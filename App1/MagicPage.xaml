@@ -8,6 +8,9 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
+    <Page.Resources>
+        <local:ColorConvector x:Key="ColorConvert"/>
+    </Page.Resources>
     <Grid x:Name="frame">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -38,7 +41,7 @@
                 </ListView>
             </ComboBox>
             <ComboBox PlaceholderText="Качество" VerticalAlignment="Top" Margin="0,0,10,10" >
-                <ListView  SelectionMode="Multiple">
+                <ListView  SelectionMode="Multiple" SelectionChanged="ListView2_SelectionChanged">
                     <TextBlock>
                         Обычный
                     </TextBlock>
@@ -61,13 +64,14 @@
             </ComboBox>
             <Button Margin="0,0,10,10" Click="Button_Click">Применить</Button>
         </StackPanel>
-        <GridView x:Name="ItemsPanel" Grid.Row="1" HorizontalAlignment="Stretch">
+        <GridView x:Name="ItemsPanel" Grid.Row="1" HorizontalAlignment="Stretch" ItemsSource="{x:Bind magicItems}">
             <GridView.ItemTemplate>
-                <DataTemplate >
-                    <StackPanel HorizontalAlignment="Stretch" Padding="5,0,5,0" Margin="10" Background="Bisque" Width="200">
-                        <TextBlock  Text="{Binding Name}"  HorizontalAlignment="Center" Grid.Column="0" Margin="10,0,10,0" />
+                <DataTemplate x:DataType="local:MagicItem" >
+                    <StackPanel HorizontalAlignment="Stretch" Padding="5,0,5,0" Margin="10" Width="220">
+                        <TextBlock x:Name="nameTex" Text="{Binding Name}"  HorizontalAlignment="Center" Grid.Column="0" Margin="10,0,10,0" />
                         <RelativePanel  Padding="2" HorizontalAlignment="Stretch">
-                            <TextBlock FontSize="10"  FontStyle="Italic" Text="{Binding Quality}"  RelativePanel.AlignLeftWithPanel="True"/>
+                            <TextBlock x:Name="qualText" FontSize="10"  FontStyle="Italic" Text="{Binding Quality}"  RelativePanel.AlignLeftWithPanel="True" Foreground="{Binding Quality, Converter={StaticResource ColorConvert}}"/>
+                            <TextBlock FontSize="8"  FontStyle="Oblique" Text="{Binding Concentration}" RelativePanel.RightOf="qualText" Margin="5,0,0,0" RelativePanel.AlignVerticalCenterWithPanel="True" Foreground="DodgerBlue"/>
                             <TextBlock FontSize="10" Text="{Binding Type}" Grid.Column="1"  RelativePanel.AlignRightWithPanel="True"/>
                         </RelativePanel>
                     </StackPanel>
@@ -79,7 +83,7 @@
                 </ItemsPanelTemplate>
             </GridView.ItemsPanel>
             <GridView.Items>
-                <local:MagicItem Name="Сумка" Quality="очень редкая" Type="броня" />
+                <local:MagicItem Name="Сумка" Quality="очень редкая" Type="броня" Concentration="(Концентрация)" />
             </GridView.Items>
         </GridView>
     </Grid>
