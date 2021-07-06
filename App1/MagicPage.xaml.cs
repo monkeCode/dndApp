@@ -25,12 +25,31 @@ namespace App1
         {
             magicItems.Clear();
             string s = null;
-            if (whereReq[0] != null && whereReq[1] != null)
-                s = whereReq[0] + "AND" + whereReq[1];
-            else if(whereReq[0] != null || whereReq[1] != null) s = whereReq[0] + whereReq[1];
+            //if (searchBox.Text.Trim() != "")
+            //   s = $" Name  LIKE  \"%{searchBox.Text.ToLower().Trim()}%\" OR Name LIKE  \"%{searchBox.Text.Trim().ToUpper()[0]+ searchBox.Text.ToLower().Trim().Remove(0, 1)}%\"";
+            //if (whereReq[0] != null && whereReq[1] != null)
+            //    s = whereReq[0] + " AND " + whereReq[1];
+            //else if (whereReq[0] != null || whereReq[1] != null) s =  whereReq[0] + whereReq[1];
+            foreach(var a in whereReq)
+            {
+                if (a != null)
+                {
+                    if (s != null)
+                    {
+                        s += " AND " + a;
+                    }
+                    else s = a;
+                }
+            }
             foreach (var i in DataAccess.GetData("MagicItems", s, "*"))
             {
-                magicItems.Add(new MagicItem(int.Parse(i[0]), i[1], (MagicItem.ItemQuality)int.Parse(i[2]), i[3], i[4] != "0"));
+               string subString = searchBox.Text.ToLower().Trim().ToLower();
+                if (subString != "")
+                {
+                    if(i[1].ToLower().IndexOf(subString) !=-1)
+                        magicItems.Add(new MagicItem(int.Parse(i[0]), i[1], (MagicItem.ItemQuality)int.Parse(i[2]), i[3], i[4] != "0"));
+                }
+               else magicItems.Add(new MagicItem(int.Parse(i[0]), i[1], (MagicItem.ItemQuality)int.Parse(i[2]), i[3], i[4] != "0"));
             }
           
            
@@ -46,15 +65,17 @@ namespace App1
             else
             {
 
-                string str = "( ";
+                string str = "Type IN ( ";
                 foreach (var a in listView.SelectedItems)
                 {
                     if (a != listView.SelectedItems.Last())
-                        str += $"Type = \"{((TextBlock)a).Text}\" OR ";
-                    else str += $"Type = \"{((TextBlock)a).Text}\" )";
+                        str += $" \"{((TextBlock)a).Text}\", ";
+                    else str += $"\"{((TextBlock)a).Text}\" )";
                 }
+             
                 whereReq[0] = str;
             }
+            Refresh();
         }
 
         private void ListView2_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -73,20 +94,32 @@ namespace App1
                     {"Редкий", 2 },
                     {"Крайне редкий", 3 },
                     {"Легендарный", 4 },
+                    {"Варьируется", 5 }
                 };
-                string str = "( ";
+                string str = "Quality IN ( ";
                 foreach (var a in listView.SelectedItems)
                 {
                     if (a != listView.SelectedItems.Last())
-                        str += $"Quality = {quality[((TextBlock)a).Text]} OR ";
-                    else str += $"Quality = {quality[((TextBlock)a).Text]} )";
+                        str += $"{quality[((TextBlock)a).Text]}, ";
+                    else str += $"{quality[((TextBlock)a).Text]} )";
                 }
                 whereReq[1] = str;
             }
+            Refresh();
         }
-        private void Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private void Refresh()
         {
             GetListData();
+        }
+
+        private void searchBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Refresh();
+        }
+
+        private void DropFilters(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+
         }
     }
 }

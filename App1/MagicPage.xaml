@@ -9,7 +9,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Page.Resources>
-        <local:ColorConvector x:Key="ColorConvert"/>
+        <local:RarityConvector x:Key="RarityConvert"/>
     </Page.Resources>
     <Grid x:Name="frame">
         <Grid.RowDefinitions>
@@ -17,7 +17,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="0">
-            <TextBox PlaceholderText ="Поиск" Width="200" Margin="0,0,10,10"></TextBox>
+            <TextBox x:Name="searchBox" PlaceholderText ="Поиск" Width="200" Margin="0,0,10,10" TextChanged="searchBox_TextChanged"></TextBox>
             <ComboBox  PlaceholderText="Тип" VerticalAlignment="Top" Margin="0,0,10,10" >
                 <ListView  SelectionMode="Multiple"  SelectionChanged="ListView1_SelectionChanged">
                     <TextBlock>
@@ -62,7 +62,7 @@
                     </TextBlock>
                 </ListView>
             </ComboBox>
-            <Button Margin="0,0,10,10" Click="Button_Click">Применить</Button>
+            <Button Margin="0,0,10,10" Click="DropFilters">Сбросить</Button>
         </StackPanel>
         <GridView x:Name="ItemsPanel" Grid.Row="1" HorizontalAlignment="Stretch" ItemsSource="{x:Bind magicItems}">
             <GridView.ItemTemplate>
@@ -70,7 +70,7 @@
                     <StackPanel HorizontalAlignment="Stretch" Padding="5,0,5,0" Margin="10" Width="220">
                         <TextBlock x:Name="nameTex" Text="{Binding Name}"  HorizontalAlignment="Center" Grid.Column="0" Margin="10,0,10,0" />
                         <RelativePanel  Padding="2" HorizontalAlignment="Stretch">
-                            <TextBlock x:Name="qualText" FontSize="10"  FontStyle="Italic" Text="{Binding Quality}"  RelativePanel.AlignLeftWithPanel="True" Foreground="{Binding Quality, Converter={StaticResource ColorConvert}}"/>
+                            <TextBlock x:Name="qualText" FontSize="10"  FontStyle="Italic" Text="{Binding Quality, Converter= {StaticResource RarityConvert}}"  RelativePanel.AlignLeftWithPanel="True" Foreground="{Binding Quality, Converter={StaticResource RarityConvert} , ConverterParameter= Color}"/>
                             <TextBlock FontSize="8"  FontStyle="Oblique" Text="{Binding Concentration}" RelativePanel.RightOf="qualText" Margin="5,0,0,0" RelativePanel.AlignVerticalCenterWithPanel="True" Foreground="DodgerBlue"/>
                             <TextBlock FontSize="10" Text="{Binding Type}" Grid.Column="1"  RelativePanel.AlignRightWithPanel="True"/>
                         </RelativePanel>

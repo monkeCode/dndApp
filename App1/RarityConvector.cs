@@ -6,11 +6,12 @@ using Windows.UI.Xaml.Media;
 
 namespace App1
 {
-    public class ColorConvector: IValueConverter
+    public class RarityConvector: IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             Enum.TryParse((string)value, out MagicItem.ItemQuality quality);
+            if(parameter != null && parameter.ToString() == "Color")
             switch (quality)
             {
                 case MagicItem.ItemQuality.common:
@@ -28,6 +29,25 @@ namespace App1
                     return new SolidColorBrush(ColorToColorWTF(Color.Black));
 
             }
+            else
+            {
+                switch (quality)
+                {
+                    case MagicItem.ItemQuality.common:
+                        return "Обычное";
+                    case MagicItem.ItemQuality.uncommon:
+                        return "Необычное";
+                    case MagicItem.ItemQuality.rare:
+                        return "Редкое";
+                    case MagicItem.ItemQuality.very_rare:
+                        return "Крайне редкое";
+                    case MagicItem.ItemQuality.legendary:
+                        return "Легендарное";
+                    default:
+                        return "Варьируется";
+                }
+
+            }    
         }
 
         static Windows.UI.Color ColorToColorWTF(Color color)
