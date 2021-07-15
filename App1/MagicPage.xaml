@@ -18,50 +18,58 @@
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="0">
             <TextBox x:Name="searchBox" PlaceholderText ="Поиск" Width="200" Margin="0,0,10,10" TextChanged="searchBox_TextChanged"></TextBox>
-            <ComboBox  PlaceholderText="Тип" VerticalAlignment="Top" Margin="0,0,10,10" >
-                <ListView  SelectionMode="Multiple"  SelectionChanged="ListView1_SelectionChanged">
-                    <TextBlock>
+            <Button  Content="Тип" VerticalAlignment="Top" Margin="0,0,10,10">
+                <Button.Flyout>
+                    <Flyout>
+                        <ListView  SelectionMode="Multiple"  SelectionChanged="ListView1_SelectionChanged">
+                            <TextBlock>
                         Чудесный предмет
-                    </TextBlock>
-                    <TextBlock>
+                            </TextBlock>
+                            <TextBlock>
                        Броня
-                    </TextBlock>
-                    <TextBlock>
+                            </TextBlock>
+                            <TextBlock>
                         Оружие
-                    </TextBlock>
-                    <TextBlock>
+                            </TextBlock>
+                            <TextBlock>
                         Жезл
-                    </TextBlock>
-                    <TextBlock>
+                            </TextBlock>
+                            <TextBlock>
                         Кольцо
-                    </TextBlock>
-                    <TextBlock>
+                            </TextBlock>
+                            <TextBlock>
                         Зелье
-                    </TextBlock>
-                </ListView>
-            </ComboBox>
-            <ComboBox PlaceholderText="Качество" VerticalAlignment="Top" Margin="0,0,10,10" >
-                <ListView  SelectionMode="Multiple" SelectionChanged="ListView2_SelectionChanged">
-                    <TextBlock>
+                            </TextBlock>
+                        </ListView>
+                    </Flyout>
+                </Button.Flyout>
+            </Button>
+            <Button Content="Качество" VerticalAlignment="Top" Margin="0,0,10,10" >
+                <Button.Flyout>
+                    <Flyout>
+                        <ListView  SelectionMode="Multiple" SelectionChanged="ListView2_SelectionChanged">
+                            <TextBlock>
                         Обычный
-                    </TextBlock>
-                    <TextBlock>
+                            </TextBlock>
+                            <TextBlock>
                         Необычный
-                    </TextBlock>
-                    <TextBlock>
+                            </TextBlock>
+                            <TextBlock>
                         Редкий
-                    </TextBlock>
-                    <TextBlock>
+                            </TextBlock>
+                            <TextBlock>
                         Крайне редкий
-                    </TextBlock>
-                    <TextBlock>
+                            </TextBlock>
+                            <TextBlock>
                         Легендарный
-                    </TextBlock>
-                    <TextBlock>
+                            </TextBlock>
+                            <TextBlock>
                         Варьируется
-                    </TextBlock>
-                </ListView>
-            </ComboBox>
+                            </TextBlock>
+                        </ListView>
+                    </Flyout>
+                </Button.Flyout>
+            </Button>
             <Button Margin="0,0,10,10" Click="DropFilters">Сбросить</Button>
         </StackPanel>
         <GridView x:Name="ItemsPanel" Grid.Row="1" HorizontalAlignment="Stretch" ItemsSource="{x:Bind magicItems}">

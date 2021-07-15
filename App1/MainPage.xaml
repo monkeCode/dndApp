@@ -9,7 +9,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid  Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <NavigationView x:Name="navPanel" IsSettingsVisible="False">
+        <NavigationView x:Name="navPanel" IsSettingsVisible="False" PaneDisplayMode="Left"  IsTabStop="False" SelectionChanged="navPanel_SelectionChanged">
             <NavigationView.MenuItems>
                 <NavigationViewItem Icon="Play" Content="Магические Предметы" Tag="SamplePage1" />
                 <NavigationViewItem Icon="Save" Content="Существа" Tag="SamplePage2" />

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Data.Sqlite;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using Windows.ApplicationModel;
@@ -21,20 +22,22 @@ namespace DataBaseLib
            
         }
 
-        public static void AddData(string inputText)
+        public static void AddData(object[] input)
         {
-            string dbpath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "sqliteSample.db");
+            string dbpath = Path.Combine(ApplicationData.Current.LocalFolder.Path, DB_NAME);
             using (SqliteConnection db =
               new SqliteConnection($"Filename={dbpath}"))
             {
                 db.Open();
 
-                SqliteCommand insertCommand = new SqliteCommand();
-                insertCommand.Connection = db;
+                SqliteCommand insertCommand = new SqliteCommand
+                {
+                    Connection = db,
 
-                // Use parameterized query to prevent SQL injection attacks
-                insertCommand.CommandText = "INSERT INTO MyTable VALUES (NULL, @Entry);";
-                insertCommand.Parameters.AddWithValue("@Entry", inputText);
+                    // Use parameterized query to prevent SQL injection attacks
+                    CommandText = "INSERT INTO MyTable VALUES @Entry"
+                };
+                insertCommand.Parameters.AddWithValue("@Entry", input);
 
                 insertCommand.ExecuteReader();
 
@@ -43,9 +46,9 @@ namespace DataBaseLib
 
         }
 
-        public static List<string[]> GetData(string table, string whereReq = null, params string[] columns)
+        public static ArrayList GetData(string table, string whereReq = null, params string[] columns)
         {
-            List<string[]> entries = new List<string[]>();
+            ArrayList entries = new ArrayList();
             //for (int i = 0; i < entries.Count; i++)
             //    entries[i] = new string[columns.Length];
 
@@ -66,14 +69,13 @@ namespace DataBaseLib
                     whereReq = "WHERE " + whereReq;
                 SqliteCommand selectCommand = new SqliteCommand
                     ($"SELECT {columnsString} from {table} {whereReq}", db);
-
                 SqliteDataReader query = selectCommand.ExecuteReader();
                 while (query.Read())
                 {
-                    string[] arr = new string[query.FieldCount];
+                    object[] arr = new object[query.FieldCount];
                     for (int i = 0; i < arr.Length; i++)
                     {
-                        arr[i] = query.GetString(i);
+                        arr[i] = query.GetValue(i);
                     }
                     entries.Add(arr);
                 }

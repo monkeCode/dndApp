@@ -15,8 +15,10 @@ namespace App1
             mainFrame.Navigate(typeof(MagicPage));
         }
 
+        private void navPanel_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+        {
 
-
+        }
     }
 
 }

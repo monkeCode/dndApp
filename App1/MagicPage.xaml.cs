@@ -1,5 +1,6 @@
 ﻿using DataBaseLib;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -41,15 +42,16 @@ namespace App1
                     else s = a;
                 }
             }
-            foreach (var i in DataAccess.GetData("MagicItems", s, "*"))
+            foreach (object[] i in DataAccess.GetData("MagicItems", s, "*"))
             {
+                
                string subString = searchBox.Text.ToLower().Trim().ToLower();
-                if (subString != "")
+                if (subString == "" || i[1].ToString().ToLower().IndexOf(subString) != -1)
                 {
-                    if(i[1].ToLower().IndexOf(subString) !=-1)
-                        magicItems.Add(new MagicItem(int.Parse(i[0]), i[1], (MagicItem.ItemQuality)int.Parse(i[2]), i[3], i[4] != "0"));
+                    if (i[1].ToString().ToLower().IndexOf(subString) !=-1)
+                        magicItems.Add(new MagicItem(int.Parse(i[0].ToString()), i[1].ToString(), (MagicItem.ItemQuality)(long)i[2], i[3].ToString(), i[4].ToString() != "0"));
                 }
-               else magicItems.Add(new MagicItem(int.Parse(i[0]), i[1], (MagicItem.ItemQuality)int.Parse(i[2]), i[3], i[4] != "0"));
+               //else magicItems.Add(new MagicItem(int.Parse(i[0].ToString()), i[1].ToString(), (MagicItem.ItemQuality)(long)i[2], i[3].ToString(), i[4].ToString() != "0"));
             }
           
            
