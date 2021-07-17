@@ -1,4 +1,6 @@
 ﻿using DataBaseLib;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -24,27 +26,16 @@ namespace App1
         private void GetListData()
         {
             magicItems.Clear();
-            string s = null;
-            foreach (var a in whereReq)
+            string s = whereReq.GetAllElemets(" AND ");
+            foreach (object[] i in DataAccess.GetData("MagicItems", s, "*"))
             {
-                if (a != null)
+                
+               string subString = searchBox.Text.ToLower().Trim();
+                if (subString == "" || i[1].ToString().ToLower().IndexOf(subString) != -1)
                 {
-                    if (s != null)
-                    {
-                        s += " AND " + a;
-                    }
-                    else s = a;
+                    if (i[1].ToString().ToLower().IndexOf(subString) !=-1)
+                        magicItems.Add(new MagicItem(int.Parse(i[0].ToString()), i[1].ToString(), (MagicItem.ItemQuality)(long)i[2], i[3].ToString(), i[4].ToString()));
                 }
-            }
-            foreach (string[] i in DataAccess.GetData("MagicItems", s, "*"))
-            {
-                string subString = searchBox.Text.ToLower().Trim().ToLower();
-                if (subString != "")
-                {
-                    if (i[1].ToLower().IndexOf(subString) != -1)
-                        magicItems.Add(new MagicItem(int.Parse(i[0]), i[1], (MagicItem.ItemQuality)int.Parse(i[2]), i[3], i[4] != "0"));
-                }
-                else magicItems.Add(new MagicItem(int.Parse(i[0]), i[1], (MagicItem.ItemQuality)int.Parse(i[2]), i[3], i[4] != "0"));
             }
         }
 
