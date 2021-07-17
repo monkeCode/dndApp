@@ -21,7 +21,7 @@
             <Button  Content="Тип" VerticalAlignment="Top" Margin="0,0,10,10">
                 <Button.Flyout>
                     <Flyout>
-                        <ListView  SelectionMode="Multiple"  SelectionChanged="ListView1_SelectionChanged">
+                        <ListView x:Name="TypeList"  SelectionMode="Multiple"  SelectionChanged="ListView1_SelectionChanged">
                             <TextBlock>
                         Чудесный предмет
                             </TextBlock>
@@ -47,7 +47,7 @@
             <Button Content="Качество" VerticalAlignment="Top" Margin="0,0,10,10" >
                 <Button.Flyout>
                     <Flyout>
-                        <ListView  SelectionMode="Multiple" SelectionChanged="ListView2_SelectionChanged">
+                        <ListView x:Name="QualityList"  SelectionMode="Multiple" SelectionChanged="ListView2_SelectionChanged">
                             <TextBlock>
                         Обычный
                             </TextBlock>
@@ -91,7 +91,7 @@
                 </ItemsPanelTemplate>
             </GridView.ItemsPanel>
             <GridView.Items>
-                <local:MagicItem Name="Сумка" Quality="очень редкая" Type="броня" Concentration="(Концентрация)" />
+                <local:MagicItem Name="Сумка" Quality="очень редкая" Type="броня" Attunement="(Концентрация)" />
             </GridView.Items>
         </GridView>
     </Grid>

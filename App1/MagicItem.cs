@@ -10,13 +10,14 @@
         public string Type { set; get; }
         public string Attunement { get; set; }
 
-        public MagicItem(int id, string name, ItemQuality quality, string type, bool attunement)
+        public MagicItem(int id, string name, ItemQuality quality, string type, string attunement)
         {
             this.Id = id;
             this.Name = name;
             this.Quality = quality.ToString();
             this.Type = type;
-            Attunement = attunement ? "(Настройка)" : "";
+            Attunement = attunement !="0" ? "(Настройка)" : "";
+
         }
 
         public MagicItem()
