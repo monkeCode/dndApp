@@ -1,11 +1,9 @@
 ﻿using DataBaseLib;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using Windows.UI;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
+
 // Документацию по шаблону элемента "Пустая страница" см. по адресу https://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace App1
@@ -16,21 +14,18 @@ namespace App1
     public sealed partial class MagicPage : Page
     {
         public ObservableCollection<MagicItem> magicItems = new ObservableCollection<MagicItem>();
+
         public MagicPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
             GetListData();
         }
-        void GetListData()
+
+        private void GetListData()
         {
             magicItems.Clear();
             string s = null;
-            //if (searchBox.Text.Trim() != "")
-            //   s = $" Name  LIKE  \"%{searchBox.Text.ToLower().Trim()}%\" OR Name LIKE  \"%{searchBox.Text.Trim().ToUpper()[0]+ searchBox.Text.ToLower().Trim().Remove(0, 1)}%\"";
-            //if (whereReq[0] != null && whereReq[1] != null)
-            //    s = whereReq[0] + " AND " + whereReq[1];
-            //else if (whereReq[0] != null || whereReq[1] != null) s =  whereReq[0] + whereReq[1];
-            foreach(var a in whereReq)
+            foreach (var a in whereReq)
             {
                 if (a != null)
                 {
@@ -41,20 +36,20 @@ namespace App1
                     else s = a;
                 }
             }
-            foreach (var i in DataAccess.GetData("MagicItems", s, "*"))
+            foreach (string[] i in DataAccess.GetData("MagicItems", s, "*"))
             {
-               string subString = searchBox.Text.ToLower().Trim().ToLower();
+                string subString = searchBox.Text.ToLower().Trim().ToLower();
                 if (subString != "")
                 {
-                    if(i[1].ToLower().IndexOf(subString) !=-1)
+                    if (i[1].ToLower().IndexOf(subString) != -1)
                         magicItems.Add(new MagicItem(int.Parse(i[0]), i[1], (MagicItem.ItemQuality)int.Parse(i[2]), i[3], i[4] != "0"));
                 }
-               else magicItems.Add(new MagicItem(int.Parse(i[0]), i[1], (MagicItem.ItemQuality)int.Parse(i[2]), i[3], i[4] != "0"));
+                else magicItems.Add(new MagicItem(int.Parse(i[0]), i[1], (MagicItem.ItemQuality)int.Parse(i[2]), i[3], i[4] != "0"));
             }
-          
-           
         }
-        string[] whereReq = new string[2];
+
+        private string[] whereReq = new string[2];
+
         private void ListView1_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ListView listView = sender as ListView;
@@ -64,7 +59,6 @@ namespace App1
             }
             else
             {
-
                 string str = "Type IN ( ";
                 foreach (var a in listView.SelectedItems)
                 {
@@ -72,7 +66,7 @@ namespace App1
                         str += $" \"{((TextBlock)a).Text}\", ";
                     else str += $"\"{((TextBlock)a).Text}\" )";
                 }
-             
+
                 whereReq[0] = str;
             }
             Refresh();
@@ -107,6 +101,7 @@ namespace App1
             }
             Refresh();
         }
+
         private void Refresh()
         {
             GetListData();
@@ -119,7 +114,10 @@ namespace App1
 
         private void DropFilters(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-
+            searchBox.Text = "";
+            QualityList.DeselectRange(new Windows.UI.Xaml.Data.ItemIndexRange(0, (uint)QualityList.Items.Count));
+            TypeList.DeselectRange(new Windows.UI.Xaml.Data.ItemIndexRange(0, (uint)TypeList.Items.Count));
+            Refresh();
         }
     }
 }
