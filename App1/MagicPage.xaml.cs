@@ -25,33 +25,16 @@ namespace App1
         void GetListData()
         {
             magicItems.Clear();
-            string s = null;
-            //if (searchBox.Text.Trim() != "")
-            //   s = $" Name  LIKE  \"%{searchBox.Text.ToLower().Trim()}%\" OR Name LIKE  \"%{searchBox.Text.Trim().ToUpper()[0]+ searchBox.Text.ToLower().Trim().Remove(0, 1)}%\"";
-            //if (whereReq[0] != null && whereReq[1] != null)
-            //    s = whereReq[0] + " AND " + whereReq[1];
-            //else if (whereReq[0] != null || whereReq[1] != null) s =  whereReq[0] + whereReq[1];
-            foreach(var a in whereReq)
-            {
-                if (a != null)
-                {
-                    if (s != null)
-                    {
-                        s += " AND " + a;
-                    }
-                    else s = a;
-                }
-            }
+            string s = whereReq.GetAllElemets(" AND ");
             foreach (object[] i in DataAccess.GetData("MagicItems", s, "*"))
             {
                 
-               string subString = searchBox.Text.ToLower().Trim().ToLower();
+               string subString = searchBox.Text.ToLower().Trim();
                 if (subString == "" || i[1].ToString().ToLower().IndexOf(subString) != -1)
                 {
                     if (i[1].ToString().ToLower().IndexOf(subString) !=-1)
-                        magicItems.Add(new MagicItem(int.Parse(i[0].ToString()), i[1].ToString(), (MagicItem.ItemQuality)(long)i[2], i[3].ToString(), i[4].ToString() != "0"));
+                        magicItems.Add(new MagicItem(int.Parse(i[0].ToString()), i[1].ToString(), (MagicItem.ItemQuality)(long)i[2], i[3].ToString(), i[4].ToString()));
                 }
-               //else magicItems.Add(new MagicItem(int.Parse(i[0].ToString()), i[1].ToString(), (MagicItem.ItemQuality)(long)i[2], i[3].ToString(), i[4].ToString() != "0"));
             }
           
            

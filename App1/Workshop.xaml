@@ -1,0 +1,70 @@
+﻿<Page
+    x:Class="App1.Workshop"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:App1"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid>
+        <Pivot>
+            <PivotItem Header="Мастерская">
+                <Grid>
+                    <Grid.Resources>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                            <Setter Property="FontSize" Value="22"/>
+                        </Style>
+                    </Grid.Resources>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel>
+                        <TextBlock Text="Заклинания" />
+                        <ListView>
+
+                        </ListView>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1">
+                        <TextBlock Text="Существа" />
+                        <ListView>
+
+                        </ListView>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Text="Магические предметы" />
+                        <ListView>
+
+                        </ListView>
+                    </StackPanel>
+                </Grid>
+            </PivotItem>
+            <PivotItem Header="Создать заклинание">
+                
+            </PivotItem>
+            <PivotItem Header="Создать Существо">
+                
+            </PivotItem>
+            <PivotItem Header="Создать предмет">
+                <StackPanel>
+                    <TextBox Header="Название" Width="200" HorizontalAlignment="Left"></TextBox>
+                    <StackPanel Orientation="Horizontal">
+                        <controls:Expander Header="Редкость">
+                            <ListBox>
+                                <TextBlock>Обычный</TextBlock>
+                                <TextBlock>Необычный</TextBlock>
+                                <TextBlock>Редкий</TextBlock>
+                                <TextBlock>Крайне редкий</TextBlock>
+                                <TextBlock>Легендарный</TextBlock>
+                                <TextBlock>Варьируется</TextBlock>
+                            </ListBox>
+                        </controls:Expander>
+                    </StackPanel>
+                </StackPanel>
+            </PivotItem>
+        </Pivot>
+    </Grid>
+</Page>

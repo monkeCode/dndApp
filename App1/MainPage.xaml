@@ -9,12 +9,17 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid  Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <NavigationView x:Name="navPanel" IsSettingsVisible="False" PaneDisplayMode="Left"  IsTabStop="False" SelectionChanged="navPanel_SelectionChanged">
+        <NavigationView x:Name="navPanel" IsSettingsVisible="False" PaneDisplayMode="Left"
+                        IsTabStop="False" ItemInvoked="navPanel_ItemInvoked" BackRequested="navPanel_BackRequested"
+                        Loaded="navPanel_Loaded">
             <NavigationView.MenuItems>
-                <NavigationViewItem Icon="Play" Content="Магические Предметы" Tag="SamplePage1" />
-                <NavigationViewItem Icon="Save" Content="Существа" Tag="SamplePage2" />
-                <NavigationViewItem Icon="Refresh" Content="Заклинания" Tag="SamplePage3" />
-                <NavigationViewItem Icon="Download" Content="Menu Item4" Tag="SamplePage4" />
+                <NavigationViewItemHeader Content="Справочники" />
+                <NavigationViewItem Icon="Play" Content="Магические предметы" Tag="MagicItems" />
+                <NavigationViewItem Icon="Save" Content="Бестиарий" Tag="Monsters" />
+                <NavigationViewItem Icon="Refresh" Content="Заклинания" Tag="Magic" />
+                <NavigationViewItemSeparator/>
+                <NavigationViewItemHeader Content="Инструменты"/>
+                <NavigationViewItem Icon="Download" Content="Мастерская" Tag="Workshop" />
             </NavigationView.MenuItems>
             <Frame x:Name="mainFrame" />
         </NavigationView>

@@ -46,9 +46,9 @@ namespace DataBaseLib
 
         }
 
-        public static ArrayList GetData(string table, string whereReq = null, params string[] columns)
+        public static List<object[]> GetData(string table, string whereReq = null, params string[] columns)
         {
-            ArrayList entries = new ArrayList();
+            List<object[]> entries = new List<object[]>();
             //for (int i = 0; i < entries.Count; i++)
             //    entries[i] = new string[columns.Length];
 
@@ -65,7 +65,7 @@ namespace DataBaseLib
                 }
                 columnsString = columnsString.Trim();
                 columnsString = columnsString.Remove(columnsString.Length - 1);
-                if (whereReq != null)
+                if (!string.IsNullOrEmpty(whereReq))
                     whereReq = "WHERE " + whereReq;
                 SqliteCommand selectCommand = new SqliteCommand
                     ($"SELECT {columnsString} from {table} {whereReq}", db);

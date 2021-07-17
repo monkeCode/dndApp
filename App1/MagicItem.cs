@@ -13,13 +13,13 @@ namespace App1
         public string Quality { set; get; }
         public string Type { set; get; }
         public string Concentration { get; set; }
-        public MagicItem(int id, string name, ItemQuality quality, string type, bool concentration)
+        public MagicItem(int id, string name, ItemQuality quality, string type, string concentration)
         {
             this.Id = id;
             this.Name = name;
             this.Quality = quality.ToString();
             this.Type = type;
-            Concentration = concentration ? "(Концентрация)" : "";
+            Concentration = concentration != "0"? "(Концентрация)" : "";
         }
         public MagicItem()
         {

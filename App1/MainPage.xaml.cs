@@ -1,4 +1,6 @@
 ﻿using DataBaseLib;
+using System.Collections.Generic;
+using System.Linq;
 using Windows.UI.Xaml.Controls;
 
 // Документацию по шаблону элемента "Пустая страница" см. по адресу https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x419
@@ -14,10 +16,70 @@ namespace App1
             DataAccess.InitializeDatabase();
             mainFrame.Navigate(typeof(MagicPage));
         }
-
-        private void navPanel_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+        //Dictionary<string, System.Type> TagPage = new Dictionary<string, System.Type>
+        //{
+        //    {"MagicItems", typeof(MagicPage) },
+        //    {"Workshop", typeof(Workshop)}
+        //};
+        List<(string Tag, System.Type Page)> TagPage = new List<(string, System.Type)>
         {
+           ("MagicItems", typeof(MagicPage)),
+           ("Workshop", typeof(Workshop))
 
+        };
+        private void navPanel_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
+        {
+            string tag = args.InvokedItemContainer.Tag.ToString();
+            NavView_Navigate(tag, args.RecommendedNavigationTransitionInfo);
+        }
+
+        private void NavView_Navigate(
+    string navItemTag,
+    Windows.UI.Xaml.Media.Animation.NavigationTransitionInfo transitionInfo)
+        {
+            System.Type _page;
+
+            try
+            {
+                var item = TagPage.FirstOrDefault(p => p.Tag.Equals(navItemTag));
+                _page = item.Page;
+            }
+            catch { return; }
+            // Get the page type before navigation so you can prevent duplicate
+            // entries in the backstack.
+            var preNavPageType =  mainFrame.CurrentSourcePageType;
+
+            // Only navigate if the selected page isn't currently loaded.
+            if (!(_page is null) && !System.Type.Equals(preNavPageType, _page))
+            {
+                mainFrame.Navigate(_page, null, transitionInfo);
+            }
+        }
+
+        private void navPanel_BackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args) => TryGoBack();
+        private bool TryGoBack()
+        {
+            if (!mainFrame.CanGoBack)
+                return false;
+
+            //// Don't go back if the nav pane is overlayed.
+            //if (navPanel.IsPaneOpen &&
+            //    (navPanel.DisplayMode == muxc.NavigationViewDisplayMode.Compact ||
+            //     NavView.DisplayMode == muxc.NavigationViewDisplayMode.Minimal))
+            //    return false;
+
+            mainFrame.GoBack();
+            return true;
+        }
+
+        private void navPanel_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            mainFrame.Navigated += MainFrame_Navigated;
+        }
+
+        private void MainFrame_Navigated(object sender, Windows.UI.Xaml.Navigation.NavigationEventArgs e)
+        {
+            navPanel.IsBackEnabled =  mainFrame.CanGoBack;   
         }
     }
 
