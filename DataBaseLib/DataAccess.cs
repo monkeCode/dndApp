@@ -67,6 +67,7 @@ namespace DataBaseLib
                 columnsString = columnsString.Remove(columnsString.Length - 1);
                 if (!string.IsNullOrEmpty(whereReq))
                     whereReq = "WHERE " + whereReq;
+                else whereReq = "";
                 SqliteCommand selectCommand = new SqliteCommand
                     ($"SELECT {columnsString} from {table} {whereReq}", db);
                 SqliteDataReader query = selectCommand.ExecuteReader();

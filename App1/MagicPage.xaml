@@ -17,11 +17,11 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="0">
-            <TextBox x:Name="searchBox" PlaceholderText ="Поиск" Width="200" Margin="0,0,10,10" TextChanged="searchBox_TextChanged"></TextBox>
+            <TextBox x:Name="searchBox" PlaceholderText ="Поиск" Width="200" Margin="0,0,10,10" Text="{Binding SubstringFilter}" TextChanged="searchBox_TextChanged" ></TextBox>
             <Button  Content="Тип" VerticalAlignment="Top" Margin="0,0,10,10">
                 <Button.Flyout>
                     <Flyout>
-                        <ListView x:Name="TypeList"  SelectionMode="Multiple"  SelectionChanged="ListView1_SelectionChanged">
+                        <ListView x:Name="TypeList"  SelectionMode="Multiple" SelectionChanged="ListView1_SelectionChanged" >
                             <TextBlock>
                         Чудесный предмет
                             </TextBlock>
@@ -70,16 +70,17 @@
                     </Flyout>
                 </Button.Flyout>
             </Button>
-            <Button Margin="0,0,10,10" Click="DropFilters">Сбросить</Button>
+            <ToggleButton Content="Homebrew" VerticalAlignment="Top" Margin="0,0,10,10"/>
+            <Button Margin="0,0,10,10" Click="DropFilters" Command="{Binding DropFiltersCommand}">Сбросить</Button>
         </StackPanel>
-        <GridView x:Name="ItemsPanel" Grid.Row="1" HorizontalAlignment="Stretch" ItemsSource="{x:Bind magicItems}">
+        <GridView x:Name="ItemsPanel" Grid.Row="1" HorizontalAlignment="Stretch" ItemsSource="{Binding DataCollection }">
             <GridView.ItemTemplate>
                 <DataTemplate x:DataType="local:MagicItem" >
                     <StackPanel HorizontalAlignment="Stretch" Padding="5,0,5,0" Margin="10" Width="220">
                         <TextBlock x:Name="nameTex" Text="{Binding Name}"  HorizontalAlignment="Center" Grid.Column="0" Margin="10,0,10,0" />
                         <RelativePanel  Padding="2" HorizontalAlignment="Stretch">
                             <TextBlock x:Name="qualText" FontSize="10"  FontStyle="Italic" Text="{Binding Quality, Converter= {StaticResource RarityConvert}}"  RelativePanel.AlignLeftWithPanel="True" Foreground="{Binding Quality, Converter={StaticResource RarityConvert} , ConverterParameter= Color}"/>
-                            <TextBlock FontSize="8"  FontStyle="Oblique" Text="{Binding Concentration}" RelativePanel.RightOf="qualText" Margin="5,0,0,0" RelativePanel.AlignVerticalCenterWithPanel="True" Foreground="DodgerBlue"/>
+                            <TextBlock FontSize="8"  FontStyle="Oblique" Text="{Binding Attunement}" RelativePanel.RightOf="qualText" Margin="5,0,0,0" RelativePanel.AlignVerticalCenterWithPanel="True" Foreground="DodgerBlue"/>
                             <TextBlock FontSize="10" Text="{Binding Type}" Grid.Column="1"  RelativePanel.AlignRightWithPanel="True"/>
                         </RelativePanel>
                     </StackPanel>

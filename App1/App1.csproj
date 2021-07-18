@@ -119,7 +119,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DirectoriesModelView.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="MagicItemsModelView.cs" />
     <Compile Include="RarityConvector.cs" />
     <Compile Include="MagicItem.cs" />
     <Compile Include="MainPage.xaml.cs">
@@ -175,6 +177,9 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls">
       <Version>7.0.2</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Uwp.Managed">
+      <Version>2.0.1</Version>
     </PackageReference>
     <PackageReference Include="SQLitePCLRaw.bundle_winsqlite3">
       <Version>2.0.4</Version>

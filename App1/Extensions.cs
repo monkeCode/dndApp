@@ -14,7 +14,7 @@ namespace App1
             var enumerator = collection.GetEnumerator();
             while(enumerator.MoveNext())
             {
-                if (!string.IsNullOrEmpty(str.ToString()) && enumerator.Current !=null)
+                if (!string.IsNullOrEmpty(str.ToString()) && !string.IsNullOrEmpty(enumerator.Current?.ToString()))
                     str.Append(separator ?? " ");
                 str.Append(enumerator.Current);
             }

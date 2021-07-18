@@ -4,20 +4,19 @@
     {
         public enum ItemQuality { common, uncommon, rare, very_rare, legendary, varies }
 
-        public int Id { set; get; }
-        public string Name { set; get; }
         public string Quality { set; get; }
+        public string Name { get; set; }
+        public int Id { get; set; }
         public string Type { set; get; }
         public string Attunement { get; set; }
 
-        public MagicItem(int id, string name, ItemQuality quality, string type, string attunement)
+        public MagicItem(int id, string name, ItemQuality quality, string type, bool attunement)
         {
-            this.Id = id;
-            this.Name = name;
-            this.Quality = quality.ToString();
-            this.Type = type;
-            Attunement = attunement !="0" ? "(Настройка)" : "";
-
+            Id = id;
+            Name = name;
+            Quality = quality.ToString();
+            Type = type;
+            Attunement = attunement ? "(Настройка)" : "";
         }
 
         public MagicItem()

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 
 // Документацию по шаблону элемента "Пустая страница" см. по адресу https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -15,38 +16,20 @@ namespace App1
     /// </summary>
     public sealed partial class MagicPage : Page
     {
-        public ObservableCollection<MagicItem> magicItems = new ObservableCollection<MagicItem>();
 
         public MagicPage()
         {
             InitializeComponent();
-            GetListData();
+            DataContext = new MagicItemsModelView();
         }
-
-        private void GetListData()
-        {
-            magicItems.Clear();
-            string s = whereReq.GetAllElemets(" AND ");
-            foreach (object[] i in DataAccess.GetData("MagicItems", s, "*"))
-            {
-                
-               string subString = searchBox.Text.ToLower().Trim();
-                if (subString == "" || i[1].ToString().ToLower().IndexOf(subString) != -1)
-                {
-                    if (i[1].ToString().ToLower().IndexOf(subString) !=-1)
-                        magicItems.Add(new MagicItem(int.Parse(i[0].ToString()), i[1].ToString(), (MagicItem.ItemQuality)(long)i[2], i[3].ToString(), i[4].ToString()));
-                }
-            }
-        }
-
-        private string[] whereReq = new string[2];
 
         private void ListView1_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            MagicItemsModelView view = DataContext as MagicItemsModelView;
             ListView listView = sender as ListView;
             if (listView.SelectedIndex == -1)
             {
-                whereReq[0] = null;
+                view.SelectedQuality = null;
             }
             else
             {
@@ -58,17 +41,18 @@ namespace App1
                     else str += $"\"{((TextBlock)a).Text}\" )";
                 }
 
-                whereReq[0] = str;
+               view.SelectedQuality = str;
             }
-            Refresh();
         }
 
         private void ListView2_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            MagicItemsModelView view = DataContext as MagicItemsModelView;
             ListView listView = sender as ListView;
+            var i = listView.SelectedItem;
             if (listView.SelectedIndex == -1)
             {
-                whereReq[1] = null;
+                view.SelectedType = null;
             }
             else
             {
@@ -88,27 +72,21 @@ namespace App1
                         str += $"{quality[((TextBlock)a).Text]}, ";
                     else str += $"{quality[((TextBlock)a).Text]} )";
                 }
-                whereReq[1] = str;
+                view.SelectedType = str;
             }
-            Refresh();
-        }
-
-        private void Refresh()
-        {
-            GetListData();
         }
 
         private void searchBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            Refresh();
+            ((MagicItemsModelView)DataContext).Search(sender);
         }
 
         private void DropFilters(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            searchBox.Text = "";
+            MagicItemsModelView view = DataContext as MagicItemsModelView;
+            //searchBox.Text = "";
             QualityList.DeselectRange(new Windows.UI.Xaml.Data.ItemIndexRange(0, (uint)QualityList.Items.Count));
             TypeList.DeselectRange(new Windows.UI.Xaml.Data.ItemIndexRange(0, (uint)TypeList.Items.Count));
-            Refresh();
         }
     }
 }
