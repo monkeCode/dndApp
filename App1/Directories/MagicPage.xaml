@@ -10,6 +10,7 @@
 
     <Page.Resources>
         <local:RarityConvector x:Key="RarityConvert"/>
+        <local:StaticValues x:Key="StaticVal"/>
     </Page.Resources>
     <Grid x:Name="frame">
         <Grid.RowDefinitions>
@@ -21,56 +22,19 @@
             <Button  Content="Тип" VerticalAlignment="Top" Margin="0,0,10,10">
                 <Button.Flyout>
                     <Flyout>
-                        <ListView x:Name="TypeList"  SelectionMode="Multiple" SelectionChanged="ListView1_SelectionChanged" >
-                            <TextBlock>
-                        Чудесный предмет
-                            </TextBlock>
-                            <TextBlock>
-                       Броня
-                            </TextBlock>
-                            <TextBlock>
-                        Оружие
-                            </TextBlock>
-                            <TextBlock>
-                        Жезл
-                            </TextBlock>
-                            <TextBlock>
-                        Кольцо
-                            </TextBlock>
-                            <TextBlock>
-                        Зелье
-                            </TextBlock>
-                        </ListView>
+                        <ListView x:Name="TypeList"  SelectionMode="Multiple" SelectionChanged="ListView1_SelectionChanged" ItemsSource="{Binding Source={StaticResource StaticVal}, Path=MagicItemsType, Mode=OneTime}"/>
                     </Flyout>
                 </Button.Flyout>
             </Button>
             <Button Content="Качество" VerticalAlignment="Top" Margin="0,0,10,10" >
                 <Button.Flyout>
                     <Flyout>
-                        <ListView x:Name="QualityList"  SelectionMode="Multiple" SelectionChanged="ListView2_SelectionChanged">
-                            <TextBlock>
-                        Обычный
-                            </TextBlock>
-                            <TextBlock>
-                        Необычный
-                            </TextBlock>
-                            <TextBlock>
-                        Редкий
-                            </TextBlock>
-                            <TextBlock>
-                        Крайне редкий
-                            </TextBlock>
-                            <TextBlock>
-                        Легендарный
-                            </TextBlock>
-                            <TextBlock>
-                        Варьируется
-                            </TextBlock>
-                        </ListView>
+                        <ListView x:Name="QualityList"  SelectionMode="Multiple" SelectionChanged="ListView2_SelectionChanged" ItemsSource= "{Binding Source={StaticResource StaticVal}, Path=MagicItemsQuality, Mode=OneTime}"/>
                     </Flyout>
                 </Button.Flyout>
             </Button>
-            <ToggleButton Content="Homebrew" VerticalAlignment="Top" Margin="0,0,10,10"/>
+            <ToggleButton Content="HB"  VerticalAlignment="Top" Margin="0,0,10,10" FontFamily="Book Antiqua" FontWeight="Normal" ToolTipService.ToolTip="Homebrew">
+            </ToggleButton>
             <Button Margin="0,0,10,10" Click="DropFilters" Command="{Binding DropFiltersCommand}">Сбросить</Button>
         </StackPanel>
         <GridView x:Name="ItemsPanel" Grid.Row="1" HorizontalAlignment="Stretch" ItemsSource="{Binding DataCollection }">

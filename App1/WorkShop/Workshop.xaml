@@ -22,19 +22,19 @@
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <StackPanel>
+                    <StackPanel MinWidth="100">
                         <TextBlock Text="Заклинания" />
                         <ListView>
 
                         </ListView>
                     </StackPanel>
-                    <StackPanel Grid.Column="1">
+                    <StackPanel Grid.Column="1"  MinWidth="100">
                         <TextBlock Text="Существа" />
                         <ListView>
 
                         </ListView>
                     </StackPanel>
-                    <StackPanel Grid.Column="2">
+                    <StackPanel Grid.Column="2"  MinWidth="100">
                         <TextBlock Text="Магические предметы" />
                         <ListView>
 
@@ -49,21 +49,7 @@
                 
             </PivotItem>
             <PivotItem Header="Создать предмет">
-                <StackPanel>
-                    <TextBox Header="Название" Width="200" HorizontalAlignment="Left"></TextBox>
-                    <StackPanel Orientation="Horizontal">
-                        <controls:Expander Header="Редкость">
-                            <ListBox>
-                                <TextBlock>Обычный</TextBlock>
-                                <TextBlock>Необычный</TextBlock>
-                                <TextBlock>Редкий</TextBlock>
-                                <TextBlock>Крайне редкий</TextBlock>
-                                <TextBlock>Легендарный</TextBlock>
-                                <TextBlock>Варьируется</TextBlock>
-                            </ListBox>
-                        </controls:Expander>
-                    </StackPanel>
-                </StackPanel>
+                <Frame x:Name="MagicFrame"/>
             </PivotItem>
         </Pivot>
     </Grid>

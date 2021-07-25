@@ -37,8 +37,8 @@ namespace App1
                 foreach (var a in listView.SelectedItems)
                 {
                     if (a != listView.SelectedItems.Last())
-                        str += $" \"{((TextBlock)a).Text}\", ";
-                    else str += $"\"{((TextBlock)a).Text}\" )";
+                        str += $" \"{a}\", ";
+                    else str += $"\"{a}\" )";
                 }
 
                view.SelectedQuality = str;
@@ -56,21 +56,13 @@ namespace App1
             }
             else
             {
-                Dictionary<string, int> quality = new Dictionary<string, int>()
-                {
-                    {"Обычный", 0 },
-                    {"Необычный", 1 },
-                    {"Редкий", 2 },
-                    {"Крайне редкий", 3 },
-                    {"Легендарный", 4 },
-                    {"Варьируется", 5 }
-                };
+                
                 string str = "Quality IN ( ";
                 foreach (var a in listView.SelectedItems)
                 {
                     if (a != listView.SelectedItems.Last())
-                        str += $"{quality[((TextBlock)a).Text]}, ";
-                    else str += $"{quality[((TextBlock)a).Text]} )";
+                        str += $"{StaticValues.magicItemQality[a.ToString()]}, ";
+                    else str += $"{StaticValues.magicItemQality[a.ToString()]} )";
                 }
                 view.SelectedType = str;
             }

@@ -1,4 +1,6 @@
-﻿namespace App1
+﻿using System;
+
+namespace App1
 {
     public class MagicItem
     {

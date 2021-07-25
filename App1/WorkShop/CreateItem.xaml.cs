@@ -20,11 +20,33 @@ namespace App1
     /// <summary>
     /// Пустая страница, которую можно использовать саму по себе или для перехода внутри фрейма.
     /// </summary>
-    public sealed partial class Workshop : Page
+    public sealed partial class CreateItem : Page
     {
-        public Workshop()
+        public CreateItem()
         {
             this.InitializeComponent();
+        }
+
+        private void Grid_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            Grid grid = grid2;
+            if (e.NewSize.Width < 700)
+            {
+                Grid.SetRow(grid, 1);
+                Grid.SetColumn(grid, 0);
+                ((Grid)sender).ColumnDefinitions[1].Width = GridLength.Auto;
+            }
+            else
+            {
+                Grid.SetRow(grid, 0);
+                Grid.SetColumn(grid, 1);
+                ((Grid)sender).ColumnDefinitions[1].Width = new GridLength(1, GridUnitType.Star);
+            }
+        }
+
+        private void RichEditBox_TextChanged(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

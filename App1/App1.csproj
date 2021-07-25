@@ -119,19 +119,23 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DirectoriesModelView.cs" />
+    <Compile Include="WorkShop\CreateItem.xaml.cs">
+      <DependentUpon>CreateItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Directories\DirectoriesModelView.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="MagicItemsModelView.cs" />
+    <Compile Include="Directories\MagicItemsModelView.cs" />
     <Compile Include="RarityConvector.cs" />
     <Compile Include="MagicItem.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MagicPage.xaml.cs">
+    <Compile Include="Directories\MagicPage.xaml.cs">
       <DependentUpon>MagicPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Workshop.xaml.cs">
+    <Compile Include="StaticValues.cs" />
+    <Compile Include="WorkShop\Workshop.xaml.cs">
       <DependentUpon>Workshop.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -155,15 +159,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="WorkShop\CreateItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="MagicPage.xaml">
+    <Page Include="Directories\MagicPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Workshop.xaml">
+    <Page Include="WorkShop\Workshop.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -194,6 +206,7 @@
   <ItemGroup>
     <Content Include="sqliteSample.db" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

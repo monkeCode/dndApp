@@ -1,6 +1,7 @@
 ﻿using System;
 //using Windows.UI;
 using System.Drawing;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media;
 
@@ -8,25 +9,27 @@ namespace App1
 {
     public class RarityConvector: IValueConverter
     {
+        ResourceDictionary myResourceDictionary = new ResourceDictionary();
         public object Convert(object value, Type targetType, object parameter, string language)
         {
+           myResourceDictionary.Source =  new Uri("ms-appx:///Dictionary.xaml");
             Enum.TryParse((string)value, out MagicItem.ItemQuality quality);
             if(parameter != null && parameter.ToString() == "Color")
             switch (quality)
             {
                 case MagicItem.ItemQuality.common:
-                    return new SolidColorBrush(ColorToColorWTF(Color.Black));
+                    return myResourceDictionary["Common"];
 
                 case MagicItem.ItemQuality.uncommon:
-                    return new SolidColorBrush(ColorToColorWTF(Color.MediumSpringGreen));
+                    return myResourceDictionary["Uncommon"];
                 case MagicItem.ItemQuality.rare:
-                    return new SolidColorBrush(ColorToColorWTF(Color.BlueViolet));
+                    return myResourceDictionary["Rare"];
                 case MagicItem.ItemQuality.very_rare:
-                    return new SolidColorBrush(ColorToColorWTF(Color.Magenta));
+                    return myResourceDictionary["VeryRare"];
                 case MagicItem.ItemQuality.legendary:
-                    return new SolidColorBrush(ColorToColorWTF(Color.Goldenrod));
+                    return myResourceDictionary["Legendary"];
                 default:
-                    return new SolidColorBrush(ColorToColorWTF(Color.Black));
+                    return myResourceDictionary["Common"];
 
             }
             else
