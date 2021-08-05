@@ -13,9 +13,12 @@ namespace App1
     {
         public ObservableCollection<MagicItemFeautes> Features { get; set; } = new ObservableCollection<MagicItemFeautes>();
 
-        public ExtendedMIviewModel(int num)
+        public ExtendedMIviewModel(int id)
         {
             Features.Add(new MagicItemFeautes { Name = "Тест", Desctipt = "я ~люблю~ |козу|, а ~|также|~ `|Корову|`" });
+            Name = "Имя";
+            Type = "чудесный предмет";
+            Quality = ItemQuality.legendary.ToString();
         }
     }
     class MagicItemFeautes

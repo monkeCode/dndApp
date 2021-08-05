@@ -7,15 +7,17 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+    <Page.Resources>
+        <local:RarityConvector x:Key="RarityConvert"/>
+    </Page.Resources>
     <ScrollViewer>
         <StackPanel>
-            <TextBlock Text="Name" FontSize="24" Margin="30"/>
-            <TextBlock Text="Quality" Margin="30,0,0,0"/>
-            <TextBlock Text="Type" Margin="30,30,0,30"/>
+            <TextBlock FontSize="24" Margin="30" Text="{Binding Name}"/>
+            <TextBlock Text="{Binding Quality, Converter= {StaticResource RarityConvert}}" Margin="30,0,0,0"/>
+            <TextBlock Text="{Binding Type}" Margin="30,30,0,30"/>
             <StackPanel>
                 <TextBlock Text="Особенности" FontSize="24" Margin="30" TextDecorations="Underline"/>
-                <ListView x:Name="FeaturesList" ItemsSource="{Binding Features, Mode=OneTime}" SelectionMode="None" >
+                <ListView x:Name="FeaturesList" ItemsSource="{Binding Features, Mode=OneTime}" SelectionMode="None" Margin="30,0,0,0" >
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="local:MagicItemFeautes">
                             <StackPanel Orientation="Horizontal">

@@ -8,12 +8,12 @@ namespace App1.WorkShop
     {
         public static void StringtoText(string s, TextBlock textBlock)
         {
-            Formating(s, '~', textBlock);
-            Formating(s, '`', textBlock);
-            Formating(s, '|', textBlock);
+            Formating('~', textBlock);
+            Formating('`', textBlock);
+            Formating('|', textBlock);
         }
 
-        private static void Formating(string s, char formatfactor, TextBlock textBlock)
+        private static void Formating(char formatfactor, TextBlock textBlock)
         {
             List<Run> runs = new List<Run>();
             foreach (Run ru in textBlock.Inlines)
@@ -21,11 +21,13 @@ namespace App1.WorkShop
                 string[] str = ru.Text.Split(formatfactor);
                 for (int i = 0; i < str.Length; i++)
                 {
-                    Run run = new Run();
-                    run.FontWeight = ru.FontWeight;
-                    run.TextDecorations = ru.TextDecorations;
-                    run.FontStyle = ru.FontStyle;
-                    run.Text = str[i];
+                    Run run = new Run
+                    {
+                        FontWeight = ru.FontWeight,
+                        TextDecorations = ru.TextDecorations,
+                        FontStyle = ru.FontStyle,
+                        Text = str[i]
+                    };
                     if (i % 2 != 0)
                     {
                         switch (formatfactor)
