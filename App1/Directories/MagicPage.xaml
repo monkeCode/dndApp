@@ -37,7 +37,7 @@
             </ToggleButton>
             <Button Margin="0,0,10,10" Click="DropFilters" Command="{Binding DropFiltersCommand}">Сбросить</Button>
         </StackPanel>
-        <GridView x:Name="ItemsPanel" Grid.Row="1" HorizontalAlignment="Stretch" ItemsSource="{Binding DataCollection }">
+        <GridView x:Name="ItemsPanel" Grid.Row="1" HorizontalAlignment="Stretch" ItemsSource="{Binding DataCollection }" ItemClick="ItemsPanel_ItemClick" IsItemClickEnabled="True">
             <GridView.ItemTemplate>
                 <DataTemplate x:DataType="local:MagicItem" >
                     <StackPanel HorizontalAlignment="Stretch" Padding="5,0,5,0" Margin="10" Width="220">

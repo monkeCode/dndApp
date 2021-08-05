@@ -1,4 +1,5 @@
-﻿using DataBaseLib;
+﻿using App1.Directories;
+using DataBaseLib;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -79,6 +80,11 @@ namespace App1
             //searchBox.Text = "";
             QualityList.DeselectRange(new Windows.UI.Xaml.Data.ItemIndexRange(0, (uint)QualityList.Items.Count));
             TypeList.DeselectRange(new Windows.UI.Xaml.Data.ItemIndexRange(0, (uint)TypeList.Items.Count));
+        }
+
+        private void ItemsPanel_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            this.Frame.Navigate(typeof(MagicItemExtendedPage));
         }
     }
 }

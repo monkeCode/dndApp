@@ -52,15 +52,31 @@
                 </StackPanel>
             </StackPanel>
             <StackPanel Grid.Row="1">
-                <RichEditBox Header="Описание" HorizontalAlignment="Stretch" Grid.Row="1" MaxHeight="200" Margin="30" TextChanged="RichEditBox_TextChanged">
+                <RichEditBox Header="Описание" HorizontalAlignment="Stretch" Grid.Row="1" MaxHeight="200" Margin="30">
                 </RichEditBox>
                 <TextBlock Margin="40,0,0,0" FontSize="18" TextDecorations="Underline">Особенности</TextBlock>
                 <ListView Style="{StaticResource ListViewStyle}" ItemContainerStyle="{StaticResource ListViewItemsStyle}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="local:MagicItemFeautes">
+                        <Grid Background="Crimson">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Grid.Column="0" Text="{Binding Name}"/>
+                            <RichEditBox Grid.Column="1" />
+                        </Grid>
+                    </DataTemplate>
+                    </ListView.ItemTemplate>
+                    <local:MagicItemFeautes Name="Тест" />
                 </ListView>
                 <Button Margin="10" HorizontalAlignment="Center">Добавить особенность</Button>
                 <TextBlock Margin="40,20,0,0" FontSize="18" TextDecorations="Underline" >Таблицы</TextBlock>
                 <ListView Style="{StaticResource ListViewStyle}"></ListView>
                 <Button HorizontalAlignment="Center" Margin="5">Добавить таблицу</Button>
+                <TextBlock Margin="40,20,0,0" FontSize="18" TextDecorations="Underline">Ссылки</TextBlock>
+                <ListView Style="{StaticResource ListViewStyle}"></ListView>
+                <Button HorizontalAlignment="Center" Margin="5">Добавить ссылку</Button>
             </StackPanel>
         </Grid>
     </ScrollViewer>
