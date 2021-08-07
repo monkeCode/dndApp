@@ -55,20 +55,19 @@
                 <RichEditBox Header="Описание" HorizontalAlignment="Stretch" Grid.Row="1" MaxHeight="200" Margin="30">
                 </RichEditBox>
                 <TextBlock Margin="40,0,0,0" FontSize="18" TextDecorations="Underline">Особенности</TextBlock>
-                <ListView Style="{StaticResource ListViewStyle}" ItemContainerStyle="{StaticResource ListViewItemsStyle}">
+                <ListView Style="{StaticResource ListViewStyle}" ItemContainerStyle="{StaticResource ListViewItemsStyle}" ItemsSource="{Binding Features}">
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="local:MagicItemFeautes">
-                        <Grid Background="Crimson">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBox Grid.Column="0" Text="{Binding Name}"/>
-                            <RichEditBox Grid.Column="1" />
-                        </Grid>
-                    </DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox Grid.Column="0" Text="{Binding Name}" Margin="10" VerticalAlignment="Top" MinWidth="100" MaxWidth="250"/>
+                                <RichEditBox Grid.Column="1" Margin="0,10,10,10" MinWidth="100"/>
+                            </Grid>
+                        </DataTemplate>
                     </ListView.ItemTemplate>
-                    <local:MagicItemFeautes Name="Тест" />
                 </ListView>
                 <Button Margin="10" HorizontalAlignment="Center">Добавить особенность</Button>
                 <TextBlock Margin="40,20,0,0" FontSize="18" TextDecorations="Underline" >Таблицы</TextBlock>

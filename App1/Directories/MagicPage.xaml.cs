@@ -84,7 +84,12 @@ namespace App1
 
         private void ItemsPanel_ItemClick(object sender, ItemClickEventArgs e)
         {
-            this.Frame.Navigate(typeof(MagicItemExtendedPage));
+            this.Frame.Navigate(typeof(MagicItemExtendedPage),(e.ClickedItem as MagicItem).Id);
+        }
+
+        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

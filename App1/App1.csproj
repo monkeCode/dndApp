@@ -119,6 +119,8 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="NameConvert.cs" />
+    <Compile Include="Table.cs" />
     <Compile Include="WorkShop\ExtendedMIviewModel.cs" />
     <Compile Include="Directories\MagicItemExtendedPage.xaml.cs">
       <DependentUpon>MagicItemExtendedPage.xaml</DependentUpon>
@@ -140,6 +142,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StaticValues.cs" />
     <Compile Include="Formator.cs" />
+    <Compile Include="Link.cs" />
     <Compile Include="WorkShop\Workshop.xaml.cs">
       <DependentUpon>Workshop.xaml</DependentUpon>
     </Compile>

@@ -10,6 +10,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
+using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
@@ -26,13 +27,37 @@ namespace App1.Directories
         public MagicItemExtendedPage()
         {
             this.InitializeComponent();
-            DataContext = new ExtendedMIviewModel(1);
         }
-
-        private void RichTextBlock_Loaded(object sender, RoutedEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            DataContext = new ExtendedMIviewModel((int)e.Parameter);
+            TableLoading();
+        }
+        private void ReFormateText(object sender, RoutedEventArgs e)
         {
             TextBlock textBlock = sender as TextBlock;
-            Formator.StringtoText(textBlock.Text, textBlock);
+            Formator.StringtoText(textBlock);
+            foreach(var r in textBlock.Inlines)
+            {
+                if(r.GetType() == typeof(Hyperlink))
+                {
+                    Hyperlink hyperlink = r as Hyperlink;
+                    hyperlink.Click += Hyperlink_Click;
+                }
+            }    
+        }
+
+        private void Hyperlink_Click(Hyperlink sender, HyperlinkClickEventArgs args)
+        {
+            ExtendedMIviewModel model = DataContext as ExtendedMIviewModel; 
+            Link link = model.Links.First(obj => obj.Text == (sender.Inlines.First() as Run).Text);
+            Frame.Navigate(link.Page, link.Id);
+        }
+
+        void TableLoading()
+        {
+            Table table = (DataContext as ExtendedMIviewModel).Table;
+            table.LoadTable(TableGrid);
         }
     }
 }
