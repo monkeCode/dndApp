@@ -46,7 +46,7 @@ namespace DataBaseLib
 
         }
 
-        public static List<object[]> GetData(string table, string whereReq = null, params string[] columns)
+        public static List<object[]> GetData(string table, string whereReq = null,string sortBy = null, params string[] columns)
         {
             List<object[]> entries = new List<object[]>();
             //for (int i = 0; i < entries.Count; i++)
@@ -68,8 +68,11 @@ namespace DataBaseLib
                 if (!string.IsNullOrEmpty(whereReq))
                     whereReq = "WHERE " + whereReq;
                 else whereReq = "";
+                if (sortBy != null)
+                    sortBy = "ORDER BY " + sortBy;
+                else sortBy = "";
                 SqliteCommand selectCommand = new SqliteCommand
-                    ($"SELECT {columnsString} from {table} {whereReq}", db);
+                    ($"SELECT {columnsString} from {table} {whereReq} {sortBy}", db);
                 SqliteDataReader query = selectCommand.ExecuteReader();
                 while (query.Read())
                 {

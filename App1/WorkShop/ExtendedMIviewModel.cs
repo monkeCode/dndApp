@@ -16,15 +16,17 @@ namespace App1
         public string Description { get; set; }
         public string UnderType { get; set; }
         public string UnderQuality { get; set; }
+        public string OptionableText { get; set; }
         public ObservableCollection<Link> Links { get; set; } = new ObservableCollection<Link>();
-         public Table Table { get; set; }
+        public Table Table { get; set; }
         public ExtendedMIviewModel(int id)
         {
-           var item =  DataAccess.GetData("MagicItems", $"_id = {id}", "*")[0];
+           var item =  DataAccess.GetData("MagicItems", $"_id = {id}",null, "*")[0];
             Id = id;
             Name = item[1].ToString();
             Quality = ((ItemQuality)(long)item[2]).ToString();
             Type = item[3].ToString();
+            OptionableText = "~ТИПА~ ААААААААААААААААААААААААА\nАААААААААА\nААААААААААААА\nААААААААААААААААА\nААААААААААААААААААААААААААААААААААААА";
             //Attunement
             Description = "это ~Описание~ |подчеркнуто|";
 

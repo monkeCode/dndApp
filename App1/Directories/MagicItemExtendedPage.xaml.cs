@@ -59,5 +59,13 @@ namespace App1.Directories
             Table table = (DataContext as ExtendedMIviewModel).Table;
             table.LoadTable(TableGrid);
         }
+
+        private void TextBlock_Loaded(object sender, RoutedEventArgs e)
+        {
+            if(FeaturesList.Items.Count == 0)
+            {
+                MainPanel.Children.Remove((UIElement)sender);
+            }
+        }
     }
 }

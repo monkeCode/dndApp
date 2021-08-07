@@ -11,7 +11,6 @@ namespace App1
             GetListData();
             whereReq = new string[2];
         }
-
         public object SelectedType { set { whereReq[0] = value?.ToString(); GetListData(); } }
         public object SelectedQuality { set { whereReq[1] = value?.ToString(); GetListData(); } }
 
@@ -21,7 +20,7 @@ namespace App1
 
             string s = null;
             s = whereReq?.GetAllElemets(" AND ");
-            foreach (object[] i in DataAccess.GetData("MagicItems", s, "*"))
+            foreach (object[] i in DataAccess.GetData("MagicItems", s,"Name", "*"))
             {
                 if (!string.IsNullOrEmpty(SubstringFilter))
                     if (i[1].ToString().ToLower().IndexOf(SubstringFilter) == -1)
