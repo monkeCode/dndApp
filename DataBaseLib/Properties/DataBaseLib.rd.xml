@@ -28,6 +28,5 @@
   <Library Name="DataBaseLib">
 
   	<!-- добавьте сюда директивы для своей библиотеки -->
-
   </Library>
 </Directives>

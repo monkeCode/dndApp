@@ -1,10 +1,10 @@
 ﻿<Page
     x:Class="App1.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:App1"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="using:App1"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Grid  Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -16,34 +16,33 @@
                 <NavigationViewItem Icon="Play" Content="Магические предметы" Tag="MagicItems" />
                 <NavigationViewItem Icon="Save" Content="Бестиарий" Tag="Monsters" />
                 <NavigationViewItem Icon="Refresh" Content="Заклинания" Tag="Magic" />
-                <NavigationViewItemSeparator/>
-                <NavigationViewItemHeader Content="Инструменты"/>
+                <NavigationViewItemSeparator />
+                <NavigationViewItemHeader Content="Инструменты" />
                 <NavigationViewItem Icon="Download" Content="Мастерская" Tag="Workshop" />
             </NavigationView.MenuItems>
-            <NavigationView.PaneFooter >
+            <NavigationView.PaneFooter>
                 <StackPanel  KeyDown="DiceText_acceptEvent"  x:Name="dicePanel" SizeChanged="dicePanel_SizeChanged">
                     <ListView MaxHeight="200" ItemsSource="{x:Bind _dices}" x:Name="listDices">
                         <ListView.ItemContainerStyle>
                             <Style TargetType="ListViewItem">
-                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                             </Style>
                         </ListView.ItemContainerStyle>
                         <ListView.ItemTemplate>
                             <DataTemplate x:DataType="local:Dice">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Text="{x:Bind Roll}" VerticalAlignment="Bottom"/>
-                                    <TextBlock Text="{x:Bind Result}" Grid.Column="1" FontSize="18"  HorizontalAlignment="Right"/>
+                                    <TextBlock Text="{x:Bind Roll}" VerticalAlignment="Bottom" />
+                                    <TextBlock Text="{x:Bind Result}" Grid.Column="1" FontSize="18"  HorizontalAlignment="Right" />
                                 </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
-                    <TextBox x:Name="diceText"/>
+                    <TextBox x:Name="diceText" />
                 </StackPanel>
-
             </NavigationView.PaneFooter>
             <Frame x:Name="mainFrame" />
         </NavigationView>

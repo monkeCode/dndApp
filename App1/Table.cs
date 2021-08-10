@@ -1,28 +1,23 @@
 ﻿using App1.WorkShop;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 
 namespace App1
 {
-    class Table
+    internal class Table
     {
         public int Rows { get; set; }
         public int Columns { get; set; }
-       public ObservableCollection<string> Fields { get; set; } = new ObservableCollection<string>();
+        public ObservableCollection<string> Fields { get; set; } = new ObservableCollection<string>();
+
         public void LoadTable(Grid grid)
         {
-           
             for (int i = 0; i <= this.Rows; i++)
                 grid.RowDefinitions.Add(new RowDefinition());
             for (int i = 0; i <= this.Columns; i++)
-                grid.ColumnDefinitions.Add(new ColumnDefinition() { MinWidth=150});
+                grid.ColumnDefinitions.Add(new ColumnDefinition() { MinWidth = 150 });
             var enumerator = this.Fields.GetEnumerator();
             for (int r = 0; r < this.Rows; r++)
                 for (int c = 0; c < this.Columns; c++)
@@ -33,7 +28,6 @@ namespace App1
                         BorderBrush = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 255, 255, 255)),
                         Padding = new Thickness(5),
                         VerticalAlignment = VerticalAlignment.Stretch
-                        
                     };
                     TextBlock textBlock = new TextBlock();
                     textBlock.TextWrapping = TextWrapping.Wrap;

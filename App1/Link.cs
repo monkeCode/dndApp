@@ -7,6 +7,7 @@ namespace App1
         public Type Page { get; private set; }
         public int Id { get; private set; }
         public string Text { get; private set; }
+
         public Link(Type type, int id, string str)
         {
             Page = type;

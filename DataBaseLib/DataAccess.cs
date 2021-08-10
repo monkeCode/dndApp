@@ -1,6 +1,5 @@
 ﻿using Microsoft.Data.Sqlite;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
@@ -11,10 +10,12 @@ namespace DataBaseLib
 {
     static public class DataAccess
     {
-        const string DB_NAME = "sqliteSample.db";
-        const int DB_VERSION = 1;
+        private const string DB_NAME = "sqliteSample.db";
+        private const int DB_VERSION = 1;
         static private Task initTask;
+
         static DataAccess() => initTask = InitializeDatabase();
+
         public async static Task InitializeDatabase()
         {
             ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
@@ -26,9 +27,9 @@ namespace DataBaseLib
                 File.Copy(databaseFile.Path, ApplicationData.Current.LocalFolder.Path + $"\\{DB_NAME}");
                 localSettings.Values["DataBaseVercion"] = DB_VERSION;
             }
-            else if(localSettings.Values["DataBaseVercion"] == null ||(int)localSettings.Values["DataBaseVercion"] != DB_VERSION)
+            else if (localSettings.Values["DataBaseVercion"] == null || (int)localSettings.Values["DataBaseVercion"] != DB_VERSION)
             {
-                var storage =  await ApplicationData.Current.LocalFolder.TryGetItemAsync(DB_NAME);
+                var storage = await ApplicationData.Current.LocalFolder.TryGetItemAsync(DB_NAME);
                 if (storage != null)
                     File.Delete(storage.Path);
                 StorageFile databaseFile = await Package.Current.InstalledLocation.GetFileAsync(/*$"Assets/*/DB_NAME/*"*/);
@@ -36,7 +37,6 @@ namespace DataBaseLib
                 File.Copy(databaseFile.Path, ApplicationData.Current.LocalFolder.Path + $"\\{DB_NAME}");
                 localSettings.Values["DataBaseVercion"] = DB_VERSION;
             }
-           
         }
 
         public static void AddData(object[] input)
@@ -61,17 +61,16 @@ namespace DataBaseLib
 
                 db.Close();
             }
-
         }
 
-        public static List<object[]> GetData(string table, string whereReq = null,string sortBy = null, params string[] columns)
+        public static List<object[]> GetData(string table, string whereReq = null, string sortBy = null, params string[] columns)
         {
             List<object[]> entries = new List<object[]>();
             //for (int i = 0; i < entries.Count; i++)
             //    entries[i] = new string[columns.Length];
 
             string dbpath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "sqliteSample.db");
-            
+
             using (SqliteConnection db =
                new SqliteConnection($"Filename={dbpath}"))
             {

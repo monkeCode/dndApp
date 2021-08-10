@@ -4,6 +4,7 @@ using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+
 namespace App1
 {
     /// <summary>
@@ -67,7 +68,7 @@ namespace App1
         /// </summary>
         /// <param name="sender">Фрейм, для которого произошел сбой навигации</param>
         /// <param name="e">Сведения о сбое навигации</param>
-        void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
+        private void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
         {
             throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
         }

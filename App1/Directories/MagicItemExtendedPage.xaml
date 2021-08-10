@@ -8,28 +8,28 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Page.Resources>
-        <local:RarityConvector x:Key="RarityConvert"/>
-        <local:NameConvert x:Key="NameConvert"/>
+        <local:RarityConvector x:Key="RarityConvert" />
+        <local:NameConvert x:Key="NameConvert" />
     </Page.Resources>
     <ScrollViewer>
         <StackPanel x:Name="MainPanel">
-            <TextBlock FontSize="24" Margin="30" Text="{Binding Name}"/>
+            <TextBlock FontSize="24" Margin="30" Text="{Binding Name}" />
             <StackPanel Margin="30,0,0,0" Orientation="Horizontal">
-              
+
                 <TextBlock Text="{Binding Quality, Converter= {StaticResource RarityConvert}}" Margin="0,0,10,0" />
-                <TextBlock Text="{Binding UnderQuality}" Margin="0,0,15,0"/>
+                <TextBlock Text="{Binding UnderQuality}" Margin="0,0,15,0" />
                 <TextBlock Text="{Binding Type}" Margin="0,0,10,0" />
                 <TextBlock Text="{Binding UnderType}" />
             </StackPanel>
-            <TextBlock Text="{Binding Description}" Margin="30,30,0,0" Loaded="ReFormateText" TextWrapping="Wrap" MaxWidth="1000" HorizontalAlignment="Left"/>
-            <TextBlock Text="Особенности" FontSize="20" Margin="30,30,0,0" TextDecorations="Underline" Loaded="TextBlock_Loaded"/>
-            <ListView x:Name="FeaturesList" ItemsSource="{Binding Features, Mode=OneTime}" SelectionMode="None" Margin="30,0,0,30" >
+            <TextBlock Text="{Binding Description}" Margin="30,30,0,0" Loaded="ReFormateText" TextWrapping="Wrap" MaxWidth="1000" HorizontalAlignment="Left" />
+            <TextBlock Text="Особенности" FontSize="20" Margin="30,30,0,0" TextDecorations="Underline" Loaded="TextBlock_Loaded" />
+            <ListView x:Name="FeaturesList" ItemsSource="{Binding Features, Mode=OneTime}" SelectionMode="None" Margin="30,0,0,30">
                 <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="local:MagicItemFeautes">
+                    <DataTemplate x:DataType="local:Feautes">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="*" MinWidth="150"/>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="*" MinWidth="150" />
                             </Grid.ColumnDefinitions>
                             <TextBlock FontWeight="Black" Text="{Binding Name, Converter={StaticResource NameConvert}}" VerticalAlignment="Top">
                             </TextBlock>
@@ -40,12 +40,12 @@
                 </ListView.ItemTemplate>
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
-                        <Setter Property="VerticalAlignment" Value="Stretch"/>
+                        <Setter Property="VerticalAlignment" Value="Stretch" />
                     </Style>
                 </ListView.ItemContainerStyle>
             </ListView>
-            <Grid x:Name="TableGrid" Margin="30,0,0,0"/>
-            <TextBlock Text="{Binding OptionableText}" Loaded="ReFormateText" Margin="30" TextWrapping="Wrap"/>
+            <Grid x:Name="TableGrid" Margin="30,0,0,0" />
+            <TextBlock Text="{Binding OptionableText}" Loaded="ReFormateText" Margin="30" TextWrapping="Wrap" />
         </StackPanel>
     </ScrollViewer>
 </Page>

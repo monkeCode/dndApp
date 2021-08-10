@@ -17,6 +17,7 @@ namespace App1
         };
 
         public static List<string> MagicItemsQuality { get => magicItemQality.Keys.ToList(); }
+
         public static List<string> MagicItemsType { get; } = new List<string>()
         {
              "Чудесный предмет",
@@ -35,8 +36,6 @@ namespace App1
             "Dungeon master's guide",
             "Homebrew"
         };
-
-
 
         public StaticValues()
         {

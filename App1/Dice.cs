@@ -1,24 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace App1
 {
-    class Dice
+    internal class Dice
     {
         public string Roll { get; set; }
         public int Result { get; set; }
-       public Dice(string roll)
+
+        public Dice(string roll)
         {
             Roll = roll;
             Result = Calculate(roll);
         }
+
         private int Calculate(string roll)
         {
-            if(Regex.IsMatch(roll.Trim(), @"[\D-[d\|k\|д\|к\|\+\|\-\|\s]]"))
+            if (Regex.IsMatch(roll.Trim(), @"[\D-[d\|k\|д\|к\|\+\|\-\|\s]]"))
                 throw new ArgumentException();
             if (Regex.IsMatch(roll.Trim(), @"^\d*[d\|k\|д\|к]\d*$"))
             {
@@ -30,7 +30,7 @@ namespace App1
                     result += new Random().Next(1, dice + 1);
                 return result;
             }
-            else if(int.TryParse(roll, out int res))
+            else if (int.TryParse(roll, out int res))
             {
                 return res;
             }

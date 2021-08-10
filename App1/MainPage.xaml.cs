@@ -1,5 +1,4 @@
-﻿using DataBaseLib;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Windows.UI.Xaml.Controls;
@@ -8,21 +7,22 @@ using Windows.UI.Xaml.Controls;
 
 namespace App1
 {
-
     public sealed partial class MainPage : Page
     {
-        ObservableCollection<Dice> _dices = new ObservableCollection<Dice>();
+        private ObservableCollection<Dice> _dices = new ObservableCollection<Dice>();
+
         public MainPage()
         {
             this.InitializeComponent();
             mainFrame.Navigate(typeof(MagicPage));
         }
-        List<(string Tag, System.Type Page)> TagPage = new List<(string, System.Type)>
+
+        private List<(string Tag, System.Type Page)> TagPage = new List<(string, System.Type)>
         {
            ("MagicItems", typeof(MagicPage)),
            ("Workshop", typeof(Workshop))
-
         };
+
         private void navPanel_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
         {
             string tag = args.InvokedItemContainer.Tag.ToString();
@@ -43,7 +43,7 @@ namespace App1
             catch { return; }
             // Get the page type before navigation so you can prevent duplicate
             // entries in the backstack.
-            var preNavPageType =  mainFrame.CurrentSourcePageType;
+            var preNavPageType = mainFrame.CurrentSourcePageType;
 
             // Only navigate if the selected page isn't currently loaded.
             if (!(_page is null) && !System.Type.Equals(preNavPageType, _page))
@@ -53,6 +53,7 @@ namespace App1
         }
 
         private void navPanel_BackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args) => TryGoBack();
+
         private bool TryGoBack()
         {
             if (!mainFrame.CanGoBack)
@@ -75,13 +76,12 @@ namespace App1
 
         private void MainFrame_Navigated(object sender, Windows.UI.Xaml.Navigation.NavigationEventArgs e)
         {
-            navPanel.IsBackEnabled =  mainFrame.CanGoBack;   
+            navPanel.IsBackEnabled = mainFrame.CanGoBack;
         }
-
 
         private void DiceText_acceptEvent(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
         {
-            if(e.Key == Windows.System.VirtualKey.Enter)
+            if (e.Key == Windows.System.VirtualKey.Enter)
             {
                 if (!string.IsNullOrEmpty(diceText.Text))
                     try
@@ -91,7 +91,6 @@ namespace App1
                             _dices.RemoveAt(0);
                         listDices.ScrollIntoView(listDices.Items.Last(), ScrollIntoViewAlignment.Leading);
                         listDices.UpdateLayout();
-
                     }
                     catch { }
             }
@@ -101,12 +100,11 @@ namespace App1
         {
             StackPanel stackPanel = sender as StackPanel;
             if (e.NewSize.Width < 50)
-                foreach(var ch in stackPanel.Children)
-                ch.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                foreach (var ch in stackPanel.Children)
+                    ch.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
             else
                 foreach (var ch in stackPanel.Children)
                     ch.Visibility = Windows.UI.Xaml.Visibility.Visible;
         }
     }
-
 }

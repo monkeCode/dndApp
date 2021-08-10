@@ -31,7 +31,7 @@ namespace App1.WorkShop
                         FontStyle = ru.FontStyle,
                         Text = str[i]
                     };
-                    
+
                     if (i % 2 != 0)
                     {
                         switch (formatfactor)
@@ -56,6 +56,7 @@ namespace App1.WorkShop
             foreach (var r in runs)
                 textBlock.Inlines.Add(r);
         }
+
         private static void AddHyperlink(TextBlock textBlock)
         {
             List<Inline> runs = new List<Inline>();
@@ -78,7 +79,7 @@ namespace App1.WorkShop
                         runs.Add(hyperlink);
                     }
                     else
-                    runs.Add(run);
+                        runs.Add(run);
                 }
             }
             textBlock.Text = string.Empty;

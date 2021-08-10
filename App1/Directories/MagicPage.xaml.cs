@@ -1,12 +1,6 @@
 ﻿using App1.Directories;
-using DataBaseLib;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
 
 // Документацию по шаблону элемента "Пустая страница" см. по адресу https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -17,7 +11,6 @@ namespace App1
     /// </summary>
     public sealed partial class MagicPage : Page
     {
-
         public MagicPage()
         {
             InitializeComponent();
@@ -42,7 +35,7 @@ namespace App1
                     else str += $"\"{a}\" )";
                 }
 
-               view.SelectedQuality = str;
+                view.SelectedQuality = str;
             }
         }
 
@@ -57,13 +50,12 @@ namespace App1
             }
             else
             {
-                
                 string str = "Quality IN ( ";
                 foreach (var a in listView.SelectedItems)
                 {
                     if (a != listView.SelectedItems.Last())
-                        str += $"{StaticValues.magicItemQality[a.ToString()]}, ";
-                    else str += $"{StaticValues.magicItemQality[a.ToString()]} )";
+                        str += $"{listView.Items.IndexOf(a)}, ";
+                    else str += $"{listView.Items.IndexOf(a)} )";
                 }
                 view.SelectedType = str;
             }
@@ -84,12 +76,11 @@ namespace App1
 
         private void ItemsPanel_ItemClick(object sender, ItemClickEventArgs e)
         {
-            this.Frame.Navigate(typeof(MagicItemExtendedPage),(e.ClickedItem as MagicItem).Id);
+            this.Frame.Navigate(typeof(MagicItemExtendedPage), (e.ClickedItem as MagicItem).Id);
         }
 
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
         }
     }
 }
