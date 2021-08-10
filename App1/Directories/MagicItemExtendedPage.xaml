@@ -17,11 +17,11 @@
             <StackPanel Margin="30,0,0,0" Orientation="Horizontal">
               
                 <TextBlock Text="{Binding Quality, Converter= {StaticResource RarityConvert}}" Margin="0,0,10,0" />
-                <TextBlock Text="under quality" Margin="0,0,15,0"/>
+                <TextBlock Text="{Binding UnderQuality}" Margin="0,0,15,0"/>
                 <TextBlock Text="{Binding Type}" Margin="0,0,10,0" />
-                <TextBlock Text="under type" />
+                <TextBlock Text="{Binding UnderType}" />
             </StackPanel>
-            <TextBlock Text="{Binding Description}" Margin="30,30,0,0" Loaded="ReFormateText"/>
+            <TextBlock Text="{Binding Description}" Margin="30,30,0,0" Loaded="ReFormateText" TextWrapping="Wrap" MaxWidth="1000" HorizontalAlignment="Left"/>
             <TextBlock Text="Особенности" FontSize="20" Margin="30,30,0,0" TextDecorations="Underline" Loaded="TextBlock_Loaded"/>
             <ListView x:Name="FeaturesList" ItemsSource="{Binding Features, Mode=OneTime}" SelectionMode="None" Margin="30,0,0,30" >
                 <ListView.ItemTemplate>

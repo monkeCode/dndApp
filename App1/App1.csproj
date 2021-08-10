@@ -119,6 +119,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Dice.cs" />
     <Compile Include="NameConvert.cs" />
     <Compile Include="Table.cs" />
     <Compile Include="WorkShop\ExtendedMIviewModel.cs" />

@@ -1,5 +1,6 @@
 ﻿using DataBaseLib;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using Windows.UI.Xaml.Controls;
 
@@ -10,17 +11,12 @@ namespace App1
 
     public sealed partial class MainPage : Page
     {
+        ObservableCollection<Dice> _dices = new ObservableCollection<Dice>();
         public MainPage()
         {
             this.InitializeComponent();
-            DataAccess.InitializeDatabase();
             mainFrame.Navigate(typeof(MagicPage));
         }
-        //Dictionary<string, System.Type> TagPage = new Dictionary<string, System.Type>
-        //{
-        //    {"MagicItems", typeof(MagicPage) },
-        //    {"Workshop", typeof(Workshop)}
-        //};
         List<(string Tag, System.Type Page)> TagPage = new List<(string, System.Type)>
         {
            ("MagicItems", typeof(MagicPage)),
@@ -80,6 +76,36 @@ namespace App1
         private void MainFrame_Navigated(object sender, Windows.UI.Xaml.Navigation.NavigationEventArgs e)
         {
             navPanel.IsBackEnabled =  mainFrame.CanGoBack;   
+        }
+
+
+        private void DiceText_acceptEvent(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
+        {
+            if(e.Key == Windows.System.VirtualKey.Enter)
+            {
+                if (!string.IsNullOrEmpty(diceText.Text))
+                    try
+                    {
+                        _dices.Add(new Dice(diceText.Text));
+                        if (_dices.Count > 10)
+                            _dices.RemoveAt(0);
+                        listDices.ScrollIntoView(listDices.Items.Last(), ScrollIntoViewAlignment.Leading);
+                        listDices.UpdateLayout();
+
+                    }
+                    catch { }
+            }
+        }
+
+        private void dicePanel_SizeChanged(object sender, Windows.UI.Xaml.SizeChangedEventArgs e)
+        {
+            StackPanel stackPanel = sender as StackPanel;
+            if (e.NewSize.Width < 50)
+                foreach(var ch in stackPanel.Children)
+                ch.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+            else
+                foreach (var ch in stackPanel.Children)
+                    ch.Visibility = Windows.UI.Xaml.Visibility.Visible;
         }
     }
 

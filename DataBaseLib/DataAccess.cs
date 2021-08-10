@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.Storage;
 
@@ -11,13 +12,29 @@ namespace DataBaseLib
     static public class DataAccess
     {
         const string DB_NAME = "sqliteSample.db";
-        public async static void InitializeDatabase()
+        const int DB_VERSION = 1;
+        static private Task initTask;
+        static DataAccess() => initTask = InitializeDatabase();
+        public async static Task InitializeDatabase()
         {
+            ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
             //await ApplicationData.Current.LocalFolder.CreateFileAsync("sqliteSample.db", CreationCollisionOption.OpenIfExists);
             if (await ApplicationData.Current.LocalFolder.TryGetItemAsync(DB_NAME) == null)
             {
                 StorageFile databaseFile = await Package.Current.InstalledLocation.GetFileAsync(/*$"Assets/*/DB_NAME/*"*/);
-                await databaseFile.CopyAsync(ApplicationData.Current.LocalFolder);
+                //await databaseFile.CopyAsync(ApplicationData.Current.LocalFolder);
+                File.Copy(databaseFile.Path, ApplicationData.Current.LocalFolder.Path + $"\\{DB_NAME}");
+                localSettings.Values["DataBaseVercion"] = DB_VERSION;
+            }
+            else if(localSettings.Values["DataBaseVercion"] == null ||(int)localSettings.Values["DataBaseVercion"] != DB_VERSION)
+            {
+                var storage =  await ApplicationData.Current.LocalFolder.TryGetItemAsync(DB_NAME);
+                if (storage != null)
+                    File.Delete(storage.Path);
+                StorageFile databaseFile = await Package.Current.InstalledLocation.GetFileAsync(/*$"Assets/*/DB_NAME/*"*/);
+                //await databaseFile.CopyAsync(ApplicationData.Current.LocalFolder);
+                File.Copy(databaseFile.Path, ApplicationData.Current.LocalFolder.Path + $"\\{DB_NAME}");
+                localSettings.Values["DataBaseVercion"] = DB_VERSION;
             }
            
         }
@@ -28,6 +45,7 @@ namespace DataBaseLib
             using (SqliteConnection db =
               new SqliteConnection($"Filename={dbpath}"))
             {
+                Task.WaitAll(new Task[] { initTask });
                 db.Open();
 
                 SqliteCommand insertCommand = new SqliteCommand
@@ -57,6 +75,7 @@ namespace DataBaseLib
             using (SqliteConnection db =
                new SqliteConnection($"Filename={dbpath}"))
             {
+                Task.WaitAll(new Task[] { initTask });
                 db.Open();
                 string columnsString = "";
                 foreach (var str in columns)
@@ -92,7 +111,8 @@ namespace DataBaseLib
 
         public static SqliteDataReader RawRequest(string request)
         {
-            string dbpath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "sqliteSample.db");
+            Task.WaitAll(new Task[] { initTask });
+            string dbpath = Path.Combine(ApplicationData.Current.LocalFolder.Path, DB_NAME);
             using (SqliteConnection db =
               new SqliteConnection($"Filename={dbpath}"))
             {

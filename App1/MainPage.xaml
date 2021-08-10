@@ -7,7 +7,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
     <Grid  Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <NavigationView x:Name="navPanel" IsSettingsVisible="False" PaneDisplayMode="Left"
                         IsTabStop="False" ItemInvoked="navPanel_ItemInvoked" BackRequested="navPanel_BackRequested"
@@ -21,6 +20,31 @@
                 <NavigationViewItemHeader Content="Инструменты"/>
                 <NavigationViewItem Icon="Download" Content="Мастерская" Tag="Workshop" />
             </NavigationView.MenuItems>
+            <NavigationView.PaneFooter >
+                <StackPanel  KeyDown="DiceText_acceptEvent"  x:Name="dicePanel" SizeChanged="dicePanel_SizeChanged">
+                    <ListView MaxHeight="200" ItemsSource="{x:Bind _dices}" x:Name="listDices">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="local:Dice">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="{x:Bind Roll}" VerticalAlignment="Bottom"/>
+                                    <TextBlock Text="{x:Bind Result}" Grid.Column="1" FontSize="18"  HorizontalAlignment="Right"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    <TextBox x:Name="diceText"/>
+                </StackPanel>
+
+            </NavigationView.PaneFooter>
             <Frame x:Name="mainFrame" />
         </NavigationView>
     </Grid>

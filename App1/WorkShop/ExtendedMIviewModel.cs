@@ -17,38 +17,25 @@ namespace App1
         public string UnderType { get; set; }
         public string UnderQuality { get; set; }
         public string OptionableText { get; set; }
+        public string Sourse { get; set; }
         public ObservableCollection<Link> Links { get; set; } = new ObservableCollection<Link>();
         public Table Table { get; set; }
         public ExtendedMIviewModel(int id)
         {
-           var item =  DataAccess.GetData("MagicItems", $"_id = {id}",null, "*")[0];
+            object[] item =  DataAccess.GetData("MagicItems, ExtendedMagicItems", $"MagicItems._id = {id} And MagicItems._Id = ExtendedMagicItems._id",null, "*")[0];
             Id = id;
             Name = item[1].ToString();
             Quality = ((ItemQuality)(long)item[2]).ToString();
             Type = item[3].ToString();
-            OptionableText = "~ТИПА~ ААААААААААААААААААААААААА\nАААААААААА\nААААААААААААА\nААААААААААААААААА\nААААААААААААААААААААААААААААААААААААА";
-            //Attunement
-            Description = "это ~Описание~ |подчеркнуто|";
+            Sourse = item[5].ToString();
 
-            Features.Add(new MagicItemFeautes { Name = "типо имя", Desctipt = "я ~люблю~ |козу|, а ~|также|~ `|Корову|`" });
-            Features.Add(new MagicItemFeautes { Name = "типо имя", Desctipt = "еще один ^гиперлинк^ fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff" });
-            Features.Add(new MagicItemFeautes { Desctipt = "без названия" });
-            Links.Add(new Link(typeof(MagicPage), 1, "гиперлинк"));
-
-            Table = new Table()
-            {
-                Rows = 4,
-                Columns = 2,
-
-            };
-            Table.Fields.Add("~Название~");
-            Table.Fields.Add("~Действие~");
-            Table.Fields.Add("название1");
-            Table.Fields.Add("действие1");
-            Table.Fields.Add("название2");
-            Table.Fields.Add("действие2");
-            Table.Fields.Add("название3");
-            Table.Fields.Add("действие3   fgfffffffffffffff");
+            Description = item[7].ToString();
+            if (item[8].ToString() != "")
+                UnderType = "(" + item[8].ToString() + ")";
+            if (item[9].ToString() != "")
+                UnderQuality = "(" + item[9].ToString() + ")";
+            Attunement = item[10].ToString();
+            OptionableText = item[11].ToString();
         }
     }
     class MagicItemFeautes

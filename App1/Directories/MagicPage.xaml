@@ -48,7 +48,12 @@
             <GridView.ItemTemplate>
                 <DataTemplate x:DataType="local:MagicItem" >
                     <StackPanel HorizontalAlignment="Stretch" Padding="5,0,5,0" Margin="10" Width="220">
-                        <TextBlock x:Name="nameTex" Text="{Binding Name}"  HorizontalAlignment="Center" Grid.Column="0" Margin="10,0,10,0" />
+                        <ToolTipService.ToolTip>
+                            <ToolTip Content="{Binding Name}"/>
+                        </ToolTipService.ToolTip>
+                        <ScrollViewer HorizontalScrollMode="Enabled" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Hidden">
+                            <TextBlock x:Name="nameTex" Text="{Binding Name}"  HorizontalAlignment="Center" Grid.Column="0" Margin="10,0,10,0" />
+                        </ScrollViewer>
                         <RelativePanel  Padding="2" HorizontalAlignment="Stretch">
                             <TextBlock x:Name="qualText" FontSize="10"  FontStyle="Italic" Text="{Binding Quality, Converter= {StaticResource RarityConvert}}"  RelativePanel.AlignLeftWithPanel="True" Foreground="{Binding Quality, Converter={StaticResource RarityConvert} , ConverterParameter= Color}"/>
                             <TextBlock FontSize="8"  FontStyle="Oblique" Text="{Binding Attunement}" RelativePanel.RightOf="qualText" Margin="5,0,0,0" RelativePanel.AlignVerticalCenterWithPanel="True" Foreground="DodgerBlue"/>

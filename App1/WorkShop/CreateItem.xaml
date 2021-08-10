@@ -17,7 +17,7 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <StackPanel>
-                <TextBox Header="Название" Width="300" HorizontalAlignment="Left" Margin="10" VerticalAlignment="Top"></TextBox>
+                <TextBox Header="Название" Width="300" HorizontalAlignment="Left" Margin="10" VerticalAlignment="Top" Text="{Binding Name, Mode=TwoWay}"></TextBox>
                 <Grid  HorizontalAlignment="Stretch"  SizeChanged="Grid_SizeChanged">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" MaxWidth="600"/>
@@ -32,27 +32,27 @@
                             <ColumnDefinition Width="*" MaxWidth="200"/>
                             <ColumnDefinition Width="*" MaxWidth="400"/>
                         </Grid.ColumnDefinitions>
-                        <ComboBox Header="Качество" Margin="10" HorizontalAlignment="Stretch" MinWidth="70" ItemsSource="{Binding Source={StaticResource StaticValues}, Path=MagicItemsQuality}"/>
-                        <TextBox Header="Подкачество" Margin="10" Grid.Column="1" HorizontalAlignment="Stretch" MinWidth="150"/>
+                        <ComboBox Header="Качество" Margin="10" HorizontalAlignment="Stretch" MinWidth="70" ItemsSource="{Binding Source={StaticResource StaticValues}, Path=MagicItemsQuality}" SelectedIndex="{Binding Quality, Mode=TwoWay}"/>
+                        <TextBox Header="Подкачество" Margin="10" Grid.Column="1" HorizontalAlignment="Stretch" MinWidth="150" Text="{Binding UnderQuality, Mode=TwoWay}"/>
                     </Grid>
                     <Grid Grid.Column="1" Name="grid2">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" MaxWidth="200"/>
                             <ColumnDefinition Width="*" MaxWidth="400"/>
                         </Grid.ColumnDefinitions>
-                            <ComboBox Header="Тип" Margin="10" HorizontalAlignment="Stretch" MinWidth="50" ItemsSource="{Binding Source={StaticResource StaticValues}, Path=MagicItemsType }"/>
+                            <ComboBox Header="Тип" Margin="10" HorizontalAlignment="Stretch" MinWidth="50" ItemsSource="{Binding Source={StaticResource StaticValues}, Path=MagicItemsType }" SelectedValue="{Binding Type, Mode=TwoWay}"/>
 
-                            <TextBox Header="Подтип" Margin="10"  Grid.Column="1" HorizontalAlignment="Stretch" MinWidth="150"/>
+                        <TextBox Header="Подтип" Margin="10"  Grid.Column="1" HorizontalAlignment="Stretch" MinWidth="150" Text="{Binding UnderType, Mode=TwoWay}"/>
                     </Grid>
                 </Grid>
                 <StackPanel Orientation="Horizontal">
-                    <ComboBox Header="Источник" Width="200" Margin="10" ItemsSource="{Binding Source={StaticResource StaticValues}, Path=MagicItemsSource }">
+                    <ComboBox Header="Источник" Width="200" Margin="10" ItemsSource="{Binding Source={StaticResource StaticValues}, Path=MagicItemsSource }" Text="{Binding Source, Mode=TwoWay}">
                     </ComboBox>
                     <CheckBox Content="Настроенность" Margin="10" VerticalAlignment="Bottom"/>
                 </StackPanel>
             </StackPanel>
             <StackPanel Grid.Row="1">
-                <RichEditBox Header="Описание" HorizontalAlignment="Stretch" Grid.Row="1" MaxHeight="200" Margin="30">
+                <RichEditBox Header="Описание" HorizontalAlignment="Stretch" Grid.Row="1" MaxHeight="200" Margin="30" Loaded="Description_Loaded">
                 </RichEditBox>
                 <TextBlock Margin="40,0,0,0" FontSize="18" TextDecorations="Underline">Особенности</TextBlock>
                 <ListView Style="{StaticResource ListViewStyle}" ItemContainerStyle="{StaticResource ListViewItemsStyle}" ItemsSource="{Binding Features}">

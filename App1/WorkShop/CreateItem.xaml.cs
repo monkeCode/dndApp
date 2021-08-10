@@ -25,7 +25,7 @@ namespace App1
         public CreateItem()
         {
             this.InitializeComponent();
-            DataContext = new ExtendedMIviewModel(1);
+            DataContext = new ExtendedMIviewModel(0);
         }
 
         private void Grid_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -45,6 +45,9 @@ namespace App1
             }
         }
 
-        
+        private void Description_Loaded(object sender, RoutedEventArgs e)
+        {
+            RichEditBox editBox = sender as RichEditBox;
+        }
     }
 }

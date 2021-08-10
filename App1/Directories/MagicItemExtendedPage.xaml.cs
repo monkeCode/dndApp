@@ -57,6 +57,7 @@ namespace App1.Directories
         void TableLoading()
         {
             Table table = (DataContext as ExtendedMIviewModel).Table;
+            if(table != null)
             table.LoadTable(TableGrid);
         }
 

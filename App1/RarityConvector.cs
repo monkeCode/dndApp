@@ -29,7 +29,7 @@ namespace App1
                 case MagicItem.ItemQuality.legendary:
                     return myResourceDictionary["Legendary"];
                 default:
-                    return myResourceDictionary["Common"];
+                    return myResourceDictionary["Variant"];
 
             }
             else
