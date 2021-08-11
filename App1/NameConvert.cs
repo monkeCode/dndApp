@@ -12,7 +12,8 @@ namespace App1
             {
                 return text + ":";
             }
-            else return "";
+
+            return "";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

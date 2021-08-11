@@ -1,15 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
+using App1.Annotations;
 
 namespace App1
 {
-    internal class Dice
+    public class Dice
     {
         public string Roll { get; set; }
         public int Result { get; set; }
 
+        public const string DICE_PATTERN = @"\d*[[dkдк]\d+\d*(\s*[+-]?\s*\d+\d*)?";
         public Dice(string roll)
         {
             Roll = roll;
@@ -30,34 +34,30 @@ namespace App1
                     result += new Random().Next(1, dice + 1);
                 return result;
             }
-            else if (int.TryParse(roll, out int res))
+
+            if (int.TryParse(roll, out int res))
             {
                 return res;
             }
-            else
+            char nextoperat;
+            List<string> l = roll.Split('+').ToList();
+            nextoperat = '+';
+            if (l.Count < 2)
             {
-                char nextoperat;
-                List<string> l = roll.Split('+').ToList();
-                nextoperat = '+';
-                if (l.Count < 2)
-                {
-                    l = roll.Split('-').ToList();
-                    nextoperat = '-';
-                }
-                string first = l[0];
-                string second = "";
-                for (int i = 1; i < l.Count; i++)
-                {
-                    second += l[i];
-                    if (i < l.Count - 1)
-                        second += nextoperat;
-                }
-                if (first == roll || second == roll)
-                    throw new ArgumentException();
-                if (nextoperat == '+')
-                    return Calculate(first) + Calculate(second);
-                else return Calculate(first) - Calculate(second);
+                l = roll.Split('-').ToList();
+                nextoperat = '-';
             }
+            string first = l[0];
+            string second = "";
+            for (int i = 1; i < l.Count; i++)
+            {
+                second += l[i];
+                if (i < l.Count - 1)
+                    second += nextoperat;
+            }
+
+            return first == roll || second == roll ? throw new ArgumentException() :
+                nextoperat == '+' ? Calculate(first) + Calculate(second) : Calculate(first) - Calculate(second);
         }
     }
 }

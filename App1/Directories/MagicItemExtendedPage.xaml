@@ -5,6 +5,7 @@
     xmlns:local="using:App1"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:controls1="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Page.Resources>
@@ -14,16 +15,20 @@
     <ScrollViewer>
         <StackPanel x:Name="MainPanel">
             <TextBlock FontSize="24" Margin="30" Text="{Binding Name}" />
-            <StackPanel Margin="30,0,0,0" Orientation="Horizontal">
+            <TextBlock TextWrapping="Wrap" FontStyle="Italic" Margin="30,0,0,0">
+                    <Run Text="{Binding UnderQuality}"></Run>
+                    <Run Text="{Binding Quality, Converter= {StaticResource RarityConvert}}"></Run>
+                    <Run Text="{Binding Type}"></Run>
+                    <Run Text="{Binding UnderType}"></Run>
+            </TextBlock>
 
-                <TextBlock Text="{Binding Quality, Converter= {StaticResource RarityConvert}}" Margin="0,0,10,0" />
-                <TextBlock Text="{Binding UnderQuality}" Margin="0,0,15,0" />
-                <TextBlock Text="{Binding Type}" Margin="0,0,10,0" />
-                <TextBlock Text="{Binding UnderType}" />
-            </StackPanel>
-            <TextBlock Text="{Binding Description}" Margin="30,30,0,0" Loaded="ReFormateText" TextWrapping="Wrap" MaxWidth="1000" HorizontalAlignment="Left" />
-            <TextBlock Text="Особенности" FontSize="20" Margin="30,30,0,0" TextDecorations="Underline" Loaded="TextBlock_Loaded" />
-            <ListView x:Name="FeaturesList" ItemsSource="{Binding Features, Mode=OneTime}" SelectionMode="None" Margin="30,0,0,30">
+            <TextBlock Margin="30,15,0,0" FontWeight="Bold">
+                    <Run>Источник:</Run>
+                    <Run  Text="{Binding ItemSource}"></Run>
+            </TextBlock>
+                <TextBlock Text="{Binding Description}" Margin="30,30,0,0" Loaded="ReFormateText" TextWrapping="Wrap" MaxWidth="1000" HorizontalAlignment="Left" />
+            <TextBlock Text="Особенности" FontSize="20" Margin="30,30,0,0" TextDecorations="Underline" Loaded="TextBlock_Loaded"/>
+                <ListView x:Name="FeaturesList" ItemsSource="{Binding Features, Mode=OneTime}" SelectionMode="None" Margin="30,0,0,30">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="local:Feautes">
                         <Grid>

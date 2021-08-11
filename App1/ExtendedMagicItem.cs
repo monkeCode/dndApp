@@ -1,9 +1,10 @@
-﻿using DataBaseLib;
+﻿using System;
+using DataBaseLib;
 using System.Collections.ObjectModel;
 
 namespace App1
 {
-    internal class ExtendedMIviewModel : MagicItem
+    internal class ExtendedMagicItem : MagicItem
     {
         public ObservableCollection<Feautes> Features { get; set; } = new ObservableCollection<Feautes>();
         public string Description { get; set; }
@@ -14,7 +15,7 @@ namespace App1
         public ObservableCollection<Link> Links { get; set; } = new ObservableCollection<Link>();
         public Table Table { get; set; }
 
-        public ExtendedMIviewModel(int id)
+        public ExtendedMagicItem(int id)
         {
             object[] item = DataAccess.GetData("MagicItems, ExtendedMagicItems", $"MagicItems._id = {id} And MagicItems._Id = ExtendedMagicItems._id", null, "*")[0];
             Id = id;
@@ -25,11 +26,26 @@ namespace App1
 
             Description = item[7].ToString();
             if (item[8].ToString() != "")
-                UnderType = "(" + item[8].ToString() + ")";
+                UnderType = "(" + item[8] + ")";
             if (item[9].ToString() != "")
-                UnderQuality = "(" + item[9].ToString() + ")";
+                UnderQuality = "(" + item[9] + ")";
             Attunement = item[10].ToString();
             OptionableText = item[11].ToString();
+
+            LoadTableFromDb(id);
+        }
+
+        private void LoadTableFromDb(int id)
+        {
+            try
+            {
+                var data = DataAccess.GetData("TablesMagicItems", $"ParentId = {id}", null, "*");
+                Table = new Table(data[0]);
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
         }
     }
 

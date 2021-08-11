@@ -10,16 +10,14 @@ namespace DataBaseLib
 {
     static public class DataAccess
     {
-        private const string DB_NAME = "sqliteSample.db";
-        private const int DB_VERSION = 1;
-        static private Task initTask;
+        private const string DB_NAME = "DataBase.db";
+        private const int DB_VERSION = 3;
 
-        static DataAccess() => initTask = InitializeDatabase();
+        static DataAccess() => InitializeDatabase();
 
         public async static Task InitializeDatabase()
         {
             ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
-            //await ApplicationData.Current.LocalFolder.CreateFileAsync("sqliteSample.db", CreationCollisionOption.OpenIfExists);
             if (await ApplicationData.Current.LocalFolder.TryGetItemAsync(DB_NAME) == null)
             {
                 StorageFile databaseFile = await Package.Current.InstalledLocation.GetFileAsync(/*$"Assets/*/DB_NAME/*"*/);
@@ -45,7 +43,6 @@ namespace DataBaseLib
             using (SqliteConnection db =
               new SqliteConnection($"Filename={dbpath}"))
             {
-                Task.WaitAll(new Task[] { initTask });
                 db.Open();
 
                 SqliteCommand insertCommand = new SqliteCommand
@@ -69,12 +66,11 @@ namespace DataBaseLib
             //for (int i = 0; i < entries.Count; i++)
             //    entries[i] = new string[columns.Length];
 
-            string dbpath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "sqliteSample.db");
+            string dbpath = Path.Combine(ApplicationData.Current.LocalFolder.Path, DB_NAME);
 
             using (SqliteConnection db =
                new SqliteConnection($"Filename={dbpath}"))
             {
-                Task.WaitAll(new Task[] { initTask });
                 db.Open();
                 string columnsString = "";
                 foreach (var str in columns)
@@ -110,7 +106,6 @@ namespace DataBaseLib
 
         public static SqliteDataReader RawRequest(string request)
         {
-            Task.WaitAll(new Task[] { initTask });
             string dbpath = Path.Combine(ApplicationData.Current.LocalFolder.Path, DB_NAME);
             using (SqliteConnection db =
               new SqliteConnection($"Filename={dbpath}"))

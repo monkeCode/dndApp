@@ -13,11 +13,6 @@ namespace App1
         protected string[] whereReq = default;
         protected string substringFilter = "";
         public string SubstringFilter { get { return substringFilter; } set { substringFilter = value.Trim().ToLower(); OnPropertyChanged(); } }
-        protected bool includeHomeBrew = false;
-        public bool IncludeHomeBrew { get { return includeHomeBrew; } set { includeHomeBrew = value; OnPropertyChanged(); } }
-        protected CustomCommand dropFiltersCommand;
-        public CustomCommand DropFiltersCommand { get { return dropFiltersCommand ?? (dropFiltersCommand = new CustomCommand(obj => { DropFilters(); })); } }
-
         public void Search(object s)
         {
             substringFilter = ((TextBox)s).Text;
@@ -42,8 +37,8 @@ namespace App1
             {
                 whereReq[i] = string.Empty;
             }
+
             SubstringFilter = string.Empty;
-            includeHomeBrew = false;
             GetListData();
         }
     }

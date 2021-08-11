@@ -120,9 +120,14 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dice.cs" />
+    <Compile Include="Directories\BestiaryPage.xaml.cs">
+      <DependentUpon>BestiaryPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Monster.cs" />
     <Compile Include="NameConvert.cs" />
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Table.cs" />
-    <Compile Include="WorkShop\ExtendedMIviewModel.cs" />
+    <Compile Include="ExtendedMagicItem.cs" />
     <Compile Include="Directories\MagicItemExtendedPage.xaml.cs">
       <DependentUpon>MagicItemExtendedPage.xaml</DependentUpon>
     </Compile>
@@ -168,6 +173,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Directories\BestiaryPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Directories\MagicItemExtendedPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -217,9 +226,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="sqliteSample.db" />
+    <Content Include="DataBase.db" />
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

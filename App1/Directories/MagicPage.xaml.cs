@@ -1,6 +1,7 @@
 ﻿using App1.Directories;
 using System.Linq;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Data;
 
 // Документацию по шаблону элемента "Пустая страница" см. по адресу https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -43,7 +44,6 @@ namespace App1
         {
             MagicItemsModelView view = DataContext as MagicItemsModelView;
             ListView listView = sender as ListView;
-            var i = listView.SelectedItem;
             if (listView.SelectedIndex == -1)
             {
                 view.SelectedType = null;
@@ -72,6 +72,7 @@ namespace App1
             //searchBox.Text = "";
             QualityList.DeselectRange(new Windows.UI.Xaml.Data.ItemIndexRange(0, (uint)QualityList.Items.Count));
             TypeList.DeselectRange(new Windows.UI.Xaml.Data.ItemIndexRange(0, (uint)TypeList.Items.Count));
+            SourceList.DeselectRange(new ItemIndexRange(0, (uint)SourceList.Items.Count));
         }
 
         private void ItemsPanel_ItemClick(object sender, ItemClickEventArgs e)
@@ -81,6 +82,23 @@ namespace App1
 
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            MagicItemsModelView view = DataContext as MagicItemsModelView;
+            ListView listView = sender as ListView;
+            if (listView.SelectedIndex == -1)
+            {
+                view.SelectedSource = null;
+            }
+            else
+            {
+                string str = "Source IN ( ";
+                foreach (var a in listView.SelectedItems)
+                {
+                    if (a != listView.SelectedItems.Last())
+                        str += $" \"{a}\", ";
+                    else str += $"\"{a}\" )";
+                }
+                view.SelectedSource = str;
+            }
         }
     }
 }

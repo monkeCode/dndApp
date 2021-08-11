@@ -14,7 +14,7 @@ namespace App1
         public MainPage()
         {
             this.InitializeComponent();
-            mainFrame.Navigate(typeof(MagicPage));
+            //mainFrame.Navigate(typeof(MagicPage));
         }
 
         private List<(string Tag, System.Type Page)> TagPage = new List<(string, System.Type)>

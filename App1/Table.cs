@@ -1,5 +1,7 @@
-﻿using App1.WorkShop;
+﻿using System.Collections.Generic;
+using App1.WorkShop;
 using System.Collections.ObjectModel;
+using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -10,8 +12,14 @@ namespace App1
     {
         public int Rows { get; set; }
         public int Columns { get; set; }
-        public ObservableCollection<string> Fields { get; set; } = new ObservableCollection<string>();
+        public ObservableCollection<string> Fields { get; set; }
 
+        public Table(object[] dataList)
+        {
+            Rows = (int) (long) dataList[1];
+            Columns = (int)(long)dataList[2];
+            Fields = new ObservableCollection<string>(dataList[3].ToString().Split('@').ToList());
+        }
         public void LoadTable(Grid grid)
         {
             for (int i = 0; i <= this.Rows; i++)

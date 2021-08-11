@@ -9,12 +9,12 @@ namespace App1
         {
             DataCollection = new ObservableCollection<MagicItem>();
             GetListData();
-            whereReq = new string[2];
+            whereReq = new string[3];
         }
 
         public object SelectedType { set { whereReq[0] = value?.ToString(); GetListData(); } }
         public object SelectedQuality { set { whereReq[1] = value?.ToString(); GetListData(); } }
-
+        public object SelectedSource { set { whereReq[2] = value?.ToString(); GetListData(); } }
         public override void GetListData()
         {
             DataCollection.Clear();

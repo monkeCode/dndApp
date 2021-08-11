@@ -13,7 +13,7 @@ namespace App1
         public CreateItem()
         {
             this.InitializeComponent();
-            DataContext = new ExtendedMIviewModel(0);
+            DataContext = new ExtendedMagicItem(0);
         }
 
         private void Grid_SizeChanged(object sender, SizeChangedEventArgs e)
