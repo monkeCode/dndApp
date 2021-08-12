@@ -5,9 +5,14 @@
     xmlns:local="using:App1.Directories"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:app1="using:App1"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
+    <Page.Resources>
+        <app1:StaticValues x:Key="StaticVal" />
+        <app1:SizeConverter x:Key="SizeConverter"></app1:SizeConverter>
+    </Page.Resources>
     <Grid x:Name="frame">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -18,35 +23,35 @@
             <Button  Content="Тип" VerticalAlignment="Top" Margin="0,0,10,10">
                 <Button.Flyout>
                     <Flyout>
-                        <ListView x:Name="TypeList"  SelectionMode="Multiple" />
+                        <ListView x:Name="TypeList"  SelectionMode="Multiple" SelectionChanged="TypeList_OnSelectionChanged" ItemsSource="{Binding Source= {StaticResource StaticVal}, Path=MonsterType, Mode=OneTime}" />
                     </Flyout>
                 </Button.Flyout>
             </Button>
             <Button Content="Опасность" VerticalAlignment="Top" Margin="0,0,10,10">
                 <Button.Flyout>
                     <Flyout>
-                        <ListView x:Name="ChallengeList"  SelectionMode="Multiple" />
+                        <ListView x:Name="ChallengeList"  SelectionMode="Multiple"  SelectionChanged="ChallengeList_OnSelectionChanged" ItemsSource="{Binding Source= {StaticResource StaticVal}, Path=MonsterRate, Mode=OneTime}"/>
                     </Flyout>
                 </Button.Flyout>
             </Button>
             <Button Content="Размер" VerticalAlignment="Top" Margin="0,0,10,10">
                 <Button.Flyout>
                     <Flyout>
-                        <ListView x:Name="SizeList"  SelectionMode="Multiple" />
+                        <ListView x:Name="SizeList"  SelectionMode="Multiple" SelectionChanged="SizeList_OnSelectionChanged" ItemsSource="{Binding Source={StaticResource StaticVal}, Path=MonsterSize, Mode=OneTime}"/>
                     </Flyout>
                 </Button.Flyout>
             </Button>
-            <Button Content="Обитание" VerticalAlignment="Top" Margin="0,0,10,10">
+            <Button Content="Обитание" VerticalAlignment="Top" Margin="0,0,10,10" >
                 <Button.Flyout>
                     <Flyout>
-                        <ListView x:Name="HabbiatList"  SelectionMode="Multiple" />
+                        <ListView x:Name="HabbiatList"  SelectionMode="Multiple" SelectionChanged="HabbiatList_OnSelectionChanged" ItemsSource="{Binding Source= {StaticResource StaticVal}, Path=MonsterHabitat, Mode=OneTime}"/>
                     </Flyout>
                 </Button.Flyout>
             </Button>
             <Button Content="Источник" VerticalAlignment="Top" Margin="0,0,10,0">
                 <Button.Flyout>
                     <Flyout>
-                        <ListView SelectionMode="Multiple"  />
+                        <ListView SelectionMode="Multiple"  SelectionChanged="Selector_OnSelectionChanged" ItemsSource="{Binding Source= {StaticResource StaticVal}, Path=MonsterSource, Mode=OneTime}"/>
                     </Flyout>
                 </Button.Flyout>
             </Button>
@@ -54,12 +59,22 @@
         </StackPanel>
         <GridView x:Name="ItemsPanel" Grid.Row="1" HorizontalAlignment="Stretch" ItemsSource="{Binding DataCollection }" IsItemClickEnabled="True">
             <GridView.ItemTemplate>
-                <DataTemplate >
+                <DataTemplate x:DataType="app1:Monster">
                     <StackPanel HorizontalAlignment="Stretch" Padding="5,0,5,0" Margin="10" Width="220">
                         <ToolTipService.ToolTip>
                             <ToolTip Content="{Binding Name}" />
                         </ToolTipService.ToolTip>
-                        
+                        <TextBlock Text="{Binding Name}" Margin="10,0,10,0" HorizontalAlignment="Center"></TextBlock>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="{Binding Size, Converter={StaticResource SizeConverter}}" FontSize="12"></TextBlock>
+                            <TextBlock Text="{Binding Challenge}" Grid.Column="1" HorizontalAlignment="Center" TextDecorations="Underline" FontWeight="Bold"></TextBlock>
+                            <TextBlock Text="{Binding Type}" Grid.Column="2" HorizontalAlignment="Right" FontSize="12"></TextBlock>
+                        </Grid>
                     </StackPanel>
                 </DataTemplate>
             </GridView.ItemTemplate>
@@ -68,6 +83,9 @@
                     <ItemsWrapGrid Orientation="Horizontal" HorizontalAlignment="Center"></ItemsWrapGrid>
                 </ItemsPanelTemplate>
             </GridView.ItemsPanel>
+            <GridView.Items>
+                <app1:Monster Name="Monster" Size="3" Id="0" Challenge="1/4" Type="Абберация"></app1:Monster>
+            </GridView.Items>
         </GridView>
     </Grid>
 </Page>

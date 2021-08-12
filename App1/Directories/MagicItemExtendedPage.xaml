@@ -20,6 +20,8 @@
                     <Run Text="{Binding Quality, Converter= {StaticResource RarityConvert}}"></Run>
                     <Run Text="{Binding Type}"></Run>
                     <Run Text="{Binding UnderType}"></Run>
+                    <LineBreak/>
+                    <Run Text="{Binding Attunement}"></Run>
             </TextBlock>
 
             <TextBlock Margin="30,15,0,0" FontWeight="Bold">

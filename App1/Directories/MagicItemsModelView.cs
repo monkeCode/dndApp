@@ -19,8 +19,7 @@ namespace App1
         {
             DataCollection.Clear();
 
-            string s = null;
-            s = whereReq?.GetAllElemets(" AND ");
+            string s = whereReq?.GetAllElemets(" AND ");
             foreach (object[] i in DataAccess.GetData("MagicItems", s, "Name", "*"))
             {
                 if (!string.IsNullOrEmpty(SubstringFilter))

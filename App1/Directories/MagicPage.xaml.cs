@@ -73,6 +73,7 @@ namespace App1
             QualityList.DeselectRange(new Windows.UI.Xaml.Data.ItemIndexRange(0, (uint)QualityList.Items.Count));
             TypeList.DeselectRange(new Windows.UI.Xaml.Data.ItemIndexRange(0, (uint)TypeList.Items.Count));
             SourceList.DeselectRange(new ItemIndexRange(0, (uint)SourceList.Items.Count));
+            view.DropFilters();
         }
 
         private void ItemsPanel_ItemClick(object sender, ItemClickEventArgs e)

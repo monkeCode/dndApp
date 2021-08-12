@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Windows.Networking.PushNotifications;
+using Microsoft.Toolkit.Uwp.UI.Controls.TextToolbarSymbols;
 
 namespace App1
 {
@@ -37,6 +39,82 @@ namespace App1
             "Homebrew"
         };
 
+        public static List<string> MonsterType { get; } = new List<string>()
+        {
+            "Абберация",
+            "Бестия",
+            "Великан",
+            "Гуманоид",
+            "Дракон",
+            "Жижа",
+            "Животное",
+            "Конструкция",
+            "Монстр",
+            "Небожитель",
+            "Нежить",
+            "Растение",
+            "Фея",
+            "Элементаль"
+        };
+
+        public static Dictionary<string, int> MonsterSize = new Dictionary<string, int>()
+        {
+            {"Маленький", 0},
+            {"Небольшой", 1},
+            {"Средний", 2},
+            {"Крупный", 3},
+            {"Огромный", 4},
+            {"Исполинский", 5},
+        };
+
+        public static List<string> MonsterRate = new List<string>()
+        {
+            "0",
+            "1/8",
+            "1/4",
+            "1/2",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22",
+            "23",
+            "24",
+            "25",
+            "26",
+            "27",
+            "28",
+            "29",
+            "30"
+        };
+
+        public static List<string> MonsterSource = new List<string>()
+        {
+            "Monster manual",
+            "Homebrew"
+        };
+
+        public static List<string> MonsterHabitat = new List<string>()
+        {
+
+        };
         public StaticValues()
         {
         }

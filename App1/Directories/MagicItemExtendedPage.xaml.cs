@@ -41,10 +41,17 @@ namespace App1.Directories
                     if (Regex.IsMatch((hyperlink.Inlines[0] as Run).Text, Dice.DICE_PATTERN))
                         hyperlink.Click += Hyperlink_rollDice;
                     else
+                    {
+                        //ToolTip toolTip = new ToolTip();
+                        //toolTip.Content = new MagicPage();
+                        //ToolTipService.SetToolTip(hyperlink, toolTip);
                         hyperlink.Click += Hyperlink_Click;
+                    }
                 }
             }
         }
+
+      
 
         private void Hyperlink_rollDice(Hyperlink sender, HyperlinkClickEventArgs args)
         {

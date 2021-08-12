@@ -123,9 +123,11 @@
     <Compile Include="Directories\BestiaryPage.xaml.cs">
       <DependentUpon>BestiaryPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Directories\MonsterModelView.cs" />
     <Compile Include="Monster.cs" />
     <Compile Include="NameConvert.cs" />
     <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="SizeConverter.cs" />
     <Compile Include="Table.cs" />
     <Compile Include="ExtendedMagicItem.cs" />
     <Compile Include="Directories\MagicItemExtendedPage.xaml.cs">
