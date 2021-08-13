@@ -8,6 +8,12 @@ namespace App1
         public int Id { get; set; }
         public string Type { set; get; }
         public int Size { get; set; }
-        public string Challenge { get; set; } 
+        public string Challenge { get; set; }
+        public int Ex { get; }
+
+        public Monster()
+        {
+            Ex = 100;
+        }
     }
 }

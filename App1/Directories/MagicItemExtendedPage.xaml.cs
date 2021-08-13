@@ -72,7 +72,29 @@ namespace App1.Directories
         {
             Table table = (DataContext as ExtendedMagicItem).Table;
             if (table != null)
-                table.LoadTable(TableGrid);
+            {
+
+                foreach (TextBlock tex in table.LoadTable(TableGrid))
+                {
+
+                    foreach (var r in tex.Inlines)
+                    {
+                        if (r.GetType() == typeof(Hyperlink))
+                        {
+                            Hyperlink hyperlink = r as Hyperlink;
+                            if (Regex.IsMatch((hyperlink.Inlines[0] as Run).Text, Dice.DICE_PATTERN))
+                                hyperlink.Click += Hyperlink_rollDice;
+                            else
+                            {
+                                //ToolTip toolTip = new ToolTip();
+                                //toolTip.Content = new MagicPage();
+                                //ToolTipService.SetToolTip(hyperlink, toolTip);
+                                hyperlink.Click += Hyperlink_Click;
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         private void TextBlock_Loaded(object sender, RoutedEventArgs e)

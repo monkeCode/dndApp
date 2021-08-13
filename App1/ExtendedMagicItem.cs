@@ -24,15 +24,16 @@ namespace App1
             Type = item[3].ToString();
             ItemSource = item[5].ToString();
 
-            Description = item[7].ToString();
-            if (item[8].ToString() != "")
-                UnderType = "(" + item[8] + ")";
+            Description = item[8].ToString();
             if (item[9].ToString() != "")
-                UnderQuality = "(" + item[9] + ")";
-            Attunement = item[10].ToString();
-            OptionableText = item[11].ToString();
+                UnderType = "(" + item[9] + ")";
+            if (item[10].ToString() != "")
+                UnderQuality = "(" + item[10] + ")";
+            Attunement = item[11].ToString();
+            OptionableText = item[12].ToString();
 
             LoadTableFromDb(id);
+            LoadFeatures(id);
         }
 
         private void LoadTableFromDb(int id)
@@ -46,6 +47,19 @@ namespace App1
             {
                 // ignored
             }
+        }
+
+        private void LoadFeatures(int id)
+        {
+            foreach (var item in DataAccess.GetData("FeaturesOfMagicItem", $"_id = {id}", null, "Name", "Description"))
+            {
+                Features.Add(new Feautes()
+                {
+                    Name = item[0].ToString(),
+                    Desctipt = item[1].ToString()
+                });
+            }
+
         }
     }
 

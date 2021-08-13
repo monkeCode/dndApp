@@ -20,8 +20,9 @@ namespace App1
             Columns = (int)(long)dataList[2];
             Fields = new ObservableCollection<string>(dataList[3].ToString().Split('@').ToList());
         }
-        public void LoadTable(Grid grid)
+        public List<TextBlock> LoadTable(Grid grid)
         {
+            List<TextBlock> textBlocks = new List<TextBlock>();
             for (int i = 0; i <= this.Rows; i++)
                 grid.RowDefinitions.Add(new RowDefinition());
             for (int i = 0; i <= this.Columns; i++)
@@ -45,7 +46,10 @@ namespace App1
                     if (enumerator.MoveNext())
                         Formator.StringtoText(textBlock, enumerator.Current);
                     grid.Children.Add(border);
+                    textBlocks.Add(textBlock);
                 }
+
+            return textBlocks;
         }
     }
 }

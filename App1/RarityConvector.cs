@@ -2,6 +2,7 @@
 
 //using Windows.UI;
 using System.Drawing;
+using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 
@@ -43,35 +44,9 @@ namespace App1
                     default:
                         return myResourceDictionary["Common"];
                 }
-            else
-            {
-                switch (quality)
-                {
-                    case 0:
-                        return "Обычное";
-
-                    case 1:
-                        return "Необычное";
-
-                    case 2:
-                        return "Редкое";
-
-                    case 3:
-                        return "Крайне редкое";
-
-                    case 4:
-                        return "Легендарное";
-
-                    default:
-                        return "Варьируется";
-                }
-            }
+            return StaticValues.magicItemQality.First(obj => obj.Value == quality).Key;
         }
 
-        private static Windows.UI.Color ColorToColorWTF(Color color)
-        {
-            return Windows.UI.Color.FromArgb(color.A, color.R, color.G, color.B);
-        }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {

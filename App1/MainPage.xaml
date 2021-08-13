@@ -19,6 +19,9 @@
                 <NavigationViewItemSeparator />
                 <NavigationViewItemHeader Content="Инструменты" />
                 <NavigationViewItem Icon="Download" Content="Мастерская" Tag="Workshop" />
+                <NavigationViewItem Icon="Download" Content="Генератор добычи" Tag="LootGenerator" />
+                <NavigationViewItem Icon="Download" Content="Управление группами" Tag="GroupManager" />
+                <NavigationViewItem Icon="Download" Content="Боевые сцены" Tag="Encounters" />
             </NavigationView.MenuItems>
             <NavigationView.PaneFooter>
                 <StackPanel  KeyDown="DiceText_acceptEvent"  x:Name="dicePanel" SizeChanged="dicePanel_SizeChanged">

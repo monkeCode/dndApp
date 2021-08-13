@@ -10,7 +10,6 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Page.Resources>
         <local:RarityConvector x:Key="RarityConvert" />
-        <local:NameConvert x:Key="NameConvert" />
     </Page.Resources>
     <ScrollViewer>
         <StackPanel x:Name="MainPanel">
@@ -33,12 +32,12 @@
                 <ListView x:Name="FeaturesList" ItemsSource="{Binding Features, Mode=OneTime}" SelectionMode="None" Margin="30,0,0,30">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="local:Feautes">
-                        <Grid>
+                        <Grid MaxWidth="1000">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto" />
                                 <ColumnDefinition Width="*" MinWidth="150" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock FontWeight="Black" Text="{Binding Name, Converter={StaticResource NameConvert}}" VerticalAlignment="Top">
+                            <TextBlock FontWeight="Black" Text="{Binding Name}" VerticalAlignment="Top">
                             </TextBlock>
                             <TextBlock Margin="10,0,0,0" Text="{x:Bind Desctipt}" Loaded="ReFormateText" VerticalAlignment="Top" Grid.Column="1" TextWrapping="Wrap">
                             </TextBlock>
