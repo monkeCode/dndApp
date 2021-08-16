@@ -8,13 +8,13 @@ using DataBaseLib;
 
 namespace App1.Directories
 {
-    class MonsterModelView:DirectoriesModelView<Monster>
+    public class MonsterModelView:DirectoriesModelView<Monster>
     {
-        MonsterModelView()
+       public MonsterModelView()
         {
             DataCollection = new ObservableCollection<Monster>();
             GetListData();
-            whereReq = new string[3];
+            whereReq = new string[5];
         }
         public object SelectedType { set { whereReq[0] = value?.ToString(); GetListData(); } }
         public object SelectedRate { set { whereReq[1] = value?.ToString(); GetListData(); } }
@@ -33,9 +33,9 @@ namespace App1.Directories
                         continue;
                 DataCollection.Add(new Monster
                 {
-                    Id = (int) i[0],
+                    Id = (int)(long) i[0],
                     Name = i[1].ToString(),
-                    Size = (int) i[2],
+                    Size = (int)(long)i[2],
                     Challenge = i[3].ToString(),
                     Type = i[4].ToString()
 

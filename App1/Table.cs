@@ -4,7 +4,8 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
+using System.Drawing;
+using System;
 
 namespace App1
 {
@@ -28,13 +29,15 @@ namespace App1
             for (int i = 0; i <= this.Columns; i++)
                 grid.ColumnDefinitions.Add(new ColumnDefinition() { MinWidth = 150 });
             var enumerator = this.Fields.GetEnumerator();
+            ResourceDictionary dict = new ResourceDictionary();
+            dict.Source = new Uri("ms-appx:///Dictionary.xaml");
             for (int r = 0; r < this.Rows; r++)
                 for (int c = 0; c < this.Columns; c++)
                 {
                     Border border = new Border()
                     {
                         BorderThickness = new Thickness(1),
-                        BorderBrush = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 255, 255, 255)),
+                        BorderBrush = (Windows.UI.Xaml.Media.Brush)dict["AccentDark1"],
                         Padding = new Thickness(5),
                         VerticalAlignment = VerticalAlignment.Stretch
                     };

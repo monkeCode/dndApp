@@ -11,7 +11,7 @@ namespace DataBaseLib
     static public class DataAccess
     {
         private const string DB_NAME = "DataBase.db";
-        private const int DB_VERSION = 3;
+        private const int DB_VERSION = 4;
 
         static DataAccess() => InitializeDatabase();
 
@@ -37,23 +37,37 @@ namespace DataBaseLib
             }
         }
 
-        public static void AddData(object[] input)
+        public static void AddData(string table, string[] rows ,object[] input)
         {
             string dbpath = Path.Combine(ApplicationData.Current.LocalFolder.Path, DB_NAME);
             using (SqliteConnection db =
               new SqliteConnection($"Filename={dbpath}"))
             {
                 db.Open();
+                string rowEx = "";
+                string param = "";
+                if(rows != null)
+                {
+                    foreach(var i in rows)
+                    {
+                        rowEx += i + ",";
+                    }
+                    rowEx = "(" + rowEx.Trim(',') + ")";
+                }
 
+                foreach(var i in input)
+                {
+                    param += i.ToString() + ',';
+                }
+                param = "(" + param.Trim(',') + ")";
                 SqliteCommand insertCommand = new SqliteCommand
                 {
                     Connection = db,
 
                     // Use parameterized query to prevent SQL injection attacks
-                    CommandText = "INSERT INTO MyTable VALUES @Entry"
+                    CommandText = $"INSERT INTO {table} {rowEx} VALUES {param}",
+                    CommandType = System.Data.CommandType.Text
                 };
-                insertCommand.Parameters.AddWithValue("@Entry", input);
-
                 insertCommand.ExecuteReader();
 
                 db.Close();

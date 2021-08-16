@@ -8,18 +8,21 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using App1.Annotations;
+using App1.Directories;
 using DataBaseLib;
 
 namespace App1.Encounters
 {
-    class EncounterModelView:INotifyPropertyChanged
+    class EncounterModelView : INotifyPropertyChanged
     {
+        public MonsterModelView MonsterModel { get; } = new MonsterModelView();
+        public ObservableCollection<BattleMonster> MonsterList { get; private set; } = new();
         public ObservableCollection<Encounter> Encounters { get; set; } = new ObservableCollection<Encounter>();
 
         private Group playerGroup;
         public Group PlayerGroup
         {
-            get { return playerGroup;}
+            get { return playerGroup; }
             set { playerGroup = value; OnPropertyChanged(); }
         }
 
@@ -46,8 +49,22 @@ namespace App1.Encounters
         public EncounterModelView()
         {
             ChangeGroup(2);
+            GetMonsterData();
         }
 
+        public void GetMonsterData()
+        {
+            MonsterModel.GetListData();
+            MonsterList.Clear();
+          foreach(var monster in  MonsterModel.DataCollection)
+            {
+                MonsterList.Add(new BattleMonster
+                {
+                    Monster = monster,
+                    Quantity = 1
+                });
+            }
+        }
         public void SelectionEncountersChanged(IEnumerator<object> enumerator)
         {
             int res = 0;
@@ -107,6 +124,26 @@ namespace App1.Encounters
             }
 
             DailyEx = res;
+        }
+
+
+        CustomCommand addNewEncounter;
+        public CustomCommand AddEncounterCommand { get
+            {
+                if(addNewEncounter == null)
+                {
+                    addNewEncounter = new CustomCommand(obj => { AddEncounter(); }, obj => true);
+                }
+                return addNewEncounter;
+            } }
+        private void AddEncounter()
+        {
+            DataAccess.AddData("Encounters", new[] { "Group_id" }, new[] { (object)playerGroup.Id });
+            foreach (var item in DataAccess.GetData("Encounters", $"Group_id = {playerGroup.Id}", null, "*"))
+            {
+                if(Encounters.FirstOrDefault(obj => obj.Id == (int)(long)item[2]) == null)
+                Encounters.Add(new Encounter((int)(long)item[2], item[1].ToString()));
+            }
         }
         public event PropertyChangedEventHandler PropertyChanged;
 

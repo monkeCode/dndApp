@@ -31,4 +31,5 @@
         <GradientStop Color="Transparent" Offset="0.2" />
         <GradientStop Color="{StaticResource SystemBaseHighColor}" Offset="1" />
     </LinearGradientBrush>
+    <SolidColorBrush x:Key="AccentDark1" Color="{ThemeResource SystemAccentColorDark1}"/>
 </ResourceDictionary>
