@@ -14,135 +14,133 @@
     </Page.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="0.8*"/>
-            <ColumnDefinition Width="0.2*" MinWidth="250"/>
+            <ColumnDefinition Width="auto" MinWidth="300"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition/>
-                <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
-            <TextBlock Style="{StaticResource TitleTextBlockStyle}" HorizontalAlignment="Center" TextDecorations="Underline">Боевые сцены</TextBlock>
-            <ListView Name="EncounterList" SelectionMode="Extended" SelectionChanged="EncounterList_SelectionChanged" ItemsSource="{Binding Encounters}" Grid.Row="1">
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
-                        <Setter Property="Margin" Value="10,30,10,10"/>
-                        <Setter Property="Padding" Value="0"/>
-                    </Style>
-                </ListView.ItemContainerStyle>
-                <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="local:Encounter">
-                        <Border BorderBrush="{StaticResource SystemAccentColorDark2}" BorderThickness="1" CornerRadius="3" Padding="10" >
-                            <StackPanel>
-                                <TextBox BorderThickness="0" Text="{x:Bind Name, Mode=TwoWay}" Style="{StaticResource TitleTextBlockStyle}" Margin="10,0,0,0" PlaceholderText ="Поиск"></TextBox>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock Margin="10,10,0,0">
+            <StackPanel Grid.Column="2" MinWidth="250">
+                <TextBlock Style="{StaticResource TitleTextBlockStyle}" HorizontalAlignment="Center" TextDecorations="Underline">Группа</TextBlock>
+                <StackPanel Margin="0,10,0,10">
+                    <RelativePanel>
+                        <TextBlock Margin="10" Text="Дневной бюджет:" />
+                        <TextBlock  Text="{Binding DailyEx}" RelativePanel.AlignRightWithPanel="True" Margin="10" HorizontalAlignment="Right" Foreground="{ThemeResource AccentDark1}" FontWeight="SemiBold"/>
+                    </RelativePanel>
+                    <RelativePanel>
+                        <TextBlock Grid.Row="1" Margin="10" Text="Опыт за выбранные сцены:"/>
+                        <TextBlock Text="{Binding TotalMonstersEx}" Margin="10" HorizontalAlignment="Right" RelativePanel.AlignRightWithPanel="True" Foreground="{ThemeResource AccentDark1}" FontWeight="SemiBold"/>
+
+                    </RelativePanel>
+                            
+                </StackPanel>
+                <TextBlock Margin="10" Text="{Binding PlayerGroup.Name}" Style="{StaticResource TitleTextBlockStyle}" HorizontalAlignment="Center"></TextBlock>
+                <!--<ListView ItemsSource="{Binding PlayerGroup.Players}" Margin="10,5,0,10">
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="app1:Player">
+                            <StackPanel Margin="10,0,0,10" Orientation="Horizontal">
+
+                                <TextBlock Text="{Binding Lvl}" VerticalAlignment="Center" TextDecorations="Underline" FontSize="28" Margin="0,0,10,0"/>
+                                <StackPanel>
+                                    <TextBlock Text="{x:Bind Name}" FontSize="20" FontWeight="SemiBold"></TextBlock>
+                                    <TextBlock Text="{x:Bind PlayerName}" FontSize="12"></TextBlock>
+                                </StackPanel>
+
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>-->
+            </StackPanel>
+            <Grid  Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Style="{StaticResource TitleTextBlockStyle}" HorizontalAlignment="Center" TextDecorations="Underline">Боевые сцены</TextBlock>
+                <ListView Name="EncounterList" SelectionMode="Extended" SelectionChanged="EncounterList_SelectionChanged" ItemsSource="{Binding Encounters}" Grid.Row="1">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                            <Setter Property="Margin" Value="10,30,10,10"/>
+                            <Setter Property="Padding" Value="0"/>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="local:Encounter">
+                            <Border BorderBrush="{StaticResource SystemAccentColorDark2}" BorderThickness="1" CornerRadius="3" Padding="10" >
+                                <StackPanel>
+                                    <TextBox BorderThickness="0" Text="{x:Bind Name, Mode=TwoWay}" Style="{StaticResource TitleTextBlockStyle}" Margin="10,0,0,0" PlaceholderText ="Поиск"></TextBox>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Margin="10,10,0,0">
                                         <Run Text="Опасность:"></Run>
                                         <Run Text="{Binding Difficulty}"></Run>
-                                    </TextBlock>
-                                    <TextBlock Grid.Column="1" HorizontalAlignment="Right" Margin="0,10,10,0">
+                                        </TextBlock>
+                                        <TextBlock Grid.Column="1" HorizontalAlignment="Right" Margin="0,10,10,0">
                                         <Run Text="Опыт:"></Run>
                                         <Run Text="{Binding TotalEx}"></Run>
-                                    </TextBlock>
-                                </Grid>
-                                <ProgressBar Margin="10" HorizontalAlignment="Stretch" Height="20"/>
-                                <ListView ItemsSource="{x:Bind Monsters}" MinHeight="200" HorizontalAlignment="Stretch" CanDragItems="True" AllowDrop="True" CanReorderItems="True" DragItemsStarting="ListView_DragItemsStarting" DragOver="ListView_DragOver_1" Drop="ListView_Drop">
-                                <ListView.ItemContainerStyle>
-                                    <Style TargetType="ListViewItem">
-                                        <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
-                                            <Setter Property="Margin" Value="0,10,0,10"/>
-                                            <Setter Property="Padding" Value="0"/>
-                                        </Style>
-                                </ListView.ItemContainerStyle>
-                                <ListView.ItemTemplate>
-                                    <DataTemplate x:DataType="local:BattleMonster">
-                                        <Border BorderBrush="{StaticResource SystemAccentColorLight1}" BorderThickness="1"   CornerRadius="10" HorizontalAlignment="Stretch">
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="Auto"/>
-                                                    <ColumnDefinition/>
-                                                </Grid.ColumnDefinitions>
-                                                <TextBlock Margin="10" VerticalAlignment="Center">
+                                        </TextBlock>
+                                    </Grid>
+                                    <ProgressBar Margin="10" HorizontalAlignment="Stretch" Height="20" Maximum="{Binding Deadly}" Value="{Binding TotalEx}">
+                                        
+                                        
+                                    </ProgressBar>
+                                    <ListView ItemsSource="{x:Bind Monsters}" MinHeight="200" HorizontalAlignment="Stretch" CanDragItems="True" AllowDrop="True" CanReorderItems="True" DragItemsStarting="ListView_DragItemsStarting" DragOver="ListView_DragOver_1" Drop="ListView_Drop">
+                                        <ListView.ItemContainerStyle>
+                                            <Style TargetType="ListViewItem">
+                                                <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                                                <Setter Property="Margin" Value="0,10,0,10"/>
+                                                <Setter Property="Padding" Value="0"/>
+                                            </Style>
+                                        </ListView.ItemContainerStyle>
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate x:DataType="local:BattleMonster">
+                                                <Border BorderBrush="{StaticResource SystemAccentColorLight1}" BorderThickness="1"   CornerRadius="10" HorizontalAlignment="Stretch">
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="Auto"/>
+                                                            <ColumnDefinition/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock Margin="10" VerticalAlignment="Center">
                                                     <Run  Text="{Binding Monster.Name}" FontSize="20" FontWeight="SemiBold" ></Run>
                                                     <LineBreak/>
                                                     <Run Text="{Binding Monster.Size, Converter={StaticResource SizeConverter}}" FontStyle="Italic"/>
                                                     <Run Text="{Binding Monster.Type}" FontStyle="Italic"></Run>
-                                                </TextBlock>
-                                                    <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
-                                                        <TextBlock HorizontalAlignment="Right" Margin="10" VerticalAlignment="Center">
+                                                        </TextBlock>
+                                                        <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+                                                            <TextBlock HorizontalAlignment="Right" Margin="10" VerticalAlignment="Center">
                                                             <Run Text="Опасность:"></Run>
                                                             <Run Text="{Binding Monster.Challenge}" Foreground="{ThemeResource AccentDark1}" FontWeight="SemiBold"></Run>
                                                             <LineBreak/>
                                                             <Run Text="Опыт:"></Run>
                                                             <Run Text="{Binding Monster.Ex}" Foreground="{ThemeResource AccentDark1}" FontWeight="SemiBold"></Run>
-                                                        </TextBlock>
-                                                        <StackPanel BorderThickness="1,0,0,0" BorderBrush="{StaticResource SystemColorControlAccentBrush }" HorizontalAlignment="Right" VerticalAlignment="Stretch">
-                                                            <Button Content="+" FontSize="12" HorizontalAlignment="Right" VerticalAlignment="Top" Width="30" CornerRadius="0,10,0,0" Command="{x:Bind PositiveCommand}"/>
-                                                            <app1:NumericalTextBox BorderThickness="0" Text="{Binding Quantity, Mode=TwoWay}" HorizontalAlignment="Center" MaxWidth="30" TextAlignment="Center" HorizontalTextAlignment="Center" />
-                                                            <Button Content="-" FontSize="12" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="30" CornerRadius="0,0,10,0"/>
+                                                            </TextBlock>
+                                                            <StackPanel BorderThickness="1,0,0,0" BorderBrush="{StaticResource SystemColorControlAccentBrush }" HorizontalAlignment="Right" VerticalAlignment="Stretch">
+                                                                <Button Content="+" FontSize="12" HorizontalAlignment="Right" VerticalAlignment="Top" Width="30" CornerRadius="0,10,0,0" Command="{x:Bind PositiveCommand}"/>
+                                                                <app1:NumericalTextBox BorderThickness="0" Text="{Binding Quantity, Mode=TwoWay}" HorizontalAlignment="Center" MaxWidth="30" TextAlignment="Center" HorizontalTextAlignment="Center" />
+                                                                <Button Content="-" FontSize="12" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="30" CornerRadius="0,0,10,0" Command="{x:Bind NegativeCommand}"/>
+                                                            </StackPanel>
                                                         </StackPanel>
-                                                    </StackPanel>
-                                                </Grid>
-                                        </Border>
-                                    </DataTemplate>
-                                </ListView.ItemTemplate>
-                            </ListView>
-                        </StackPanel>
-                        </Border>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-            <Button HorizontalAlignment="Center" Margin="10" FontSize="16" Command="{Binding AddEncounterCommand}" Grid.Row="2">Добавить сцену</Button>
+                                                    </Grid>
+                                                </Border>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <Button HorizontalAlignment="Center" Margin="10" FontSize="16" Command="{Binding AddEncounterCommand}" Grid.Row="2">Добавить сцену</Button>
+            </Grid>
         </Grid>
-        <StackPanel Grid.Column="2" MinWidth="250">
-            <TextBlock Style="{StaticResource TitleTextBlockStyle}" HorizontalAlignment="Center" TextDecorations="Underline">Группа</TextBlock>
-            <StackPanel Margin="0,10,0,10">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                        </Grid.RowDefinitions>
-                        <TextBlock Margin="10" Text="Дневной бюджет:" />
-                        <TextBlock  Text="{Binding DailyEx}" Grid.Column="1" Margin="10" HorizontalAlignment="Right" Foreground="{ThemeResource AccentDark1}" FontWeight="SemiBold"/>
-                        <TextBlock Grid.Row="1" Margin="10" Text="Опыт за выбранные сцены:"/>
-                        <TextBlock Text="{Binding TotalMonstersEx}" Grid.Row="1" Grid.Column="1" Margin="10" HorizontalAlignment="Right" Foreground="{ThemeResource AccentDark1}" FontWeight="SemiBold"/>
-                    </Grid>
 
-                </Grid>
-            </StackPanel>
-            <TextBlock Margin="10" Text="{Binding PlayerGroup.Name}" Style="{StaticResource TitleTextBlockStyle}" HorizontalAlignment="Center"></TextBlock>
-            <ListView ItemsSource="{Binding PlayerGroup.Players}" Margin="10,5,0,10">
-                <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="app1:Player">
-                        <StackPanel Margin="10,0,0,10" Orientation="Horizontal">
-
-                            <TextBlock Text="{Binding Lvl}" VerticalAlignment="Center" TextDecorations="Underline" FontSize="28" Margin="0,0,10,0"/>
-                            <StackPanel>
-                                <TextBlock Text="{x:Bind Name}" FontSize="20" FontWeight="SemiBold"></TextBlock>
-                                <TextBlock Text="{x:Bind PlayerName}" FontSize="12"></TextBlock>
-                            </StackPanel>
-                            
-                        </StackPanel>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </StackPanel>
         <Border Grid.Column="1" BorderThickness="1" BorderBrush="{StaticResource SystemControlBackgroundBaseHighBrush }">
             <StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
@@ -184,7 +182,7 @@
                     </Button>
                     <Button Margin="0,0,10,10" Click="Button_Click">Сбросить</Button>
                 </StackPanel>
-                <ListView ItemsSource="{x:Bind ((local:EncounterModelView)DataContext).MonsterList}" CanDragItems="True" AllowDrop="True" DragOver="ListView_DragOver" DragItemsStarting="ListView_DragItemsStarting" Drop="ListView_Drop_1" >
+                <ListView ItemsSource="{x:Bind ((local:EncounterModelView)DataContext).MonsterList}" CanDragItems="True" AllowDrop="True" DragOver="ListView_DragOver" DragItemsStarting="ListView_DragItemsStarting" Drop="ListView_Drop_1" Margin="10,0,10,0">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
                             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
@@ -200,9 +198,9 @@
                                     <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Text="{x:Bind Monster.Name}"/>
-                                <TextBlock Text="{x:Bind Monster.Type}" Grid.Column="1"/>
-                                <TextBlock Text="{x:Bind Monster.Size}" Grid.Column="2"/>
-                                <TextBlock Text="{x:Bind Monster.Challenge}" Grid.Column="3"/>
+                                <TextBlock Text="{x:Bind Monster.Type}" Grid.Column="1" TextAlignment="Center"/>
+                                <TextBlock Text="{x:Bind Monster.Size}" Grid.Column="2" TextAlignment="Center"/>
+                                <TextBlock Text="{x:Bind Monster.Challenge}" Grid.Column="3" TextAlignment="Center"/>
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>

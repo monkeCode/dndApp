@@ -23,7 +23,7 @@ namespace App1.Encounters
     /// </summary>
     public sealed partial class EncounterPage : Page
     {
-
+        
         private List<BattleMonster> dragableItems = new List<BattleMonster>();
         ListView originalSource;
         public EncounterPage()
@@ -77,7 +77,7 @@ namespace App1.Encounters
 
         private void ListView_DragOver(object sender, DragEventArgs e)
         {
-           if(originalSource.DataContext.GetType() == (sender as ListView).DataContext.GetType() ||((sender as ListView).DataContext.GetType() == typeof(EncounterModelView)))
+           if(originalSource != sender)
             e.AcceptedOperation = Windows.ApplicationModel.DataTransfer.DataPackageOperation.Move;
         }
 
@@ -101,7 +101,7 @@ namespace App1.Encounters
             foreach (var i in dragableItems)
             {
                 if (((lv.DataContext) as Encounter).Monsters.FirstOrDefault(monster => monster.Monster.Id == i.Monster.Id) == null)
-                    ((lv.DataContext) as Encounter).Monsters.Add(i);
+                    ((lv.DataContext) as Encounter).Monsters.Add(new BattleMonster() { Monster = i.Monster, Quantity = i.Quantity});
                 else
                     ((lv.DataContext) as Encounter).Monsters.First(monster => monster.Monster.Id == i.Monster.Id).Quantity++;
                        var obj = originalSource.DataContext as Encounter;

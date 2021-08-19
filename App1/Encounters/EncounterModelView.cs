@@ -26,21 +26,20 @@ namespace App1.Encounters
             set { playerGroup = value; OnPropertyChanged(); }
         }
 
-        private int exModifierOffset = 0;
-        private int exModifier = 1;
-        private int dailyEx;
-        private int totalMonstersEx;
+        private int _exModifierOffset = 0;
+        private int _dailyEx;
+        private int _totalMonstersEx;
         public int TotalMonstersEx
         {
-            get => totalMonstersEx;
-            set { totalMonstersEx = value; OnPropertyChanged(); }
+            get => _totalMonstersEx;
+            set { _totalMonstersEx = value; OnPropertyChanged(); }
         }
         public int DailyEx
         {
-            get => dailyEx;
+            get => _dailyEx;
             set
             {
-                dailyEx = value;
+                _dailyEx = value;
                 OnPropertyChanged();
             }
         
@@ -80,15 +79,15 @@ namespace App1.Encounters
         {
             PlayerGroup = new Group(groupId);
             if (playerGroup.Players.Count < 3)
-                exModifierOffset = 1;
+                _exModifierOffset = 1;
             else if (playerGroup.Players.Count > 5)
-                exModifierOffset = -1;
+                _exModifierOffset = -1;
             else
-                exModifierOffset = 0;
+                _exModifierOffset = 0;
            SetDailyEx();
             foreach (var item in DataAccess.GetData("Encounters", $"Group_id = {groupId}", null, "*"))
             {
-                Encounters.Add(new Encounter((int)(long)item[2], item[1].ToString()));
+                Encounters.Add(new Encounter((int)(long)item[2], item[1].ToString(), _exModifierOffset, playerGroup));
             }
         }
 
@@ -142,7 +141,7 @@ namespace App1.Encounters
             foreach (var item in DataAccess.GetData("Encounters", $"Group_id = {playerGroup.Id}", null, "*"))
             {
                 if(Encounters.FirstOrDefault(obj => obj.Id == (int)(long)item[2]) == null)
-                Encounters.Add(new Encounter((int)(long)item[2], item[1].ToString()));
+                Encounters.Add(new Encounter((int)(long)item[2], item[1].ToString(), _exModifierOffset, playerGroup));
             }
         }
         public event PropertyChangedEventHandler PropertyChanged;
