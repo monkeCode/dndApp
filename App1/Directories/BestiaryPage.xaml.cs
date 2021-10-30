@@ -25,6 +25,7 @@ namespace App1.Directories
         public BestiaryPage()
         {
             this.InitializeComponent();
+            DataContext = new MonsterModelView();
         }
 
         private void SearchBox_OnTextChanged(object sender, TextChangedEventArgs e)

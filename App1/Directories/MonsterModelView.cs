@@ -36,8 +36,8 @@ namespace App1.Directories
                     Id = (int)(long) i[0],
                     Name = i[1].ToString(),
                     Size = (int)(long)i[2],
-                    Challenge = i[3].ToString(),
-                    Type = i[4].ToString()
+                    Challenge = i[5].ToString(),
+                    Type = i[3].ToString()
 
                 });
 

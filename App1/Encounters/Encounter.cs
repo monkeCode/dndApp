@@ -2,27 +2,42 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Drawing;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Media.DialProtocol;
 using App1.Annotations;
 using DataBaseLib;
 using Microsoft.Graphics.Canvas.Svg;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 
 namespace App1.Encounters
 {
     class Encounter:INotifyPropertyChanged
     {
         
-        public ObservableCollection<BattleMonster> Monsters { get;} = new ObservableCollection<BattleMonster>();
-        public string Name { get; set; }
+        public ObservableCollection<BattleMonster> Monsters { get;} = new();
+        private string _name;
+        public string Name
+        {
+            get => _name;
+            set 
+            { 
+                _name = value;
+                if(!string.IsNullOrEmpty(_name.Trim()))
+                DataAccess.RawRequest($"UPDATE Encounters SET Name = \'{_name}\' WHERE _Id = {Id}");
+                else
+                {
+                    DataAccess.RawRequest($"UPDATE Encounters SET Name = \'Боевая сцена\' WHERE _Id = {Id}");
+                }
+            }
+        }
         public int Id { get; set; }
         private string _difficulty = "";
-        private float _exModifier = 1;
-        private readonly int _offcet = 0;
-        public int[] Difficults { get; set; } = new int[4];
+        private readonly int _offset;
         public string Difficulty
         {
             get => _difficulty;
@@ -33,7 +48,7 @@ namespace App1.Encounters
             }
         }
 
-        private int _totalEx = 0;
+        private int _totalEx;
         public int TotalEx
         {
             get => _totalEx;
@@ -43,21 +58,43 @@ namespace App1.Encounters
                 OnPropertyChanged();
             }
         }
-        public int Deadly { get; private set; }
-        private int _hard;
-        private int _medium;
-        private int _easy;
 
+        private int _adaptEx;
+        public  int AdaptEx
+        {
+            get => _adaptEx;
+            set
+            {
+                _adaptEx = value;
+                OnPropertyChanged();
+            }
+        }
+        public int Deadly { get; }
+        private readonly int _hard;
+        private readonly int _medium;
+        private readonly int _easy;
+
+        private float _modificator;
+        public  float Modificator
+        {
+            get => _modificator;
+            set
+            {
+                _modificator = value;
+                OnPropertyChanged();
+            }
+        }
         public Encounter(int id, string name, int offset, in Group group)
         {
-            _offcet = offset;
             Monsters.CollectionChanged += Monsters_CollectionChanged;
-            Name = name;
+            _offset = offset;
+            _name = name;
             Id = id;
             _easy = group.Easy;
             _medium = group.Medium;
             _hard = group.Hard;
             Deadly = group.Deadly;
+            //иницилизация монстров из бд
             foreach (var item in DataAccess.GetData("Monsters", $"_id IN (SELECT EncountersToMonsters.Monster_Id FROM EncountersToMonsters WHERE Encounter_Id = {id} )",null,"*"))
             {
                 int MonsterId = (int) (long) item[0];
@@ -76,8 +113,8 @@ namespace App1.Encounters
                 });
                 
             }
-            foreach (var monster in Monsters)
-            SetDificulty();
+            //обновление сложности
+            //SetDificulty();
         }
         private void Monsters_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
@@ -105,23 +142,25 @@ namespace App1.Encounters
                 res += monster.Quantity * monster.Monster.Ex;
                 quantity += monster.Quantity;
             }
-            DifficultyModificator(quantity);
-            TotalEx = (int)Math.Round(res * _exModifier);
-            if (TotalEx < _easy)
+
+            TotalEx = res;
+            Modificator = DifficultyModificator(quantity);
+            AdaptEx = (int)Math.Round(res * Modificator);
+            if (AdaptEx < _easy)
             {
                 Difficulty = "Нет угрозы";
             }
-            else if(TotalEx < _medium)
+            else if(AdaptEx < _medium)
             {
                 Difficulty = "Легко";
             }
-            else if(TotalEx < _hard)
+            else if(AdaptEx < _hard)
             {
                 Difficulty = "Средне";
             }
-            else if(TotalEx < Deadly)
+            else if(AdaptEx < Deadly)
             {
-                Difficulty = "Сложно";
+                Difficulty = "Трудно";
             }
             else
             {
@@ -129,7 +168,7 @@ namespace App1.Encounters
             }
         }
 
-        private void DifficultyModificator(int quantity)
+        private float DifficultyModificator(int quantity)
         {
             float[] modificators = new float[8]
             {
@@ -142,14 +181,14 @@ namespace App1.Encounters
                 4,
                 5
             };
-            _exModifier = quantity switch
+            return quantity switch
             {
-                <=1 => modificators[1 - _offcet],
-                2 => modificators[2 - _offcet],
-                >= 3 and <= 6 => modificators[3 - _offcet],
-                >= 7 and <= 10 => modificators[4 - _offcet],
-                >= 11 and <= 14 => modificators[5 - _offcet],
-                >= 15 => modificators[6 - _offcet]
+                <=1 => modificators[1 - _offset],
+                2 => modificators[2 - _offset],
+                >= 3 and <= 6 => modificators[3 - _offset],
+                >= 7 and <= 10 => modificators[4 - _offset],
+                >= 11 and <= 14 => modificators[5 - _offset],
+                >= 15 => modificators[6 - _offset]
 
             };
         }
@@ -161,7 +200,37 @@ namespace App1.Encounters
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-       
+        public string SaveData()
+        {
+            DataAccess.RawRequest($"DELETE FROM EncountersToMonsters WHERE Encounter_Id = {Id}");
+            string values = "";
+            if (Monsters.Count > 0)
+            {
+                foreach (var monster in Monsters)
+                {
+                    //  DataAccess.AddData("EncountersToMonsters", null, new object[] { Id, monster.Monster.Id, monster.Quantity });
+                    values += $"({Id}, {monster.Monster.Id}, {monster.Quantity}), ";
+
+                }
+
+                values = values.Remove(values.Length - 2, 2);
+              return $"INSERT INTO EncountersToMonsters VALUES {values}";
+
+            }
+
+            return "";
+        }
+
+        //ивент удаления из листа в viewmodel
+        public event Action<int> DeleteEvent;
+        public CustomCommand DeleteCommand
+        {
+            get => new CustomCommand(obj =>
+            {
+                DataAccess.RawRequest($"DELETE FROM Encounters WHERE _id = {Id}");
+                DeleteEvent.Invoke(Id);
+            });
+        }
     }
     public class BattleMonster:INotifyPropertyChanged
     { 

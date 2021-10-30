@@ -129,5 +129,11 @@ namespace App1.Encounters
                 if(sender != originalSource)
                 e.AcceptedOperation = Windows.ApplicationModel.DataTransfer.DataPackageOperation.Move;
         }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            (DataContext as EncounterModelView).SaveEncounters();
+            base.OnNavigatedFrom(e);
+        }
     }
 }

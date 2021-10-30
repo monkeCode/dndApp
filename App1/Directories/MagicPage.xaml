@@ -42,40 +42,36 @@
             </Button>
             <Button Margin="0,0,10,10" Click="DropFilters" Command="{Binding DropFiltersCommand}">Сбросить</Button>
         </StackPanel>
-        <GridView x:Name="ItemsPanel" Grid.Row="1" HorizontalAlignment="Stretch" ItemsSource="{Binding DataCollection }" ItemClick="ItemsPanel_ItemClick" IsItemClickEnabled="True">
-            <GridView.ItemTemplate>
+        <ListView Grid.Row="1" HorizontalAlignment="Stretch" ItemsSource="{Binding DataCollection }" ItemClick="ItemsPanel_ItemClick" IsItemClickEnabled="True">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.ItemTemplate>
                 <DataTemplate x:DataType="local:MagicItem">
-                    <StackPanel HorizontalAlignment="Stretch" Padding="5,0,5,0" Margin="10" Width="220">
-                        <ToolTipService.ToolTip>
-                            <ToolTip Content="{Binding Name}" />
-                        </ToolTipService.ToolTip>
-                        <ScrollViewer HorizontalScrollMode="Enabled" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Hidden">
-                            <TextBlock x:Name="nameTex" Text="{Binding Name}"  HorizontalAlignment="Center" Margin="10,0,10,0" />
-                        </ScrollViewer>
-                        <Grid  Padding="2" HorizontalAlignment="Stretch">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-                            <TextBlock x:Name="qualText" FontSize="12"  FontStyle="Italic" Text="{Binding Quality, Converter= {StaticResource RarityConvert}}" Foreground="{Binding Quality, Converter={StaticResource RarityConvert} , ConverterParameter= Color}" />
-                            <TextBlock FontSize="9"  FontStyle="Oblique" Text="{Binding Attunement}" RelativePanel.RightOf="qualText" Margin="5,0,0,0"  Foreground="DodgerBlue" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Grid.Row="1"/>
-                            <TextBlock FontSize="12" Text="{Binding Type}" Grid.Column="1"  RelativePanel.AlignRightWithPanel="True" HorizontalAlignment="Right" Margin="0,2,0,0"/>
-                        </Grid>
-                    </StackPanel>
+                    <Grid HorizontalAlignment="Stretch" Margin="10" BorderThickness="0,0,0,0.5">
+                        <Grid.BorderBrush>
+                            <LinearGradientBrush EndPoint="1,0">
+                                <GradientStop Offset="0"></GradientStop>
+                                <GradientStop Offset="0.25" Color="{ThemeResource SystemAccentColor}"></GradientStop>
+                                <GradientStop Offset="0.75" Color="{ThemeResource SystemAccentColor}"></GradientStop>
+                                <GradientStop Offset="1"></GradientStop>
+                            </LinearGradientBrush>
+                        </Grid.BorderBrush>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="{Binding Name}"  HorizontalAlignment="Center" TextAlignment="Left" Margin="10,0,10,0" FontWeight="SemiBold" />
+                        <TextBlock Grid.Column="1"  TextAlignment="Center" FontStyle="Italic" Text="{Binding Quality, Converter= {StaticResource RarityConvert}}" Foreground="{Binding Quality, Converter={StaticResource RarityConvert} , ConverterParameter= Color}" />
+                        <TextBlock Grid.Column="2" TextAlignment="Center"  FontStyle="Oblique" Text="{Binding Attunement}"  Foreground="DodgerBlue" />
+                        <TextBlock Grid.Column="3" TextAlignment="Center"  Text="{Binding Type}"/>
+                    </Grid>
                 </DataTemplate>
-            </GridView.ItemTemplate>
-            <GridView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <ItemsWrapGrid Orientation="Horizontal" HorizontalAlignment="Center"></ItemsWrapGrid>
-                </ItemsPanelTemplate>
-            </GridView.ItemsPanel>
-            <GridView.Items>
-                <local:MagicItem Name="Сумка" Quality="3" Type="броня" Attunement="(Концентрация)" />
-            </GridView.Items>
-        </GridView>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </Page>

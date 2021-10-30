@@ -18,7 +18,8 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="0">
+        <StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="0">
             <TextBox x:Name="searchBox" PlaceholderText ="Поиск" Width="200" Margin="0,0,10,10" Text="{Binding SubstringFilter}" TextChanged="SearchBox_OnTextChanged" ></TextBox>
             <Button  Content="Тип" VerticalAlignment="Top" Margin="0,0,10,10">
                 <Button.Flyout>
@@ -57,35 +58,49 @@
             </Button>
             <Button Margin="0,0,10,10" Click="RefreshButtonClick">Сбросить</Button>
         </StackPanel>
-        <GridView x:Name="ItemsPanel" Grid.Row="1" HorizontalAlignment="Stretch" ItemsSource="{Binding DataCollection }" IsItemClickEnabled="True">
-            <GridView.ItemTemplate>
+            <Grid Margin="10,0,10,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBlock TextAlignment="Center" Style="{StaticResource SubtitleTextBlockStyle}" TextDecorations="Underline">Название</TextBlock>
+                <TextBlock Grid.Column="1" TextAlignment="Center" Style="{StaticResource SubtitleTextBlockStyle}" TextDecorations="Underline">Тип</TextBlock>
+                <TextBlock Grid.Column="2"  TextAlignment="Center" Style="{StaticResource SubtitleTextBlockStyle}" TextDecorations="Underline">Размер</TextBlock>
+                <TextBlock Grid.Column="3"  TextAlignment="Center" Style="{StaticResource SubtitleTextBlockStyle}" TextDecorations="Underline">Опасность</TextBlock>
+            </Grid>
+            </StackPanel>
+        <ListView Grid.Row="1" ItemsSource="{Binding DataCollection, Mode=OneTime }"  Margin="10,0,10,0">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.ItemTemplate>
                 <DataTemplate x:DataType="app1:Monster">
-                    <StackPanel HorizontalAlignment="Stretch" Padding="5,0,5,0" Margin="10" Width="220">
-                        <ToolTipService.ToolTip>
-                            <ToolTip Content="{Binding Name}" />
-                        </ToolTipService.ToolTip>
-                        <TextBlock Text="{Binding Name}" Margin="10,0,10,0" HorizontalAlignment="Center"></TextBlock>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Text="{Binding Size, Converter={StaticResource SizeConverter}}" FontSize="12"></TextBlock>
-                            <TextBlock Text="{Binding Challenge}" Grid.Column="1" HorizontalAlignment="Center" TextDecorations="Underline" FontWeight="Bold"></TextBlock>
-                            <TextBlock Text="{Binding Type}" Grid.Column="2" HorizontalAlignment="Right" FontSize="12"></TextBlock>
-                        </Grid>
-                    </StackPanel>
+                    <Grid BorderThickness="0,0,0,0.5">
+                        <Grid.BorderBrush>
+                            <LinearGradientBrush EndPoint="1,0">
+                                <GradientStop Offset="0"></GradientStop>
+                                <GradientStop Offset="0.25" Color="{ThemeResource SystemAccentColor}"></GradientStop>
+                                <GradientStop Offset="0.75" Color="{ThemeResource SystemAccentColor}"></GradientStop>
+                                <GradientStop Offset="1"></GradientStop>
+                            </LinearGradientBrush>
+                        </Grid.BorderBrush>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="{x:Bind Name}" FontWeight="SemiBold" TextAlignment="Left" HorizontalAlignment="Center"/>
+                        <TextBlock Text="{x:Bind Type}" Grid.Column="1" TextAlignment="Center"/>
+                        <TextBlock Text="{x:Bind Size, Converter ={StaticResource SizeConverter}}" Grid.Column="2" TextAlignment="Center"/>
+                        <TextBlock Text="{x:Bind Challenge}" Grid.Column="3" TextAlignment="Center"/>
+                    </Grid>
                 </DataTemplate>
-            </GridView.ItemTemplate>
-            <GridView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <ItemsWrapGrid Orientation="Horizontal" HorizontalAlignment="Center"></ItemsWrapGrid>
-                </ItemsPanelTemplate>
-            </GridView.ItemsPanel>
-            <GridView.Items>
-                <app1:Monster Name="Monster" Size="3" Id="0" Challenge="1/4" Type="Абберация"></app1:Monster>
-            </GridView.Items>
-        </GridView>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </Page>

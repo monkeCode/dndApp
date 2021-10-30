@@ -34,6 +34,7 @@ namespace App1
 
             LoadTableFromDb(id);
             LoadFeatures(id);
+            LoadLinks(id);
         }
 
         private void LoadTableFromDb(int id)
@@ -60,6 +61,16 @@ namespace App1
                 });
             }
 
+        }
+
+        private void LoadLinks(int id)
+        {
+            foreach (var link in DataAccess.GetData("LinksMagicItems", $"Parent_Id = {id}", null, "*"))
+            {
+                Links.Add(new Link(link[1].ToString(), (int)(long)link[2], link[3].ToString()));
+            }
+
+            
         }
     }
 

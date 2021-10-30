@@ -57,7 +57,7 @@ namespace App1
             "Элементаль"
         };
 
-        public static Dictionary<string, int> MonsterSize = new Dictionary<string, int>()
+        public readonly static Dictionary<string, int> monsterSize = new Dictionary<string, int>()
         {
             {"Маленький", 0},
             {"Небольшой", 1},
@@ -66,8 +66,11 @@ namespace App1
             {"Огромный", 4},
             {"Исполинский", 5},
         };
-
-        public static List<string> MonsterRate = new List<string>()
+        public  static List<string> MonsterSize
+        {
+            get => monsterSize.Keys.ToList();
+        }
+        public static List<string> MonsterRate { get; } = new List<string>()
         {
             "0",
             "1/8",
@@ -105,13 +108,13 @@ namespace App1
             "30"
         };
 
-        public static List<string> MonsterSource = new List<string>()
+        public static List<string> MonsterSource { get; } = new List<string>()
         {
             "Monster manual",
             "Homebrew"
         };
 
-        public static List<string> MonsterHabitat = new List<string>()
+        public static List<string> MonsterHabitat { get; } = new List<string>()
         {
 
         };

@@ -69,7 +69,7 @@ namespace App1.Encounters
             int res = 0;
             while (enumerator.MoveNext())
             {
-                res += (enumerator.Current as Encounter).TotalEx;
+                res += (enumerator.Current as Encounter).AdaptEx;
 
             }
 
@@ -85,9 +85,13 @@ namespace App1.Encounters
             else
                 _exModifierOffset = 0;
            SetDailyEx();
+           Encounters.Clear();
             foreach (var item in DataAccess.GetData("Encounters", $"Group_id = {groupId}", null, "*"))
             {
-                Encounters.Add(new Encounter((int)(long)item[2], item[1].ToString(), _exModifierOffset, playerGroup));
+                Encounter e = new Encounter((int) (long) item[2], item[1].ToString(), _exModifierOffset, playerGroup);
+                e.DeleteEvent += DeleteElement;
+                Encounters.Add(e);
+                
             }
         }
 
@@ -125,26 +129,46 @@ namespace App1.Encounters
             DailyEx = res;
         }
 
-
-        CustomCommand addNewEncounter;
-        public CustomCommand AddEncounterCommand { get
+        public void SaveEncounters()
+        {
+            string req = "";
+            foreach (var E in Encounters)
             {
-                if(addNewEncounter == null)
-                {
-                    addNewEncounter = new CustomCommand(obj => { AddEncounter(); }, obj => true);
-                }
-                return addNewEncounter;
-            } }
+                
+               req += E.SaveData() + ";";
+            }
+            if(req != "")
+            DataAccess.RawRequest(req);
+        }
+
+
+        CustomCommand _addNewEncounter;
+        public CustomCommand AddEncounterCommand { get
+        {
+            return _addNewEncounter ?? (_addNewEncounter = new CustomCommand(obj => { AddEncounter(); }, obj => true));
+        } }
         private void AddEncounter()
         {
             DataAccess.AddData("Encounters", new[] { "Group_id" }, new[] { (object)playerGroup.Id });
             foreach (var item in DataAccess.GetData("Encounters", $"Group_id = {playerGroup.Id}", null, "*"))
             {
-                if(Encounters.FirstOrDefault(obj => obj.Id == (int)(long)item[2]) == null)
-                Encounters.Add(new Encounter((int)(long)item[2], item[1].ToString(), _exModifierOffset, playerGroup));
+                if (Encounters.FirstOrDefault(obj => obj.Id == (int) (long) item[2]) == null)
+                {
+                    Encounter e = new Encounter((int) (long) item[2], item[1].ToString(), _exModifierOffset,
+                        playerGroup);
+                    Encounters.Add(e);
+                    e.DeleteEvent += DeleteElement;
+
+                }
             }
         }
+
+        private void DeleteElement(int id)
+        {
+            Encounters.Remove(Encounters.First(obj => obj.Id == id));
+        }
         public event PropertyChangedEventHandler PropertyChanged;
+
 
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

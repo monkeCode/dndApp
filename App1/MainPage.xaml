@@ -13,7 +13,7 @@
                         Loaded="navPanel_Loaded">
             <NavigationView.MenuItems>
                 <NavigationViewItemHeader Content="Справочники" />
-                <NavigationViewItem Icon="Play" Content="Магические предметы" Tag="MagicItems" />
+                <NavigationViewItem Tag="MagicItems" Content="Магические предметы" Icon="play"/>
                 <NavigationViewItem Icon="Save" Content="Бестиарий" Tag="Monsters" />
                 <NavigationViewItem Icon="Refresh" Content="Заклинания" Tag="Magic" />
                 <NavigationViewItemSeparator />

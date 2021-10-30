@@ -1,4 +1,5 @@
 ﻿using System;
+using App1.Directories;
 
 namespace App1
 {
@@ -8,11 +9,17 @@ namespace App1
         public int Id { get; private set; }
         public string Text { get; private set; }
 
-        public Link(Type type, int id, string str)
+        public Link(string type, int id, string str)
         {
-            Page = type;
             Id = id;
             Text = str;
+            Page = type switch
+            {
+                "MI" => typeof(MagicItemExtendedPage),
+                "MO" => throw new Exception(),
+                "MA" => typeof(MagicItemExtendedPage)
+            };
         }
+
     }
 }

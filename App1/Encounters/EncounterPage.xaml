@@ -5,7 +5,11 @@
     xmlns:local="using:App1.Encounters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:app1="using:App1" xmlns:controls="using:WinRTXamlToolkit.Controls"
+    xmlns:app1="using:App1"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:controls1="using:Microsoft.UI.Xaml.Controls"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Page.Resources>
@@ -13,30 +17,57 @@
         <app1:StaticValues x:Key="StaticVal"/>
     </Page.Resources>
     <Grid>
+       
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="auto" MinWidth="300"/>
+            <ColumnDefinition Width="350"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Grid>
+        <Grid BorderThickness="0,0,1,0" >
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
-                <RowDefinition/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <StackPanel Grid.Column="2" MinWidth="250">
+            <StackPanel >
                 <TextBlock Style="{StaticResource TitleTextBlockStyle}" HorizontalAlignment="Center" TextDecorations="Underline">Группа</TextBlock>
                 <StackPanel Margin="0,10,0,10">
                     <RelativePanel>
                         <TextBlock Margin="10" Text="Дневной бюджет:" />
                         <TextBlock  Text="{Binding DailyEx}" RelativePanel.AlignRightWithPanel="True" Margin="10" HorizontalAlignment="Right" Foreground="{ThemeResource AccentDark1}" FontWeight="SemiBold"/>
                     </RelativePanel>
-                    <RelativePanel>
-                        <TextBlock Grid.Row="1" Margin="10" Text="Опыт за выбранные сцены:"/>
-                        <TextBlock Text="{Binding TotalMonstersEx}" Margin="10" HorizontalAlignment="Right" RelativePanel.AlignRightWithPanel="True" Foreground="{ThemeResource AccentDark1}" FontWeight="SemiBold"/>
+                    <StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Margin="10,0,0,5">
+                                <Run Text="Легко: "></Run>
+                                <Run Text="{Binding PlayerGroup.Easy}" Foreground="{ThemeResource AccentDark1}"></Run>
+                            </TextBlock>
+                            <TextBlock Grid.Column="1" Margin="10,0,0,5">
+                                <Run Text="Средне: "></Run>
+                                <Run Text="{Binding PlayerGroup.Medium}" Foreground="{ThemeResource AccentDark1}"></Run>
+                                </TextBlock>
+                        </Grid>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Margin="10,0,0,5">
+                                <Run Text="Трудно: "></Run>
+                                <Run Text="{Binding PlayerGroup.Hard}" Foreground="{ThemeResource AccentDark1}"></Run>
+                            </TextBlock>
+                            <TextBlock Grid.Column="1" Margin="10,0,0,0">
+                                <Run Text="Смертельно: "></Run>
+                                <Run Text="{Binding PlayerGroup.Deadly}" Foreground="{ThemeResource AccentDark1}"></Run>
+                            </TextBlock>
+                        </Grid>
 
-                    </RelativePanel>
-                            
+                       
+                    </StackPanel>
                 </StackPanel>
-                <TextBlock Margin="10" Text="{Binding PlayerGroup.Name}" Style="{StaticResource TitleTextBlockStyle}" HorizontalAlignment="Center"></TextBlock>
+                <Button Margin="10" Content="{Binding PlayerGroup.Name}" HorizontalAlignment="Center"></Button>
                 <!--<ListView ItemsSource="{Binding PlayerGroup.Players}" Margin="10,5,0,10">
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="app1:Player">
@@ -53,45 +84,65 @@
                     </ListView.ItemTemplate>
                 </ListView>-->
             </StackPanel>
-            <Grid  Grid.Row="1">
+            <Grid Grid.Row="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
                     <RowDefinition/>
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
                 <TextBlock Style="{StaticResource TitleTextBlockStyle}" HorizontalAlignment="Center" TextDecorations="Underline">Боевые сцены</TextBlock>
-                <ListView Name="EncounterList" SelectionMode="Extended" SelectionChanged="EncounterList_SelectionChanged" ItemsSource="{Binding Encounters}" Grid.Row="1">
+                <ListView Name="EncounterList" SelectionMode="None" SelectionChanged="EncounterList_SelectionChanged" ItemsSource="{Binding Encounters}" Grid.Row="1" >
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
                             <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
                             <Setter Property="Margin" Value="10,30,10,10"/>
                             <Setter Property="Padding" Value="0"/>
+                            <!--<Setter Property="Template" Value="{StaticResource SelectedTemplate}"></Setter>-->
                         </Style>
                     </ListView.ItemContainerStyle>
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="local:Encounter">
-                            <Border BorderBrush="{StaticResource SystemAccentColorDark2}" BorderThickness="1" CornerRadius="3" Padding="10" >
+                            <Border BorderBrush="#00a8ff" BorderThickness="1" CornerRadius="3" Padding="5" >
                                 <StackPanel>
-                                    <TextBox BorderThickness="0" Text="{x:Bind Name, Mode=TwoWay}" Style="{StaticResource TitleTextBlockStyle}" Margin="10,0,0,0" PlaceholderText ="Поиск"></TextBox>
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBox BorderThickness="0" Text="{x:Bind Name, Mode=TwoWay}" Margin="10,0,0,0" PlaceholderText ="Название сцены" HorizontalAlignment="Stretch"></TextBox>
+                                        <Button Grid.Column="1" HorizontalAlignment="Right" Margin="5,0,0,0" FontSize="16" FontFamily="{StaticResource SymbolThemeFontFamily}" Content="&#xE74D;" ToolTipService.ToolTip="Удалить" Command="{x:Bind DeleteCommand}"/>
+                                        </Grid>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition/>
                                         </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
                                         <TextBlock Margin="10,10,0,0">
                                         <Run Text="Опасность:"></Run>
-                                        <Run Text="{Binding Difficulty}"></Run>
+                                        <Run Text="{Binding Difficulty}" Foreground="{Binding }"></Run>
                                         </TextBlock>
                                         <TextBlock Grid.Column="1" HorizontalAlignment="Right" Margin="0,10,10,0">
                                         <Run Text="Опыт:"></Run>
-                                        <Run Text="{Binding TotalEx}"></Run>
+                                        <Run Text="{Binding TotalEx}" Foreground="{ThemeResource AccentDark1}"></Run>
+                                        </TextBlock>
+                                        <TextBlock Grid.Row="1" Margin="10,5,0,0">
+                                            <Run>Модификатор:</Run>
+                                            <Run Text="{Binding Modificator}" Foreground="{ThemeResource AccentDark1}"></Run>
+                                        </TextBlock>
+                                        <TextBlock Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" Margin="0,10,10,0">
+                                            <Run>Модиф. ПО:</Run>
+                                            <Run Text="{Binding AdaptEx}" Foreground="{ThemeResource AccentDark1}"></Run>
                                         </TextBlock>
                                     </Grid>
-                                    <ProgressBar Margin="10" HorizontalAlignment="Stretch" Height="20" Maximum="{Binding Deadly}" Value="{Binding TotalEx}">
+                                    <ProgressBar Margin="10" HorizontalAlignment="Stretch" Height="20" Maximum="{Binding Deadly}" Value="{Binding AdaptEx}">
                                         
                                         
                                     </ProgressBar>
-                                    <ListView ItemsSource="{x:Bind Monsters}" MinHeight="200" HorizontalAlignment="Stretch" CanDragItems="True" AllowDrop="True" CanReorderItems="True" DragItemsStarting="ListView_DragItemsStarting" DragOver="ListView_DragOver_1" Drop="ListView_Drop">
+                                    <ListView ItemsSource="{x:Bind Monsters}" MinHeight="200" HorizontalAlignment="Stretch" CanDragItems="True" AllowDrop="True" CanReorderItems="True" DragItemsStarting="ListView_DragItemsStarting" DragOver="ListView_DragOver_1" Drop="ListView_Drop" SelectionMode="None">
                                         <ListView.ItemContainerStyle>
                                             <Style TargetType="ListViewItem">
                                                 <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
@@ -104,11 +155,11 @@
                                                 <Border BorderBrush="{StaticResource SystemAccentColorLight1}" BorderThickness="1"   CornerRadius="10" HorizontalAlignment="Stretch">
                                                     <Grid>
                                                         <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*"/>
                                                             <ColumnDefinition Width="Auto"/>
-                                                            <ColumnDefinition/>
                                                         </Grid.ColumnDefinitions>
-                                                        <TextBlock Margin="10" VerticalAlignment="Center">
-                                                    <Run  Text="{Binding Monster.Name}" FontSize="20" FontWeight="SemiBold" ></Run>
+                                                        <TextBlock Margin="10" VerticalAlignment="Center" TextWrapping="Wrap">
+                                                    <Hyperlink FontSize="20" FontWeight="SemiBold" Foreground="{ThemeResource SystemControlHyperlinkBaseHighBrush}" ><Run Text="{Binding Monster.Name}"></Run></Hyperlink>
                                                     <LineBreak/>
                                                     <Run Text="{Binding Monster.Size, Converter={StaticResource SizeConverter}}" FontStyle="Italic"/>
                                                     <Run Text="{Binding Monster.Type}" FontStyle="Italic"></Run>
@@ -121,17 +172,23 @@
                                                             <Run Text="Опыт:"></Run>
                                                             <Run Text="{Binding Monster.Ex}" Foreground="{ThemeResource AccentDark1}" FontWeight="SemiBold"></Run>
                                                             </TextBlock>
-                                                            <StackPanel BorderThickness="1,0,0,0" BorderBrush="{StaticResource SystemColorControlAccentBrush }" HorizontalAlignment="Right" VerticalAlignment="Stretch">
+                                                            <Grid BorderThickness="1,0,0,0" BorderBrush="{StaticResource SystemAccentColorLight1 }" HorizontalAlignment="Right" VerticalAlignment="Stretch">
+                                                                <Grid.RowDefinitions>
+                                                                    <RowDefinition Height="*"/>
+                                                                    <RowDefinition/>
+                                                                    <RowDefinition Height="*"/>
+                                                                </Grid.RowDefinitions>
                                                                 <Button Content="+" FontSize="12" HorizontalAlignment="Right" VerticalAlignment="Top" Width="30" CornerRadius="0,10,0,0" Command="{x:Bind PositiveCommand}"/>
-                                                                <app1:NumericalTextBox BorderThickness="0" Text="{Binding Quantity, Mode=TwoWay}" HorizontalAlignment="Center" MaxWidth="30" TextAlignment="Center" HorizontalTextAlignment="Center" />
-                                                                <Button Content="-" FontSize="12" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="30" CornerRadius="0,0,10,0" Command="{x:Bind NegativeCommand}"/>
-                                                            </StackPanel>
+                                                                <app1:NumericalTextBox BorderThickness="0" Text="{Binding Quantity, Mode=TwoWay}" HorizontalAlignment="Center" MaxWidth="30" Grid.Row="1" />
+                                                                <Button Content="-" FontSize="12" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="30" CornerRadius="0,0,10,0" Command="{x:Bind NegativeCommand}" Grid.Row="2"/>
+                                                            </Grid>
                                                         </StackPanel>
                                                     </Grid>
                                                 </Border>
                                             </DataTemplate>
                                         </ListView.ItemTemplate>
                                     </ListView>
+                                    <Button HorizontalAlignment="Center" VerticalAlignment="Bottom">Начать сцену</Button>
                                 </StackPanel>
                             </Border>
                         </DataTemplate>
@@ -140,10 +197,14 @@
                 <Button HorizontalAlignment="Center" Margin="10" FontSize="16" Command="{Binding AddEncounterCommand}" Grid.Row="2">Добавить сцену</Button>
             </Grid>
         </Grid>
-
-        <Border Grid.Column="1" BorderThickness="1" BorderBrush="{StaticResource SystemControlBackgroundBaseHighBrush }">
-            <StackPanel>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
+        <Border BorderBrush="{StaticResource SystemControlBackgroundBaseHighBrush }" BorderThickness="1" Grid.Column="1">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0" >
                     <TextBox x:Name="searchBox" PlaceholderText ="Поиск" Width="200" Margin="0,0,10,10" Text="{Binding MonsterModel.SubstringFilter, Mode=TwoWay}" TextChanged="searchBox_TextChanged" ></TextBox>
                     <Button  Content="Тип" VerticalAlignment="Top" Margin="0,0,10,10">
                         <Button.Flyout>
@@ -182,7 +243,20 @@
                     </Button>
                     <Button Margin="0,0,10,10" Click="Button_Click">Сбросить</Button>
                 </StackPanel>
-                <ListView ItemsSource="{x:Bind ((local:EncounterModelView)DataContext).MonsterList}" CanDragItems="True" AllowDrop="True" DragOver="ListView_DragOver" DragItemsStarting="ListView_DragItemsStarting" Drop="ListView_Drop_1" Margin="10,0,10,0">
+                    <Grid Margin="10,0,10,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock TextAlignment="Center" Style="{StaticResource SubtitleTextBlockStyle}" TextDecorations="Underline">Название</TextBlock>
+                        <TextBlock Grid.Column="1" TextAlignment="Center" Style="{StaticResource SubtitleTextBlockStyle}" TextDecorations="Underline">Тип</TextBlock>
+                        <TextBlock Grid.Column="2"  TextAlignment="Center" Style="{StaticResource SubtitleTextBlockStyle}" TextDecorations="Underline">Размер</TextBlock>
+                        <TextBlock Grid.Column="3"  TextAlignment="Center" Style="{StaticResource SubtitleTextBlockStyle}" TextDecorations="Underline">Опасность</TextBlock>
+                    </Grid>
+                </StackPanel>
+            <ListView Grid.Row="1" ItemsSource="{x:Bind ((local:EncounterModelView)DataContext).MonsterList}" CanDragItems="True" AllowDrop="True" DragOver="ListView_DragOver" DragItemsStarting="ListView_DragItemsStarting" Drop="ListView_Drop_1" Margin="0,0,0,0">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
                             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
@@ -190,22 +264,31 @@
                     </ListView.ItemContainerStyle>
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="local:BattleMonster">
-                            <Grid>
+                            <Grid BorderThickness="0,0,0,0.5" >
+                                
+                                <Grid.BorderBrush>
+                                    <LinearGradientBrush EndPoint="1,0">
+                                        <GradientStop Offset="0"></GradientStop>
+                                        <GradientStop Offset="0.25" Color="{ThemeResource SystemAccentColor}"></GradientStop>
+                                        <GradientStop Offset="0.75" Color="{ThemeResource SystemAccentColor}"></GradientStop>
+                                        <GradientStop Offset="1"></GradientStop>
+                                    </LinearGradientBrush>
+                                </Grid.BorderBrush>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition/>
                                     <ColumnDefinition/>
                                     <ColumnDefinition/>
                                     <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Text="{x:Bind Monster.Name}"/>
+                                <TextBlock Text="{x:Bind Monster.Name}" FontWeight="SemiBold" TextAlignment="Center"/>
                                 <TextBlock Text="{x:Bind Monster.Type}" Grid.Column="1" TextAlignment="Center"/>
-                                <TextBlock Text="{x:Bind Monster.Size}" Grid.Column="2" TextAlignment="Center"/>
+                                <TextBlock Text="{x:Bind Monster.Size, Converter ={StaticResource SizeConverter}}" Grid.Column="2" TextAlignment="Center"/>
                                 <TextBlock Text="{x:Bind Monster.Challenge}" Grid.Column="3" TextAlignment="Center"/>
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-            </StackPanel>
-        </Border>
+        </Grid>
+            </Border>
     </Grid>
 </Page>

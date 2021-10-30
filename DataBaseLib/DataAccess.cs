@@ -11,7 +11,7 @@ namespace DataBaseLib
     static public class DataAccess
     {
         private const string DB_NAME = "DataBase.db";
-        private const int DB_VERSION = 4;
+        private const int DB_VERSION = 10;
 
         static DataAccess() => InitializeDatabase();
 
@@ -101,6 +101,37 @@ namespace DataBaseLib
                 else sortBy = "";
                 SqliteCommand selectCommand = new SqliteCommand
                     ($"SELECT {columnsString} from {table} {whereReq} {sortBy}", db);
+                SqliteDataReader query = selectCommand.ExecuteReader();
+                while (query.Read())
+                {
+                    object[] arr = new object[query.FieldCount];
+                    for (int i = 0; i < arr.Length; i++)
+                    {
+                        arr[i] = query.GetValue(i);
+                    }
+                    entries.Add(arr);
+                }
+
+                db.Close();
+            }
+
+            return entries;
+        }
+
+        public static List<object[]> GetData(string request)
+        {
+            List<object[]> entries = new List<object[]>();
+            //for (int i = 0; i < entries.Count; i++)
+            //    entries[i] = new string[columns.Length];
+
+            string dbpath = Path.Combine(ApplicationData.Current.LocalFolder.Path, DB_NAME);
+
+            using (SqliteConnection db =
+                new SqliteConnection($"Filename={dbpath}"))
+            {
+                db.Open();
+                SqliteCommand selectCommand = new SqliteCommand
+                    (request, db);
                 SqliteDataReader query = selectCommand.ExecuteReader();
                 while (query.Read())
                 {
