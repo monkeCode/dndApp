@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Windows.Input;
 using Windows.UI.Xaml.Controls;
 using Microsoft.Toolkit.Uwp.UI.Controls.TextToolbarSymbols;
+using System.Linq;
 
 namespace App1
 {
@@ -21,8 +20,23 @@ namespace App1
             GetListData();
         }
 
-        // protected CustomCommand searchCommand;
-        // public CustomCommand SearchCommand { get { return searchCommand??(searchCommand = new CustomCommand(obj => { GetListData(); })); } }
+      protected string ChangeSelect(IList<object> list)
+        {
+            if (list.Count == 0)
+            {
+                return null;
+            }
+
+            string str = "";
+            foreach (var a in list)
+            {
+                if (a != list.Last())
+                    str += $" \"{a}\", ";
+                else str += $"\"{a}\" )";
+            }
+
+            return str;
+        }
 
         public abstract void GetListData();
 
@@ -43,38 +57,5 @@ namespace App1
             SubstringFilter = string.Empty;
             GetListData();
         }
-    }
-
-    public class CustomCommand : ICommand
-    {
-        private Action<object> action;
-        private Predicate<object> canExecut;
-
-        public CustomCommand(Action<object> action, Predicate<object> canExecut)
-        {
-            this.action = action != null
-                ? action
-                : throw new ArgumentNullException();
-            this.canExecut = canExecut;
-        }
-
-        public CustomCommand(Action<object> action)
-            : this(action, null)
-        {
-        }
-
-        public bool CanExecute(object parameter)
-        {
-            //if (parameter == null) return true;
-            var t = canExecut?.Invoke((object)parameter) ?? true;
-            return t;
-        }
-
-        public void Execute(object parameter)
-        {
-            action((object)parameter);
-        }
-
-        public event EventHandler CanExecuteChanged;
     }
 }

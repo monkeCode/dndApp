@@ -28,23 +28,7 @@ namespace App1.Directories
             DataContext = new MonsterModelView();
         }
 
-        string ChangeSelect(ListView sender, string column)
-        {
-            if (sender.SelectedIndex == -1)
-            {
-                return null;
-            }
-           
-            string str = column+" IN ( ";
-            foreach (var a in sender.SelectedItems)
-            {
-                if (a != sender.SelectedItems.Last())
-                    str += $" \"{a}\", ";
-                else str += $"\"{a}\" )";
-            }
-
-            return str;
-        }
+        
         private void SearchBox_OnTextChanged(object sender, TextChangedEventArgs e)
         {
             throw new NotImplementedException();
@@ -57,46 +41,28 @@ namespace App1.Directories
 
         private void TypeList_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            (DataContext as MonsterModelView).SelectedType = ChangeSelect(sender as ListView, "Type");
+            (DataContext as MonsterModelView).SelectedType = (sender as ListView).SelectedItems;
         }
 
         private void ChallengeList_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            (DataContext as MonsterModelView).SelectedRate = ChangeSelect(sender as ListView, "ChallengeRate");
+            (DataContext as MonsterModelView).SelectedRate = (sender as ListView).SelectedItems;
         }
 
         private void SizeList_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             MonsterModelView model = (DataContext as MonsterModelView);
             ListView lv = sender as ListView;
-            ;
-            if (lv.SelectedIndex == -1)
-            {
-                model.SelectedSize = null;
-            }
-            else
-            {
-
-                string str = "Size IN ( ";
-                foreach (var a in lv.SelectedItems)
-                {
-                    if (a != lv.SelectedItems.Last())
-                        str += $" \"{StaticValues.monsterSize[a.ToString()]}\", ";
-                    else str += $"\"{StaticValues.monsterSize[a.ToString()]}\" )";
-                }
-
-                model.SelectedSize = str;
-            }
+            model.SelectedSize = lv.SelectedItems;
         }
 
         private void HabbiatList_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            (DataContext as MonsterModelView).SelectedHabitat = ChangeSelect(sender as ListView, "Habbitat");
+            (DataContext as MonsterModelView).SelectedHabitat = (sender as ListView).SelectedItems;
         }
-
         private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            (DataContext as MonsterModelView).SelectedSource = ChangeSelect(sender as ListView, "Source");
+            (DataContext as MonsterModelView).SelectedSource = (sender as ListView).SelectedItems;
         }
     }
 }

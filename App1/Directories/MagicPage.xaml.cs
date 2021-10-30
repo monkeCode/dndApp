@@ -15,50 +15,21 @@ namespace App1
         public MagicPage()
         {
             InitializeComponent();
-            DataContext = new MagicItemsModelView();
+            _model = new MagicItemsModelView();
+            DataContext = _model;
         }
-
+        private MagicItemsModelView _model;
         private void ListView1_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            MagicItemsModelView view = DataContext as MagicItemsModelView;
             ListView listView = sender as ListView;
-            if (listView.SelectedIndex == -1)
-            {
-                view.SelectedQuality = null;
-            }
-            else
-            {
-                string str = "Type IN ( ";
-                foreach (var a in listView.SelectedItems)
-                {
-                    if (a != listView.SelectedItems.Last())
-                        str += $" \"{a}\", ";
-                    else str += $"\"{a}\" )";
-                }
-
-                view.SelectedQuality = str;
-            }
+            _model.SelectedType = listView.SelectedItems;
         }
 
         private void ListView2_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            MagicItemsModelView view = DataContext as MagicItemsModelView;
+           
             ListView listView = sender as ListView;
-            if (listView.SelectedIndex == -1)
-            {
-                view.SelectedType = null;
-            }
-            else
-            {
-                string str = "Quality IN ( ";
-                foreach (var a in listView.SelectedItems)
-                {
-                    if (a != listView.SelectedItems.Last())
-                        str += $"{listView.Items.IndexOf(a)}, ";
-                    else str += $"{listView.Items.IndexOf(a)} )";
-                }
-                view.SelectedType = str;
-            }
+            _model.SelectedQuality = listView.SelectedItems;
         }
 
         private void searchBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -67,13 +38,11 @@ namespace App1
         }
 
         private void DropFilters(object sender, Windows.UI.Xaml.RoutedEventArgs e)
-        {
-            MagicItemsModelView view = DataContext as MagicItemsModelView;
-            //searchBox.Text = "";
+        { 
             QualityList.DeselectRange(new Windows.UI.Xaml.Data.ItemIndexRange(0, (uint)QualityList.Items.Count));
             TypeList.DeselectRange(new Windows.UI.Xaml.Data.ItemIndexRange(0, (uint)TypeList.Items.Count));
             SourceList.DeselectRange(new ItemIndexRange(0, (uint)SourceList.Items.Count));
-            view.DropFilters();
+            _model.DropFilters();
         }
 
         private void ItemsPanel_ItemClick(object sender, ItemClickEventArgs e)
@@ -83,23 +52,8 @@ namespace App1
 
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            MagicItemsModelView view = DataContext as MagicItemsModelView;
             ListView listView = sender as ListView;
-            if (listView.SelectedIndex == -1)
-            {
-                view.SelectedSource = null;
-            }
-            else
-            {
-                string str = "Source IN ( ";
-                foreach (var a in listView.SelectedItems)
-                {
-                    if (a != listView.SelectedItems.Last())
-                        str += $" \"{a}\", ";
-                    else str += $"\"{a}\" )";
-                }
-                view.SelectedSource = str;
-            }
+            _model.SelectedSource = listView.SelectedItems;
         }
     }
 }

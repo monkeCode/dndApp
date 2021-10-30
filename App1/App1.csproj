@@ -131,6 +131,7 @@
     <Compile Include="Directories\BestiaryPage.xaml.cs">
       <DependentUpon>BestiaryPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CustomCommand.cs" />
     <Compile Include="Directories\MonsterModelView.cs" />
     <Compile Include="Encounters\Encounter.cs" />
     <Compile Include="Encounters\EncounterModelView.cs" />
