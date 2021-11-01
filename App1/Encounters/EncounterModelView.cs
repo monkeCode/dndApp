@@ -13,17 +13,17 @@ using DataBaseLib;
 
 namespace App1.Encounters
 {
-    class EncounterModelView : INotifyPropertyChanged
+    class EncounterModelView : INotifyPropertyChanged, IDisposable
     {
-        public MonsterModelView MonsterModel { get; } = new MonsterModelView();
+        public MonsterModelView MonsterModel { get; } = new();
         public ObservableCollection<BattleMonster> MonsterList { get; private set; } = new();
-        public ObservableCollection<Encounter> Encounters { get; set; } = new ObservableCollection<Encounter>();
+        public ObservableCollection<Encounter> Encounters { get; set; } = new();
 
-        private Group playerGroup;
+        private Group _playerGroup;
         public Group PlayerGroup
         {
-            get { return playerGroup; }
-            set { playerGroup = value; OnPropertyChanged(); }
+            get { return _playerGroup; }
+            set { _playerGroup = value; OnPropertyChanged(); }
         }
 
         private int _exModifierOffset = 0;
@@ -50,7 +50,6 @@ namespace App1.Encounters
             ChangeGroup(2);
             GetMonsterData();
         }
-
         public void GetMonsterData()
         {
             MonsterModel.GetListData();
@@ -78,9 +77,9 @@ namespace App1.Encounters
         public void ChangeGroup(int groupId)
         {
             PlayerGroup = new Group(groupId);
-            if (playerGroup.Players.Count < 3)
+            if (_playerGroup.Players.Count < 3)
                 _exModifierOffset = 1;
-            else if (playerGroup.Players.Count > 5)
+            else if (_playerGroup.Players.Count > 5)
                 _exModifierOffset = -1;
             else
                 _exModifierOffset = 0;
@@ -88,7 +87,7 @@ namespace App1.Encounters
            Encounters.Clear();
             foreach (var item in DataAccess.GetData("Encounters", $"Group_id = {groupId}", null, "*"))
             {
-                Encounter e = new Encounter((int) (long) item[2], item[1].ToString(), _exModifierOffset, playerGroup);
+                Encounter e = new Encounter((int) (long) item[2], item[1].ToString(), _exModifierOffset, _playerGroup);
                 e.DeleteEvent += DeleteElement;
                 Encounters.Add(e);
                 
@@ -98,7 +97,7 @@ namespace App1.Encounters
         private void SetDailyEx()
         {
             int res = 0;
-            foreach (Player player in playerGroup.Players)
+            foreach (Player player in _playerGroup.Players)
             {
                 res += player.Lvl switch
                 {
@@ -129,7 +128,7 @@ namespace App1.Encounters
             DailyEx = res;
         }
 
-        public void SaveEncounters()
+        private void SaveEncounters()
         {
             string req = "";
             foreach (var E in Encounters)
@@ -145,17 +144,17 @@ namespace App1.Encounters
         CustomCommand _addNewEncounter;
         public CustomCommand AddEncounterCommand { get
         {
-            return _addNewEncounter ?? (_addNewEncounter = new CustomCommand(obj => { AddEncounter(); }, obj => true));
+            return _addNewEncounter ??= new CustomCommand(obj => { AddEncounter(); }, _ => true);
         } }
         private void AddEncounter()
         {
-            DataAccess.AddData("Encounters", new[] { "Group_id" }, new[] { (object)playerGroup.Id });
-            foreach (var item in DataAccess.GetData("Encounters", $"Group_id = {playerGroup.Id}", null, "*"))
+            DataAccess.AddData("Encounters", new[] { "Group_id" }, new[] { (object)_playerGroup.Id });
+            foreach (var item in DataAccess.GetData("Encounters", $"Group_id = {_playerGroup.Id}", null, "*"))
             {
                 if (Encounters.FirstOrDefault(obj => obj.Id == (int) (long) item[2]) == null)
                 {
                     Encounter e = new Encounter((int) (long) item[2], item[1].ToString(), _exModifierOffset,
-                        playerGroup);
+                        _playerGroup);
                     Encounters.Add(e);
                     e.DeleteEvent += DeleteElement;
 
@@ -174,6 +173,11 @@ namespace App1.Encounters
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public void Dispose()
+        {
+            SaveEncounters();
         }
     }
 }

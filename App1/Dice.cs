@@ -22,11 +22,11 @@ namespace App1
 
         private int Calculate(string roll)
         {
-            if (Regex.IsMatch(roll.Trim(), @"[\D-[d\|k\|д\|к\|\+\|\-\|\s]]"))
+            if (Regex.IsMatch(roll.Trim().ToLower(), @"[\D-[d\|k\|д\|к\|\+\|\-\|\s]]"))
                 throw new ArgumentException();
-            if (Regex.IsMatch(roll.Trim(), @"^\d*[d\|k\|д\|к]\d*$"))
+            if (Regex.IsMatch(roll.Trim().ToLower(), @"^\d*[d\|k\|д\|к]\d*$"))
             {
-                string[] str = Regex.Split(roll, @"[d\|k\|д\|к]");
+                string[] str = Regex.Split(roll.ToLower(), @"[d\|k\|д\|к]");
                 int count = int.Parse(str[0]);
                 int dice = int.Parse(str[1]);
                 int result = 0;

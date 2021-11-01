@@ -41,32 +41,38 @@ namespace App1.Encounters
 
         private void SourceList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            (DataContext as EncounterModelView).MonsterModel.SelectedSource = (sender as ListView).SelectedItems;
+            (DataContext as EncounterModelView).GetMonsterData();
         }
 
         private void HabbiatList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            (DataContext as EncounterModelView).MonsterModel.SelectedHabitat = (sender as ListView).SelectedItems;
+            (DataContext as EncounterModelView).GetMonsterData();
         }
 
         private void SizeList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            (DataContext as EncounterModelView).MonsterModel.SelectedSize = (sender as ListView).SelectedItems;
+            (DataContext as EncounterModelView).GetMonsterData();
         }
 
         private void ChallengeList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            (DataContext as EncounterModelView).MonsterModel.SelectedRate = (sender as ListView).SelectedItems;
+            (DataContext as EncounterModelView).GetMonsterData();
         }
 
         private void TypeList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            (DataContext as EncounterModelView).MonsterModel.SelectedType = (sender as ListView).SelectedItems;
+            (DataContext as EncounterModelView).GetMonsterData();
         }
 
         private void searchBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-
+            (DataContext as EncounterModelView).MonsterModel.SubstringFilter = (sender as TextBox).Text;
+            (DataContext as EncounterModelView).GetMonsterData();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -132,8 +138,9 @@ namespace App1.Encounters
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            (DataContext as EncounterModelView).SaveEncounters();
+            (DataContext as EncounterModelView).Dispose();
             base.OnNavigatedFrom(e);
         }
+
     }
 }

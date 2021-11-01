@@ -84,6 +84,7 @@ namespace App1
         {
             var deferral = e.SuspendingOperation.GetDeferral();
             //TODO: Сохранить состояние приложения и остановить все фоновые операции
+            GC.Collect();
             deferral.Complete();
         }
     }
