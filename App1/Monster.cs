@@ -1,6 +1,4 @@
-﻿using Microsoft.Toolkit.Uwp.UI.Controls.TextToolbarSymbols;
-
-namespace App1
+﻿namespace App1
 {
     public class Monster
     {
@@ -13,10 +11,10 @@ namespace App1
             Challenge switch
             {
                 "0" => 0,
-                "1/8" =>25,
+                "1/8" => 25,
                 "1/4" => 50,
                 "1/2" => 100,
-                "1" =>200,
+                "1" => 200,
                 "2" => 450,
                 "3" => 700,
                 "4" => 1100,

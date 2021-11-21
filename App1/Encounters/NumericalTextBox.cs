@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 
@@ -18,7 +14,7 @@ namespace App1
             Windows.System.VirtualKey.Left,
             Windows.System.VirtualKey.Right,
             Windows.System.VirtualKey.Back
-           
+
         };
         protected override void OnKeyDown(KeyRoutedEventArgs e)
         {
@@ -32,4 +28,4 @@ namespace App1
             e.Handled = true;
         }
     }
-	}
+}

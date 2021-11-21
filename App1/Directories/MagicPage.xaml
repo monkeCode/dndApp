@@ -40,7 +40,7 @@
                     </Flyout>
                 </Button.Flyout>
             </Button>
-            <Button Margin="0,0,10,10" Click="DropFilters" Command="{Binding DropFiltersCommand}">Сбросить</Button>
+            <Button Margin="0,0,10,10" Click="DropFilters">Сбросить</Button>
         </StackPanel>
         <ListView Grid.Row="1" HorizontalAlignment="Stretch" ItemsSource="{Binding DataCollection }" ItemClick="ItemsPanel_ItemClick" IsItemClickEnabled="True">
             <ListView.ItemContainerStyle>

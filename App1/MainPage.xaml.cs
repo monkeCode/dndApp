@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using App1.Directories;
+using App1.Encounters;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Windows.UI.Xaml.Controls;
-using App1.Directories;
-using App1.Encounters;
 
 // Документацию по шаблону элемента "Пустая страница" см. по адресу https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x419
 

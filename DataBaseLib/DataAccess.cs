@@ -37,7 +37,7 @@ namespace DataBaseLib
             }
         }
 
-        public static void AddData(string table, string[] rows ,object[] input)
+        public static void AddData(string table, string[] rows, object[] input)
         {
             string dbpath = Path.Combine(ApplicationData.Current.LocalFolder.Path, DB_NAME);
             using (SqliteConnection db =
@@ -46,16 +46,16 @@ namespace DataBaseLib
                 db.Open();
                 string rowEx = "";
                 string param = "";
-                if(rows != null)
+                if (rows != null)
                 {
-                    foreach(var i in rows)
+                    foreach (var i in rows)
                     {
                         rowEx += i + ",";
                     }
                     rowEx = "(" + rowEx.Trim(',') + ")";
                 }
 
-                foreach(var i in input)
+                foreach (var i in input)
                 {
                     param += i.ToString() + ',';
                 }

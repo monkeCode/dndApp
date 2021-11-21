@@ -14,9 +14,9 @@ namespace App1
             whereReq = new string[3];
         }
 
-        public IList<object> SelectedType { set { whereReq[0] =value.Count > 0 ? "Type IN ( " + ChangeSelect(value) : null; GetListData(); } }
-        public IList<object> SelectedQuality { set { whereReq[1] = value.Count > 0 ? "Quality IN ( " + ChangeSelect(value.Select(i => (object)StaticValues.magicItemQality[i.ToString()]).ToList()):null; GetListData(); } }
-        public IList<object> SelectedSource { set { whereReq[2] =value.Count>0? "Source IN ( " + ChangeSelect(value):null; GetListData(); } }
+        public IList<object> SelectedType { set { whereReq[0] = value.Count > 0 ? "Type IN ( " + ChangeSelect(value) : null; GetListData(); } }
+        public IList<object> SelectedQuality { set { whereReq[1] = value.Count > 0 ? "Quality IN ( " + ChangeSelect(value.Select(i => (object)StaticValues.magicItemQality[i.ToString()]).ToList()) : null; GetListData(); } }
+        public IList<object> SelectedSource { set { whereReq[2] = value.Count > 0 ? "Source IN ( " + ChangeSelect(value) : null; GetListData(); } }
         public override void GetListData()
         {
             DataCollection.Clear();

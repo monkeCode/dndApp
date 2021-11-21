@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Windows.Networking.PushNotifications;
-using Microsoft.Toolkit.Uwp.UI.Controls.TextToolbarSymbols;
 
 namespace App1
 {
@@ -66,7 +64,7 @@ namespace App1
             {"Огромный", 4},
             {"Исполинский", 5},
         };
-        public  static List<string> MonsterSize
+        public static List<string> MonsterSize
         {
             get => monsterSize.Keys.ToList();
         }

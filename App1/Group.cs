@@ -58,7 +58,7 @@ namespace App1
         {
             foreach (var player in Players)
             {
-                Easy += _difficultyList[player.Lvl - 1,0];
+                Easy += _difficultyList[player.Lvl - 1, 0];
                 Medium += _difficultyList[player.Lvl - 1, 1];
                 Hard += _difficultyList[player.Lvl - 1, 2];
                 Deadly += _difficultyList[player.Lvl - 1, 3];

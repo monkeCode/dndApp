@@ -3,10 +3,8 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Navigation;
-using Microsoft.UI.Xaml.Controls;
 
 // Документацию по шаблону элемента "Пустая страница" см. по адресу https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -51,14 +49,14 @@ namespace App1.Directories
             }
         }
 
-      
+
 
         private void Hyperlink_rollDice(Hyperlink sender, HyperlinkClickEventArgs args)
         {
-           var match =  Regex.Match((sender.Inlines[0] as Run).Text, Dice.DICE_PATTERN);
+            var match = Regex.Match((sender.Inlines[0] as Run).Text, Dice.DICE_PATTERN);
             Dice dice = new Dice(match.Value);
 
-            (sender.Inlines[0] as Run).Text = match.Value +" = "+dice.Result;
+            (sender.Inlines[0] as Run).Text = match.Value + " = " + dice.Result;
         }
 
         private void Hyperlink_Click(Hyperlink sender, HyperlinkClickEventArgs args)

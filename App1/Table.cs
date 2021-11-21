@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
-using App1.WorkShop;
+﻿using App1.WorkShop;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using System.Drawing;
-using System;
 
 namespace App1
 {
@@ -17,7 +16,7 @@ namespace App1
 
         public Table(object[] dataList)
         {
-            Rows = (int) (long) dataList[1];
+            Rows = (int)(long)dataList[1];
             Columns = (int)(long)dataList[2];
             Fields = new ObservableCollection<string>(dataList[3].ToString().Split('@').ToList());
         }

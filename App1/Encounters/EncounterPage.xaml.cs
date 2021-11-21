@@ -1,17 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 // Документацию по шаблону элемента "Пустая страница" см. по адресу https://go.microsoft.com/fwlink/?LinkId=234238
@@ -23,7 +13,7 @@ namespace App1.Encounters
     /// </summary>
     public sealed partial class EncounterPage : Page
     {
-        
+
         private List<BattleMonster> dragableItems = new List<BattleMonster>();
         ListView originalSource;
         public EncounterPage()
@@ -83,8 +73,8 @@ namespace App1.Encounters
 
         private void ListView_DragOver(object sender, DragEventArgs e)
         {
-           if(originalSource != sender)
-            e.AcceptedOperation = Windows.ApplicationModel.DataTransfer.DataPackageOperation.Move;
+            if (originalSource != sender)
+                e.AcceptedOperation = Windows.ApplicationModel.DataTransfer.DataPackageOperation.Move;
         }
 
 
@@ -93,7 +83,7 @@ namespace App1.Encounters
         {
 
             dragableItems.Clear();
-            foreach(var i in e.Items)
+            foreach (var i in e.Items)
             {
                 dragableItems.Add((BattleMonster)i);
                 originalSource = sender as ListView;
@@ -107,11 +97,11 @@ namespace App1.Encounters
             foreach (var i in dragableItems)
             {
                 if (((lv.DataContext) as Encounter).Monsters.FirstOrDefault(monster => monster.Monster.Id == i.Monster.Id) == null)
-                    ((lv.DataContext) as Encounter).Monsters.Add(new BattleMonster() { Monster = i.Monster, Quantity = i.Quantity});
+                    ((lv.DataContext) as Encounter).Monsters.Add(new BattleMonster() { Monster = i.Monster, Quantity = i.Quantity });
                 else
                     ((lv.DataContext) as Encounter).Monsters.First(monster => monster.Monster.Id == i.Monster.Id).Quantity++;
-                       var obj = originalSource.DataContext as Encounter;
-                    if (obj != null)
+                var obj = originalSource.DataContext as Encounter;
+                if (obj != null)
                     ((originalSource.DataContext) as Encounter).Monsters.Remove(i);
 
             }
@@ -120,7 +110,7 @@ namespace App1.Encounters
 
         private void ListView_Drop_1(object sender, DragEventArgs e)
         {
-            
+
 
             foreach (var i in dragableItems)
             {
@@ -132,7 +122,7 @@ namespace App1.Encounters
         private void ListView_DragOver_1(object sender, DragEventArgs e)
         {
 
-                if(sender != originalSource)
+            if (sender != originalSource)
                 e.AcceptedOperation = Windows.ApplicationModel.DataTransfer.DataPackageOperation.Move;
         }
 
