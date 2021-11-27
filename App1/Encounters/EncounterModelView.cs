@@ -73,21 +73,28 @@ namespace App1.Encounters
         }
         public void ChangeGroup(int groupId)
         {
-            PlayerGroup = new Group(groupId);
-            if (_playerGroup.Players.Count < 3)
-                _exModifierOffset = 1;
-            else if (_playerGroup.Players.Count > 5)
-                _exModifierOffset = -1;
-            else
-                _exModifierOffset = 0;
-            SetDailyEx();
-            Encounters.Clear();
-            foreach (var item in DataAccess.GetData("Encounters", $"Group_id = {groupId}", null, "*"))
+            try
             {
-                Encounter e = new Encounter((int)(long)item[2], item[1].ToString(), _exModifierOffset, _playerGroup);
-                e.DeleteEvent += DeleteElement;
-                Encounters.Add(e);
+                SaveEncounters();
+            }
+            finally
+            {
+                PlayerGroup = new Group(groupId);
+                if (_playerGroup.Players.Count < 3)
+                    _exModifierOffset = 1;
+                else if (_playerGroup.Players.Count > 5)
+                    _exModifierOffset = -1;
+                else
+                    _exModifierOffset = 0;
+                SetDailyEx();
+                Encounters.Clear();
+                foreach (var item in DataAccess.GetData("Encounters", $"Group_id = {groupId}", null, "*"))
+                {
+                    Encounter e = new Encounter((int)(long)item[2], item[1].ToString(), _exModifierOffset, _playerGroup);
+                    e.DeleteEvent += DeleteElement;
+                    Encounters.Add(e);
 
+                }
             }
         }
 
@@ -134,7 +141,8 @@ namespace App1.Encounters
                 req += E.SaveData() + ";";
             }
             if (req != "")
-                DataAccess.RawRequest(req);
+               // DataAccess.RawRequest(req);
+               DataAccess.RawRequestAsyns(req);
         }
 
 

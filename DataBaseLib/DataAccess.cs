@@ -168,5 +168,10 @@ namespace DataBaseLib
                 return query;
             }
         }
+
+        public static async Task<SqliteDataReader> RawRequestAsyns(string request)
+        {
+            return await Task.Run(() => RawRequest(request));
+        }
     }
 }
