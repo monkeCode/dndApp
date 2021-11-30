@@ -44,9 +44,11 @@ namespace App1.Encounters
 
         public EncounterModelView()
         {
+            // TODO: load active group
             ChangeGroup(2);
             GetMonsterData();
         }
+
         public void GetMonsterData()
         {
             MonsterModel.GetListData();

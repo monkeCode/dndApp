@@ -1,0 +1,55 @@
+﻿<Page
+    x:Class="App1.GroupMenu.GroupPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:App1.GroupMenu"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:x1="using:App1"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.DataContext>
+        <local:GroupMV/>
+    </Page.DataContext>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.7*"/>
+            <ColumnDefinition MaxWidth="400" MinWidth="200" Width="0.3*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel>
+            <TextBlock Style="{StaticResource TitleTextBlockStyle}" HorizontalAlignment="Center" TextDecorations="Underline">Группы</TextBlock>
+            <ListView ItemsSource="{Binding Groups }">
+                <ListView.DataContext>
+                    <DataTemplate x:DataType="x1:Group">
+                        <TextBlock Text="{x:Bind Name}"></TextBlock>
+                    </DataTemplate>
+                </ListView.DataContext>
+            </ListView>
+        </StackPanel>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <StackPanel>
+                <TextBlock Style="{StaticResource TitleTextBlockStyle}" HorizontalAlignment="Center" TextDecorations="Underline">Игроки без группы</TextBlock>
+                <ListView>
+                    <ListView.DataContext>
+                        <DataTemplate x:DataType="x1:Player">
+                            <StackPanel Orientation="Horizontal">
+                                <StackPanel>
+                                    <TextBlock Text="{x:Bind Name}"/>
+                                    <TextBlock Text="{x:Bind PlayerName}"/>
+                                </StackPanel>
+                                <StackPanel>
+                                    <TextBlock Text="{x:Bind Class}"/>
+                                    <TextBlock Text="{x:Bind Lvl}"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.DataContext>
+                </ListView>
+            </StackPanel>
+            <Button HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Row="1">Добавить игрока</Button>
+        </Grid>
+    </Grid>
+</Page>

@@ -6,9 +6,6 @@ using Windows.UI.Xaml.Data;
 
 namespace App1
 {
-    /// <summary>
-    /// Пустая страница, которую можно использовать саму по себе или для перехода внутри фрейма.
-    /// </summary>
     public sealed partial class MagicPage : Page
     {
         public MagicPage()

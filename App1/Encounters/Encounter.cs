@@ -19,10 +19,10 @@ namespace App1.Encounters
             {
                 _name = value;
                 if (!string.IsNullOrEmpty(_name.Trim()))
-                    DataAccess.RawRequest($"UPDATE Encounters SET Name = \'{_name}\' WHERE _Id = {Id}");
+                    DataAccess.RawRequest($"UPDATE Encounters SET Name = \'{_name}\' WHERE _Id = {Id}").Close();
                 else
                 {
-                    DataAccess.RawRequest($"UPDATE Encounters SET Name = \'Боевая сцена\' WHERE _Id = {Id}");
+                    DataAccess.RawRequest($"UPDATE Encounters SET Name = \'Боевая сцена\' WHERE _Id = {Id}").Close();
                 }
             }
         }
@@ -221,43 +221,6 @@ namespace App1.Encounters
                 DataAccess.RawRequest($"DELETE FROM Encounters WHERE _id = {Id}");
                 DeleteEvent.Invoke(Id);
             });
-        }
-    }
-    public class BattleMonster : INotifyPropertyChanged
-    {
-        public Monster Monster { get; set; }
-        private int quantity;
-        public int Quantity { get => quantity; set { quantity = value > 99 ? 99 : value; OnPropertyChanged(); } }
-
-        CustomCommand positiveCommand;
-        public CustomCommand PositiveCommand
-        {
-            get
-            {
-                if (positiveCommand == null)
-                {
-                    positiveCommand = new CustomCommand(delegate (object obj) { Quantity++; }, delegate (object obj) { return true; });
-                }
-                return positiveCommand;
-            }
-        }
-        CustomCommand negativeCommand;
-        public CustomCommand NegativeCommand
-        {
-            get
-            {
-                if (negativeCommand == null)
-                {
-                    negativeCommand = new CustomCommand(delegate (object obj) { Quantity--; }, delegate (object obj) { return true; });
-                }
-                return negativeCommand;
-            }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

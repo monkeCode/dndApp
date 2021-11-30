@@ -62,7 +62,7 @@ namespace App1.Encounters
         private void searchBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             (DataContext as EncounterModelView).MonsterModel.SubstringFilter = (sender as TextBox).Text;
-            (DataContext as EncounterModelView).GetMonsterData();
+           (DataContext as EncounterModelView).GetMonsterData();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

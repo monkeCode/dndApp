@@ -1,5 +1,6 @@
 ﻿using App1.Directories;
 using App1.Encounters;
+using App1.GroupMenu;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -24,7 +25,8 @@ namespace App1
            ("MagicItems", typeof(MagicPage)),
            ("Workshop", typeof(Workshop)),
            ("Monsters", typeof(BestiaryPage)),
-           ("Encounters", typeof(EncounterPage))
+           ("Encounters", typeof(EncounterPage)),
+            ("GroupManager", typeof(GroupPage))
         };
 
         private void navPanel_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
