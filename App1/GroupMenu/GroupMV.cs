@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace App1.GroupMenu
 {
-    internal class GroupMV
+    class GroupMV
     {
         public ObservableCollection<Player> PlayerWithoutGroup { get; } = new ObservableCollection<Player>();
-        public ObservableCollection<Group> Groups { get; } = new ObservableCollection<Group>();
+        public ObservableCollection<Group> Groups { get; set; } = new ObservableCollection<Group>();
        public GroupMV()
        {
             foreach(var groups in DataBaseLib.DataAccess.GetData("SELECT _id FROM Parties"))

@@ -24,8 +24,8 @@ namespace App1.GroupMenu
     {
         public GroupPage()
         {
+            DataContext = new GroupMV();
             this.InitializeComponent();
-           // DataContext = new GroupMV();
         }
     }
 }

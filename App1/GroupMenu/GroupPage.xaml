@@ -7,9 +7,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:x1="using:App1"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-    <Page.DataContext>
-        <local:GroupMV/>
-    </Page.DataContext>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.7*"/>
@@ -17,12 +14,31 @@
         </Grid.ColumnDefinitions>
         <StackPanel>
             <TextBlock Style="{StaticResource TitleTextBlockStyle}" HorizontalAlignment="Center" TextDecorations="Underline">Группы</TextBlock>
-            <ListView ItemsSource="{Binding Groups }">
-                <ListView.DataContext>
+            <ListView ItemsSource="{Binding Groups}" Style="{StaticResource ListViewStyle}" ItemContainerStyle="{StaticResource ListViewItemsStyle}">
+                <ListView.ItemTemplate>
                     <DataTemplate x:DataType="x1:Group">
-                        <TextBlock Text="{x:Bind Name}"></TextBlock>
+                        <StackPanel>
+                            <TextBlock Text="{x:Bind Name}">
+                            </TextBlock>
+                            <ListView Margin="10,0,0,0" ItemsSource="{x:Bind Players}" ItemContainerStyle="{StaticResource ListViewItemsStyle}">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate x:DataType="x1:Player">
+                                        <StackPanel Orientation="Horizontal">
+                                            <StackPanel>
+                                                <TextBlock Text="{x:Bind Name}"/>
+                                                <TextBlock Text="{x:Bind PlayerName}"/>
+                                            </StackPanel>
+                                            <StackPanel HorizontalAlignment="Right">
+                                                <TextBlock Text="{x:Bind Class}"/>
+                                                <TextBlock Text="{x:Bind Lvl}"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </StackPanel>
                     </DataTemplate>
-                </ListView.DataContext>
+                </ListView.ItemTemplate>
             </ListView>
         </StackPanel>
         <Grid Grid.Column="1">
@@ -33,7 +49,7 @@
             <StackPanel>
                 <TextBlock Style="{StaticResource TitleTextBlockStyle}" HorizontalAlignment="Center" TextDecorations="Underline">Игроки без группы</TextBlock>
                 <ListView>
-                    <ListView.DataContext>
+                    <ListView.ItemTemplate>
                         <DataTemplate x:DataType="x1:Player">
                             <StackPanel Orientation="Horizontal">
                                 <StackPanel>
@@ -46,7 +62,7 @@
                                 </StackPanel>
                             </StackPanel>
                         </DataTemplate>
-                    </ListView.DataContext>
+                    </ListView.ItemTemplate>
                 </ListView>
             </StackPanel>
             <Button HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Row="1">Добавить игрока</Button>

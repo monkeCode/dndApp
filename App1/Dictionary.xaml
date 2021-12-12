@@ -32,4 +32,10 @@
         <GradientStop Color="{StaticResource SystemBaseHighColor}" Offset="1" />
     </LinearGradientBrush>
     <SolidColorBrush x:Key="AccentDark1" Color="{ThemeResource SystemAccentColorLight1}"/>
+    <LinearGradientBrush x:Key="UnderlineBrush" EndPoint="1,0">
+        <GradientStop Offset="0"></GradientStop>
+        <GradientStop Offset="0.25" Color="{ThemeResource SystemAccentColor}"></GradientStop>
+        <GradientStop Offset="0.75" Color="{ThemeResource SystemAccentColor}"></GradientStop>
+        <GradientStop Offset="1"></GradientStop>
+    </LinearGradientBrush>
 </ResourceDictionary>
