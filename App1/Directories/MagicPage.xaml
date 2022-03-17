@@ -50,7 +50,7 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <TextBlock TextAlignment="Center" Style="{StaticResource SubtitleTextBlockStyle}" TextDecorations="Underline">Название</TextBlock>
+                <TextBlock TextAlignment="Center" Style="{StaticResource SubtitleTextBlockStyle}" TextDecorations="Underline"  Text="Название"></TextBlock>
                 <TextBlock Grid.Column="1" TextAlignment="Center" Style="{StaticResource SubtitleTextBlockStyle}" TextDecorations="Underline">Качество</TextBlock>
                 <TextBlock Grid.Column="2"  TextAlignment="Center" Style="{StaticResource SubtitleTextBlockStyle}" TextDecorations="Underline">Настройка</TextBlock>
                 <TextBlock Grid.Column="3"  TextAlignment="Center" Style="{StaticResource SubtitleTextBlockStyle}" TextDecorations="Underline">Тип</TextBlock>

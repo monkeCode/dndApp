@@ -33,9 +33,15 @@ namespace App1
             for (int r = 0; r < this.Rows; r++)
                 for (int c = 0; c < this.Columns; c++)
                 {
+                    int val = (int)dict["tableBorderSize"];
+                    Thickness thickness = new Thickness(0,0,val,val);
+                    if (r == 0)
+                        thickness.Top = val;
+                    if (c == 0)
+                        thickness.Left = val;
                     Border border = new Border()
                     {
-                        BorderThickness = new Thickness(1),
+                        BorderThickness = thickness,
                         BorderBrush = (Windows.UI.Xaml.Media.Brush)dict["AccentDark1"],
                         Padding = new Thickness(5),
                         VerticalAlignment = VerticalAlignment.Stretch

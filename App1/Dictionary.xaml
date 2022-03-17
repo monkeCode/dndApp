@@ -38,4 +38,5 @@
         <GradientStop Offset="0.75" Color="{ThemeResource SystemAccentColor}"></GradientStop>
         <GradientStop Offset="1"></GradientStop>
     </LinearGradientBrush>
+    <x:Int32 x:Key="tableBorderSize">1</x:Int32>
 </ResourceDictionary>

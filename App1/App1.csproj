@@ -148,6 +148,11 @@
     <Compile Include="Model\Monster.cs" />
     <Compile Include="Model\Player.cs" />
     <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="Quest\QuestModel.cs" />
+    <Compile Include="Quest\QuestPage.xaml.cs">
+      <DependentUpon>QuestPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Quest\QuestsMV.cs" />
     <Compile Include="SizeConverter.cs" />
     <Compile Include="Table.cs" />
     <Compile Include="Model\ExtendedMagicItem.cs" />
@@ -213,6 +218,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="GroupMenu\GroupPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Quest\QuestPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
