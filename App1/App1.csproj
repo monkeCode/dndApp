@@ -131,7 +131,7 @@
     <Compile Include="Directories\BestiaryPage.xaml.cs">
       <DependentUpon>BestiaryPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CustomCommand.cs" />
+    <Compile Include="Help and Ext\CustomCommand.cs" />
     <Compile Include="Directories\MonsterModelView.cs" />
     <Compile Include="Encounters\Encounter.cs" />
     <Compile Include="Encounters\EncounterModelView.cs" />
@@ -142,7 +142,7 @@
     <Compile Include="Group.cs" />
     <Compile Include="Monster.cs" />
     <Compile Include="Properties\Annotations.cs" />
-    <Compile Include="SizeConverter.cs" />
+    <Compile Include="Help and Ext\SizeConverter.cs" />
     <Compile Include="Table.cs" />
     <Compile Include="ExtendedMagicItem.cs" />
     <Compile Include="Directories\MagicItemExtendedPage.xaml.cs">
@@ -152,9 +152,9 @@
       <DependentUpon>CreateItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="Directories\DirectoriesModelView.cs" />
-    <Compile Include="Extensions.cs" />
+    <Compile Include="Help and Ext\Extensions.cs" />
     <Compile Include="Directories\MagicItemsModelView.cs" />
-    <Compile Include="RarityConvector.cs" />
+    <Compile Include="Help and Ext\RarityConvector.cs" />
     <Compile Include="MagicItem.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -163,8 +163,8 @@
       <DependentUpon>MagicPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StaticValues.cs" />
-    <Compile Include="Formator.cs" />
+    <Compile Include="Help and Ext\StaticValues.cs" />
+    <Compile Include="Help and Ext\Formator.cs" />
     <Compile Include="Link.cs" />
     <Compile Include="WorkShop\Workshop.xaml.cs">
       <DependentUpon>Workshop.xaml</DependentUpon>
