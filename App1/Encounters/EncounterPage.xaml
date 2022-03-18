@@ -27,48 +27,52 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <StackPanel >
-                <TextBlock Style="{StaticResource TitleTextBlockStyle}" HorizontalAlignment="Center" TextDecorations="Underline">Группа</TextBlock>
-                <StackPanel Margin="0,10,0,10">
-                    <RelativePanel>
-                        <TextBlock Margin="10" Text="Дневной бюджет:" />
-                        <TextBlock  Text="{Binding DailyEx}" RelativePanel.AlignRightWithPanel="True" Margin="10" HorizontalAlignment="Right" Foreground="{ThemeResource AccentDark1}" FontWeight="SemiBold"/>
-                    </RelativePanel>
-                    <StackPanel>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Margin="10,0,0,5">
+            <controls:Expander >
+                <controls:Expander.Header>
+                    <TextBlock Style="{StaticResource TitleTextBlockStyle}" HorizontalAlignment="Center" TextDecorations="Underline">Группа</TextBlock>
+                </controls:Expander.Header>
+                <controls:Expander.Content>
+                <StackPanel >
+                    <StackPanel Margin="0,10,0,10">
+                        <RelativePanel>
+                            <TextBlock Margin="10" Text="Дневной бюджет:" />
+                            <TextBlock  Text="{Binding DailyEx}" RelativePanel.AlignRightWithPanel="True" Margin="10" HorizontalAlignment="Right" Foreground="{ThemeResource AccentDark1}" FontWeight="SemiBold"/>
+                        </RelativePanel>
+                        <StackPanel>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Margin="10,0,0,5">
                                 <Run Text="Легко: "></Run>
                                 <Run Text="{Binding PlayerGroup.Easy}" Foreground="{ThemeResource AccentDark1}"></Run>
-                            </TextBlock>
-                            <TextBlock Grid.Column="1" Margin="10,0,0,5">
+                                </TextBlock>
+                                <TextBlock Grid.Column="1" Margin="10,0,0,5">
                                 <Run Text="Средне: "></Run>
                                 <Run Text="{Binding PlayerGroup.Medium}" Foreground="{ThemeResource AccentDark1}"></Run>
                                 </TextBlock>
-                        </Grid>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Margin="10,0,0,5">
+                            </Grid>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Margin="10,0,0,5">
                                 <Run Text="Трудно: "></Run>
                                 <Run Text="{Binding PlayerGroup.Hard}" Foreground="{ThemeResource AccentDark1}"></Run>
-                            </TextBlock>
-                            <TextBlock Grid.Column="1" Margin="10,0,0,0">
+                                </TextBlock>
+                                <TextBlock Grid.Column="1" Margin="10,0,0,0">
                                 <Run Text="Смертельно: "></Run>
                                 <Run Text="{Binding PlayerGroup.Deadly}" Foreground="{ThemeResource AccentDark1}"></Run>
-                            </TextBlock>
-                        </Grid>
+                                </TextBlock>
+                            </Grid>
 
-                       
+
+                        </StackPanel>
                     </StackPanel>
-                </StackPanel>
-                <Button Margin="10" Content="{Binding PlayerGroup.Name}" HorizontalAlignment="Center"></Button>
-                <!--<ListView ItemsSource="{Binding PlayerGroup.Players}" Margin="10,5,0,10">
+                    <Button Margin="10" Content="{Binding PlayerGroup.Name}" HorizontalAlignment="Center"></Button>
+                    <!--<ListView ItemsSource="{Binding PlayerGroup.Players}" Margin="10,5,0,10">
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="app1:Player">
                             <StackPanel Margin="10,0,0,10" Orientation="Horizontal">
@@ -83,7 +87,9 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>-->
-            </StackPanel>
+                </StackPanel>
+                </controls:Expander.Content>
+            </controls:Expander>
             <Grid Grid.Row="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>

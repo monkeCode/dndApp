@@ -11,33 +11,35 @@ namespace DataBaseLib
     static public class DataAccess
     {
         private const string DB_NAME = "DataBase.db";
-        private const int DB_VERSION = 10;
-
-        static DataAccess() => InitializeDatabase();
+        private const int DB_VERSION = 11;
+       static public event Action NewDataLoaded;
+        static DataAccess() { InitializeDatabase(); }
 
         public async static Task InitializeDatabase()
         {
             ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+           
+            if (localSettings.Values["DataBaseVercion"] == null || (int)localSettings.Values["DataBaseVercion"] != DB_VERSION)
+            {
+                var storage = await ApplicationData.Current.LocalFolder.TryGetItemAsync(DB_NAME);
+                if (storage != null)
+                    File.Delete(storage.Path);
+                //StorageFile databaseFile = await Package.Current.InstalledLocation.GetFileAsync(/*$"Assets/*/DB_NAME/*"*/);
+                ////await databaseFile.CopyAsync(ApplicationData.Current.LocalFolder);
+                //File.Copy(databaseFile.Path, ApplicationData.Current.LocalFolder.Path + $"\\{DB_NAME}");
+                //localSettings.Values["DataBaseVercion"] = DB_VERSION;
+            }
             if (await ApplicationData.Current.LocalFolder.TryGetItemAsync(DB_NAME) == null)
             {
                 StorageFile databaseFile = await Package.Current.InstalledLocation.GetFileAsync(/*$"Assets/*/DB_NAME/*"*/);
                 //await databaseFile.CopyAsync(ApplicationData.Current.LocalFolder);
                 File.Copy(databaseFile.Path, ApplicationData.Current.LocalFolder.Path + $"\\{DB_NAME}");
                 localSettings.Values["DataBaseVercion"] = DB_VERSION;
-            }
-            else if (localSettings.Values["DataBaseVercion"] == null || (int)localSettings.Values["DataBaseVercion"] != DB_VERSION)
-            {
-                var storage = await ApplicationData.Current.LocalFolder.TryGetItemAsync(DB_NAME);
-                if (storage != null)
-                    File.Delete(storage.Path);
-                StorageFile databaseFile = await Package.Current.InstalledLocation.GetFileAsync(/*$"Assets/*/DB_NAME/*"*/);
-                //await databaseFile.CopyAsync(ApplicationData.Current.LocalFolder);
-                File.Copy(databaseFile.Path, ApplicationData.Current.LocalFolder.Path + $"\\{DB_NAME}");
-                localSettings.Values["DataBaseVercion"] = DB_VERSION;
+                NewDataLoaded?.Invoke();
             }
         }
 
-        public static void AddData(string table, string[] rows ,object[] input)
+        public static void AddData(string table, string[] rows, object[] input)
         {
             string dbpath = Path.Combine(ApplicationData.Current.LocalFolder.Path, DB_NAME);
             using (SqliteConnection db =
@@ -46,16 +48,16 @@ namespace DataBaseLib
                 db.Open();
                 string rowEx = "";
                 string param = "";
-                if(rows != null)
+                if (rows != null)
                 {
-                    foreach(var i in rows)
+                    foreach (var i in rows)
                     {
                         rowEx += i + ",";
                     }
                     rowEx = "(" + rowEx.Trim(',') + ")";
                 }
 
-                foreach(var i in input)
+                foreach (var i in input)
                 {
                     param += i.ToString() + ',';
                 }
@@ -167,6 +169,11 @@ namespace DataBaseLib
                 db.Close();
                 return query;
             }
+        }
+
+        public static async Task<SqliteDataReader> RawRequestAsyns(string request)
+        {
+            return await Task.Run(() => RawRequest(request));
         }
     }
 }

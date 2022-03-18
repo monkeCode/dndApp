@@ -1,37 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using App1.Annotations;
+using DataBaseLib;
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Drawing;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.Media.DialProtocol;
-using App1.Annotations;
-using DataBaseLib;
-using Microsoft.Graphics.Canvas.Svg;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
 
 namespace App1.Encounters
 {
-    class Encounter:INotifyPropertyChanged
+    class Encounter : INotifyPropertyChanged
     {
-        
-        public ObservableCollection<BattleMonster> Monsters { get;} = new();
+
+        public ObservableCollection<BattleMonster> Monsters { get; } = new();
         private string _name;
         public string Name
         {
             get => _name;
-            set 
-            { 
+            set
+            {
                 _name = value;
-                if(!string.IsNullOrEmpty(_name.Trim()))
-                DataAccess.RawRequest($"UPDATE Encounters SET Name = \'{_name}\' WHERE _Id = {Id}");
+                if (!string.IsNullOrEmpty(_name.Trim()))
+                    DataAccess.RawRequest($"UPDATE Encounters SET Name = \'{_name}\' WHERE _Id = {Id}").Close();
                 else
                 {
-                    DataAccess.RawRequest($"UPDATE Encounters SET Name = \'Боевая сцена\' WHERE _Id = {Id}");
+                    DataAccess.RawRequest($"UPDATE Encounters SET Name = \'Боевая сцена\' WHERE _Id = {Id}").Close();
                 }
             }
         }
@@ -60,7 +51,7 @@ namespace App1.Encounters
         }
 
         private int _adaptEx;
-        public  int AdaptEx
+        public int AdaptEx
         {
             get => _adaptEx;
             set
@@ -75,7 +66,7 @@ namespace App1.Encounters
         private readonly int _easy;
 
         private float _modificator;
-        public  float Modificator
+        public float Modificator
         {
             get => _modificator;
             set
@@ -95,39 +86,39 @@ namespace App1.Encounters
             _hard = group.Hard;
             Deadly = group.Deadly;
             //иницилизация монстров из бд
-            foreach (var item in DataAccess.GetData("Monsters", $"_id IN (SELECT EncountersToMonsters.Monster_Id FROM EncountersToMonsters WHERE Encounter_Id = {id} )",null,"*"))
+            foreach (var item in DataAccess.GetData("Monsters", $"_id IN (SELECT EncountersToMonsters.Monster_Id FROM EncountersToMonsters WHERE Encounter_Id = {id} )", null, "*"))
             {
-                int MonsterId = (int) (long) item[0];
+                int MonsterId = (int)(long)item[0];
                 Monsters.Add(new BattleMonster()
                 {
                     Monster = new Monster()
                     {
-                        Id =MonsterId,
+                        Id = MonsterId,
                         Name = item[1].ToString(),
                         Size = (int)(long)item[2],
                         Type = item[3].ToString(),
                         Challenge = item[5].ToString()
                     },
-                    Quantity = (int)(long)DataAccess.GetData("EncountersToMonsters", $"Encounter_Id = {id} AND Monster_Id = {MonsterId}",null, "Monster_Quantity")[0][0]
+                    Quantity = (int)(long)DataAccess.GetData("EncountersToMonsters", $"Encounter_Id = {id} AND Monster_Id = {MonsterId}", null, "Monster_Quantity")[0][0]
 
                 });
-                
+
             }
             //обновление сложности
             //SetDificulty();
         }
         private void Monsters_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            if(e.NewItems != null)
-            foreach(BattleMonster i in e.NewItems)
-                i.PropertyChanged += delegate (object sender, PropertyChangedEventArgs args) { if (args.PropertyName == "Quantity") MonstersChanged((sender as BattleMonster)); };
+            if (e.NewItems != null)
+                foreach (BattleMonster i in e.NewItems)
+                    i.PropertyChanged += delegate (object sender, PropertyChangedEventArgs args) { if (args.PropertyName == "Quantity") MonstersChanged((sender as BattleMonster)); };
 
             SetDificulty();
         }
 
         private void MonstersChanged(BattleMonster monster)
         {
-            if(monster.Quantity <1)
+            if (monster.Quantity < 1)
             {
                 Monsters.Remove(monster);
             }
@@ -150,15 +141,15 @@ namespace App1.Encounters
             {
                 Difficulty = "Нет угрозы";
             }
-            else if(AdaptEx < _medium)
+            else if (AdaptEx < _medium)
             {
                 Difficulty = "Легко";
             }
-            else if(AdaptEx < _hard)
+            else if (AdaptEx < _hard)
             {
                 Difficulty = "Средне";
             }
-            else if(AdaptEx < Deadly)
+            else if (AdaptEx < Deadly)
             {
                 Difficulty = "Трудно";
             }
@@ -183,7 +174,7 @@ namespace App1.Encounters
             };
             return quantity switch
             {
-                <=1 => modificators[1 - _offset],
+                <= 1 => modificators[1 - _offset],
                 2 => modificators[2 - _offset],
                 >= 3 and <= 6 => modificators[3 - _offset],
                 >= 7 and <= 10 => modificators[4 - _offset],
@@ -214,7 +205,7 @@ namespace App1.Encounters
                 }
 
                 values = values.Remove(values.Length - 2, 2);
-              return $"INSERT INTO EncountersToMonsters VALUES {values}";
+                return $"INSERT INTO EncountersToMonsters VALUES {values}";
 
             }
 
@@ -230,39 +221,6 @@ namespace App1.Encounters
                 DataAccess.RawRequest($"DELETE FROM Encounters WHERE _id = {Id}");
                 DeleteEvent.Invoke(Id);
             });
-        }
-    }
-    public class BattleMonster:INotifyPropertyChanged
-    { 
-        public Monster Monster { get; set; }
-        private int quantity;
-        public int Quantity { get => quantity; set { quantity = value > 99 ? 99 : value; OnPropertyChanged(); } }
-
-        CustomCommand positiveCommand;
-       public CustomCommand PositiveCommand { 
-            get {
-                if(positiveCommand == null)
-                {
-                    positiveCommand = new CustomCommand(delegate (object obj) { Quantity++;  }, delegate (object obj) { return true; });
-                }
-                return positiveCommand;
-                } }
-        CustomCommand negativeCommand;
-        public CustomCommand NegativeCommand {
-            get 
-            {
-                if (negativeCommand == null)
-                {
-                    negativeCommand = new CustomCommand(delegate (object obj) { Quantity--; }, delegate (object obj) { return true; });
-                }
-                return negativeCommand;
-            }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

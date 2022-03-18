@@ -1,7 +1,6 @@
 ﻿using System;
 
 //using Windows.UI;
-using System.Drawing;
 using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;

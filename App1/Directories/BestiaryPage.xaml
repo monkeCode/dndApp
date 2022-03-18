@@ -79,15 +79,8 @@
             </ListView.ItemContainerStyle>
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="app1:Monster">
-                    <Grid BorderThickness="0,0,0,0.5">
-                        <Grid.BorderBrush>
-                            <LinearGradientBrush EndPoint="1,0">
-                                <GradientStop Offset="0"></GradientStop>
-                                <GradientStop Offset="0.25" Color="{ThemeResource SystemAccentColor}"></GradientStop>
-                                <GradientStop Offset="0.75" Color="{ThemeResource SystemAccentColor}"></GradientStop>
-                                <GradientStop Offset="1"></GradientStop>
-                            </LinearGradientBrush>
-                        </Grid.BorderBrush>
+                    <Grid BorderThickness="0,0,0,0.5" BorderBrush="{StaticResource UnderlineBrush}">
+                       
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
                             <ColumnDefinition/>

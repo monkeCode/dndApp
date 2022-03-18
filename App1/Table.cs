@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
-using App1.WorkShop;
+﻿using App1.WorkShop;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using System.Drawing;
-using System;
 
 namespace App1
 {
@@ -17,7 +16,7 @@ namespace App1
 
         public Table(object[] dataList)
         {
-            Rows = (int) (long) dataList[1];
+            Rows = (int)(long)dataList[1];
             Columns = (int)(long)dataList[2];
             Fields = new ObservableCollection<string>(dataList[3].ToString().Split('@').ToList());
         }
@@ -34,9 +33,15 @@ namespace App1
             for (int r = 0; r < this.Rows; r++)
                 for (int c = 0; c < this.Columns; c++)
                 {
+                    int val = (int)dict["tableBorderSize"];
+                    Thickness thickness = new Thickness(0,0,val,val);
+                    if (r == 0)
+                        thickness.Top = val;
+                    if (c == 0)
+                        thickness.Left = val;
                     Border border = new Border()
                     {
-                        BorderThickness = new Thickness(1),
+                        BorderThickness = thickness,
                         BorderBrush = (Windows.UI.Xaml.Media.Brush)dict["AccentDark1"],
                         Padding = new Thickness(5),
                         VerticalAlignment = VerticalAlignment.Stretch

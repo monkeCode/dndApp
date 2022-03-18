@@ -1,5 +1,4 @@
 ﻿using App1.Directories;
-using System.Linq;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
 
@@ -7,9 +6,6 @@ using Windows.UI.Xaml.Data;
 
 namespace App1
 {
-    /// <summary>
-    /// Пустая страница, которую можно использовать саму по себе или для перехода внутри фрейма.
-    /// </summary>
     public sealed partial class MagicPage : Page
     {
         public MagicPage()
@@ -27,7 +23,7 @@ namespace App1
 
         private void ListView2_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-           
+
             ListView listView = sender as ListView;
             _model.SelectedQuality = listView.SelectedItems;
         }
@@ -38,7 +34,7 @@ namespace App1
         }
 
         private void DropFilters(object sender, Windows.UI.Xaml.RoutedEventArgs e)
-        { 
+        {
             QualityList.DeselectRange(new Windows.UI.Xaml.Data.ItemIndexRange(0, (uint)QualityList.Items.Count));
             TypeList.DeselectRange(new Windows.UI.Xaml.Data.ItemIndexRange(0, (uint)TypeList.Items.Count));
             SourceList.DeselectRange(new ItemIndexRange(0, (uint)SourceList.Items.Count));

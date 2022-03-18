@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using App1.Directories;
+using App1.Encounters;
+using App1.GroupMenu;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Windows.UI.Xaml.Controls;
-using App1.Directories;
-using App1.Encounters;
 
 // Документацию по шаблону элемента "Пустая страница" см. по адресу https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x419
 
@@ -24,7 +25,8 @@ namespace App1
            ("MagicItems", typeof(MagicPage)),
            ("Workshop", typeof(Workshop)),
            ("Monsters", typeof(BestiaryPage)),
-           ("Encounters", typeof(EncounterPage))
+           ("Encounters", typeof(EncounterPage)),
+            ("GroupManager", typeof(GroupPage))
         };
 
         private void navPanel_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)

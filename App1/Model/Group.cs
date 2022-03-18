@@ -28,6 +28,7 @@ namespace App1
             { 2400,    4900 ,   7300,    10900 },
             { 2800,    5700,    8500,    12700 }
         };
+        private object v;
 
         public int Id { get; set; }
         public string Name { get; set; }
@@ -58,19 +59,11 @@ namespace App1
         {
             foreach (var player in Players)
             {
-                Easy += _difficultyList[player.Lvl - 1,0];
+                Easy += _difficultyList[player.Lvl - 1, 0];
                 Medium += _difficultyList[player.Lvl - 1, 1];
                 Hard += _difficultyList[player.Lvl - 1, 2];
                 Deadly += _difficultyList[player.Lvl - 1, 3];
             }
         }
-    }
-
-    internal class Player
-    {
-        public string Name { get; set; }
-        public string PlayerName { get; set; }
-        public string Class { get; set; }
-        public int Lvl { get; set; }
     }
 }

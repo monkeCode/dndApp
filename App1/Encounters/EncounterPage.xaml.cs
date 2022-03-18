@@ -1,17 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Microsoft.Toolkit.Uwp.UI;
 
@@ -73,7 +63,7 @@ namespace App1.Encounters
         private void searchBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             (DataContext as EncounterModelView).MonsterModel.SubstringFilter = (sender as TextBox).Text;
-            (DataContext as EncounterModelView).GetMonsterData();
+           (DataContext as EncounterModelView).GetMonsterData();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -116,7 +106,7 @@ namespace App1.Encounters
             foreach (var i in _draggableItems)
             {
                 if (((lv.DataContext) as Encounter).Monsters.FirstOrDefault(monster => monster.Monster.Id == i.Monster.Id) == null)
-                    ((lv.DataContext) as Encounter).Monsters.Add(new BattleMonster() { Monster = i.Monster, Quantity = i.Quantity});
+                    ((lv.DataContext) as Encounter).Monsters.Add(new BattleMonster() { Monster = i.Monster, Quantity = i.Quantity });
                 else
                     ((lv.DataContext) as Encounter).Monsters.First(monster => monster.Monster.Id == i.Monster.Id).Quantity++;
                        var obj = _originalSource.DataContext as Encounter;
@@ -129,7 +119,7 @@ namespace App1.Encounters
 
         private void ListView_Drop_1(object sender, DragEventArgs e)
         {
-            
+
 
             foreach (var i in _draggableItems)
             {

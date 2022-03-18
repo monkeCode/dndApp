@@ -133,18 +133,30 @@
     </Compile>
     <Compile Include="Help and Ext\CustomCommand.cs" />
     <Compile Include="Directories\MonsterModelView.cs" />
+    <Compile Include="Encounters\BattleMonster.cs" />
     <Compile Include="Encounters\Encounter.cs" />
     <Compile Include="Encounters\EncounterModelView.cs" />
     <Compile Include="Encounters\EncounterPage.xaml.cs">
       <DependentUpon>EncounterPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Encounters\NumericalTextBox.cs" />
-    <Compile Include="Group.cs" />
-    <Compile Include="Monster.cs" />
+    <Compile Include="GroupMenu\GroupMV.cs" />
+    <Compile Include="GroupMenu\GroupPage.xaml.cs">
+      <DependentUpon>GroupPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Group.cs" />
+    <Compile Include="Model\Monster.cs" />
+    <Compile Include="Model\Player.cs" />
     <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="Quest\QuestModel.cs" />
+    <Compile Include="Quest\QuestPage.xaml.cs">
+      <DependentUpon>QuestPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Quest\QuestsMV.cs" />
+    <Compile Include="SizeConverter.cs" />
     <Compile Include="Help and Ext\SizeConverter.cs" />
     <Compile Include="Table.cs" />
-    <Compile Include="ExtendedMagicItem.cs" />
+    <Compile Include="Model\ExtendedMagicItem.cs" />
     <Compile Include="Directories\MagicItemExtendedPage.xaml.cs">
       <DependentUpon>MagicItemExtendedPage.xaml</DependentUpon>
     </Compile>
@@ -203,6 +215,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Encounters\EncounterPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GroupMenu\GroupPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Quest\QuestPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

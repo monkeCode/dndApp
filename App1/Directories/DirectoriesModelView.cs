@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using Windows.UI.Xaml.Controls;
-using Microsoft.Toolkit.Uwp.UI.Controls.TextToolbarSymbols;
-using System.Linq;
 
 namespace App1
 {
@@ -16,11 +15,11 @@ namespace App1
         public string SubstringFilter { get { return substringFilter; } set { substringFilter = value.Trim().ToLower(); OnPropertyChanged(); } }
         public void Search(object s)
         {
-            substringFilter = ((TextBox)s).Text;
+            substringFilter = ((TextBox)s).Text.ToLower();
             GetListData();
         }
 
-      protected string ChangeSelect(IList<object> list)
+        protected string ChangeSelect(IList<object> list)
         {
             if (list.Count == 0)
             {
