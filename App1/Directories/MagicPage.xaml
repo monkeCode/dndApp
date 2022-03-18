@@ -50,10 +50,24 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <TextBlock TextAlignment="Center" Style="{StaticResource SubtitleTextBlockStyle}" TextDecorations="Underline"  Text="Название"></TextBlock>
-                <TextBlock Grid.Column="1" TextAlignment="Center" Style="{StaticResource SubtitleTextBlockStyle}" TextDecorations="Underline">Качество</TextBlock>
-                <TextBlock Grid.Column="2"  TextAlignment="Center" Style="{StaticResource SubtitleTextBlockStyle}" TextDecorations="Underline">Настройка</TextBlock>
-                <TextBlock Grid.Column="3"  TextAlignment="Center" Style="{StaticResource SubtitleTextBlockStyle}" TextDecorations="Underline">Тип</TextBlock>
+                <TextBlock TextAlignment="Center" Style="{StaticResource SubtitleTextBlockStyle}"  TextDecorations="Underline" >
+                    <Hyperlink Foreground="{ThemeResource SystemControlHyperlinkBaseHighBrush}">
+                        Название
+                    </Hyperlink>
+                </TextBlock>
+                <TextBlock Grid.Column="1" TextAlignment="Center" Style="{StaticResource SubtitleTextBlockStyle}" TextDecorations="Underline">
+                     <Hyperlink Foreground="{ThemeResource SystemControlHyperlinkBaseHighBrush}">
+                         Качество
+                     </Hyperlink> </TextBlock>
+                <TextBlock Grid.Column="2"  TextAlignment="Center" Style="{StaticResource SubtitleTextBlockStyle}" TextDecorations="Underline">
+                     <Hyperlink Foreground="{ThemeResource SystemControlHyperlinkBaseHighBrush}">
+                         Настройка
+                     </Hyperlink>
+                </TextBlock>
+                <TextBlock Grid.Column="3"  TextAlignment="Center" Style="{StaticResource SubtitleTextBlockStyle}" TextDecorations="Underline">
+                     <Hyperlink Foreground="{ThemeResource SystemControlHyperlinkBaseHighBrush}">
+                         Тип</Hyperlink>
+                </TextBlock>
             </Grid>
         </StackPanel>
         <ListView Grid.Row="1" HorizontalAlignment="Stretch" ItemsSource="{Binding DataCollection }" ItemClick="ItemsPanel_ItemClick" IsItemClickEnabled="True">
