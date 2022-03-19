@@ -24,15 +24,10 @@ namespace DataBaseLib
                 var storage = await ApplicationData.Current.LocalFolder.TryGetItemAsync(DB_NAME);
                 if (storage != null)
                     File.Delete(storage.Path);
-                //StorageFile databaseFile = await Package.Current.InstalledLocation.GetFileAsync(/*$"Assets/*/DB_NAME/*"*/);
-                ////await databaseFile.CopyAsync(ApplicationData.Current.LocalFolder);
-                //File.Copy(databaseFile.Path, ApplicationData.Current.LocalFolder.Path + $"\\{DB_NAME}");
-                //localSettings.Values["DataBaseVercion"] = DB_VERSION;
             }
             if (await ApplicationData.Current.LocalFolder.TryGetItemAsync(DB_NAME) == null)
             {
-                StorageFile databaseFile = await Package.Current.InstalledLocation.GetFileAsync(/*$"Assets/*/DB_NAME/*"*/);
-                //await databaseFile.CopyAsync(ApplicationData.Current.LocalFolder);
+                StorageFile databaseFile = await Package.Current.InstalledLocation.GetFileAsync(DB_NAME);
                 File.Copy(databaseFile.Path, ApplicationData.Current.LocalFolder.Path + $"\\{DB_NAME}");
                 localSettings.Values["DataBaseVercion"] = DB_VERSION;
                 NewDataLoaded?.Invoke();
@@ -75,7 +70,6 @@ namespace DataBaseLib
                 db.Close();
             }
         }
-
         public static List<object[]> GetData(string table, string whereReq = null, string sortBy = null, params string[] columns)
         {
             List<object[]> entries = new List<object[]>();

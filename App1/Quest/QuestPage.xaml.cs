@@ -20,10 +20,11 @@ namespace App1.Quest
     /// <summary>
     /// Пустая страница, которую можно использовать саму по себе или для перехода внутри фрейма.
     /// </summary>
-    public sealed partial class BlankPage1 : Page
+    public sealed partial class QuestPage : Page
     {
-        public BlankPage1()
+        public QuestPage()
         {
+            DataContext = new QuestsMV();
             this.InitializeComponent();
         }
     }

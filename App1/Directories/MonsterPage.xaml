@@ -1,0 +1,22 @@
+﻿<Page
+    x:Class="App1.Directories.MonsterPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:App1"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.Resources>
+        <local:SizeConverter x:Key="SizeConverter"/>
+    </Page.Resources>
+    <ScrollViewer>
+        <StackPanel>
+            <TextBlock FontSize="24" Margin="30" Text="{Binding Name}" FontWeight="Bold" Foreground="{ThemeResource SystemAccentColorLight1}" />
+            <TextBlock TextWrapping="Wrap" FontStyle="Italic" Margin="30,0,0,0">
+                <Run Text="{Binding Size, Converter= {StaticResource SizeConverter}}"/>
+                <Run Text="{Binding Type}"/>
+            </TextBlock>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

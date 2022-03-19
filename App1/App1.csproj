@@ -133,6 +133,9 @@
     </Compile>
     <Compile Include="CustomCommand.cs" />
     <Compile Include="Directories\MonsterModelView.cs" />
+    <Compile Include="Directories\MonsterPage.xaml.cs">
+      <DependentUpon>MonsterPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Encounters\BattleMonster.cs" />
     <Compile Include="Encounters\Encounter.cs" />
     <Compile Include="Encounters\EncounterModelView.cs" />
@@ -144,6 +147,7 @@
     <Compile Include="GroupMenu\GroupPage.xaml.cs">
       <DependentUpon>GroupPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\ExtendedMonster.cs" />
     <Compile Include="Model\Group.cs" />
     <Compile Include="Model\Monster.cs" />
     <Compile Include="Model\Player.cs" />
@@ -210,6 +214,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Directories\MagicItemExtendedPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Directories\MonsterPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

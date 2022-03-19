@@ -51,22 +51,23 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <TextBlock TextAlignment="Center" Style="{StaticResource SubtitleTextBlockStyle}"  TextDecorations="Underline" >
-                    <Hyperlink Foreground="{ThemeResource SystemControlHyperlinkBaseHighBrush}">
+                    <Hyperlink Foreground="{ThemeResource SystemControlHyperlinkBaseHighBrush}" Click="NameClick">
                         Название
                     </Hyperlink>
                 </TextBlock>
                 <TextBlock Grid.Column="1" TextAlignment="Center" Style="{StaticResource SubtitleTextBlockStyle}" TextDecorations="Underline">
-                     <Hyperlink Foreground="{ThemeResource SystemControlHyperlinkBaseHighBrush}">
+                     <Hyperlink Foreground="{ThemeResource SystemControlHyperlinkBaseHighBrush}" Click="QualityClick">
                          Качество
                      </Hyperlink> </TextBlock>
                 <TextBlock Grid.Column="2"  TextAlignment="Center" Style="{StaticResource SubtitleTextBlockStyle}" TextDecorations="Underline">
-                     <Hyperlink Foreground="{ThemeResource SystemControlHyperlinkBaseHighBrush}">
+                     <Hyperlink Foreground="{ThemeResource SystemControlHyperlinkBaseHighBrush}" Click="ConsentrationClick">
                          Настройка
                      </Hyperlink>
                 </TextBlock>
                 <TextBlock Grid.Column="3"  TextAlignment="Center" Style="{StaticResource SubtitleTextBlockStyle}" TextDecorations="Underline">
-                     <Hyperlink Foreground="{ThemeResource SystemControlHyperlinkBaseHighBrush}">
-                         Тип</Hyperlink>
+                     <Hyperlink Foreground="{ThemeResource SystemControlHyperlinkBaseHighBrush}" Click="TypeClick">
+                         Тип
+                     </Hyperlink>
                 </TextBlock>
             </Grid>
         </StackPanel>

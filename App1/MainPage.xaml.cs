@@ -26,7 +26,8 @@ namespace App1
            ("Workshop", typeof(Workshop)),
            ("Monsters", typeof(BestiaryPage)),
            ("Encounters", typeof(EncounterPage)),
-            ("GroupManager", typeof(GroupPage))
+            ("GroupManager", typeof(GroupPage)),
+            ("Quests", typeof(Quest.QuestPage))
         };
 
         private void navPanel_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
