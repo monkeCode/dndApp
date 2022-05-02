@@ -53,5 +53,10 @@ namespace App1.Directories
         {
             (DataContext as MonsterModelView).SelectedSource = (sender as ListView).SelectedItems;
         }
+
+        private void ListViewBase_OnItemClick(object sender, ItemClickEventArgs e)
+        {
+            Frame.Navigate(typeof(MonsterPage), (e.ClickedItem as Monster).Id);
+        }
     }
 }

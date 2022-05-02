@@ -57,7 +57,7 @@
                 <TextBlock Margin="40,0,0,0" FontSize="18" TextDecorations="Underline">Особенности</TextBlock>
                 <ListView Style="{StaticResource ListViewStyle}" ItemContainerStyle="{StaticResource ListViewItemsStyle}" ItemsSource="{Binding Features}">
                     <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="local:Feautes">
+                        <DataTemplate x:DataType="local:Features">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="auto" />

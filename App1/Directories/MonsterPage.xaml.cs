@@ -28,7 +28,6 @@ namespace App1.Directories
     {
         public MonsterPage()
         {
-            DataContext = new Monster();
             this.InitializeComponent();
         }
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -80,7 +79,7 @@ namespace App1.Directories
             if (table != null)
             {
 
-                foreach (TextBlock tex in table.LoadTable(TableGrid))
+                foreach (TextBlock tex in table.LoadTable(/*TableGrid*/ null))
                 {
 
                     foreach (var r in tex.Inlines)

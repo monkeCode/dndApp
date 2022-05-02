@@ -148,6 +148,7 @@
       <DependentUpon>GroupPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\ExtendedMonster.cs" />
+    <Compile Include="Model\Features.cs" />
     <Compile Include="Model\Group.cs" />
     <Compile Include="Model\Monster.cs" />
     <Compile Include="Model\Player.cs" />

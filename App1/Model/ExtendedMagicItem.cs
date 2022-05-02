@@ -6,7 +6,7 @@ namespace App1
 {
     internal class ExtendedMagicItem : MagicItem
     {
-        public ObservableCollection<Feautes> Features { get; set; } = new ObservableCollection<Feautes>();
+        public ObservableCollection<Features> Features { get; set; } = new ObservableCollection<Features>();
         public string Description { get; set; }
         public string UnderType { get; set; }
         public string UnderQuality { get; set; }
@@ -54,10 +54,10 @@ namespace App1
         {
             foreach (var item in DataAccess.GetData("FeaturesOfMagicItem", $"_id = {id}", null, "Name", "Description"))
             {
-                Features.Add(new Feautes()
+                Features.Add(new Features()
                 {
                     Name = item[0].ToString(),
-                    Desctipt = item[1].ToString()
+                    Description = item[1].ToString()
                 });
             }
 
@@ -72,11 +72,5 @@ namespace App1
 
 
         }
-    }
-
-    internal class Feautes
-    {
-        public string Name { get; set; }
-        public string Desctipt { get; set; }
     }
 }
