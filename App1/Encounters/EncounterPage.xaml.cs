@@ -3,7 +3,6 @@ using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using Microsoft.Toolkit.Uwp.UI;
 
 // Документацию по шаблону элемента "Пустая страница" см. по адресу https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -14,9 +13,9 @@ namespace App1.Encounters
     /// </summary>
     public sealed partial class EncounterPage : Page
     {
-        
-        private readonly List<BattleMonster> _draggableItems = new();
-        private ListView _originalSource;
+
+        private List<BattleMonster> dragableItems = new List<BattleMonster>();
+        ListView originalSource;
         public EncounterPage()
         {
             DataContext = new EncounterModelView();
@@ -26,32 +25,32 @@ namespace App1.Encounters
         private void EncounterList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ListView list = sender as ListView;
-            (DataContext as EncounterModelView)?.SelectionEncountersChanged(list?.SelectedItems.GetEnumerator());
+            (DataContext as EncounterModelView).SelectionEncountersChanged(list.SelectedItems.GetEnumerator());
         }
 
 
         private void SourceList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ((EncounterModelView) DataContext).MonsterModel.SelectedSource = (sender as ListView).SelectedItems;
-            (DataContext as EncounterModelView)?.GetMonsterData();
+            (DataContext as EncounterModelView).MonsterModel.SelectedSource = (sender as ListView).SelectedItems;
+            (DataContext as EncounterModelView).GetMonsterData();
         }
 
         private void HabbiatList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ((EncounterModelView) DataContext).MonsterModel.SelectedHabitat = (sender as ListView).SelectedItems;
-            (DataContext as EncounterModelView)?.GetMonsterData();
+            (DataContext as EncounterModelView).MonsterModel.SelectedHabitat = (sender as ListView).SelectedItems;
+            (DataContext as EncounterModelView).GetMonsterData();
         }
 
         private void SizeList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ((EncounterModelView) DataContext).MonsterModel.SelectedSize = (sender as ListView).SelectedItems;
-            (DataContext as EncounterModelView)?.GetMonsterData();
+            (DataContext as EncounterModelView).MonsterModel.SelectedSize = (sender as ListView).SelectedItems;
+            (DataContext as EncounterModelView).GetMonsterData();
         }
 
         private void ChallengeList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ((EncounterModelView) DataContext).MonsterModel.SelectedRate = (sender as ListView).SelectedItems;
-            (DataContext as EncounterModelView)?.GetMonsterData();
+            (DataContext as EncounterModelView).MonsterModel.SelectedRate = (sender as ListView).SelectedItems;
+            (DataContext as EncounterModelView).GetMonsterData();
         }
 
         private void TypeList_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -68,22 +67,14 @@ namespace App1.Encounters
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            TypeList.DeselectAll();
-            SizeList.DeselectAll();
-            HabbiatList.DeselectAll();
-            SourceList.DeselectAll();
-            ChallengeList.DeselectAll();
-            SearchBox.Text = "";
-            EncounterModelView model = DataContext as EncounterModelView;
-               model.MonsterModel.DropFilters();
-            model.GetMonsterData();
+
         }
 
 
         private void ListView_DragOver(object sender, DragEventArgs e)
         {
-           if(_originalSource != sender)
-            e.AcceptedOperation = Windows.ApplicationModel.DataTransfer.DataPackageOperation.Move;
+            if (originalSource != sender)
+                e.AcceptedOperation = Windows.ApplicationModel.DataTransfer.DataPackageOperation.Move;
         }
 
 
@@ -91,11 +82,11 @@ namespace App1.Encounters
         private void ListView_DragItemsStarting(object sender, DragItemsStartingEventArgs e)
         {
 
-            _draggableItems.Clear();
-            foreach(var i in e.Items)
+            dragableItems.Clear();
+            foreach (var i in e.Items)
             {
-                _draggableItems.Add((BattleMonster)i);
-                _originalSource = sender as ListView;
+                dragableItems.Add((BattleMonster)i);
+                originalSource = sender as ListView;
             }
         }
 
@@ -103,15 +94,15 @@ namespace App1.Encounters
         {
             ListView lv = sender as ListView;
 
-            foreach (var i in _draggableItems)
+            foreach (var i in dragableItems)
             {
                 if (((lv.DataContext) as Encounter).Monsters.FirstOrDefault(monster => monster.Monster.Id == i.Monster.Id) == null)
                     ((lv.DataContext) as Encounter).Monsters.Add(new BattleMonster() { Monster = i.Monster, Quantity = i.Quantity });
                 else
                     ((lv.DataContext) as Encounter).Monsters.First(monster => monster.Monster.Id == i.Monster.Id).Quantity++;
-                       var obj = _originalSource.DataContext as Encounter;
-                    if (obj != null)
-                    ((_originalSource.DataContext) as Encounter).Monsters.Remove(i);
+                var obj = originalSource.DataContext as Encounter;
+                if (obj != null)
+                    ((originalSource.DataContext) as Encounter).Monsters.Remove(i);
 
             }
 
@@ -121,9 +112,9 @@ namespace App1.Encounters
         {
 
 
-            foreach (var i in _draggableItems)
+            foreach (var i in dragableItems)
             {
-                ((_originalSource.DataContext) as Encounter).Monsters.Remove(i);
+                ((originalSource.DataContext) as Encounter).Monsters.Remove(i);
 
             }
         }
@@ -131,7 +122,7 @@ namespace App1.Encounters
         private void ListView_DragOver_1(object sender, DragEventArgs e)
         {
 
-                if(sender != _originalSource)
+            if (sender != originalSource)
                 e.AcceptedOperation = Windows.ApplicationModel.DataTransfer.DataPackageOperation.Move;
         }
 
