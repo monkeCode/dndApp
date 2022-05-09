@@ -1,6 +1,8 @@
-﻿using App1.Directories;
+﻿using Windows.Media.Devices;
+using App1.Directories;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
+using Windows.UI.Xaml.Documents;
 
 // Документацию по шаблону элемента "Пустая страница" см. по адресу https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -50,6 +52,26 @@ namespace App1
         {
             ListView listView = sender as ListView;
             _model.SelectedSource = listView.SelectedItems;
+        }
+
+        private void NameClick(Hyperlink sender, HyperlinkClickEventArgs args)
+        {
+            (DataContext as MagicItemsModelView).SortCommand.Execute((MagicItem mn)=> mn.Name);
+        }
+
+        private void QualityClick(Hyperlink sender, HyperlinkClickEventArgs args)
+        {
+            (DataContext as MagicItemsModelView).SortCommand.Execute((MagicItem mn) => mn.Quality.ToString());
+        }
+
+        private void ConsentrationClick(Hyperlink sender, HyperlinkClickEventArgs args)
+        {
+            (DataContext as MagicItemsModelView).SortCommand.Execute((MagicItem mn) => mn.Attunement);
+        }
+
+        private void TypeClick(Hyperlink sender, HyperlinkClickEventArgs args)
+        {
+            (DataContext as MagicItemsModelView).SortCommand.Execute((MagicItem mn) => mn.Type);
         }
     }
 }

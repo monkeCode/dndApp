@@ -17,7 +17,7 @@
         <app1:StaticValues x:Key="StaticVal"/>
     </Page.Resources>
     <Grid>
-       
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="350"/>
             <ColumnDefinition Width="*"/>
@@ -32,47 +32,47 @@
                     <TextBlock Style="{StaticResource TitleTextBlockStyle}" HorizontalAlignment="Center" TextDecorations="Underline">Группа</TextBlock>
                 </controls:Expander.Header>
                 <controls:Expander.Content>
-                <StackPanel >
-                    <StackPanel Margin="0,10,0,10">
-                        <RelativePanel>
-                            <TextBlock Margin="10" Text="Дневной бюджет:" />
-                            <TextBlock  Text="{Binding DailyEx}" RelativePanel.AlignRightWithPanel="True" Margin="10" HorizontalAlignment="Right" Foreground="{ThemeResource AccentDark1}" FontWeight="SemiBold"/>
-                        </RelativePanel>
-                        <StackPanel>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Margin="10,0,0,5">
+                    <StackPanel >
+                        <StackPanel Margin="0,10,0,10">
+                            <RelativePanel>
+                                <TextBlock Margin="10" Text="Дневной бюджет:" />
+                                <TextBlock  Text="{Binding DailyEx}" RelativePanel.AlignRightWithPanel="True" Margin="10" HorizontalAlignment="Right" Foreground="{ThemeResource AccentDark1}" FontWeight="SemiBold"/>
+                            </RelativePanel>
+                            <StackPanel>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Margin="10,0,0,5">
                                 <Run Text="Легко: "></Run>
                                 <Run Text="{Binding PlayerGroup.Easy}" Foreground="{ThemeResource AccentDark1}"></Run>
-                                </TextBlock>
-                                <TextBlock Grid.Column="1" Margin="10,0,0,5">
+                                    </TextBlock>
+                                    <TextBlock Grid.Column="1" Margin="10,0,0,5">
                                 <Run Text="Средне: "></Run>
                                 <Run Text="{Binding PlayerGroup.Medium}" Foreground="{ThemeResource AccentDark1}"></Run>
-                                </TextBlock>
-                            </Grid>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Margin="10,0,0,5">
+                                    </TextBlock>
+                                </Grid>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Margin="10,0,0,5">
                                 <Run Text="Трудно: "></Run>
                                 <Run Text="{Binding PlayerGroup.Hard}" Foreground="{ThemeResource AccentDark1}"></Run>
-                                </TextBlock>
-                                <TextBlock Grid.Column="1" Margin="10,0,0,0">
+                                    </TextBlock>
+                                    <TextBlock Grid.Column="1" Margin="10,0,0,0">
                                 <Run Text="Смертельно: "></Run>
                                 <Run Text="{Binding PlayerGroup.Deadly}" Foreground="{ThemeResource AccentDark1}"></Run>
-                                </TextBlock>
-                            </Grid>
+                                    </TextBlock>
+                                </Grid>
 
 
+                            </StackPanel>
                         </StackPanel>
-                    </StackPanel>
-                    <Button Margin="10" Content="{Binding PlayerGroup.Name}" HorizontalAlignment="Center"></Button>
-                    <!--<ListView ItemsSource="{Binding PlayerGroup.Players}" Margin="10,5,0,10">
+                        <Button Margin="10" Content="{Binding PlayerGroup.Name}" HorizontalAlignment="Center"></Button>
+                        <!--<ListView ItemsSource="{Binding PlayerGroup.Players}" Margin="10,5,0,10">
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="app1:Player">
                             <StackPanel Margin="10,0,0,10" Orientation="Horizontal">
@@ -87,17 +87,17 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>-->
-                </StackPanel>
+                    </StackPanel>
                 </controls:Expander.Content>
             </controls:Expander>
             <Grid Grid.Row="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
-                    <RowDefinition/>
+                    <RowDefinition Height="*"/>
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
-                <TextBlock Style="{StaticResource TitleTextBlockStyle}" HorizontalAlignment="Center" TextDecorations="Underline">Боевые сцены</TextBlock>
-                <ListView Name="EncounterList" SelectionMode="None" SelectionChanged="EncounterList_SelectionChanged" ItemsSource="{Binding Encounters}" Grid.Row="1" >
+                <TextBlock Style="{StaticResource TitleTextBlockStyle}" HorizontalAlignment="Center" TextDecorations="Underline" >Боевые сцены</TextBlock>
+                <ListView Grid.Row="1" Name="EncounterList" SelectionMode="None" SelectionChanged="EncounterList_SelectionChanged" ItemsSource="{Binding Encounters}" Grid.ColumnSpan="2" Margin="0,10,0,0" Grid.RowSpan="2" >
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
                             <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
@@ -117,7 +117,7 @@
                                         </Grid.ColumnDefinitions>
                                         <TextBox BorderThickness="0" Text="{x:Bind Name, Mode=TwoWay}" Margin="10,0,0,0" PlaceholderText ="Название сцены" HorizontalAlignment="Stretch"></TextBox>
                                         <Button Grid.Column="1" HorizontalAlignment="Right" Margin="5,0,0,0" FontSize="16" FontFamily="{StaticResource SymbolThemeFontFamily}" Content="&#xE74D;" ToolTipService.ToolTip="Удалить" Command="{x:Bind DeleteCommand}"/>
-                                        </Grid>
+                                    </Grid>
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto"/>
@@ -145,8 +145,8 @@
                                         </TextBlock>
                                     </Grid>
                                     <ProgressBar Margin="10" HorizontalAlignment="Stretch" Height="20" Maximum="{Binding Deadly}" Value="{Binding AdaptEx}">
-                                        
-                                        
+
+
                                     </ProgressBar>
                                     <ListView ItemsSource="{x:Bind Monsters}" MinHeight="200" HorizontalAlignment="Stretch" CanDragItems="True" AllowDrop="True" CanReorderItems="True" DragItemsStarting="ListView_DragItemsStarting" DragOver="ListView_DragOver_1" Drop="ListView_Drop" SelectionMode="None">
                                         <ListView.ItemContainerStyle>
@@ -200,55 +200,55 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <Button HorizontalAlignment="Center" Margin="10" FontSize="16" Command="{Binding AddEncounterCommand}" Grid.Row="2">Добавить сцену</Button>
+                <Button FontSize="16" Command="{Binding AddEncounterCommand}" Grid.Row="2" HorizontalAlignment="Center" Margin="10">Добавить сцену</Button>
             </Grid>
         </Grid>
         <Border BorderBrush="{StaticResource SystemControlBackgroundBaseHighBrush }" BorderThickness="1" Grid.Column="1">
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
                 <StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0" >
-                    <TextBox x:Name="SearchBox" PlaceholderText ="Поиск" Width="200" Margin="0,0,10,10" Text="{Binding  MonsterModel.SubstringFilter, Mode=OneTime}" TextChanged="searchBox_TextChanged" ></TextBox>
-                    <Button  Content="Тип" VerticalAlignment="Top" Margin="0,0,10,10">
-                        <Button.Flyout>
-                            <Flyout>
-                                <ListView x:Name="TypeList"  SelectionMode="Multiple" SelectionChanged="TypeList_SelectionChanged" ItemsSource="{Binding Source= {StaticResource StaticVal}, Path=MonsterType, Mode=OneTime}" />
-                            </Flyout>
-                        </Button.Flyout>
-                    </Button>
-                    <Button Content="Опасность" VerticalAlignment="Top" Margin="0,0,10,10">
-                        <Button.Flyout>
-                            <Flyout>
-                                <ListView x:Name="ChallengeList"  SelectionMode="Multiple"  SelectionChanged="ChallengeList_SelectionChanged" ItemsSource="{Binding Source= {StaticResource StaticVal}, Path=MonsterRate, Mode=OneTime}"/>
-                            </Flyout>
-                        </Button.Flyout>
-                    </Button>
-                    <Button Content="Размер" VerticalAlignment="Top" Margin="0,0,10,10">
-                        <Button.Flyout>
-                            <Flyout>
-                                <ListView x:Name="SizeList"  SelectionMode="Multiple" SelectionChanged="SizeList_SelectionChanged" ItemsSource="{Binding Source={StaticResource StaticVal}, Path=MonsterSize, Mode=OneTime}"/>
-                            </Flyout>
-                        </Button.Flyout>
-                    </Button>
-                    <Button Content="Обитание" VerticalAlignment="Top" Margin="0,0,10,10" >
-                        <Button.Flyout>
-                            <Flyout>
-                                <ListView x:Name="HabbiatList"  SelectionMode="Multiple" SelectionChanged="HabbiatList_SelectionChanged" ItemsSource="{Binding Source= {StaticResource StaticVal}, Path=MonsterHabitat, Mode=OneTime}"/>
-                            </Flyout>
-                        </Button.Flyout>
-                    </Button>
-                    <Button Content="Источник" VerticalAlignment="Top" Margin="0,0,10,0">
-                        <Button.Flyout>
-                            <Flyout>
-                                <ListView Name="SourceList" SelectionMode="Multiple"  SelectionChanged="SourceList_SelectionChanged" ItemsSource="{Binding Source= {StaticResource StaticVal}, Path=MonsterSource, Mode=OneTime}"/>
-                            </Flyout>
-                        </Button.Flyout>
-                    </Button>
-                    <Button Margin="0,0,10,10" Click="Button_Click">Сбросить</Button>
-                </StackPanel>
+                        <TextBox x:Name="searchBox" PlaceholderText ="Поиск" Width="200" Margin="0,0,10,10" Text="{Binding  MonsterModel.SubstringFilter, Mode=OneTime}" TextChanged="searchBox_TextChanged" ></TextBox>
+                        <Button  Content="Тип" VerticalAlignment="Top" Margin="0,0,10,10">
+                            <Button.Flyout>
+                                <Flyout>
+                                    <ListView x:Name="TypeList"  SelectionMode="Multiple" SelectionChanged="TypeList_SelectionChanged" ItemsSource="{Binding Source= {StaticResource StaticVal}, Path=MonsterType, Mode=OneTime}" />
+                                </Flyout>
+                            </Button.Flyout>
+                        </Button>
+                        <Button Content="Опасность" VerticalAlignment="Top" Margin="0,0,10,10">
+                            <Button.Flyout>
+                                <Flyout>
+                                    <ListView x:Name="ChallengeList"  SelectionMode="Multiple"  SelectionChanged="ChallengeList_SelectionChanged" ItemsSource="{Binding Source= {StaticResource StaticVal}, Path=MonsterRate, Mode=OneTime}"/>
+                                </Flyout>
+                            </Button.Flyout>
+                        </Button>
+                        <Button Content="Размер" VerticalAlignment="Top" Margin="0,0,10,10">
+                            <Button.Flyout>
+                                <Flyout>
+                                    <ListView x:Name="SizeList"  SelectionMode="Multiple" SelectionChanged="SizeList_SelectionChanged" ItemsSource="{Binding Source={StaticResource StaticVal}, Path=MonsterSize, Mode=OneTime}"/>
+                                </Flyout>
+                            </Button.Flyout>
+                        </Button>
+                        <Button Content="Обитание" VerticalAlignment="Top" Margin="0,0,10,10" >
+                            <Button.Flyout>
+                                <Flyout>
+                                    <ListView x:Name="HabbiatList"  SelectionMode="Multiple" SelectionChanged="HabbiatList_SelectionChanged" ItemsSource="{Binding Source= {StaticResource StaticVal}, Path=MonsterHabitat, Mode=OneTime}"/>
+                                </Flyout>
+                            </Button.Flyout>
+                        </Button>
+                        <Button Content="Источник" VerticalAlignment="Top" Margin="0,0,10,0">
+                            <Button.Flyout>
+                                <Flyout>
+                                    <ListView SelectionMode="Multiple"  SelectionChanged="SourceList_SelectionChanged" ItemsSource="{Binding Source= {StaticResource StaticVal}, Path=MonsterSource, Mode=OneTime}"/>
+                                </Flyout>
+                            </Button.Flyout>
+                        </Button>
+                        <Button Margin="0,0,10,10" Click="Button_Click">Сбросить</Button>
+                    </StackPanel>
                     <Grid Margin="10,0,10,10">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
@@ -262,7 +262,7 @@
                         <TextBlock Grid.Column="3"  TextAlignment="Center" Style="{StaticResource SubtitleTextBlockStyle}" TextDecorations="Underline">Опасность</TextBlock>
                     </Grid>
                 </StackPanel>
-            <ListView Grid.Row="1" ItemsSource="{x:Bind ((local:EncounterModelView)DataContext).MonsterList}" CanDragItems="True" AllowDrop="True" DragOver="ListView_DragOver" DragItemsStarting="ListView_DragItemsStarting" Drop="ListView_Drop_1" Margin="0,0,0,0">
+                <ListView Grid.Row="1" ItemsSource="{x:Bind ((local:EncounterModelView)DataContext).MonsterList}" CanDragItems="True" AllowDrop="True" DragOver="ListView_DragOver" DragItemsStarting="ListView_DragItemsStarting" Drop="ListView_Drop_1" Margin="0,0,0,0">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
                             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
@@ -271,7 +271,7 @@
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="local:BattleMonster">
                             <Grid BorderThickness="0,0,0,0.5" >
-                                
+
                                 <Grid.BorderBrush>
                                     <LinearGradientBrush EndPoint="1,0">
                                         <GradientStop Offset="0"></GradientStop>
@@ -294,7 +294,7 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-        </Grid>
-            </Border>
+            </Grid>
+        </Border>
     </Grid>
 </Page>

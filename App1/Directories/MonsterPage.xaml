@@ -1,0 +1,162 @@
+﻿<Page
+    x:Class="App1.Directories.MonsterPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:App1"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="using:App1.Model"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.Resources>
+        <local:SizeConverter x:Key="SizeConverter"/>
+    </Page.Resources>
+    <ScrollViewer>
+        <StackPanel>
+            <TextBlock FontSize="24" Margin="30" Text="{Binding Name}" FontWeight="Bold" Foreground="{ThemeResource SystemAccentColorLight1}" />
+                <TextBlock TextWrapping="Wrap" FontStyle="Italic" Margin="30,15,0,0">
+                    <Run Text="{Binding Size, Converter= {StaticResource SizeConverter}}"/>
+                    <Run Text="{Binding Type}"/>
+                    <Run Text="{Binding UnderType}"></Run>
+                    <Run>, </Run>
+                    <Run Text="{Binding WorldView}"></Run>
+                </TextBlock>
+            <TextBlock Margin="30,10,0,0" FontWeight="Bold">
+                <Run>Источник: </Run>
+                <Run Text="{Binding Source}"></Run>
+            </TextBlock>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Margin="0,0,10,0" BorderThickness="0,0,0.5,0">
+                    <StackPanel.BorderBrush>
+                        <LinearGradientBrush EndPoint="0,1">
+                            <GradientStop Offset="0"></GradientStop>
+                            <GradientStop Offset="0.10" Color="{ThemeResource SystemAccentColor}"></GradientStop>
+                            <GradientStop Offset="0.90" Color="{ThemeResource SystemAccentColor}"></GradientStop>
+                            <GradientStop Offset="1"></GradientStop>
+                        </LinearGradientBrush>
+                    </StackPanel.BorderBrush>
+                    <TextBlock Margin="30,30,0,0">
+                    <Run>Класс брони (КБ): </Run>
+                    <Run Text="{Binding AC}"></Run>
+                    <Run Text="{Binding ACType}"></Run>
+                </TextBlock>
+                <TextBlock Margin="30,10,0,0">
+                    <Run>Пункты здоровья (ПЗ): </Run>
+                    <Run Text="{Binding HP}"></Run>
+                </TextBlock>
+                <TextBlock Margin="30,10,0,0">
+                    <Run>Скорость: </Run>
+                    <Run Text="{Binding Speed}"></Run>
+                </TextBlock>
+                <Grid Margin="30,15,0,0">
+                    <Grid.Resources>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Margin" Value="0,0,20,10"></Setter>
+                            <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                            <Setter Property="Foreground" Value="{StaticResource AccentDark1}"/>
+                        </Style>
+                    </Grid.Resources>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock>СИЛ</TextBlock>
+                    <TextBlock Grid.Column="1" >ЛВК</TextBlock>
+                    <TextBlock Grid.Column="2">ВЫН</TextBlock>
+                    <TextBlock Grid.Column="3">ИНТ</TextBlock>
+                    <TextBlock Grid.Column="4">МДР</TextBlock>
+                    <TextBlock Grid.Column="5">ХАР</TextBlock>
+                    <TextBlock Grid.Row="1" Text="{Binding Str}"></TextBlock>
+                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Dex}"></TextBlock>
+                    <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding Con}"></TextBlock>
+                    <TextBlock Grid.Row="1" Grid.Column="3" Text="{Binding Intel}"></TextBlock>
+                    <TextBlock Grid.Row="1" Grid.Column="4" Text="{Binding Wis}"></TextBlock>
+                    <TextBlock Grid.Row="1" Grid.Column="5" Text="{Binding Cha}"></TextBlock>
+                </Grid>
+                </StackPanel>
+                <StackPanel Grid.Column="1">
+                <TextBlock Margin="30,30,0,0">
+                    <Run>Испытания: </Run>
+                    <Run Text="{Binding SavingThrows }"></Run>
+                </TextBlock>
+                <TextBlock Margin="30,10,0,0">
+                    <Run>Навыки: </Run>
+                    <Run Text="{Binding Skills}"></Run>
+                </TextBlock>
+                    <TextBlock Margin="30,10,0,0" Text="{Binding Immunity}"></TextBlock>
+                    <TextBlock Margin="30,10,0,0" Text="{Binding Resistance}"></TextBlock>
+                    <TextBlock Margin="30,10,0,0" Text="{Binding Vulnerability}"></TextBlock>
+                <TextBlock Margin="30,10,0,0">
+                    <Run>Восприятие: </Run>
+                    <Run Text="{Binding Senses}"></Run>
+                </TextBlock> 
+                <TextBlock Margin="30,10,0,0">
+                    <Run>Языки: </Run>
+                    <Run Text="{Binding Languages}"></Run>
+                </TextBlock>
+                    <TextBlock Margin="30,10,30,0">
+                        <Run Text="Опасность: "/>
+                        <Run Text="{Binding Challenge}" />
+                        <Run>(</Run>
+                        <Run Text="{Binding Ex}"/>
+                        <Run>опыта)</Run>
+                    </TextBlock>
+                </StackPanel>
+            </Grid>
+            <ListView ItemsSource="{Binding Features}" Margin="30,30,0,0">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="local:Features">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="{Binding Name}" FontWeight="Black"></TextBlock>
+                            <TextBlock Grid.Column="1" Text="{Binding Description}"></TextBlock>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView> 
+            <Border BorderThickness="0,1,0,0" BorderBrush="{StaticResource UnderlineBrush}" Margin="0,15,0,0"></Border>
+            <TextBlock FontSize="24" Margin="30,15,0,0" FontWeight="Bold">Действия</TextBlock>
+            <ListView ItemsSource="{Binding Actions}" Margin="30,30,0,0">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="local:Features">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="{Binding Name}" FontWeight="Black"></TextBlock>
+                            <TextBlock Grid.Column="1" Text="{Binding Description}"></TextBlock>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Border BorderThickness="0,1,0,0" BorderBrush="{StaticResource UnderlineBrush}" Margin="0,15,0,0"></Border>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

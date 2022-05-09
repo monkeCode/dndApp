@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -37,7 +38,35 @@ namespace App1
             return str;
         }
 
-        public abstract void GetListData();
+        protected Func<T, string> sortPred;
+        protected bool isDesc;
+        protected CustomCommand sortCommand;
+
+        public CustomCommand SortCommand
+        {
+            get
+            {
+                return sortCommand ??= new CustomCommand(obj =>
+                {
+                    if (sortPred == obj) isDesc = !isDesc;
+                    else
+                    {
+                        sortPred = (Func<T, string>) obj;
+                        isDesc = false;
+                    }
+
+                    GetListData(); });
+            }
+        }
+       protected List<T> Sort(List<T> list)
+        {
+            if (isDesc)
+            {
+                return list.OrderByDescending(sortPred).ToList();
+            }
+            return list.OrderBy(sortPred).ToList();
+        }
+       public abstract void GetListData();
 
         public event PropertyChangedEventHandler PropertyChanged;
 

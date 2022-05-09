@@ -19,6 +19,7 @@
                 <NavigationViewItemSeparator />
                 <NavigationViewItemHeader Content="Инструменты" />
                 <NavigationViewItem Icon="Download" Content="Мастерская" Tag="Workshop" />
+                <NavigationViewItem Icon="Download" Content="Задания" Tag="Quests" />
                 <NavigationViewItem Icon="Download" Content="Генератор добычи" Tag="LootGenerator" />
                 <NavigationViewItem Icon="Download" Content="Управление группами" Tag="GroupManager" />
                 <NavigationViewItem Icon="Download" Content="Боевые сцены" Tag="Encounters" />

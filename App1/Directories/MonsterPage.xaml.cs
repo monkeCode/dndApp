@@ -1,10 +1,21 @@
-﻿using App1.WorkShop;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text.RegularExpressions;
+using Windows.Foundation;
+using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Documents;
+using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using App1.Model;
+using App1.WorkShop;
 
 // Документацию по шаблону элемента "Пустая страница" см. по адресу https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -13,20 +24,16 @@ namespace App1.Directories
     /// <summary>
     /// Пустая страница, которую можно использовать саму по себе или для перехода внутри фрейма.
     /// </summary>
-    public sealed partial class MagicItemExtendedPage : Page
+    public sealed partial class MonsterPage : Page
     {
-        public MagicItemExtendedPage()
+        public MonsterPage()
         {
             this.InitializeComponent();
         }
-
-
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            DataContext = new ExtendedMagicItem((int)e.Parameter);
-            TableLoading();
+            DataContext = new ExtendedMonster((int)e.Parameter);
         }
-
         private void ReFormateText(object sender, RoutedEventArgs e)
         {
             TextBlock textBlock = sender as TextBlock;
@@ -72,7 +79,7 @@ namespace App1.Directories
             if (table != null)
             {
 
-                foreach (TextBlock tex in table.LoadTable(TableGrid))
+                foreach (TextBlock tex in table.LoadTable(/*TableGrid*/ null))
                 {
 
                     foreach (var r in tex.Inlines)
@@ -94,6 +101,5 @@ namespace App1.Directories
                 }
             }
         }
-
     }
 }

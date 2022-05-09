@@ -71,7 +71,7 @@
                 <TextBlock Grid.Column="3"  TextAlignment="Center" Style="{StaticResource SubtitleTextBlockStyle}" TextDecorations="Underline">Опасность</TextBlock>
             </Grid>
             </StackPanel>
-        <ListView Grid.Row="1" ItemsSource="{Binding DataCollection, Mode=OneTime }"  Margin="10,0,10,0">
+        <ListView Grid.Row="1" ItemsSource="{Binding DataCollection, Mode=OneTime }"  Margin="10,0,10,0" ItemClick="ListViewBase_OnItemClick" IsItemClickEnabled="True">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch"/>

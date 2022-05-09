@@ -1,4 +1,6 @@
-﻿namespace App1
+﻿using DataBaseLib;
+
+namespace App1
 {
     public class Monster
     {
@@ -44,9 +46,25 @@
                 "29" => 135000,
                 "30" => 155000
             };
-
+        public string Source { get; set; }
+        public bool isLegendary { get; set; }
+        public string Habitat { get; set; }
         public Monster()
         {
+        }
+
+        public Monster(int id)
+        {
+            var list = DataAccess.GetData("Monsters", $"_id = {id}", null, "*")[0];
+            Id = id;
+            Name = list[1].ToString();
+            Size = (int) (long) list[2];
+            Type = list[3].ToString();
+            Habitat = list[4].ToString();
+            Challenge = list[5].ToString();
+            isLegendary = list[6].ToString() == "1";
+            Source = list[7].ToString();
+
         }
     }
 }

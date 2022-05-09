@@ -1,14 +1,67 @@
 ﻿<Page
-    x:Class="App1.Quest.BlankPage1"
+    x:Class="App1.Quest.QuestPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:App1.Quest"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+    <Page.Resources>
+        <Style TargetType="ListViewItem" x:Name="ContainerStyle">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        </Style>
+        <DataTemplate x:DataType="local:QuestModel" x:Key="QuestListTemp" >
+            <TextBlock Text="{Binding Name}"></TextBlock>
+        </DataTemplate>
+        <Style TargetType="ListView" x:Key="QuestListStyle">
+            <Setter Property="ItemContainerStyle" Value="{StaticResource ContainerStyle}"/>
+           
+        </Style>
+    </Page.Resources>
     <Grid>
-
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="350"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid BorderThickness="0,0,1,0" BorderBrush="{ThemeResource SystemControlBackgroundBaseHighBrush}" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <controls:Expander>
+                <controls:Expander.Header>
+                    <TextBlock Style="{StaticResource TitleTextBlockStyle}" HorizontalAlignment="Center" TextDecorations="Underline">Группа</TextBlock>
+                </controls:Expander.Header>
+                <controls:Expander.Content>
+                    <Button Margin="10" Content="{Binding PlayerGroup.Name}" HorizontalAlignment="Center"></Button>
+                </controls:Expander.Content>
+            </controls:Expander>
+            <Grid Grid.Row ="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <StackPanel MinHeight="150">
+                    <TextBlock Style="{StaticResource TitleTextBlockStyle}" HorizontalAlignment="Center" TextDecorations="Underline">Не начато</TextBlock>
+                    <ListView ItemsSource="{Binding NonActiveQuests}" Style="{StaticResource QuestListStyle}" ItemTemplate="{StaticResource QuestListTemp}">
+                    </ListView>
+                </StackPanel> 
+                <StackPanel Grid.Row="1" MinHeight="150">
+                    <TextBlock Style="{StaticResource TitleTextBlockStyle}" HorizontalAlignment="Center" TextDecorations="Underline">активно</TextBlock>
+                    <ListView ItemsSource="{Binding ActiveQuests}" Style="{StaticResource QuestListStyle}" ItemTemplate="{StaticResource QuestListTemp}">
+                    </ListView>
+                </StackPanel>
+                <StackPanel Grid.Row="2" MinHeight="150">
+                    <TextBlock Style="{StaticResource TitleTextBlockStyle}" HorizontalAlignment="Center" TextDecorations="Underline">завершено</TextBlock>
+                    <ListView ItemsSource="{Binding CompletedQuests}" Style="{StaticResource QuestListStyle}" ItemTemplate="{StaticResource QuestListTemp}">
+                    </ListView>
+                </StackPanel>
+                <Button Grid.Row="3" Margin="10" HorizontalAlignment="Center">Добавить задание</Button>
+            </Grid>
+        </Grid>
     </Grid>
 </Page>

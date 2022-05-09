@@ -10,6 +10,7 @@ namespace App1
         public MagicItemsModelView()
         {
             DataCollection = new ObservableCollection<MagicItem>();
+            sortPred = item => item.Name; 
             GetListData();
             whereReq = new string[3];
         }
@@ -17,10 +18,6 @@ namespace App1
         public IList<object> SelectedType { set { whereReq[0] = value.Count > 0 ? "Type IN ( " + ChangeSelect(value) : null; GetListData(); } }
         public IList<object> SelectedQuality { set { whereReq[1] = value.Count > 0 ? "Quality IN ( " + ChangeSelect(value.Select(i => (object)StaticValues.magicItemQality[i.ToString()]).ToList()) : null; GetListData(); } }
         public IList<object> SelectedSource { set { whereReq[2] = value.Count > 0 ? "Source IN ( " + ChangeSelect(value) : null; GetListData(); } }
-        public ICollection<MagicItem> Sort(ICollection<MagicItem> list)
-        {
-           return list.OrderBy(i => i.Name).ToList();
-        }
         public override void GetListData()
         {
             DataCollection.Clear();
