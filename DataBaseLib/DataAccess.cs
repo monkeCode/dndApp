@@ -8,14 +8,14 @@ using Windows.Storage;
 
 namespace DataBaseLib
 {
-    static public class DataAccess
+    public static class DataAccess
     {
         private const string DB_NAME = "DataBase.db";
-        private const int DB_VERSION = 13;
-       static public event Action NewDataLoaded;
+        private const int DB_VERSION = 14;
+       public static event Action NewDataLoaded;
         static DataAccess() { InitializeDatabase(); }
 
-        public async static Task InitializeDatabase()
+        public static async Task InitializeDatabase()
         {
             ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
            
