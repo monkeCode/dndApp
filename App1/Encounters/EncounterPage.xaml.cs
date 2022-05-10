@@ -14,8 +14,8 @@ namespace App1.Encounters
     public sealed partial class EncounterPage : Page
     {
 
-        private List<BattleMonster> dragableItems = new List<BattleMonster>();
-        ListView originalSource;
+        private List<BattleMonster> _dragableItems = new List<BattleMonster>();
+        private ListView _originalSource;
         public EncounterPage()
         {
             DataContext = new EncounterModelView();
@@ -73,7 +73,7 @@ namespace App1.Encounters
 
         private void ListView_DragOver(object sender, DragEventArgs e)
         {
-            if (originalSource != sender)
+            if (_originalSource != sender)
                 e.AcceptedOperation = Windows.ApplicationModel.DataTransfer.DataPackageOperation.Move;
         }
 
@@ -82,11 +82,11 @@ namespace App1.Encounters
         private void ListView_DragItemsStarting(object sender, DragItemsStartingEventArgs e)
         {
 
-            dragableItems.Clear();
+            _dragableItems.Clear();
             foreach (var i in e.Items)
             {
-                dragableItems.Add((BattleMonster)i);
-                originalSource = sender as ListView;
+                _dragableItems.Add((BattleMonster)i);
+                _originalSource = sender as ListView;
             }
         }
 
@@ -94,15 +94,15 @@ namespace App1.Encounters
         {
             ListView lv = sender as ListView;
 
-            foreach (var i in dragableItems)
+            foreach (var i in _dragableItems)
             {
                 if (((lv.DataContext) as Encounter).Monsters.FirstOrDefault(monster => monster.Monster.Id == i.Monster.Id) == null)
                     ((lv.DataContext) as Encounter).Monsters.Add(new BattleMonster() { Monster = i.Monster, Quantity = i.Quantity });
                 else
                     ((lv.DataContext) as Encounter).Monsters.First(monster => monster.Monster.Id == i.Monster.Id).Quantity++;
-                var obj = originalSource.DataContext as Encounter;
+                var obj = _originalSource.DataContext as Encounter;
                 if (obj != null)
-                    ((originalSource.DataContext) as Encounter).Monsters.Remove(i);
+                    ((_originalSource.DataContext) as Encounter).Monsters.Remove(i);
 
             }
 
@@ -112,9 +112,9 @@ namespace App1.Encounters
         {
 
 
-            foreach (var i in dragableItems)
+            foreach (var i in _dragableItems)
             {
-                ((originalSource.DataContext) as Encounter).Monsters.Remove(i);
+                ((_originalSource.DataContext) as Encounter).Monsters.Remove(i);
 
             }
         }
@@ -122,7 +122,7 @@ namespace App1.Encounters
         private void ListView_DragOver_1(object sender, DragEventArgs e)
         {
 
-            if (sender != originalSource)
+            if (sender != _originalSource)
                 e.AcceptedOperation = Windows.ApplicationModel.DataTransfer.DataPackageOperation.Move;
         }
 
