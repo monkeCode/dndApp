@@ -7,44 +7,51 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Grid>
-        <Pivot>
-            <PivotItem Header="Мастерская">
-                <Grid>
-                    <Grid.Resources>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="HorizontalAlignment" Value="Center" />
-                            <Setter Property="FontSize" Value="22" />
-                        </Style>
-                    </Grid.Resources>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-                    <StackPanel MinWidth="100">
-                        <TextBlock Text="Заклинания" />
-                        <ListView>
-                        </ListView>
-                    </StackPanel>
-                    <StackPanel Grid.Column="1"  MinWidth="100">
-                        <TextBlock Text="Существа" />
-                        <ListView>
-                        </ListView>
-                    </StackPanel>
-                    <StackPanel Grid.Column="2"  MinWidth="100">
-                        <TextBlock Text="Магические предметы" />
-                        <ListView>
-                        </ListView>
-                    </StackPanel>
-                </Grid>
-            </PivotItem>
-            <PivotItem Header="Создать заклинание">
-            </PivotItem>
-            <PivotItem Header="Создать Существо">
-            </PivotItem>
-            <PivotItem Header="Создать предмет">
-                <Frame x:Name="MagicFrame" />
-            </PivotItem>
-        </Pivot>
+        <Grid.Resources>
+            <Style TargetType="TextBlock">
+                <Setter Property="HorizontalAlignment" Value="Center" />
+                <Setter Property="FontSize" Value="22" />
+                <Setter Property="TextDecorations" Value="Underline"/>
+            </Style>
+            <Style TargetType="Button">
+                <Setter Property="Margin" Value="10"/>
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+            </Style>
+        </Grid.Resources>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid MinWidth="100">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="Заклинания" />
+            <ListView Grid.Row="1"/>
+            <Button Grid.Row="2">Добавить новое</Button>
+        </Grid>
+        <Grid Grid.Column="1" MinWidth="100">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="Существа" />
+            <ListView Grid.Row="1"/>
+            <Button Grid.Row="2">Добавить новое</Button>
+        </Grid>
+        <Grid Grid.Column="2" MinWidth="100">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="Магические предметы"/>
+            <ListView Grid.Row="1"/>
+            <Button Grid.Row="2" Click="AddNewItem">Добавить новый</Button>
+        </Grid>
     </Grid>
 </Page>

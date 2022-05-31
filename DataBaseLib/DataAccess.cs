@@ -11,7 +11,7 @@ namespace DataBaseLib
     public static class DataAccess
     {
         private const string DB_NAME = "DataBase.db";
-        private const int DB_VERSION = 14;
+        private const int DB_VERSION = 15;
        public static event Action NewDataLoaded;
         static DataAccess() { InitializeDatabase(); }
 

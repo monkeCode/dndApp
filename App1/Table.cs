@@ -12,13 +12,13 @@ namespace App1
     {
         public int Rows { get; set; }
         public int Columns { get; set; }
-        public ObservableCollection<string> Fields { get; set; }
+        public List<string> Fields { get; set; }
 
         public Table(object[] dataList)
         {
             Rows = (int)(long)dataList[1];
             Columns = (int)(long)dataList[2];
-            Fields = new ObservableCollection<string>(dataList[3].ToString().Split('@').ToList());
+            Fields = new List<string>(dataList[3].ToString().Split('@').ToList());
         }
         public List<TextBlock> LoadTable(Grid grid)
         {

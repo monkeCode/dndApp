@@ -1,11 +1,10 @@
-﻿using DataBaseLib;
+﻿using App.Model;
+using DataBaseLib;
 
 namespace App1
 {
-    public class Monster
+    public class Monster:DataItem
     {
-        public string Name { get; set; }
-        public int Id { get; set; }
         public string Type { set; get; }
         public int Size { get; set; }
         public string Challenge { get; set; }
@@ -51,9 +50,10 @@ namespace App1
         public string Habitat { get; set; }
         public Monster()
         {
+            ItemType = DataType.Monster;
         }
 
-        public Monster(int id)
+        public Monster(int id):this()
         {
             var list = DataAccess.GetData("Monsters", $"_id = {id}", null, "*")[0];
             Id = id;

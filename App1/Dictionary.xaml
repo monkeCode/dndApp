@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:app1="using:App1">
     <SolidColorBrush x:Key="Common" Color="{StaticResource SystemBaseHighColor}">
     </SolidColorBrush>
     <SolidColorBrush x:Key="Uncommon" Color="MediumSpringGreen">
@@ -23,7 +24,7 @@
     <Style x:Key="ListViewStyle" TargetType="ListView">
         <Setter Property="SelectionMode" Value="None" />
         <Setter Property="Margin" Value="30,10,30,10" />
-        <Setter Property="BorderBrush" Value="{ThemeResource SystemColorHighlightColor}" />
+        <Setter Property="BorderBrush" Value="{ThemeResource AccentDark1}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="MinHeight" Value="50" />
     </Style>
@@ -39,4 +40,14 @@
         <GradientStop Offset="1"></GradientStop>
     </LinearGradientBrush>
     <x:Int32 x:Key="tableBorderSize">1</x:Int32>
+
+    <Style TargetType="ListViewItem" x:Name="DirectoryList">
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+    </Style>
+    <Style TargetType="Grid" x:Name="DirectoryItemGrid">
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="Margin" Value="10"/>
+        <Setter Property="BorderThickness" Value="0,0,0,0.5"/>
+        <Setter Property="BorderBrush" Value="{StaticResource UnderlineBrush}"/>
+    </Style>
 </ResourceDictionary>

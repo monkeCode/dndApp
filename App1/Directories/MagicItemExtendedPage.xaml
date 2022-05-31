@@ -11,7 +11,7 @@
     <Page.Resources>
         <local:RarityConvector x:Key="RarityConvert" />
     </Page.Resources>
-    <ScrollViewer>
+    <ScrollViewer MinWidth="500">
         <StackPanel x:Name="MainPanel">
             <TextBlock FontSize="24" Margin="30" Text="{Binding Name}" FontWeight="Bold" Foreground="{ThemeResource SystemAccentColorLight1}" />
             <TextBlock TextWrapping="Wrap" FontStyle="Italic" Margin="30,0,0,0">

@@ -12,9 +12,17 @@
                         IsTabStop="False" ItemInvoked="navPanel_ItemInvoked" BackRequested="navPanel_BackRequested"
                         Loaded="navPanel_Loaded">
             <NavigationView.MenuItems>
-                <NavigationViewItemHeader Content="Справочники" />
-                <NavigationViewItem Tag="MagicItems" Content="Магические предметы" Icon="play"/>
-                <NavigationViewItem Icon="Save" Content="Бестиарий" Tag="Monsters" />
+                <NavigationViewItemHeader Content="Справочники"/>
+                <NavigationViewItem Tag="MagicItems" Content="Магические предметы">
+                    <NavigationViewItem.Icon>
+                        <BitmapIcon UriSource="Assets/witch-hat.png"></BitmapIcon>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Бестиарий" Tag="Monsters">
+                    <NavigationViewItem.Icon>
+                        <BitmapIcon UriSource="Assets/goblin.png"></BitmapIcon>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
                 <NavigationViewItem Icon="Refresh" Content="Заклинания" Tag="Magic" />
                 <NavigationViewItemSeparator />
                 <NavigationViewItemHeader Content="Инструменты" />

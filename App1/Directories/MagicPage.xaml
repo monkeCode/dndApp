@@ -71,15 +71,10 @@
                 </TextBlock>
             </Grid>
         </StackPanel>
-        <ListView Grid.Row="1" HorizontalAlignment="Stretch" ItemsSource="{Binding DataCollection }" ItemClick="ItemsPanel_ItemClick" IsItemClickEnabled="True">
-            <ListView.ItemContainerStyle>
-                <Style TargetType="ListViewItem">
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                </Style>
-            </ListView.ItemContainerStyle>
+        <ListView Grid.Row="1" HorizontalAlignment="Stretch" ItemsSource="{Binding DataCollection }" ItemContainerStyle="{StaticResource DirectoryList}" ItemClick="ItemsPanel_ItemClick" IsItemClickEnabled="True">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="local:MagicItem">
-                    <Grid HorizontalAlignment="Stretch" Margin="10" BorderThickness="0,0,0,0.5" BorderBrush="{StaticResource UnderlineBrush}">
+                    <Grid Style="{StaticResource DirectoryItemGrid}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
                             <ColumnDefinition/>

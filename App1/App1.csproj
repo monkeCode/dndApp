@@ -147,30 +147,34 @@
     <Compile Include="GroupMenu\GroupPage.xaml.cs">
       <DependentUpon>GroupPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\AttunementConverter.cs" />
+    <Compile Include="Model\DataItem.cs" />
     <Compile Include="Model\ExtendedMonster.cs" />
     <Compile Include="Model\Features.cs" />
     <Compile Include="Model\Group.cs" />
     <Compile Include="Model\Monster.cs" />
     <Compile Include="Model\Player.cs" />
+    <Compile Include="Model\Spell.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Quest\QuestModel.cs" />
     <Compile Include="Quest\QuestPage.xaml.cs">
       <DependentUpon>QuestPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Quest\QuestsMV.cs" />
-    <Compile Include="SizeConverter.cs" />
+    <Compile Include="Helpers\SizeConverter.cs" />
     <Compile Include="Table.cs" />
     <Compile Include="Model\ExtendedMagicItem.cs" />
     <Compile Include="Directories\MagicItemExtendedPage.xaml.cs">
       <DependentUpon>MagicItemExtendedPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="VisualTable.cs" />
     <Compile Include="WorkShop\CreateItem.xaml.cs">
       <DependentUpon>CreateItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="Directories\DirectoriesModelView.cs" />
-    <Compile Include="Extensions.cs" />
+    <Compile Include="Helpers\Extensions.cs" />
     <Compile Include="Directories\MagicItemsModelView.cs" />
-    <Compile Include="RarityConvector.cs" />
+    <Compile Include="Helpers\RarityConvector.cs" />
     <Compile Include="Model\MagicItem.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -180,8 +184,9 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StaticValues.cs" />
-    <Compile Include="Formator.cs" />
-    <Compile Include="Link.cs" />
+    <Compile Include="Helpers\Formator.cs" />
+    <Compile Include="Model\Link.cs" />
+    <Compile Include="WorkShop\CreateItemMV.cs" />
     <Compile Include="WorkShop\Workshop.xaml.cs">
       <DependentUpon>Workshop.xaml</DependentUpon>
     </Compile>
@@ -192,10 +197,10 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\cthulhu.svg" />
-    <Content Include="Assets\magic-spell.svg" />
-    <Content Include="Assets\role-playing.svg" />
-    <Content Include="Assets\sword.svg" />
+    <Content Include="Assets\ancient-scroll.png" />
+    <Content Include="Assets\goblin.png" />
+    <Content Include="Assets\sword.png" />
+    <Content Include="Assets\witch-hat.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -286,7 +291,18 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Assets\Fonts\Font Awesome 6 Free-Regular-400.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Fonts\Font Awesome 6 Brands-Regular-400.otf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Fonts\Awesome-Reg.otf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Fonts\Font Awesome 6 Free-Solid-900.otf" />
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

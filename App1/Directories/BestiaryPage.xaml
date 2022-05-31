@@ -71,15 +71,10 @@
                 <TextBlock Grid.Column="3"  TextAlignment="Center" Style="{StaticResource SubtitleTextBlockStyle}" TextDecorations="Underline">Опасность</TextBlock>
             </Grid>
             </StackPanel>
-        <ListView Grid.Row="1" ItemsSource="{Binding DataCollection, Mode=OneTime }"  Margin="10,0,10,0" ItemClick="ListViewBase_OnItemClick" IsItemClickEnabled="True">
-            <ListView.ItemContainerStyle>
-                <Style TargetType="ListViewItem">
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                </Style>
-            </ListView.ItemContainerStyle>
+        <ListView Grid.Row="1" ItemsSource="{Binding DataCollection, Mode=OneTime }" ItemContainerStyle="{StaticResource DirectoryList}"  Margin="10,0,10,0" ItemClick="ListViewBase_OnItemClick" IsItemClickEnabled="True">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="app1:Monster">
-                    <Grid BorderThickness="0,0,0,0.5" BorderBrush="{StaticResource UnderlineBrush}">
+                    <Grid Style="{StaticResource DirectoryItemGrid}">
                        
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>

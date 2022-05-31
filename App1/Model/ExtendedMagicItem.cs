@@ -37,6 +37,10 @@ namespace App1
             LoadLinks(id);
         }
 
+        public ExtendedMagicItem()
+        {
+
+        }
         private void LoadTableFromDb(int id)
         {
             try

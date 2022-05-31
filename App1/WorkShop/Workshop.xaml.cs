@@ -1,4 +1,5 @@
-﻿using Windows.UI.Xaml.Controls;
+﻿using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 
 // Документацию по шаблону элемента "Пустая страница" см. по адресу https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -12,7 +13,11 @@ namespace App1
         public Workshop()
         {
             this.InitializeComponent();
-            MagicFrame.Navigate(typeof(CreateItem));
+        }
+
+        private void AddNewItem(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(CreateItem));
         }
     }
 }
