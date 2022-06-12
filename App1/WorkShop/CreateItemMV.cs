@@ -16,7 +16,7 @@ namespace App.WorkShop
         public ExtendedMagicItem Item { get => _item;
             set { _item = value; OnPropertyChanged(); }
         }
-
+        public bool IsAttunemended { get; set; }
         public CreateItemMV(int id)
         {
             Item = new ExtendedMagicItem(id);
@@ -25,6 +25,7 @@ namespace App.WorkShop
         public CreateItemMV()
         {
             Item = new ExtendedMagicItem();
+            IsAttunemended = Item.Attunement != "";
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

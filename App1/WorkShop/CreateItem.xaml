@@ -50,9 +50,10 @@
                     </Grid>
                 </Grid>
                 <StackPanel Orientation="Horizontal">
-                    <ComboBox Header="Источник" Width="200" Margin="10" ItemsSource="{Binding Source={StaticResource StaticValues}, Path=MagicItemsSource }" SelectedValue="{Binding Item.ItemSource, Mode=TwoWay}">
+                    <ComboBox Header="Источник" Width="200" Margin="10" ItemsSource="{Binding Source={StaticResource StaticValues}, Path=MagicItemsSource }" SelectedValue="{Binding Item.ItemSource, Mode=TwoWay}" >
                     </ComboBox>
-                    <CheckBox Content="Настроенность" Margin="10" VerticalAlignment="Bottom" IsChecked="{Binding Item.Attunement, Mode=TwoWay, Converter={StaticResource AttunementConverter}}" />
+                    <CheckBox Content="Настроенность" Margin="10" VerticalAlignment="Bottom" IsChecked="{Binding IsAttunemended, Mode=TwoWay}" Click="AttunBox_Checked"/>
+                    <TextBox x:Name="AttunText" PlaceholderText="Условия настроенности" Visibility="{Binding IsAttunemended, Mode=OneTime}" HorizontalAlignment="Stretch" VerticalAlignment="Center" MaxWidth="600" MinWidth="300"  Text="{Binding Item.Attunement, Mode=TwoWay}"/>
                 </StackPanel>
             </StackPanel>
             <StackPanel Grid.Row="1">

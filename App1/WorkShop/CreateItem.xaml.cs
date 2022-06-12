@@ -69,5 +69,10 @@ namespace App1
         {
             TablePanel.Visibility = (bool) (sender as CheckBox).IsChecked ? Visibility.Visible : Visibility.Collapsed;
         }
+
+        private void AttunBox_Checked(object sender, RoutedEventArgs e)
+        {
+            AttunText.Visibility = (bool)(sender as CheckBox).IsChecked?Visibility.Visible:Visibility.Collapsed;
+        }
     }
 }
