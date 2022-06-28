@@ -143,8 +143,8 @@ namespace App1.Encounters
                 req += E.SaveData() + ";";
             }
             if (req != "")
-               // DataAccess.RawRequest(req);
-               DataAccess.RawRequestAsyns(req);
+                // DataAccess.RawRequest(req);
+                DataAccess.RawRequestAsyns(req);
         }
 
 

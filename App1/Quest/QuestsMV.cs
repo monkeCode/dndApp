@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using App1.Annotations;
+using System;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using App1.Annotations;
 
 namespace App1.Quest
 {
-    internal class QuestsMV: INotifyPropertyChanged
+    internal class QuestsMV : INotifyPropertyChanged
     {
         public IObservable<QuestModel> ActiveQuests { get; set; }
         public IObservable<QuestModel> CompletedQuests { get; set; }

@@ -1,68 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
+﻿using App.Model;
 using App1;
-using App1.Annotations;
+using System;
 
 namespace App.WorkShop
 {
-    internal class CreateItemMV:INotifyPropertyChanged
+    internal class CreateItemMV : CreateMv<ExtendedMagicItem>
     {
-        private ExtendedMagicItem _item;
-        public ExtendedMagicItem Item { get => _item;
-            set { _item = value; OnPropertyChanged(); }
-        }
+
         public bool IsAttunemended { get; set; }
-        public CreateItemMV(int id)
+        public bool IsTable { get; set; }
+        public CreateItemMV(int id) : base(false)
         {
             Item = new ExtendedMagicItem(id);
+            IsTable = Item.Table != null;
         }
 
-        public CreateItemMV()
+        public CreateItemMV() : base(true)
         {
             Item = new ExtendedMagicItem();
             IsAttunemended = Item.Attunement != "";
+            IsTable = false;
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        public override void AddFeature()
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            Item.Features.Add(new Features());
         }
 
-        private CustomCommand _addFeature;
-
-        public CustomCommand AddFeature
+        public override void AddLink(DataItem item)
         {
-            get
-            {
-                return _addFeature ??= new CustomCommand(obj =>
-                {
-                    Item.Features.Add(new Features());
-                });
-            }
+            Item.Links.Add(new Link(item.ItemType, item.Id, ""));
         }
-        private CustomCommand _addLink;
 
-        public CustomCommand AddLink
+        public override void Save()
         {
-            get
-            {
-                return _addLink ??= new CustomCommand(obj =>
-                {
-                    Item.Links.Add(new Link("MA", 0, ""));
-                });
-            }
-        }
-        public void Save()
-        {
-
+            throw new NotImplementedException();
         }
     }
 }

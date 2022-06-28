@@ -1,14 +1,12 @@
-﻿using App1.Directories;
+﻿using App.Model;
+using App1.Directories;
 using System;
-using System.Linq;
-using App.Model;
-using DataBaseLib;
 
 namespace App1
 {
     public class Link
     {
-        public Type Page { get;  set; }
+        public Type Page { get; set; }
         public int Id { get; set; }
         public string Text { get; set; }
         public DataItem.DataType Type { get; set; }
@@ -31,7 +29,7 @@ namespace App1
                 Id = value.Id;
                 Type = value.ItemType;
             }
-    }
+        }
 
         public Link(string type, int id, string str)
         {
@@ -39,6 +37,13 @@ namespace App1
             Text = str;
             Page = GetPage(type);
             Type = GetDataType(type);
+        }
+        public Link(DataItem.DataType type, int id, string str)
+        {
+            Id = id;
+            Text = str;
+            Page = GetPage(type);
+            Type = (type);
         }
 
         private static DataItem.DataType GetDataType(string type)
@@ -59,6 +64,16 @@ namespace App1
                 "MI" => typeof(MagicItemExtendedPage),
                 "MO" => typeof(MonsterPage),
                 "SP" => typeof(MagicItemExtendedPage),
+                _ => throw new Exception()
+            };
+        }
+        private static Type GetPage(DataItem.DataType type)
+        {
+            return type switch
+            {
+                DataItem.DataType.MagicItem => typeof(MagicItemExtendedPage),
+                DataItem.DataType.Monster => typeof(MonsterPage),
+                DataItem.DataType.Spell => typeof(MagicItemExtendedPage),
                 _ => throw new Exception()
             };
         }

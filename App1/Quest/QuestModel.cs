@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace App1.Quest
 {
     internal class QuestModel
     {
-       public enum States
+        public enum States
         {
             NonActive,
             Active,

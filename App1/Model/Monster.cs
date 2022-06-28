@@ -3,7 +3,7 @@ using DataBaseLib;
 
 namespace App1
 {
-    public class Monster:DataItem
+    public class Monster : DataItem
     {
         public string Type { set; get; }
         public int Size { get; set; }
@@ -53,12 +53,12 @@ namespace App1
             ItemType = DataType.Monster;
         }
 
-        public Monster(int id):this()
+        public Monster(int id) : this()
         {
             var list = DataAccess.GetData("Monsters", $"_id = {id}", null, "*")[0];
             Id = id;
             Name = list[1].ToString();
-            Size = (int) (long) list[2];
+            Size = (int)(long)list[2];
             Type = list[3].ToString();
             Habitat = list[4].ToString();
             Challenge = list[5].ToString();

@@ -187,6 +187,7 @@
     <Compile Include="Helpers\Formator.cs" />
     <Compile Include="Model\Link.cs" />
     <Compile Include="WorkShop\CreateItemMV.cs" />
+    <Compile Include="WorkShop\CreateMV.cs" />
     <Compile Include="WorkShop\Workshop.xaml.cs">
       <DependentUpon>Workshop.xaml</DependentUpon>
     </Compile>

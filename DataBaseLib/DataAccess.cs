@@ -12,13 +12,13 @@ namespace DataBaseLib
     {
         private const string DB_NAME = "DataBase.db";
         private const int DB_VERSION = 15;
-       public static event Action NewDataLoaded;
+        public static event Action NewDataLoaded;
         static DataAccess() { InitializeDatabase(); }
 
         public static async Task InitializeDatabase()
         {
             ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
-           
+
             if (localSettings.Values["DataBaseVercion"] == null || (int)localSettings.Values["DataBaseVercion"] != DB_VERSION)
             {
                 var storage = await ApplicationData.Current.LocalFolder.TryGetItemAsync(DB_NAME);

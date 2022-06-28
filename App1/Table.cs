@@ -1,7 +1,6 @@
 ﻿using App1.WorkShop;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -34,7 +33,7 @@ namespace App1
                 for (int c = 0; c < this.Columns; c++)
                 {
                     int val = (int)dict["tableBorderSize"];
-                    Thickness thickness = new Thickness(0,0,val,val);
+                    Thickness thickness = new Thickness(0, 0, val, val);
                     if (r == 0)
                         thickness.Top = val;
                     if (c == 0)

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 
 namespace App1.GroupMenu
 {
@@ -11,9 +6,9 @@ namespace App1.GroupMenu
     {
         public ObservableCollection<Player> PlayerWithoutGroup { get; } = new ObservableCollection<Player>();
         public ObservableCollection<Group> Groups { get; set; } = new ObservableCollection<Group>();
-       public GroupMV()
-       {
-            foreach(var groups in DataBaseLib.DataAccess.GetData("SELECT _id FROM Parties"))
+        public GroupMV()
+        {
+            foreach (var groups in DataBaseLib.DataAccess.GetData("SELECT _id FROM Parties"))
             {
                 Groups.Add(new Group((int)(long)groups[0]));
             }
@@ -27,6 +22,6 @@ namespace App1.GroupMenu
                     Lvl = (int)(long)p[3],
                 });
             }
-       }
+        }
     }
 }

@@ -10,7 +10,7 @@ namespace App1
         public MagicItemsModelView()
         {
             DataCollection = new ObservableCollection<MagicItem>();
-            sortPred = item => item.Name; 
+            sortPred = item => item.Name;
             GetListData();
             whereReq = new string[3];
         }
@@ -30,7 +30,7 @@ namespace App1
                         continue;
                 list.Add(new MagicItem(int.Parse(i[0].ToString()), i[1].ToString(), (int)(long)i[2], i[3].ToString(), i[4].ToString() != "0"));
             }
-            foreach(var item in Sort(list))
+            foreach (var item in Sort(list))
                 DataCollection.Add(item);
         }
     }

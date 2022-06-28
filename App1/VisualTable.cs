@@ -1,19 +1,18 @@
-﻿using System;
+﻿using App1.Annotations;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using App1.Annotations;
 
 namespace App
 {
-    public class VisualTable:Grid, INotifyPropertyChanged
+    public class VisualTable : Grid, INotifyPropertyChanged
     {
-        public int Columns { 
+        public int Columns
+        {
             get => ColumnDefinitions.Count;
             set
             {
@@ -23,7 +22,7 @@ namespace App
                 {
                     for (int i = Columns; i < value; i++)
                     {
-                        ColumnDefinitions.Add(new ColumnDefinition { MinWidth = 150, MaxWidth = 300});
+                        ColumnDefinitions.Add(new ColumnDefinition { MinWidth = 150, MaxWidth = 300 });
                         for (int j = 0; j < Rows; j++)
                         {
                             TextBox textBox = new TextBox
@@ -37,10 +36,10 @@ namespace App
                         }
                     }
                 }
-                else if(value < Columns)
+                else if (value < Columns)
                 {
                     var elements = Children.Where(el =>
-                        GetColumn((TextBox) el) > value - 1).ToList();
+                        GetColumn((TextBox)el) > value - 1).ToList();
                     foreach (var el in elements)
                     {
                         Children.Remove(el);
@@ -52,9 +51,10 @@ namespace App
                         ColumnDefinitions.Remove(ColumnDefinitions[i]);
                     }
                 }
-                OnPropertyChanged();
-            } }
-
+                //OnPropertyChanged();
+                SetValue(ColumnsProperty, ColumnDefinitions.Count);
+            }
+        }
         public int Rows
         {
             get => RowDefinitions.Count;
@@ -78,7 +78,7 @@ namespace App
                             Children.Add(textBox);
                         }
                     }
-                else if(Rows > value)
+                else if (Rows > value)
                 {
                     var elements = Children.Where(el =>
                         GetRow((TextBox)el) > value - 1).ToList();
@@ -93,9 +93,36 @@ namespace App
                         RowDefinitions.Remove(RowDefinitions[i]);
                     }
                 }
-                OnPropertyChanged();
+                //OnPropertyChanged();
+                SetValue(RowsProperty, RowDefinitions.Count);
             }
         }
+
+        List<string> _data;
+        public List<string> Data
+        {
+            get => _data; 
+            set
+            {
+                _data = value;
+                for (int i = 0; i < Rows; i++)
+                {
+                    for (int j = 0; j < Columns; j++)
+                    {
+                        ((TextBox)Children.First(it => GetColumn((FrameworkElement)it) == j && GetRow((FrameworkElement)it) == i)).Text = _data[i * Columns + j];
+                    }
+                }
+            }
+        }
+
+        public static readonly DependencyProperty ColumnsProperty =
+        DependencyProperty.Register(
+        "Columns", typeof(Int32), typeof(VisualTable), new PropertyMetadata(1)
+        );
+        public static readonly DependencyProperty RowsProperty =
+        DependencyProperty.Register(
+        "Rows", typeof(Int32), typeof(VisualTable), new PropertyMetadata(1)
+        );
 
         public event PropertyChangedEventHandler PropertyChanged;
 

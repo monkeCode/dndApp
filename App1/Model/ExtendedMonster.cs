@@ -1,13 +1,9 @@
-﻿using System;
+﻿using DataBaseLib;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DataBaseLib;
 
 namespace App1.Model
 {
-    internal class ExtendedMonster:Monster
+    internal class ExtendedMonster : Monster
     {
         public int AC { get; set; }
         public string HP { get; set; }
@@ -36,18 +32,18 @@ namespace App1.Model
         public List<Features> Features { get; set; } = new();
         public List<Features> LegendaryActions { get; set; } = new();
 
-        public ExtendedMonster(int id):base(id)
+        public ExtendedMonster(int id) : base(id)
         {
             var list = DataAccess.GetData("ExtendedMonsters", $"_id = {id}", null, "*")[0];
-            AC = (int) (long) list[1];
+            AC = (int)(long)list[1];
             HP = list[2].ToString();
             Speed = list[3].ToString();
-            Str = (int)(long) list[4];
-            Dex = (int)(long) list[5];
-            Con = (int)(long) list[6];
-            Intel = (int)(long) list[7];
-            Wis = (int)(long) list[8];
-            Cha = (int)(long) list[9];
+            Str = (int)(long)list[4];
+            Dex = (int)(long)list[5];
+            Con = (int)(long)list[6];
+            Intel = (int)(long)list[7];
+            Wis = (int)(long)list[8];
+            Cha = (int)(long)list[9];
             SavingThrows = list[10].ToString();
             Skills = list[11].ToString();
             Senses = list[12].ToString();

@@ -1,7 +1,7 @@
-﻿using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using App;
+﻿using App.Model;
 using App.WorkShop;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 
 // Документацию по шаблону элемента "Пустая страница" см. по адресу https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -15,7 +15,9 @@ namespace App1
         public CreateItem()
         {
             this.InitializeComponent();
-            DataContext = new CreateItemMV(0);
+            var context = new CreateItemMV(2);
+            DataContext = context;
+
         }
 
         private void Grid_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -44,13 +46,13 @@ namespace App1
         private void AddColumn(object sender, RoutedEventArgs e)
         {
             Table.Columns++;
-           // ColumnCounter.Text = Table.Columns.ToString();
+            // ColumnCounter.Text = Table.Columns.ToString();
         }
 
         private void RemoveColumn(object sender, RoutedEventArgs e)
         {
             Table.Columns--;
-           // ColumnCounter.Text = Table.Columns.ToString();
+            // ColumnCounter.Text = Table.Columns.ToString();
         }
 
         private void RemoveRow(object sender, RoutedEventArgs e)
@@ -62,17 +64,39 @@ namespace App1
         private void AddRow(object sender, RoutedEventArgs e)
         {
             Table.Rows++;
-           // RowCounter.Text = Table.Rows.ToString();
+            // RowCounter.Text = Table.Rows.ToString();
         }
 
         private void TableStateChanged(object sender, RoutedEventArgs e)
         {
-            TablePanel.Visibility = (bool) (sender as CheckBox).IsChecked ? Visibility.Visible : Visibility.Collapsed;
+            TablePanel.Visibility = (bool)(sender as CheckBox).IsChecked ? Visibility.Visible : Visibility.Collapsed;
         }
 
         private void AttunBox_Checked(object sender, RoutedEventArgs e)
         {
-            AttunText.Visibility = (bool)(sender as CheckBox).IsChecked?Visibility.Visible:Visibility.Collapsed;
+            AttunText.Visibility = (bool)(sender as CheckBox).IsChecked ? Visibility.Visible : Visibility.Collapsed;
         }
+
+        private void AddRef(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void RefName_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
+        {
+            ((CreateItemMV)DataContext).AddLink((DataItem)args.SelectedItem);
+        }
+
+        private void RefName_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+        {
+            if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
+            {
+                var text = sender.Text.ToLower();
+                var items = ((CreateItemMV)DataContext).GetItemsByName(text);
+                sender.ItemsSource = items;
+            }
+        }
+
+
     }
 }

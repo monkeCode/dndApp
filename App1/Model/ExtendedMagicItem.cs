@@ -23,7 +23,6 @@ namespace App1
             Quality = (int)(long)item[2];
             Type = item[3].ToString();
             ItemSource = item[5].ToString();
-
             Description = item[8].ToString();
             if (item[9].ToString() != "")
                 UnderType = "(" + item[9] + ")";

@@ -51,14 +51,15 @@ namespace App1
                     if (sortPred == obj) isDesc = !isDesc;
                     else
                     {
-                        sortPred = (Func<T, string>) obj;
+                        sortPred = (Func<T, string>)obj;
                         isDesc = false;
                     }
 
-                    GetListData(); });
+                    GetListData();
+                });
             }
         }
-       protected List<T> Sort(List<T> list)
+        protected List<T> Sort(List<T> list)
         {
             if (isDesc)
             {
@@ -66,7 +67,7 @@ namespace App1
             }
             return list.OrderBy(sortPred).ToList();
         }
-       public abstract void GetListData();
+        public abstract void GetListData();
 
         public event PropertyChangedEventHandler PropertyChanged;
 

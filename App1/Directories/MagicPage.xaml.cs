@@ -1,5 +1,4 @@
-﻿using Windows.Media.Devices;
-using App1.Directories;
+﻿using App1.Directories;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Documents;
@@ -56,7 +55,7 @@ namespace App1
 
         private void NameClick(Hyperlink sender, HyperlinkClickEventArgs args)
         {
-            (DataContext as MagicItemsModelView).SortCommand.Execute((MagicItem mn)=> mn.Name);
+            (DataContext as MagicItemsModelView).SortCommand.Execute((MagicItem mn) => mn.Name);
         }
 
         private void QualityClick(Hyperlink sender, HyperlinkClickEventArgs args)
