@@ -1,7 +1,10 @@
-﻿using App.Model;
+﻿using System;
+using System.Threading.Tasks;
+using App.Model;
 using App.WorkShop;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
 
 // Документацию по шаблону элемента "Пустая страница" см. по адресу https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -12,6 +15,7 @@ namespace App1
     /// </summary>
     public sealed partial class CreateItem : Page
     {
+        private bool isSaved;
         public CreateItem()
         {
             this.InitializeComponent();
@@ -35,11 +39,6 @@ namespace App1
                 Grid.SetColumn(grid, 1);
                 ((Grid)sender).ColumnDefinitions[1].Width = new GridLength(1, GridUnitType.Star);
             }
-        }
-
-        private void Description_Loaded(object sender, RoutedEventArgs e)
-        {
-            RichEditBox editBox = sender as RichEditBox;
         }
 
 
@@ -77,11 +76,6 @@ namespace App1
             AttunText.Visibility = (bool)(sender as CheckBox).IsChecked ? Visibility.Visible : Visibility.Collapsed;
         }
 
-        private void AddRef(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void RefName_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
         {
             ((CreateItemMV)DataContext).AddLink((DataItem)args.SelectedItem);
@@ -96,7 +90,71 @@ namespace App1
                 sender.ItemsSource = items;
             }
         }
+        private async Task<ContentDialogResult> ShowDialog_Click()
+        {
+            ContentDialog dialog = new ContentDialog();
+            dialog.Title = "Сохранить изменения?";
+            dialog.PrimaryButtonText = "Сохранить";
+            dialog.SecondaryButtonText = "Не сохранять";
+            dialog.CloseButtonText = "Отмена";
+            dialog.DefaultButton = ContentDialogButton.Primary;
 
+            var result = await dialog.ShowAsync();
+            return result;
+        }
 
+        private async void SaveBeforeExit()
+        {
+            var result = await ShowDialog_Click();
+            switch (result)
+            {
+                case ContentDialogResult.Primary:
+                    ((CreateItemMV)DataContext).Save();
+                    isSaved = true;
+                    Frame.Navigate(typeof(Workshop));
+                    break;
+                case ContentDialogResult.Secondary:
+                    isSaved = true;                    
+                    Frame.Navigate(typeof(Workshop));
+                    break;
+                case ContentDialogResult.None:
+                    return;
+            }
+        }
+
+        protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
+        {
+
+            if (!isSaved)
+            {
+                e.Cancel = true;
+                SaveBeforeExit();
+            }
+            else
+            {
+                base.OnNavigatingFrom(e);
+            }
+
+        }
+
+        private void SaveBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var table =  Table.LoadTableData();
+            (DataContext as CreateItemMV).Item.Table = table;
+            (DataContext as CreateItemMV).Save();
+            isSaved = true;
+            Frame.Navigate(typeof(Workshop));
+        }
+
+        private void DeleteRef_click(object sender, RoutedEventArgs e)
+        {
+            var context = (sender as AppBarButton).DataContext;
+            (DataContext as CreateItemMV).DeleteLink((Link)context);
+        }
+
+        private void DeleteFeature(object sender, RoutedEventArgs e)
+        {
+            (DataContext as CreateItemMV).Item.Features.Remove((Features)(sender as Button).DataContext);
+        }
     }
 }

@@ -14,7 +14,7 @@
         </Grid.ColumnDefinitions>
         <StackPanel>
             <TextBlock Style="{StaticResource TitleTextBlockStyle}" HorizontalAlignment="Center" TextDecorations="Underline">Группы</TextBlock>
-            <ListView ItemsSource="{Binding Groups}" Style="{StaticResource ListViewStyle}" ItemContainerStyle="{StaticResource ListViewItemsStyle}">
+            <ListView ItemsSource="{Binding Groups}" Style="{StaticResource FeaturesListStyle}" ItemContainerStyle="{StaticResource ListViewItemsStyle}">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="x1:Group">
                         <StackPanel>

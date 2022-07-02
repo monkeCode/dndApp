@@ -7,12 +7,12 @@ using Windows.UI.Xaml.Controls;
 
 namespace App1
 {
-    internal class Table
+    public class Table
     {
         public int Rows { get; set; }
         public int Columns { get; set; }
         public List<string> Fields { get; set; }
-
+        public Table() { }
         public Table(object[] dataList)
         {
             Rows = (int)(long)dataList[1];

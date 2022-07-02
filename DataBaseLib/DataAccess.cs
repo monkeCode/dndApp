@@ -13,29 +13,46 @@ namespace DataBaseLib
         private const string DB_NAME = "DataBase.db";
         private const int DB_VERSION = 15;
         public static event Action NewDataLoaded;
-        static DataAccess() { InitializeDatabase(); }
+        private static bool _canOpenConnection;
+        public static bool IsActualDb { get
+            {
+                ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+                return !(localSettings.Values["DataBaseVercion"] == null || (int)localSettings.Values["DataBaseVercion"] != DB_VERSION);
 
+            } }
+        static DataAccess(){InitializeDatabase(); }
         public static async Task InitializeDatabase()
         {
             ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
-
-            if (localSettings.Values["DataBaseVercion"] == null || (int)localSettings.Values["DataBaseVercion"] != DB_VERSION)
+            if (!IsActualDb)
             {
-                var storage = await ApplicationData.Current.LocalFolder.TryGetItemAsync(DB_NAME);
-                if (storage != null)
-                    File.Delete(storage.Path);
+                _canOpenConnection = false;
+                await DeleteDb();
             }
             if (await ApplicationData.Current.LocalFolder.TryGetItemAsync(DB_NAME) == null)
             {
+                await LoadNewDb(localSettings);
+                _canOpenConnection = true;
+            }
+        }
+
+        private static async Task DeleteDb()
+        {
+                var storage = await ApplicationData.Current.LocalFolder.TryGetItemAsync(DB_NAME);
+                if (storage != null)
+                    await storage.DeleteAsync();
+        }
+
+        private static async Task LoadNewDb(ApplicationDataContainer localSettings)
+        {
                 StorageFile databaseFile = await Package.Current.InstalledLocation.GetFileAsync(DB_NAME);
                 File.Copy(databaseFile.Path, ApplicationData.Current.LocalFolder.Path + $"\\{DB_NAME}");
                 localSettings.Values["DataBaseVercion"] = DB_VERSION;
                 NewDataLoaded?.Invoke();
-            }
         }
 
         public static void AddData(string table, string[] rows, object[] input)
-        {
+        { 
             string dbpath = Path.Combine(ApplicationData.Current.LocalFolder.Path, DB_NAME);
             using (SqliteConnection db =
               new SqliteConnection($"Filename={dbpath}"))

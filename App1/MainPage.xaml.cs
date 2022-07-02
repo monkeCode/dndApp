@@ -30,12 +30,6 @@ namespace App1
             ("Quests", typeof(Quest.QuestPage))
         };
 
-        private void navPanel_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
-        {
-            string tag = args.InvokedItemContainer.Tag.ToString();
-            NavView_Navigate(tag, args.RecommendedNavigationTransitionInfo);
-        }
-
         private void NavView_Navigate(
     string navItemTag,
     Windows.UI.Xaml.Media.Animation.NavigationTransitionInfo transitionInfo)
@@ -59,7 +53,6 @@ namespace App1
             }
         }
 
-        private void navPanel_BackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args) => TryGoBack();
 
         private bool TryGoBack()
         {
@@ -67,8 +60,8 @@ namespace App1
                 return false;
 
             //// Don't go back if the nav pane is overlayed.
-            //if (navPanel.IsPaneOpen &&
-            //    (navPanel.DisplayMode == muxc.NavigationViewDisplayMode.Compact ||
+            //if (NavPanel.IsPaneOpen &&
+            //    (NavPanel.DisplayMode == muxc.NavigationViewDisplayMode.Compact ||
             //     NavView.DisplayMode == muxc.NavigationViewDisplayMode.Minimal))
             //    return false;
 
@@ -83,7 +76,7 @@ namespace App1
 
         private void MainFrame_Navigated(object sender, Windows.UI.Xaml.Navigation.NavigationEventArgs e)
         {
-            navPanel.IsBackEnabled = mainFrame.CanGoBack;
+            NavPanel.IsBackEnabled = mainFrame.CanGoBack;
         }
 
         private void DiceText_acceptEvent(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
@@ -112,6 +105,17 @@ namespace App1
             else
                 foreach (var ch in stackPanel.Children)
                     ch.Visibility = Windows.UI.Xaml.Visibility.Visible;
+        }
+
+        private void NavPanel_OnItemInvoked(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewItemInvokedEventArgs args)
+        {
+            string tag = args.InvokedItemContainer.Tag.ToString();
+            NavView_Navigate(tag, args.RecommendedNavigationTransitionInfo);
+        }
+
+        private void NavPanel_OnBackRequested(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewBackRequestedEventArgs args)
+        {
+            TryGoBack();
         }
     }
 }

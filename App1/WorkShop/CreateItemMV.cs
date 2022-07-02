@@ -1,6 +1,6 @@
 ﻿using App.Model;
 using App1;
-using System;
+using System.Linq;
 
 namespace App.WorkShop
 {
@@ -34,7 +34,35 @@ namespace App.WorkShop
 
         public override void Save()
         {
-            throw new NotImplementedException();
+            if (!IsTable)
+                Item.Table = null;
+            if (!IsAttunemended)
+                Item.Attunement = "";
+            else if (IsAttunemended && Item.Attunement.Trim() == string.Empty)
+                Item.Attunement = "требует настроенности";
+            if (Item.ItemSource == "Dungeon master\'s guide")
+                Item.ItemSource = "Dungeon master\'\'s guide";
+            DataBaseLib.DataAccess.RawRequest($"UPDATE MagicItems " +
+                $"SET Name = \'{Item.Name}\', " +
+                $"Quality = {Item.Quality}, " +
+                $"Type = \'{Item.Type}\', " +
+                $"Attunement = \'{((Item.Attunement != string.Empty)?1:0)}\', " +
+                $"Source = \'{Item.ItemSource}\', " +
+                $"isHomeBrew = 0 " +
+                $"Where _id = {Item.Id}").Close();
+            DataBaseLib.DataAccess.RawRequest("UPDATE ExtendedMagicItems SET " +
+                $"Description = \'{Item.Description}\', " +
+                $"Undertype = \'{Item.UnderType}\'," +
+                $"UnderQuality = \'{Item.UnderQuality}\', " +
+                $"Attunement = \'{Item.Attunement}\', " +
+                $"OptionalText = \'{Item.OptionableText}\' " +
+                $"Where _id = {Item.Id}").Close();
+            
+        }
+
+        public override void DeleteLink(Link link)
+        {
+            Item.Links.Remove(link);
         }
     }
 }

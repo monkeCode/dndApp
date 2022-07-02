@@ -7,7 +7,6 @@
     xmlns:local="using:App1"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
     <Page.Resources>
         <local:RarityConvector x:Key="RarityConvert" />
         <local:StaticValues x:Key="StaticVal" />
@@ -50,22 +49,22 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <TextBlock TextAlignment="Center" Style="{StaticResource SubtitleTextBlockStyle}"  TextDecorations="Underline" >
-                    <Hyperlink Foreground="{ThemeResource SystemControlHyperlinkBaseHighBrush}" Click="NameClick">
+                <TextBlock Style="{StaticResource SortingText}">
+                    <Hyperlink  Click="NameClick">
                         Название
                     </Hyperlink>
                 </TextBlock>
-                <TextBlock Grid.Column="1" TextAlignment="Center" Style="{StaticResource SubtitleTextBlockStyle}" TextDecorations="Underline">
-                     <Hyperlink Foreground="{ThemeResource SystemControlHyperlinkBaseHighBrush}" Click="QualityClick">
+                <TextBlock Grid.Column="1" Style="{StaticResource SortingText}">
+                     <Hyperlink  Click="QualityClick">
                          Качество
                      </Hyperlink> </TextBlock>
-                <TextBlock Grid.Column="2"  TextAlignment="Center" Style="{StaticResource SubtitleTextBlockStyle}" TextDecorations="Underline">
-                     <Hyperlink Foreground="{ThemeResource SystemControlHyperlinkBaseHighBrush}" Click="ConsentrationClick">
+                <TextBlock Grid.Column="2"  Style="{StaticResource SortingText}">
+                     <Hyperlink  Click="ConsentrationClick">
                          Настройка
                      </Hyperlink>
                 </TextBlock>
-                <TextBlock Grid.Column="3"  TextAlignment="Center" Style="{StaticResource SubtitleTextBlockStyle}" TextDecorations="Underline">
-                     <Hyperlink Foreground="{ThemeResource SystemControlHyperlinkBaseHighBrush}" Click="TypeClick">
+                <TextBlock Grid.Column="3"  Style="{StaticResource SortingText}">
+                     <Hyperlink Click="TypeClick">
                          Тип
                      </Hyperlink>
                 </TextBlock>

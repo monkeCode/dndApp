@@ -1,4 +1,5 @@
-﻿using App1.Annotations;
+﻿using App1;
+using App1.Annotations;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -123,7 +124,25 @@ namespace App
         DependencyProperty.Register(
         "Rows", typeof(Int32), typeof(VisualTable), new PropertyMetadata(1)
         );
-
+        
+        public Table LoadTableData()
+        {
+            var list = Children.ToList();
+            //sorting list by rows and after that by columns
+            list.Sort((el1, el2) =>
+            {
+                int row1 = GetRow((FrameworkElement)el1);
+                int row2 = GetRow((FrameworkElement)el2);
+                if (row1 == row2)
+                    return GetColumn((FrameworkElement)el1).CompareTo(GetColumn((FrameworkElement)el2));
+                return row1.CompareTo(row2);
+            });
+            var table = new Table();
+            table.Fields = list.Select(it => ((TextBox)it).Text).ToList();
+            table.Columns = Columns;
+            table.Rows = Rows;
+            return table;
+        }
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]

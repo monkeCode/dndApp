@@ -8,9 +8,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace App1.Encounters
 {
-    /// <summary>
-    /// Пустая страница, которую можно использовать саму по себе или для перехода внутри фрейма.
-    /// </summary>
+
     public sealed partial class EncounterPage : Page
     {
 

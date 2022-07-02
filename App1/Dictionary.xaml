@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:app1="using:App1">
+    xmlns:c="using:Microsoft.UI.Xaml.Controls">
     <SolidColorBrush x:Key="Common" Color="{StaticResource SystemBaseHighColor}">
     </SolidColorBrush>
     <SolidColorBrush x:Key="Uncommon" Color="MediumSpringGreen">
@@ -21,11 +21,12 @@
     <Style x:Key="ListViewItemsStyle" TargetType="ListViewItem">
         <Setter Property="HorizontalContentAlignment" Value="Stretch" ></Setter>
     </Style>
-    <Style x:Key="ListViewStyle" TargetType="ListView">
+    <Style x:Key="FeaturesListStyle" TargetType="ListView">
         <Setter Property="SelectionMode" Value="None" />
         <Setter Property="Margin" Value="30,10,30,10" />
         <Setter Property="BorderBrush" Value="{ThemeResource AccentDark1}" />
         <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="5"/>
         <Setter Property="MinHeight" Value="50" />
     </Style>
     <LinearGradientBrush x:Key="AlphaGradient" EndPoint="0,1">
@@ -49,5 +50,15 @@
         <Setter Property="Margin" Value="10"/>
         <Setter Property="BorderThickness" Value="0,0,0,0.5"/>
         <Setter Property="BorderBrush" Value="{StaticResource UnderlineBrush}"/>
+    </Style>
+
+    <Style x:Key="SortingText" TargetType="TextBlock" BasedOn="{StaticResource SubtitleTextBlockStyle}">
+        <Setter Property="TextAlignment" Value="Center"/>
+        <Setter Property="TextDecorations" Value="Underline"/>
+    </Style>
+    <Style x:Key="WorkshopBorder" TargetType="StackPanel">
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="{StaticResource AccentDark1}"/>
+        <Setter Property="CornerRadius" Value="5"/>
     </Style>
 </ResourceDictionary>
