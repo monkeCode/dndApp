@@ -1,6 +1,7 @@
 ﻿using App.Model;
 using App1.Directories;
 using System;
+using DataBaseLib;
 
 namespace App1
 {
@@ -76,6 +77,11 @@ namespace App1
                 DataItem.DataType.Spell => typeof(MagicItemExtendedPage),
                 _ => throw new Exception()
             };
+        }
+
+        public void Save(string table, int parentId)
+        {
+            
         }
     }
 }

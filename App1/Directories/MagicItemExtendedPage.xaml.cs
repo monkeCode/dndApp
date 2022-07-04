@@ -1,10 +1,14 @@
-﻿using App1.WorkShop;
+﻿using System;
+using App1.WorkShop;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Documents;
+using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
+using App.Helpers;
 
 // Документацию по шаблону элемента "Пустая страница" см. по адресу https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -20,11 +24,17 @@ namespace App1.Directories
             this.InitializeComponent();
         }
 
-
+        private async void LoadImage()
+        {
+           var name = (DataContext as ExtendedMagicItem).Name;
+           var result = await Web.GetImageUri(name + " днд");
+           ItemImage.Source = new BitmapImage(new Uri(result));
+        }
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             DataContext = new ExtendedMagicItem((int)e.Parameter);
             TableLoading();
+            //LoadImage();
         }
 
         private void ReFormateText(object sender, RoutedEventArgs e)

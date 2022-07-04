@@ -11,9 +11,9 @@ namespace DataBaseLib
     public static class DataAccess
     {
         private const string DB_NAME = "DataBase.db";
-        private const int DB_VERSION = 15;
+        private const int DB_VERSION = 5;
         public static event Action NewDataLoaded;
-        private static bool _canOpenConnection;
+        private static bool _canOpenConnection = true;
         public static bool IsActualDb { get
             {
                 ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
@@ -52,7 +52,7 @@ namespace DataBaseLib
         }
 
         public static void AddData(string table, string[] rows, object[] input)
-        { 
+        {
             string dbpath = Path.Combine(ApplicationData.Current.LocalFolder.Path, DB_NAME);
             using (SqliteConnection db =
               new SqliteConnection($"Filename={dbpath}"))
@@ -92,6 +92,8 @@ namespace DataBaseLib
             List<object[]> entries = new List<object[]>();
             //for (int i = 0; i < entries.Count; i++)
             //    entries[i] = new string[columns.Length];
+            if (!_canOpenConnection)
+                return entries;
 
             string dbpath = Path.Combine(ApplicationData.Current.LocalFolder.Path, DB_NAME);
 
@@ -136,7 +138,8 @@ namespace DataBaseLib
             List<object[]> entries = new List<object[]>();
             //for (int i = 0; i < entries.Count; i++)
             //    entries[i] = new string[columns.Length];
-
+            if (!_canOpenConnection)
+                return entries;
             string dbpath = Path.Combine(ApplicationData.Current.LocalFolder.Path, DB_NAME);
 
             using (SqliteConnection db =
@@ -182,7 +185,7 @@ namespace DataBaseLib
             }
         }
 
-        public static async Task<SqliteDataReader> RawRequestAsyns(string request)
+        public static async Task<SqliteDataReader> RawRequestAsync(string request)
         {
             return await Task.Run(() => RawRequest(request));
         }

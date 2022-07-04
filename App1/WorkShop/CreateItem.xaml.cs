@@ -103,7 +103,7 @@ namespace App1
             return result;
         }
 
-        private async void SaveBeforeExit()
+        private async void SaveBeforeExit(Type page)
         {
             var result = await ShowDialog_Click();
             switch (result)
@@ -111,11 +111,11 @@ namespace App1
                 case ContentDialogResult.Primary:
                     ((CreateItemMV)DataContext).Save();
                     isSaved = true;
-                    Frame.Navigate(typeof(Workshop));
+                    Frame.Navigate(page);
                     break;
                 case ContentDialogResult.Secondary:
                     isSaved = true;                    
-                    Frame.Navigate(typeof(Workshop));
+                    Frame.Navigate(page);
                     break;
                 case ContentDialogResult.None:
                     return;
@@ -128,7 +128,7 @@ namespace App1
             if (!isSaved)
             {
                 e.Cancel = true;
-                SaveBeforeExit();
+                SaveBeforeExit(e.SourcePageType);
             }
             else
             {

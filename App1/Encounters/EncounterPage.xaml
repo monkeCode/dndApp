@@ -165,9 +165,9 @@
                                                                     <RowDefinition/>
                                                                     <RowDefinition Height="*"/>
                                                                 </Grid.RowDefinitions>
-                                                                <Button Content="+" FontSize="12" HorizontalAlignment="Right" VerticalAlignment="Top" Width="30" CornerRadius="0,10,0,0" Command="{x:Bind PositiveCommand}"/>
-                                                                <app1:NumericalTextBox BorderThickness="0" Text="{Binding Quantity, Mode=TwoWay}" HorizontalAlignment="Center" MaxWidth="30" Grid.Row="1" />
-                                                                <Button Content="-" FontSize="12" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="30" CornerRadius="0,0,10,0" Command="{x:Bind NegativeCommand}" Grid.Row="2"/>
+                                                                <Button Content="+" FontSize="12" HorizontalAlignment="Right" VerticalAlignment="Stretch" Width="35" HorizontalContentAlignment="Left" CornerRadius="0,10,0,0" Command="{x:Bind PositiveCommand}"/>
+                                                                <app1:NumericalTextBox BorderThickness="0" Text="{Binding Quantity, Mode=TwoWay}" HorizontalAlignment="Center" MaxWidth="35" Grid.Row="1" />
+                                                                <Button Content="-" FontSize="12" HorizontalAlignment="Right" VerticalAlignment="Stretch" Width="35" HorizontalContentAlignment="Center" CornerRadius="0,0,10,0" Command="{x:Bind NegativeCommand}" Grid.Row="2"/>
                                                             </Grid>
                                                         </StackPanel>
                                                     </Grid>

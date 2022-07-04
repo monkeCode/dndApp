@@ -150,6 +150,8 @@
       <DependentUpon>GroupPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helpers\AttunementConverter.cs" />
+    <Compile Include="Helpers\StatsConverter.cs" />
+    <Compile Include="Helpers\Web.cs" />
     <Compile Include="Model\DataItem.cs" />
     <Compile Include="Model\ExtendedMonster.cs" />
     <Compile Include="Model\Features.cs" />
@@ -169,6 +171,7 @@
     <Compile Include="Directories\MagicItemExtendedPage.xaml.cs">
       <DependentUpon>MagicItemExtendedPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\VisibilityConverter.cs" />
     <Compile Include="VisualTable.cs" />
     <Compile Include="WorkShop\CreateItem.xaml.cs">
       <DependentUpon>CreateItem.xaml</DependentUpon>

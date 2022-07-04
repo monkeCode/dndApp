@@ -51,6 +51,7 @@
             </ListView>
             <Grid x:Name="TableGrid" Margin="30,0,0,0" />
             <TextBlock Text="{Binding OptionableText}" Loaded="ReFormateText" Margin="30" TextWrapping="Wrap" />
+            <Image HorizontalAlignment="Center" Margin="30" Name="ItemImage" Stretch="Uniform" MinWidth="800" MaxHeight="600" />
         </StackPanel>
     </ScrollViewer>
 </Page>

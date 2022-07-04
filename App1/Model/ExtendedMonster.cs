@@ -28,7 +28,8 @@ namespace App1.Model
         public string Resistance { get; set; }
         public string Vulnerability { get; set; }
         public string ImmunityState { get; set; }
-        public List<Features> Actions { get; set; } = new();
+        public List<Features> Actions { get; set; } = new(); 
+        public List<Features> ReciprocalActions { get; set; } = new();
         public List<Features> Features { get; set; } = new();
         public List<Features> LegendaryActions { get; set; } = new();
 
@@ -70,6 +71,14 @@ namespace App1.Model
             foreach (var act in DataAccess.GetData("MonsterFeatures", $"_id = {id}", null, "Name, Description"))
             {
                 Features.Add(new Features()
+                {
+                    Name = act[0].ToString(),
+                    Description = act[1].ToString()
+                });
+            }
+            foreach (var act in DataAccess.GetData("MonsterReciprocalActions", $"_id = {id}", null, "Name, Description"))
+            {
+                ReciprocalActions.Add(new Features()
                 {
                     Name = act[0].ToString(),
                     Description = act[1].ToString()

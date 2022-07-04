@@ -32,7 +32,7 @@ namespace App.WorkShop
             Item.Links.Add(new Link(item.ItemType, item.Id, ""));
         }
 
-        public override void Save()
+        public override async void Save()
         {
             if (!IsTable)
                 Item.Table = null;
@@ -42,21 +42,21 @@ namespace App.WorkShop
                 Item.Attunement = "требует настроенности";
             if (Item.ItemSource == "Dungeon master\'s guide")
                 Item.ItemSource = "Dungeon master\'\'s guide";
-            DataBaseLib.DataAccess.RawRequest($"UPDATE MagicItems " +
+            (await DataBaseLib.DataAccess.RawRequestAsync($"UPDATE MagicItems " +
                 $"SET Name = \'{Item.Name}\', " +
                 $"Quality = {Item.Quality}, " +
                 $"Type = \'{Item.Type}\', " +
                 $"Attunement = \'{((Item.Attunement != string.Empty)?1:0)}\', " +
                 $"Source = \'{Item.ItemSource}\', " +
                 $"isHomeBrew = 0 " +
-                $"Where _id = {Item.Id}").Close();
-            DataBaseLib.DataAccess.RawRequest("UPDATE ExtendedMagicItems SET " +
+                $"Where _id = {Item.Id}")).Close();
+           (await DataBaseLib.DataAccess.RawRequestAsync("UPDATE ExtendedMagicItems SET " +
                 $"Description = \'{Item.Description}\', " +
                 $"Undertype = \'{Item.UnderType}\'," +
                 $"UnderQuality = \'{Item.UnderQuality}\', " +
                 $"Attunement = \'{Item.Attunement}\', " +
                 $"OptionalText = \'{Item.OptionableText}\' " +
-                $"Where _id = {Item.Id}").Close();
+                $"Where _id = {Item.Id}")).Close();
             
         }
 

@@ -144,7 +144,7 @@ namespace App1.Encounters
             }
             if (req != "")
                 // DataAccess.RawRequest(req);
-                DataAccess.RawRequestAsyns(req);
+                DataAccess.RawRequestAsync(req);
         }
 
 

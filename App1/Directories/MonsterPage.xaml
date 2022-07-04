@@ -6,10 +6,21 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:model="using:App1.Model"
+    xmlns:app="using:App"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Page.Resources>
         <local:SizeConverter x:Key="SizeConverter"/>
+        <app:VisibilityConverter x:Key="VisibilityConverter"/>
+        <Style TargetType="TextBlock" x:Key="NameStyle">
+            <Setter Property="Foreground" Value="{ThemeResource AccentDark1}"/>
+            <Setter Property="Margin" Value="0,0,5,0"></Setter>
+            <Setter Property="FontWeight" Value="Bold"></Setter>
+        </Style> 
+        <Style TargetType="TextBlock" x:Key="DescriptionStyle">
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <!--<Setter Property="MaxWidth" Value="1000"/>-->
+        </Style>
     </Page.Resources>
     <ScrollViewer>
         <StackPanel>
@@ -40,16 +51,16 @@
                         </LinearGradientBrush>
                     </StackPanel.BorderBrush>
                     <TextBlock Margin="30,30,0,0">
-                    <Run>Класс брони (КБ): </Run>
+                    <Run FontWeight="Bold">Класс брони (КБ): </Run>
                     <Run Text="{Binding AC}"></Run>
                     <Run Text="{Binding ACType}"></Run>
                 </TextBlock>
-                <TextBlock Margin="30,10,0,0">
-                    <Run>Пункты здоровья (ПЗ): </Run>
+                <TextBlock Margin="30,10,0,0" Loaded="ReFormateText">
+                    <Run FontWeight="Bold">Пункты здоровья (ПЗ): </Run>
                     <Run Text="{Binding HP}"></Run>
                 </TextBlock>
                 <TextBlock Margin="30,10,0,0">
-                    <Run>Скорость: </Run>
+                    <Run FontWeight="Bold">Скорость: </Run>
                     <Run Text="{Binding Speed}"></Run>
                 </TextBlock>
                 <Grid Margin="30,15,0,0">
@@ -60,6 +71,7 @@
                             <Setter Property="FontWeight" Value="Bold"/>
                             <Setter Property="Foreground" Value="{StaticResource AccentDark1}"/>
                         </Style>
+                        <app:StatsConverter x:Key="StatsConverter"/>
                     </Grid.Resources>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
@@ -74,49 +86,69 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <TextBlock>СИЛ</TextBlock>
-                    <TextBlock Grid.Column="1" >ЛВК</TextBlock>
+                    <TextBlock Grid.Column="1">ЛВК</TextBlock>
                     <TextBlock Grid.Column="2">ВЫН</TextBlock>
                     <TextBlock Grid.Column="3">ИНТ</TextBlock>
                     <TextBlock Grid.Column="4">МДР</TextBlock>
                     <TextBlock Grid.Column="5">ХАР</TextBlock>
-                    <TextBlock Grid.Row="1" Text="{Binding Str}"></TextBlock>
-                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Dex}"></TextBlock>
-                    <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding Con}"></TextBlock>
-                    <TextBlock Grid.Row="1" Grid.Column="3" Text="{Binding Intel}"></TextBlock>
-                    <TextBlock Grid.Row="1" Grid.Column="4" Text="{Binding Wis}"></TextBlock>
-                    <TextBlock Grid.Row="1" Grid.Column="5" Text="{Binding Cha}"></TextBlock>
+                    <TextBlock Grid.Row="1" Text="{Binding Str, Converter= {StaticResource StatsConverter}}"></TextBlock>
+                        <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Dex, Converter= {StaticResource StatsConverter}}"></TextBlock>
+                        <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding Con, Converter= {StaticResource StatsConverter}}"></TextBlock>
+                        <TextBlock Grid.Row="1" Grid.Column="3" Text="{Binding Intel, Converter= {StaticResource StatsConverter}}"></TextBlock>
+                        <TextBlock Grid.Row="1" Grid.Column="4" Text="{Binding Wis, Converter= {StaticResource StatsConverter}}"></TextBlock>
+                        <TextBlock Grid.Row="1" Grid.Column="5" Text="{Binding Cha, Converter= {StaticResource StatsConverter}}"></TextBlock>
                 </Grid>
                 </StackPanel>
                 <StackPanel Grid.Column="1">
-                <TextBlock Margin="30,30,0,0">
-                    <Run>Испытания: </Run>
+                    <StackPanel.Resources>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="TextWrapping" Value="Wrap"/>
+                        </Style>
+                    </StackPanel.Resources>
+                    <TextBlock Margin="30,30,0,0" Visibility="{Binding SavingThrows, Converter={StaticResource VisibilityConverter} }">
+                    <Run FontWeight="Bold">Испытания: </Run>
                     <Run Text="{Binding SavingThrows }"></Run>
                 </TextBlock>
-                <TextBlock Margin="30,10,0,0">
-                    <Run>Навыки: </Run>
+                    <TextBlock Margin="30,10,0,0" Visibility="{Binding Skills, Converter={StaticResource VisibilityConverter} }">
+                    <Run FontWeight="Bold">Навыки: </Run>
                     <Run Text="{Binding Skills}"></Run>
                 </TextBlock>
-                    <TextBlock Margin="30,10,0,0" Text="{Binding Immunity}"></TextBlock>
-                    <TextBlock Margin="30,10,0,0" Text="{Binding Resistance}"></TextBlock>
-                    <TextBlock Margin="30,10,0,0" Text="{Binding Vulnerability}"></TextBlock>
-                <TextBlock Margin="30,10,0,0">
-                    <Run>Восприятие: </Run>
+                    <TextBlock Margin="30,10,0,0" Visibility="{Binding Vulnerability, Converter={StaticResource VisibilityConverter} }">
+                        <Run FontWeight="Bold">Уязвимость к урону: </Run>
+                        <Run Text="{Binding Vulnerability}"/>
+                    </TextBlock>
+                    <TextBlock Margin="30,10,0,0" Visibility="{Binding Resistance, Converter={StaticResource VisibilityConverter} }" >
+                        <Run FontWeight="Bold">Устойчивость к урону: </Run>
+                        <Run Text="{Binding Resistance}"/>
+                    </TextBlock>
+                    <TextBlock Margin="30,10,0,0" Visibility="{Binding Immunity, Converter={StaticResource VisibilityConverter} }" >
+                        <Run FontWeight="Bold">Невосприимчивость к урону: </Run>
+                        <Run Text="{Binding Immunity}"></Run>
+                    </TextBlock>
+                    <TextBlock Margin="30,10,0,0"  Visibility="{Binding ImmunityState, Converter={StaticResource VisibilityConverter} }" >
+                        <Run FontWeight="Bold">Невосприимчивость к состояниям: </Run>
+                        <Run Text="{Binding ImmunityState}"></Run>
+                    </TextBlock>
+                    <TextBlock Margin="30,10,0,0" Visibility="{Binding Senses, Converter={StaticResource VisibilityConverter} }" >
+                    <Run FontWeight="Bold">Восприятие: </Run>
                     <Run Text="{Binding Senses}"></Run>
-                </TextBlock> 
-                <TextBlock Margin="30,10,0,0">
-                    <Run>Языки: </Run>
+                    </TextBlock>
+                    <TextBlock Margin="30,10,0,0" Visibility="{Binding Languages, Converter={StaticResource VisibilityConverter} }">
+                    <Run FontWeight="Bold">Языки: </Run>
                     <Run Text="{Binding Languages}"></Run>
                 </TextBlock>
                     <TextBlock Margin="30,10,30,0">
-                        <Run Text="Опасность: "/>
+                        <Run FontWeight="Bold" Text="Опасность: "/>
                         <Run Text="{Binding Challenge}" />
                         <Run>(</Run>
                         <Run Text="{Binding Ex}"/>
-                        <Run>опыта)</Run>
+                        <Run> ПО)</Run>
                     </TextBlock>
                 </StackPanel>
             </Grid>
-            <ListView ItemsSource="{Binding Features}" Margin="30,30,0,0">
+            <StackPanel Name="FeaturesPanel" Visibility="{Binding Features.Count, Converter={StaticResource VisibilityConverter }, ConverterParameter=1}">
+            <Border BorderThickness="0,1,0,0" BorderBrush="{StaticResource UnderlineBrush}" Margin="0,15,0,0"/>
+                <ListView ItemsSource="{Binding Features}" Margin="30,30,0,0" SelectionMode="None">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
                         <Setter Property="HorizontalAlignment" Value="Stretch"/>
@@ -129,34 +161,97 @@
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text="{Binding Name}" FontWeight="Black"></TextBlock>
-                            <TextBlock Grid.Column="1" Text="{Binding Description}"></TextBlock>
-                        </Grid>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView> 
-            <Border BorderThickness="0,1,0,0" BorderBrush="{StaticResource UnderlineBrush}" Margin="0,15,0,0"></Border>
-            <TextBlock FontSize="24" Margin="30,15,0,0" FontWeight="Bold">Действия</TextBlock>
-            <ListView ItemsSource="{Binding Actions}" Margin="30,30,0,0">
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <Setter Property="HorizontalAlignment" Value="Stretch"/>
-                    </Style>
-                </ListView.ItemContainerStyle>
-                <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="local:Features">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Text="{Binding Name}" FontWeight="Black"></TextBlock>
-                            <TextBlock Grid.Column="1" Text="{Binding Description}"></TextBlock>
+                            <TextBlock Text="{Binding Name}" Style="{StaticResource NameStyle}" ></TextBlock>
+                                <TextBlock Grid.Column="1" Text="{Binding Description}" Style="{StaticResource DescriptionStyle}" Loaded="ReFormateText"></TextBlock>
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+            </StackPanel>
+            <StackPanel Name="ActionPanel" Visibility="{Binding Actions.Count, Converter={StaticResource VisibilityConverter }, ConverterParameter=1}">
+            <Border BorderThickness="0,1,0,0" BorderBrush="{StaticResource UnderlineBrush}" Margin="0,15,0,0"/>
+            <TextBlock FontSize="24" Margin="30,15,0,0" FontWeight="Bold">Действия</TextBlock>
+                <ListView ItemsSource="{Binding Actions}" Margin="30,30,0,0" SelectionMode="None">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="local:Features">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                                <TextBlock Text="{Binding Name}" Style="{StaticResource NameStyle}"></TextBlock>
+                                <TextBlock Grid.Column="1" Text="{Binding Description}" Style="{StaticResource DescriptionStyle}" Loaded="ReFormateText"></TextBlock>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+                </StackPanel>
+            <StackPanel Name="RelateActionPanel" Visibility="{Binding ReciprocalActions.Count, Converter={StaticResource VisibilityConverter }, ConverterParameter=1}">
             <Border BorderThickness="0,1,0,0" BorderBrush="{StaticResource UnderlineBrush}" Margin="0,15,0,0"></Border>
+            <TextBlock FontSize="24" Margin="30,15,0,0" FontWeight="Bold">Ответные действия</TextBlock>
+                <ListView ItemsSource="{Binding ReciprocalActions}" Margin="30,30,0,0" SelectionMode="None">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="local:Features">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                                <TextBlock Text="{Binding Name}" Style="{StaticResource NameStyle}"></TextBlock>
+                                <TextBlock Grid.Column="1" Text="{Binding Description}" Style="{StaticResource DescriptionStyle}" Loaded="ReFormateText"></TextBlock>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            </StackPanel>
+            <StackPanel Name="LegendaryActionPanel"  Visibility="{Binding LegendaryActions.Count, Converter={StaticResource VisibilityConverter }, ConverterParameter=1}">
+                <Border BorderThickness="0,1,0,0" BorderBrush="{StaticResource UnderlineBrush}" Margin="0,15,0,0"></Border>
+                <TextBlock FontSize="24" Margin="30,15,0,0" FontWeight="Bold">Легендарные действия</TextBlock>
+                <ListView ItemsSource="{Binding LegendaryActions}" Margin="30,30,0,0" SelectionMode="None">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="local:Features">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="{Binding Name}" Style="{StaticResource NameStyle}"></TextBlock>
+                                <TextBlock Grid.Column="1" Text="{Binding Description}" Style="{StaticResource DescriptionStyle}" Loaded="ReFormateText"></TextBlock>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackPanel>
+            <StackPanel Name="LairPanel" Visibility="{Binding LairActions, Converter={StaticResource VisibilityConverter }}">
+                <Border BorderThickness="0,1,0,0" BorderBrush="{StaticResource UnderlineBrush}" Margin="0,15,0,0"></Border>
+                <TextBlock FontSize="24" Margin="30,15,0,0" FontWeight="Bold">Логово</TextBlock>
+                <TextBlock Text="{Binding LairActions}" Style="{StaticResource DescriptionStyle}" Loaded="ReFormateText"></TextBlock>
+            </StackPanel>
+            <StackPanel Name="RegionalEffectPanel" Visibility="{Binding RegionalEf, Converter={StaticResource VisibilityConverter }}">
+                <Border BorderThickness="0,1,0,0" BorderBrush="{StaticResource UnderlineBrush}" Margin="0,15,0,0"></Border>
+                <TextBlock FontSize="24" Margin="30,15,0,0" FontWeight="Bold">Эффекты местности</TextBlock>
+                <TextBlock Text="{Binding RegionalEf}" Style="{StaticResource DescriptionStyle}" Loaded="ReFormateText"></TextBlock>
+            </StackPanel>
+            <StackPanel Name="DescriptionPanel" Visibility="{Binding Description, Converter={StaticResource VisibilityConverter }}">
+                <Border BorderThickness="0,1,0,0" BorderBrush="{StaticResource UnderlineBrush}" Margin="0,15,0,0"></Border>
+                <TextBlock FontSize="24" Margin="30,15,0,0" FontWeight="Bold">Описание</TextBlock>
+                <TextBlock Text="{Binding Description}" Style="{StaticResource DescriptionStyle}" Loaded="ReFormateText"></TextBlock>
+            </StackPanel>
         </StackPanel>
     </ScrollViewer>
 </Page>
