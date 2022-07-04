@@ -30,7 +30,7 @@
                 <controls1:NavigationViewItem Icon="Download" Content="Боевые сцены" Tag="Encounters" />
             </controls1:NavigationView.MenuItems>
             <controls1:NavigationView.PaneFooter>
-                <StackPanel  KeyDown="DiceText_acceptEvent"  x:Name="dicePanel" SizeChanged="dicePanel_SizeChanged">
+                <StackPanel  KeyDown="DiceText_acceptEvent"  x:Name="dicePanel" Visibility="{x:Bind NavPanel.IsPaneOpen, Mode=OneWay}">
                     <ListView MaxHeight="200" ItemsSource="{x:Bind _dices}" x:Name="listDices">
                         <ListView.ItemContainerStyle>
                             <Style TargetType="ListViewItem">
