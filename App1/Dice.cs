@@ -10,20 +10,27 @@ namespace App1
         public string Roll { get; set; }
         public int Result { get; set; }
 
-        public const string DICE_PATTERN = @"\d*[[dkдк]\d+\d*(\s*[+-]?\s*\d+\d*)?";
+        public const string DICE_PATTERN = @"\d*[[dkдк]\d{1,}(\s*[+-]?\s*\d{1,})?";
         public Dice(string roll)
         {
             Roll = roll;
             Result = Calculate(roll);
         }
-
+        public static bool ContainDice(string str)
+        {
+           return Regex.IsMatch(str, DICE_PATTERN);
+        }
         private int Calculate(string roll)
         {
-            if (Regex.IsMatch(roll.Trim().ToLower(), @"[\D-[d\|k\|д\|к\|\+\|\-\|\s]]"))
+            if (Regex.IsMatch(roll.Trim().ToLower(), @"[\D-[dkдк+-]]"))
                 throw new ArgumentException();
-            if (Regex.IsMatch(roll.Trim().ToLower(), @"^\d*[d\|k\|д\|к]\d*$"))
+            if (Regex.IsMatch(roll.Trim().ToLower(), @"^\d*[dkдк]\d*$"))
             {
-                string[] str = Regex.Split(roll.ToLower(), @"[d\|k\|д\|к]");
+                if (!char.IsNumber(roll[0]))
+                {
+                    roll = "1" + roll;
+                }
+                string[] str = Regex.Split(roll.ToLower(), @"[dkдк]");
                 int count = int.Parse(str[0]);
                 int dice = int.Parse(str[1]);
                 int result = 0;

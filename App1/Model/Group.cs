@@ -28,7 +28,6 @@ namespace App1
             { 2400,    4900 ,   7300,    10900 },
             { 2800,    5700,    8500,    12700 }
         };
-        private object v;
 
         public int Id { get; set; }
         public string Name { get; set; }

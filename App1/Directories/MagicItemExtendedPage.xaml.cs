@@ -10,13 +10,9 @@ using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using App.Helpers;
 
-// Документацию по шаблону элемента "Пустая страница" см. по адресу https://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace App1.Directories
 {
-    /// <summary>
-    /// Пустая страница, которую можно использовать саму по себе или для перехода внутри фрейма.
-    /// </summary>
     public sealed partial class MagicItemExtendedPage : Page
     {
         public MagicItemExtendedPage()
@@ -46,13 +42,10 @@ namespace App1.Directories
                 if (r is Hyperlink)
                 {
                     Hyperlink hyperlink = r as Hyperlink;
-                    if (Regex.IsMatch((hyperlink.Inlines[0] as Run).Text, Dice.DICE_PATTERN))
+                    if(Dice.ContainDice((hyperlink.Inlines[0] as Run).Text))
                         hyperlink.Click += Hyperlink_rollDice;
                     else
                     {
-                        //ToolTip toolTip = new ToolTip();
-                        //toolTip.Content = new MagicPage();
-                        //ToolTipService.SetToolTip(hyperlink, toolTip);
                         hyperlink.Click += Hyperlink_Click;
                     }
                 }
@@ -94,9 +87,6 @@ namespace App1.Directories
                                 hyperlink.Click += Hyperlink_rollDice;
                             else
                             {
-                                //ToolTip toolTip = new ToolTip();
-                                //toolTip.Content = new MagicPage();
-                                //ToolTipService.SetToolTip(hyperlink, toolTip);
                                 hyperlink.Click += Hyperlink_Click;
                             }
                         }
