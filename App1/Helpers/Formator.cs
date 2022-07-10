@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Windows.UI.Text;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Documents;
 
@@ -12,19 +14,21 @@ namespace App1.WorkShop
         {
             if (!string.IsNullOrEmpty(s))
                 textBlock.Text = s;
-            Formating('~', textBlock);
-            Formating('`', textBlock);
-            Formating('|', textBlock);
+            Formating(BoldRegex, run => run.FontWeight = FontWeights.Bold , textBlock);
+            Formating(ItalicRegex, run => run.FontStyle = FontStyle.Italic, textBlock);
+            //Formating('|', textBlock);
             AddHyperlink(textBlock);
             CreateDiceRoll(textBlock);
         }
 
-        private static void Formating(char formatfactor, TextBlock textBlock)
+        private static Regex ItalicRegex = new Regex(@"\*", RegexOptions.Compiled | RegexOptions.Multiline);
+        private static Regex BoldRegex = new Regex(@"\*\*", RegexOptions.Compiled | RegexOptions.Multiline);
+        private static void Formating(Regex rg, Action<Run> action, TextBlock textBlock)
         {
             List<Run> runs = new List<Run>();
             foreach (Run ru in textBlock.Inlines)
             {
-                string[] str = ru.Text.Split(formatfactor);
+                string[] str = rg.Split(ru.Text);
                 for (int i = 0; i < str.Length; i++)
                 {
                     Run run = new Run
@@ -37,20 +41,7 @@ namespace App1.WorkShop
 
                     if (i % 2 != 0)
                     {
-                        switch (formatfactor)
-                        {
-                            case '~':
-                                run.FontWeight = Windows.UI.Text.FontWeights.Bold;
-                                break;
-
-                            case '|':
-                                run.TextDecorations = Windows.UI.Text.TextDecorations.Underline;
-                                break;
-
-                            case '`':
-                                run.FontStyle = Windows.UI.Text.FontStyle.Italic;
-                                break;
-                        }
+                        action(run);
                     }
 
                     runs.Add(run);
@@ -62,12 +53,14 @@ namespace App1.WorkShop
                 textBlock.Inlines.Add(r);
         }
 
+        private static Regex hypeRegex = new Regex(@"[\[\]]", RegexOptions.Compiled);
         private static void AddHyperlink(TextBlock textBlock)
         {
             List<Inline> runs = new List<Inline>();
             foreach (Run ru in textBlock.Inlines)
             {
-                string[] str = ru.Text.Split("^");
+                //string[] str = ru.Text.Split("^");
+                string[] str = hypeRegex.Split(ru.Text);
                 for (int i = 0; i < str.Length; i++)
                 {
                     Run run = new Run
@@ -167,6 +160,11 @@ namespace App1.WorkShop
             foreach (var r in runs)
                 textBlock.Inlines.Add(r);
 
+        }
+
+        public string CreateDbValidStr(string s)
+        {
+            s = s.Replace("*", "\\*");
         }
     }
 }

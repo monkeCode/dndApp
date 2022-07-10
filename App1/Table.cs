@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using App;
+using DataBaseLib;
 
 namespace App1
 {
@@ -19,13 +21,13 @@ namespace App1
             Columns = (int)(long)dataList[2];
             Fields = new List<string>(dataList[3].ToString().Split('@').ToList());
         }
-        public List<TextBlock> LoadTable(Grid grid)
+        public List<MarkdownText> LoadTable(Grid grid)
         {
-            List<TextBlock> textBlocks = new List<TextBlock>();
+            List<MarkdownText> textBlocks = new List<MarkdownText>();
             for (int i = 0; i <= this.Rows; i++)
                 grid.RowDefinitions.Add(new RowDefinition());
             for (int i = 0; i <= this.Columns; i++)
-                grid.ColumnDefinitions.Add(new ColumnDefinition() { MinWidth = 150 });
+                grid.ColumnDefinitions.Add(new ColumnDefinition() { MinWidth = 100});
             var enumerator = this.Fields.GetEnumerator();
             ResourceDictionary dict = new ResourceDictionary();
             dict.Source = new Uri("ms-appx:///Dictionary.xaml");
@@ -45,18 +47,31 @@ namespace App1
                         Padding = new Thickness(5),
                         VerticalAlignment = VerticalAlignment.Stretch
                     };
-                    TextBlock textBlock = new TextBlock();
-                    textBlock.TextWrapping = TextWrapping.Wrap;
+                    MarkdownText textBlock = new MarkdownText();
+
                     border.Child = textBlock;
                     Grid.SetColumn(border, c);
                     Grid.SetRow(border, r);
-                    if (enumerator.MoveNext())
-                        Formator.StringtoText(textBlock, enumerator.Current);
+                    if(enumerator.MoveNext())
+                        textBlock.Text = enumerator.Current;
                     grid.Children.Add(border);
                     textBlocks.Add(textBlock);
                 }
 
             return textBlocks;
+        }
+
+        public void UpdateTable(string dbTable, int id)
+        {
+            DeleteTable(dbTable, id);
+            string data = string.Join("@", Fields);
+            DataAccess.RawRequest(
+                $"INSERT INTO {dbTable} (ParentId, Rows, Columns, Data) values ({id},{Rows}, {Columns}, {data})");
+        }
+
+        public static void DeleteTable(string dbTable, int id)
+        {
+            DataAccess.RawRequest($"Delete from {dbTable} where ParentId = {id}");
         }
     }
 }

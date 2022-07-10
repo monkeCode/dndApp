@@ -21,6 +21,16 @@
             <Setter Property="TextWrapping" Value="Wrap"/>
             <!--<Setter Property="MaxWidth" Value="1000"/>-->
         </Style>
+        <DataTemplate x:Name="FeatureTemplate">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="{Binding Name}" Style="{StaticResource NameStyle}" ></TextBlock>
+                <app:MarkdownText Grid.Column="1" Text="{Binding Description}" HyperlinkClicked="MarkdownText_OnHyperlinkClicked"></app:MarkdownText>
+            </Grid>
+        </DataTemplate>
     </Page.Resources>
     <ScrollViewer>
         <StackPanel>
@@ -55,11 +65,11 @@
                     <Run Text="{Binding AC}"></Run>
                     <Run Text="{Binding ACType}"></Run>
                 </TextBlock>
-                <TextBlock Margin="30,10,0,0" Loaded="ReFormateText">
-                    <Run FontWeight="Bold">Пункты здоровья (ПЗ): </Run>
-                    <Run Text="{Binding HP}"></Run>
-                </TextBlock>
-                <TextBlock Margin="30,10,0,0">
+                    <StackPanel Orientation="Horizontal" Margin="30,10,0,0">
+                        <TextBlock FontWeight="Bold">Пункты здоровья (ПЗ):</TextBlock>
+                        <app:MarkdownText Margin="5,0,0,0" Text="{Binding HP}"></app:MarkdownText>
+                    </StackPanel>
+                    <TextBlock Margin="30,10,0,0">
                     <Run FontWeight="Bold">Скорость: </Run>
                     <Run Text="{Binding Speed}"></Run>
                 </TextBlock>
@@ -148,109 +158,61 @@
             </Grid>
             <StackPanel Name="FeaturesPanel" Visibility="{Binding Features.Count, Converter={StaticResource VisibilityConverter }, ConverterParameter=1}">
             <Border BorderThickness="0,1,0,0" BorderBrush="{StaticResource UnderlineBrush}" Margin="0,15,0,0"/>
-                <ListView ItemsSource="{Binding Features}" Margin="30,30,0,0" SelectionMode="None">
+                <ListView ItemsSource="{Binding Features}" Margin="30,30,0,0" SelectionMode="None" ItemTemplate="{StaticResource FeatureTemplate}">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
                         <Setter Property="HorizontalAlignment" Value="Stretch"/>
                     </Style>
                 </ListView.ItemContainerStyle>
-                <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="local:Features">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Text="{Binding Name}" Style="{StaticResource NameStyle}" ></TextBlock>
-                                <TextBlock Grid.Column="1" Text="{Binding Description}" Style="{StaticResource DescriptionStyle}" Loaded="ReFormateText"></TextBlock>
-                        </Grid>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                </ListView>
             </StackPanel>
             <StackPanel Name="ActionPanel" Visibility="{Binding Actions.Count, Converter={StaticResource VisibilityConverter }, ConverterParameter=1}">
             <Border BorderThickness="0,1,0,0" BorderBrush="{StaticResource UnderlineBrush}" Margin="0,15,0,0"/>
             <TextBlock FontSize="24" Margin="30,15,0,0" FontWeight="Bold">Действия</TextBlock>
-                <ListView ItemsSource="{Binding Actions}" Margin="30,30,0,0" SelectionMode="None">
+                <ListView ItemsSource="{Binding Actions}" Margin="30,30,0,0" SelectionMode="None" ItemTemplate="{StaticResource FeatureTemplate}">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
                         <Setter Property="HorizontalAlignment" Value="Stretch"/>
                     </Style>
                 </ListView.ItemContainerStyle>
-                <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="local:Features">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                                <TextBlock Text="{Binding Name}" Style="{StaticResource NameStyle}"></TextBlock>
-                                <TextBlock Grid.Column="1" Text="{Binding Description}" Style="{StaticResource DescriptionStyle}" Loaded="ReFormateText"></TextBlock>
-                        </Grid>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                </ListView>
                 </StackPanel>
             <StackPanel Name="RelateActionPanel" Visibility="{Binding ReciprocalActions.Count, Converter={StaticResource VisibilityConverter }, ConverterParameter=1}">
             <Border BorderThickness="0,1,0,0" BorderBrush="{StaticResource UnderlineBrush}" Margin="0,15,0,0"></Border>
             <TextBlock FontSize="24" Margin="30,15,0,0" FontWeight="Bold">Ответные действия</TextBlock>
-                <ListView ItemsSource="{Binding ReciprocalActions}" Margin="30,30,0,0" SelectionMode="None">
+                <ListView ItemsSource="{Binding ReciprocalActions}" Margin="30,30,0,0" SelectionMode="None" ItemTemplate="{StaticResource FeatureTemplate}">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
                         <Setter Property="HorizontalAlignment" Value="Stretch"/>
                     </Style>
                 </ListView.ItemContainerStyle>
-                <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="local:Features">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                                <TextBlock Text="{Binding Name}" Style="{StaticResource NameStyle}"></TextBlock>
-                                <TextBlock Grid.Column="1" Text="{Binding Description}" Style="{StaticResource DescriptionStyle}" Loaded="ReFormateText"></TextBlock>
-                        </Grid>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                </ListView>
             </StackPanel>
             <StackPanel Name="LegendaryActionPanel"  Visibility="{Binding LegendaryActions.Count, Converter={StaticResource VisibilityConverter }, ConverterParameter=1}">
                 <Border BorderThickness="0,1,0,0" BorderBrush="{StaticResource UnderlineBrush}" Margin="0,15,0,0"></Border>
                 <TextBlock FontSize="24" Margin="30,15,0,0" FontWeight="Bold">Легендарные действия</TextBlock>
-                <ListView ItemsSource="{Binding LegendaryActions}" Margin="30,30,0,0" SelectionMode="None">
+                <ListView ItemsSource="{Binding LegendaryActions}" Margin="30,30,0,0" SelectionMode="None" ItemTemplate="{StaticResource FeatureTemplate}">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
                             <Setter Property="HorizontalAlignment" Value="Stretch"/>
                         </Style>
                     </ListView.ItemContainerStyle>
-                    <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="local:Features">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Text="{Binding Name}" Style="{StaticResource NameStyle}"></TextBlock>
-                                <TextBlock Grid.Column="1" Text="{Binding Description}" Style="{StaticResource DescriptionStyle}" Loaded="ReFormateText"></TextBlock>
-                            </Grid>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
                 </ListView>
             </StackPanel>
             <StackPanel Name="LairPanel" Visibility="{Binding LairActions, Converter={StaticResource VisibilityConverter }}">
                 <Border BorderThickness="0,1,0,0" BorderBrush="{StaticResource UnderlineBrush}" Margin="0,15,0,0"></Border>
                 <TextBlock FontSize="24" Margin="30,15,0,0" FontWeight="Bold">Логово</TextBlock>
-                <TextBlock Text="{Binding LairActions}" Style="{StaticResource DescriptionStyle}" Loaded="ReFormateText"></TextBlock>
+                <app:MarkdownText Text="{Binding LairActions}" HyperlinkClicked="MarkdownText_OnHyperlinkClicked"></app:MarkdownText>
             </StackPanel>
             <StackPanel Name="RegionalEffectPanel" Visibility="{Binding RegionalEf, Converter={StaticResource VisibilityConverter }}">
                 <Border BorderThickness="0,1,0,0" BorderBrush="{StaticResource UnderlineBrush}" Margin="0,15,0,0"></Border>
                 <TextBlock FontSize="24" Margin="30,15,0,0" FontWeight="Bold">Эффекты местности</TextBlock>
-                <TextBlock Text="{Binding RegionalEf}" Style="{StaticResource DescriptionStyle}" Loaded="ReFormateText"></TextBlock>
+                <app:MarkdownText Text="{Binding RegionalEf}" HyperlinkClicked="MarkdownText_OnHyperlinkClicked"></app:MarkdownText>
             </StackPanel>
             <StackPanel Name="DescriptionPanel" Visibility="{Binding Description, Converter={StaticResource VisibilityConverter }}">
                 <Border BorderThickness="0,1,0,0" BorderBrush="{StaticResource UnderlineBrush}" Margin="0,15,0,0"></Border>
                 <TextBlock FontSize="24" Margin="30,15,0,0" FontWeight="Bold">Описание</TextBlock>
-                <TextBlock Text="{Binding Description}" Style="{StaticResource DescriptionStyle}" Loaded="ReFormateText"></TextBlock>
+                <app:MarkdownText Text="{Binding Description}" HyperlinkClicked="MarkdownText_OnHyperlinkClicked"></app:MarkdownText>
             </StackPanel>
         </StackPanel>
     </ScrollViewer>

@@ -152,6 +152,9 @@
     <Compile Include="Helpers\AttunementConverter.cs" />
     <Compile Include="Helpers\StatsConverter.cs" />
     <Compile Include="Helpers\Web.cs" />
+    <Compile Include="MarkdownText.xaml.cs">
+      <DependentUpon>MarkdownText.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Model\DataItem.cs" />
     <Compile Include="Model\ExtendedMonster.cs" />
     <Compile Include="Model\Features.cs" />
@@ -238,6 +241,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="GroupMenu\GroupPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MarkdownText.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

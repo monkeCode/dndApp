@@ -34,8 +34,6 @@ namespace App.WorkShop
 
         public override async void Save()
         {
-            if (!IsTable)
-                Item.Table = null;
             if (!IsAttunemended)
                 Item.Attunement = "";
             else if (IsAttunemended && Item.Attunement.Trim() == string.Empty)
@@ -57,6 +55,12 @@ namespace App.WorkShop
                 $"Attunement = \'{Item.Attunement}\', " +
                 $"OptionalText = \'{Item.OptionableText}\' " +
                 $"Where _id = {Item.Id}")).Close();
+           if (!IsTable)
+           {
+               Table.DeleteTable("TablesMagicItems", Item.Id);
+           }
+           else
+               Item.Table.UpdateTable("TablesMagicItems", Item.Id);
             
         }
 
