@@ -24,10 +24,15 @@ namespace App1
             ItemSource = item[5].ToString();
             Description = item[8].ToString();
             if (item[9].ToString() != "")
-                UnderType = "(" + item[9] + ")";
+                UnderType = item[9].ToString();
             if (item[10].ToString() != "")
-                UnderQuality = "(" + item[10] + ")";
-            Attunement = item[11].ToString();
+                UnderQuality =  item[10].ToString();
+            if (item[11].ToString() != "")
+                Attunement = item[11].ToString();
+            else
+            {
+                Attunement = item[4].ToString() != "0" ? "требует настроенности" : "";
+            }
             OptionableText = item[12].ToString();
 
             LoadTableFromDb(id);

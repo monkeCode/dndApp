@@ -14,6 +14,7 @@ namespace App.WorkShop
         public CreateItemMV(int id) : base(false)
         {
             Item = new ExtendedMagicItem(id);
+            IsAttunemended = Item.Attunement != "";
             IsTable = Item.Table != null;
         }
 

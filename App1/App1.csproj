@@ -161,6 +161,7 @@
     <Compile Include="GroupMenu\GroupPage.xaml.cs">
       <DependentUpon>GroupPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\AddHooksConverter.cs" />
     <Compile Include="Helpers\AttunementConverter.cs" />
     <Compile Include="Helpers\StatsConverter.cs" />
     <Compile Include="Helpers\Web.cs" />

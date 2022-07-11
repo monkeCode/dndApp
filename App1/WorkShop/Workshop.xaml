@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:model="using:App.Model"
+    xmlns:workShop="using:App.WorkShop"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Grid>
@@ -53,9 +54,9 @@
             <TextBlock Text="Магические предметы"/>
             <ListView Grid.Row="1" ItemsSource="{Binding MagicItems}" SelectionChanged="Selector_OnSelectionChanged" ItemContainerStyle="{StaticResource DirectoryList}">
                 <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="model:DataItem">
+                    <DataTemplate x:DataType="workShop:CompletedDataItem">
                         <UserControl PointerEntered="UIElement_OnPointerEntered" PointerExited="UIElement_OnPointerExited">
-                            <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                            <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="1" BorderBrush="{Binding Color}" >
                                 <VisualStateManager.VisualStateGroups>
                                     <VisualStateGroup x:Name="HoveringStates">
                                         <VisualState x:Name="HoverButtonsHidden" />

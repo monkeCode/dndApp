@@ -7,19 +7,21 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:controls1="using:Microsoft.UI.Xaml.Controls"
     xmlns:app="using:App"
+    xmlns:helpers="using:App.Helpers"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Page.Resources>
         <local:RarityConvector x:Key="RarityConvert" />
+        <helpers:AddHooksConverter x:Key="HooksConverter"/>
     </Page.Resources>
     <ScrollViewer MinWidth="500">
         <StackPanel x:Name="MainPanel">
             <TextBlock FontSize="24" Margin="30" Text="{Binding Name}" FontWeight="Bold" Foreground="{ThemeResource SystemAccentColorLight1}" />
             <TextBlock TextWrapping="Wrap" FontStyle="Italic" Margin="30,0,0,0">
-                    <Run Text="{Binding UnderQuality}"></Run>
+                    <Run Text="{Binding UnderQuality, Converter={StaticResource HooksConverter}}"></Run>
                     <Run Text="{Binding Quality, Converter= {StaticResource RarityConvert}}"></Run>
                     <Run Text="{Binding Type}"></Run>
-                    <Run Text="{Binding UnderType}"></Run>
+                    <Run Text="{Binding UnderType , Converter={StaticResource HooksConverter}}"></Run>
                     <LineBreak/>
                     <Run Text="{Binding Attunement}"></Run>
             </TextBlock>
