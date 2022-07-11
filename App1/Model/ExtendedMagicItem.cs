@@ -12,7 +12,6 @@ namespace App1
         public string UnderQuality { get; set; }
         public string OptionableText { get; set; }
         public string ItemSource { get; set; }
-        public ObservableCollection<Link> Links { get; set; } = new ObservableCollection<Link>();
         public Table Table { get; set; }
 
         public ExtendedMagicItem(int id)
@@ -33,7 +32,6 @@ namespace App1
 
             LoadTableFromDb(id);
             LoadFeatures(id);
-            LoadLinks(id);
         }
 
         public ExtendedMagicItem()
@@ -66,14 +64,5 @@ namespace App1
 
         }
 
-        private void LoadLinks(int id)
-        {
-            foreach (var link in DataAccess.GetData("LinksMagicItems", $"Parent_Id = {id}", null, "*"))
-            {
-                Links.Add(new Link(link[1].ToString(), (int)(long)link[2], link[3].ToString()));
-            }
-
-
-        }
     }
 }

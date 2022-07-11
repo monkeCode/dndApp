@@ -7,6 +7,7 @@ namespace App1
 {
     public class Dice
     {
+        public enum Dices { D2,D4,D6,D8,D10,D12,D20,D100}
         public string Roll { get; set; }
         public int Result { get; set; }
 
@@ -62,6 +63,28 @@ namespace App1
 
             return first == roll || second == roll ? throw new ArgumentException() :
                 nextoperat == '+' ? Calculate(first) + Calculate(second) : Calculate(first) - Calculate(second);
+        }
+
+        public static int RollDice(Dices dice, int count)
+        {
+            int val = 0;
+            for(int i = 0; i < count; i++)
+            {
+                val += dice switch
+                {
+                    Dices.D2 => new Random().Next(1, 3),
+                    Dices.D4 => new Random().Next(1, 5),
+                    Dices.D6 => new Random().Next(1, 7),
+                    Dices.D8 => new Random().Next(1, 9),
+                    Dices.D10 => new Random().Next(1, 11),
+                    Dices.D12 => new Random().Next(1, 13),
+                    Dices.D20 => new Random().Next(1, 21),
+                    Dices.D100 => new Random().Next(1, 101),
+                    _ => throw new ArgumentException()
+                };
+
+            }
+            return val;
         }
     }
 }

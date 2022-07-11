@@ -32,13 +32,6 @@ namespace App1
             }
         }
 
-        public Link(string type, int id, string str)
-        {
-            Id = id;
-            Text = str;
-            Page = GetPage(type);
-            Type = GetDataType(type);
-        }
         public Link(DataItem.DataType type, int id, string str)
         {
             Id = id;
@@ -47,7 +40,7 @@ namespace App1
             Type = (type);
         }
 
-        private static DataItem.DataType GetDataType(string type)
+        public static DataItem.DataType GetDataType(string type)
         {
             return type switch
             {
@@ -58,7 +51,7 @@ namespace App1
             };
         }
 
-        private static Type GetPage(string type)
+        public static Type GetPage(string type)
         {
             return type switch
             {
@@ -68,7 +61,7 @@ namespace App1
                 _ => throw new Exception()
             };
         }
-        private static Type GetPage(DataItem.DataType type)
+        public static Type GetPage(DataItem.DataType type)
         {
             return type switch
             {
@@ -77,11 +70,6 @@ namespace App1
                 DataItem.DataType.Spell => typeof(MagicItemExtendedPage),
                 _ => throw new Exception()
             };
-        }
-
-        public void Save(string table, int parentId)
-        {
-            
         }
     }
 }

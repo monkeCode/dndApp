@@ -34,43 +34,6 @@ namespace App.WorkShop
             }
         }
         public abstract void AddFeature();
-        public abstract void AddLink(DataItem item);
-        public ICollection<DataItem> GetItemsByName(string name)
-        {
-            List<DataItem> dataItems = new List<DataItem>();
-            var request = DataBaseLib.DataAccess.GetData("SELECT _id, Name from Monsters");
-            foreach (var it in request)
-            {
-                dataItems.Add(new DataItem
-                {
-                    Id = (int)(long)it[0],
-                    Name = it[1].ToString(),
-                    ItemType = DataItem.DataType.Monster
-                });
-            }
-            request = DataBaseLib.DataAccess.GetData("SELECT _id, Name from MagicItems");
-            foreach (var it in request)
-            {
-                dataItems.Add(new DataItem
-                {
-                    Id = (int)(long)it[0],
-                    Name = it[1].ToString(),
-                    ItemType = DataItem.DataType.MagicItem
-                });
-            }
-            request = DataBaseLib.DataAccess.GetData("SELECT _id, Name from Spells where Name ");
-            foreach (var it in request)
-            {
-                dataItems.Add(new DataItem
-                {
-                    Id = (int)(long)it[0],
-                    Name = it[1].ToString(),
-                    ItemType = DataItem.DataType.Spell
-                });
-            }
-            return dataItems.Where(it => it.Name.ToLower().Contains(name)).OrderByDescending(it => it.Name).ToList();
-        }
-        public abstract void DeleteLink(Link link);
         public event PropertyChangedEventHandler PropertyChanged;
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

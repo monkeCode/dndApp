@@ -64,9 +64,10 @@ namespace App1
         public void UpdateTable(string dbTable, int id)
         {
             DeleteTable(dbTable, id);
-            string data = string.Join("@", Fields);
+            string data = string.Join("@", Fields.Select(it=> Formator.CreateDbValidStr(it)));
             DataAccess.RawRequest(
-                $"INSERT INTO {dbTable} (ParentId, Rows, Columns, Data) values ({id},{Rows}, {Columns}, {data})");
+                $"INSERT INTO {dbTable} (ParentId, Rows, Columns, Data) " +
+                $"values ({id},{Rows}, {Columns}, \'{data}\')");
         }
 
         public static void DeleteTable(string dbTable, int id)

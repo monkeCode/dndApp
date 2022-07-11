@@ -35,14 +35,6 @@ namespace App1.Directories
         }
 
 
-
-        private void Hyperlink_Click(Hyperlink sender, HyperlinkClickEventArgs args)
-        {
-            ExtendedMagicItem model = DataContext as ExtendedMagicItem;
-            Link link = model.Links.First(obj => obj.Text == (sender.Inlines.First() as Run).Text);
-            Frame.Navigate(link.Page, link.Id);
-        }
-
         private void TableLoading()
         {
             Table table = (DataContext as ExtendedMagicItem).Table;

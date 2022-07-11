@@ -162,9 +162,12 @@ namespace App1.WorkShop
 
         }
 
-        public string CreateDbValidStr(string s)
+        public static string CreateDbValidStr(string s)
         {
-            s = s.Replace("*", "\\*");
+            if (s == null)
+                return "";
+            s = s.Replace("'", "\\'");
+            return s;
         }
     }
 }

@@ -145,6 +145,18 @@
       <DependentUpon>EncounterPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Encounters\NumericalTextBox.cs" />
+    <Compile Include="Generator\Art.cs" />
+    <Compile Include="Generator\ArtsGenerator.cs" />
+    <Compile Include="Generator\Gem.cs" />
+    <Compile Include="Generator\GeneratedItem.cs" />
+    <Compile Include="Generator\ItemGenerator.cs" />
+    <Compile Include="Generator\GemGenerator.cs" />
+    <Compile Include="Generator\GenerationData.cs" />
+    <Compile Include="Generator\LootGeneratorMv.cs" />
+    <Compile Include="Generator\LootGeneratorPage.xaml.cs">
+      <DependentUpon>LootGeneratorPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Generator\MoneyGenerator.cs" />
     <Compile Include="GroupMenu\GroupMV.cs" />
     <Compile Include="GroupMenu\GroupPage.xaml.cs">
       <DependentUpon>GroupPage.xaml</DependentUpon>
@@ -199,6 +211,7 @@
     <Compile Include="WorkShop\Workshop.xaml.cs">
       <DependentUpon>Workshop.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WorkShop\WorkShopModelView.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -237,6 +250,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Encounters\EncounterPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Generator\LootGeneratorPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -316,6 +333,7 @@
   <ItemGroup>
     <Content Include="Assets\Fonts\Font Awesome 6 Free-Solid-900.otf" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

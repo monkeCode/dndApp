@@ -1,6 +1,8 @@
 ﻿using App.Model;
 using App1;
 using System.Linq;
+using System.Threading.Tasks;
+using DataBaseLib;
 
 namespace App.WorkShop
 {
@@ -25,11 +27,6 @@ namespace App.WorkShop
         public override void AddFeature()
         {
             Item.Features.Add(new Features());
-        }
-
-        public override void AddLink(DataItem item)
-        {
-            Item.Links.Add(new Link(item.ItemType, item.Id, ""));
         }
 
         public override async void Save()
@@ -61,12 +58,10 @@ namespace App.WorkShop
            }
            else
                Item.Table.UpdateTable("TablesMagicItems", Item.Id);
-            
-        }
 
-        public override void DeleteLink(Link link)
-        {
-            Item.Links.Remove(link);
+           await DataAccess.RawRequestAsync($"DELETE from FeaturesOfMagicItem where _id = {Item.Id}");
+           Parallel.ForEach(Item.Features, (Features f) => f.Save("FeaturesOfMagicItem", Item.Id));
+
         }
     }
 }

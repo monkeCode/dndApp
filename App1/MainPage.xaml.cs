@@ -1,4 +1,5 @@
-﻿using App1.Directories;
+﻿using App.Generator;
+using App1.Directories;
 using App1.Encounters;
 using App1.GroupMenu;
 using System.Collections.Generic;
@@ -27,7 +28,8 @@ namespace App1
            ("Monsters", typeof(BestiaryPage)),
            ("Encounters", typeof(EncounterPage)),
             ("GroupManager", typeof(GroupPage)),
-            ("Quests", typeof(Quest.QuestPage))
+            ("Quests", typeof(Quest.QuestPage)),
+            ("LootGenerator", typeof(LootGeneratorPage))
         };
 
         private void NavView_Navigate(

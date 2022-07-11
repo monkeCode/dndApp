@@ -89,20 +89,20 @@
                                      Columns="{x:Bind ((workshop:CreateItemMV)DataContext).Item.Table.Columns, Mode=TwoWay}" 
                                      Data="{x:Bind ((workshop:CreateItemMV)DataContext).Item.Table.Fields}"
                                      Margin="30,10,30,10" HorizontalAlignment="Stretch"/>
-                <Grid Margin="30,0,30,10">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
+                    <Grid Margin="30,0,30,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
                         <StackPanel  HorizontalAlignment="Center">
                             <TextBlock HorizontalAlignment="Center">Строки</TextBlock>
                             <StackPanel Orientation="Horizontal">
-                            <Button Width="35" Click="RemoveColumn">-</Button>
+                                <Button Width="35" Click="RemoveColumn">-</Button>
                                 <TextBlock Width="35" HorizontalTextAlignment="Center" VerticalAlignment="Center" Text="{Binding ElementName=Table, Path = Columns}">0</TextBlock>
-                            <Button Width="35" Click="AddColumn">+</Button>
+                                <Button Width="35" Click="AddColumn">+</Button>
+                            </StackPanel>
                         </StackPanel>
-                        </StackPanel>
-                    <StackPanel Grid.Column="1"  HorizontalAlignment="Center">
+                        <StackPanel Grid.Column="1"  HorizontalAlignment="Center">
                             <TextBlock HorizontalAlignment="Center">Столбцы</TextBlock>
                             <StackPanel Orientation="Horizontal">
                                 <Button Width="35" Click="RemoveRow">-</Button>
@@ -112,26 +112,6 @@
                         </StackPanel>
                     </Grid>
                 </StackPanel>
-                <TextBlock Margin="40,20,0,0" FontSize="18" TextDecorations="Underline">Ссылки</TextBlock>
-                <GridView ItemsSource="{Binding Item.Links}" SelectionMode="None" Margin="20">
-                    <GridView.ItemTemplate>
-                        <DataTemplate x:DataType="local:Link">
-                            <StackPanel MinWidth="350" Margin="10" Style="{StaticResource WorkshopBorder}">
-                                <Grid Margin="10">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition Width="Auto"/>
-                                    </Grid.ColumnDefinitions>
-                                    <TextBox Text="{Binding Text, Mode=TwoWay}" Header="Текст"  VerticalAlignment="Top" />
-                                    <AppBarButton Grid.Column="1" Icon="Delete" HorizontalAlignment="Left" Width="40" Height="40" VerticalAlignment="Top" Margin="5,0,0,0" Click="DeleteRef_click"/>
-                                </Grid>
-                                <TextBlock Margin="10,0,10,0">Оригинальное название:</TextBlock>
-                                <TextBlock Margin="15,0,10,10" MinWidth="100" Text="{Binding Item.Name}" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </GridView.ItemTemplate>
-                </GridView>
-                <AutoSuggestBox Margin="30" Header="Добавить ссылку" PlaceholderText="Название" SuggestionChosen="RefName_SuggestionChosen" TextChanged="RefName_TextChanged" HorizontalAlignment="Center" MinWidth="300"  ></AutoSuggestBox>
                 <Button HorizontalAlignment="Center" Click="SaveBtn_Click" Margin="0,0,0,30">Сохранить</Button>
             </StackPanel>
         </Grid>

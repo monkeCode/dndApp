@@ -19,9 +19,14 @@ namespace App1
         public CreateItem()
         {
             this.InitializeComponent();
-            var context = new CreateItemMV(2);
-            DataContext = context;
 
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            var id = (int?)e.Parameter;
+            DataContext = id.HasValue ? new CreateItemMV(id.Value) : new CreateItemMV();
+            base.OnNavigatedFrom(e);
         }
 
         private void Grid_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -76,17 +81,12 @@ namespace App1
             AttunText.Visibility = (bool)(sender as CheckBox).IsChecked ? Visibility.Visible : Visibility.Collapsed;
         }
 
-        private void RefName_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
-        {
-            ((CreateItemMV)DataContext).AddLink((DataItem)args.SelectedItem);
-        }
-
         private void RefName_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
         {
             if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
             {
                 var text = sender.Text.ToLower();
-                var items = ((CreateItemMV)DataContext).GetItemsByName(text);
+                var items = DataItem.GetItems(text);
                 sender.ItemsSource = items;
             }
         }
@@ -144,12 +144,6 @@ namespace App1
             (DataContext as CreateItemMV).Save();
             isSaved = true;
             Frame.Navigate(typeof(Workshop));
-        }
-
-        private void DeleteRef_click(object sender, RoutedEventArgs e)
-        {
-            var context = (sender as AppBarButton).DataContext;
-            (DataContext as CreateItemMV).DeleteLink((Link)context);
         }
 
         private void DeleteFeature(object sender, RoutedEventArgs e)

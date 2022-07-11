@@ -11,7 +11,7 @@ namespace DataBaseLib
     public static class DataAccess
     {
         private const string DB_NAME = "DataBase.db";
-        private const int DB_VERSION = 7;
+        private const int DB_VERSION = 8;
         public static event Action NewDataLoaded;
         private static bool _canOpenConnection = true;
         public static bool IsActualDb { get

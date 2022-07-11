@@ -60,7 +60,7 @@ namespace App1.Model
             Vulnerability = list[22].ToString();
             ImmunityState = list[23].ToString();
 
-            foreach (var act in DataAccess.GetData("MonsterActions", $"_id = {id}", null, "Name, Descript"))
+            foreach (var act in DataAccess.GetData("MonsterActions", $"_id = {id}", null, "Name, Description"))
             {
                 Actions.Add(new Features()
                 {

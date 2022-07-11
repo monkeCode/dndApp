@@ -16,6 +16,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using App1;
 using App1.WorkShop;
+using App.Model;
 
 // Документацию по шаблону элемента "Пользовательский элемент управления" см. по адресу https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -70,8 +71,12 @@ namespace App
 
         private void Hyperlink_Click(Hyperlink sender, HyperlinkClickEventArgs args)
         {
-            ExtendedMagicItem model = DataContext as ExtendedMagicItem;
-            Link link = model.Links.First(obj => obj.Text == (sender.Inlines.First() as Run).Text);
+            var itemList = DataItem.GetItems();
+            string name = (sender.Inlines.First() as Run).Text;
+            var item = itemList.OrderBy(it => name.LevenshteinDistance(it.Name)).First();
+            //ExtendedMagicItem model = DataContext as ExtendedMagicItem;
+            //Link link = model.Links.First(obj => obj.Text == (sender.Inlines.First() as Run).Text);
+            Link link = new Link(item.ItemType, item.Id, null);
             HyperlinkClicked?.Invoke(link.Page, link.Id);
         }
     }
