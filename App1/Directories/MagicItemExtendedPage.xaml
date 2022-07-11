@@ -15,8 +15,29 @@
         <helpers:AddHooksConverter x:Key="HooksConverter"/>
     </Page.Resources>
     <ScrollViewer MinWidth="500">
-        <StackPanel x:Name="MainPanel">
-            <TextBlock FontSize="24" Margin="30" Text="{Binding Name}" FontWeight="Bold" Foreground="{ThemeResource SystemAccentColorLight1}" />
+        <StackPanel  BorderThickness="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+            <TextBlock Margin="30" Style="{ThemeResource SubheaderTextBlockStyle}" Text="{Binding Name}" FontWeight="Bold" Foreground="{ThemeResource SystemAccentColorLight1}" />
+            <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right" Margin="30">
+                    <AppBarToggleButton Label="Избранное" Name="FavoriteButton">
+                        <AppBarToggleButton.Icon>
+                            <FontIcon Glyph="&#xEB51;"/>
+                        </AppBarToggleButton.Icon>
+                        <AppBarToggleButton.KeyboardAccelerators>
+                            <KeyboardAccelerator Key="F" Modifiers="Control"/>
+                        </AppBarToggleButton.KeyboardAccelerators>
+                    </AppBarToggleButton>
+                    <AppBarButton Icon="Print" Label="Печать" Name="PrintButton" Click="PrintButton_OnClick">
+                        <AppBarButton.KeyboardAccelerators>
+                            <KeyboardAccelerator Key="P" Modifiers="Control"></KeyboardAccelerator>
+                        </AppBarButton.KeyboardAccelerators>
+                    </AppBarButton>
+            </StackPanel>
+            </Grid>
             <TextBlock TextWrapping="Wrap" FontStyle="Italic" Margin="30,0,0,0">
                     <Run Text="{Binding UnderQuality, Converter={StaticResource HooksConverter}}"></Run>
                     <Run Text="{Binding Quality, Converter= {StaticResource RarityConvert}}"></Run>

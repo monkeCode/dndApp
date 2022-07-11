@@ -23,6 +23,7 @@ namespace App1
         }
         private int Calculate(string roll)
         {
+            roll = roll.Replace(" ", "");
             if (Regex.IsMatch(roll.Trim().ToLower(), @"[\D-[dkдк+-]]"))
                 throw new ArgumentException();
             if (Regex.IsMatch(roll.Trim().ToLower(), @"^\d*[dkдк]\d*$"))
