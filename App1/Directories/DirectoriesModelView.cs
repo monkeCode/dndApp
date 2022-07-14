@@ -38,7 +38,7 @@ namespace App1
             return str;
         }
 
-        protected Func<T, string> sortPred;
+        protected Func<T, object> sortPred;
         protected bool isDesc;
         protected CustomCommand sortCommand;
 
@@ -51,7 +51,7 @@ namespace App1
                     if (sortPred == obj) isDesc = !isDesc;
                     else
                     {
-                        sortPred = (Func<T, string>)obj;
+                        sortPred = (Func<T, object>)obj;
                         isDesc = false;
                     }
 
@@ -61,6 +61,8 @@ namespace App1
         }
         protected List<T> Sort(List<T> list)
         {
+            if(sortPred == null)
+                return list;
             if (isDesc)
             {
                 return list.OrderByDescending(sortPred).ToList();

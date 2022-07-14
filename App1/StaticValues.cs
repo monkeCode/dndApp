@@ -109,6 +109,7 @@ namespace App1
         public static List<string> MonsterSource { get; } = new List<string>()
         {
             "Monster manual",
+            "Dungeon master's guide",
             "Homebrew"
         };
 

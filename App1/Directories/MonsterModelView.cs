@@ -10,6 +10,7 @@ namespace App1.Directories
         public MonsterModelView()
         {
             DataCollection = new ObservableCollection<Monster>();
+            sortPred = m => m.Name;
             GetListData();
             whereReq = new string[5];
         }
@@ -21,14 +22,14 @@ namespace App1.Directories
         public override void GetListData()
         {
             DataCollection.Clear();
-
+            var list = new List<Monster>();
             string s = whereReq?.GetAllElemets(" AND ");
             foreach (object[] i in DataAccess.GetData("Monsters", s, "Name", "*"))
             {
                 if (!string.IsNullOrEmpty(SubstringFilter))
                     if (i[1].ToString().ToLower().IndexOf(SubstringFilter) == -1)
                         continue;
-                DataCollection.Add(new Monster
+                list.Add(new Monster
                 {
                     Id = (int)(long)i[0],
                     Name = i[1].ToString(),
@@ -37,9 +38,9 @@ namespace App1.Directories
                     Type = i[3].ToString()
 
                 });
-
-
             }
+                foreach (var m in Sort(list))
+                    DataCollection.Add(m);
         }
     }
 }

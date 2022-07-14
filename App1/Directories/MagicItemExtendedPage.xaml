@@ -61,7 +61,7 @@
                                 <ColumnDefinition Width="auto" />
                                 <ColumnDefinition Width="*" MinWidth="150" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock FontWeight="Black" Text="{Binding Name}" VerticalAlignment="Top">
+                            <TextBlock FontWeight="Black" Foreground="{ThemeResource AccentDark1}" Text="{Binding Name}" VerticalAlignment="Top">
                             </TextBlock>
                             <app:MarkdownText Margin="10,0,0,0" Text="{x:Bind Description}" HyperlinkClicked="MarkdownText_OnHyperlinkClicked" VerticalAlignment="Top" Grid.Column="1"/>
                         </Grid>

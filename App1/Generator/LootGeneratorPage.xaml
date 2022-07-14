@@ -16,12 +16,12 @@
         <StackPanel>
         <TextBlock Style="{ThemeResource SubtitleTextBlockStyle}" >Самоцветы</TextBlock>
         <StackPanel Orientation="Horizontal" Style="{StaticResource ButtonPanel}">
-            <Button Margin="0,0,5,0" Command="{Binding ButtonGem10Click}">10 зм</Button>
-            <Button Margin="0,0,5,0">50 зм</Button>
-            <Button Margin="0,0,5,0">100 зм</Button>
-            <Button Margin="0,0,5,0">500 зм</Button>
-            <Button Margin="0,0,5,0">1000 зм</Button>
-            <Button Margin="0,0,5,0">5000 зм</Button>
+            <Button Margin="0,0,5,0" Command="{Binding ButtonGem10Click}" CommandParameter="10">10 зм</Button>
+                <Button Margin="0,0,5,0" Command="{Binding ButtonGem10Click}" CommandParameter="50">50 зм</Button>
+                <Button Margin="0,0,5,0" Command="{Binding ButtonGem10Click}" CommandParameter="100">100 зм</Button>
+                <Button Margin="0,0,5,0" Command="{Binding ButtonGem10Click}" CommandParameter="500">500 зм</Button>
+                <Button Margin="0,0,5,0" Command="{Binding ButtonGem10Click}" CommandParameter="1000">1000 зм</Button>
+                <Button Margin="0,0,5,0" Command="{Binding ButtonGem10Click}" CommandParameter="5000">5000 зм</Button>
         </StackPanel>
         <ListView ItemsSource="{Binding Data.Gems}" MaxHeight="300" SelectionMode="None">
             <ListView.ItemTemplate>

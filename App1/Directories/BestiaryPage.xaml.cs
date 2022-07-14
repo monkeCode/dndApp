@@ -1,4 +1,5 @@
-﻿using Windows.UI.Xaml;
+﻿using System;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 // Документацию по шаблону элемента "Пустая страница" см. по адресу https://go.microsoft.com/fwlink/?LinkId=234238
@@ -56,6 +57,32 @@ namespace App1.Directories
         private void ListViewBase_OnItemClick(object sender, ItemClickEventArgs e)
         {
             Frame.Navigate(typeof(MonsterPage), (e.ClickedItem as Monster).Id);
+        }
+
+        private void NameSort(Windows.UI.Xaml.Documents.Hyperlink sender, Windows.UI.Xaml.Documents.HyperlinkClickEventArgs args)
+        {
+            ExecuteSort( m => m.Name );
+        }
+
+        private void TypeSort(Windows.UI.Xaml.Documents.Hyperlink sender, Windows.UI.Xaml.Documents.HyperlinkClickEventArgs args)
+        {
+            ExecuteSort(m => m.Type);
+        }
+
+        private void SizeSort(Windows.UI.Xaml.Documents.Hyperlink sender, Windows.UI.Xaml.Documents.HyperlinkClickEventArgs args)
+        {
+            ExecuteSort((m) => m.Size.ToString());
+        }
+
+        private void DangerousSort(Windows.UI.Xaml.Documents.Hyperlink sender, Windows.UI.Xaml.Documents.HyperlinkClickEventArgs args)
+        {
+            ExecuteSort(m=>
+                StaticValues.MonsterRate.IndexOf(m.Challenge));
+        }
+
+        private void ExecuteSort(Func<Monster, object> sortDel)
+        {
+            (DataContext as MonsterModelView).SortCommand.Execute(sortDel);
         }
     }
 }

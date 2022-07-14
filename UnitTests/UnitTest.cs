@@ -3,6 +3,8 @@ using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using App;
 using App.Generator;
+using App1;
+
 namespace UnitTests
 {
     [TestClass]
@@ -22,6 +24,16 @@ namespace UnitTests
             }
             Assert.AreEqual(GEM_COUNT, count);
             Assert.AreEqual(GEM_COUNT * 10, price);
+        }
+
+        [TestMethod]
+        public void MonsterSortValidate()
+        {
+            for (int i = 0; i < StaticValues.MonsterRate.Count; i++)
+            {
+                
+                Assert.AreEqual(i.ToString(), StaticValues.MonsterRate.IndexOf(StaticValues.MonsterRate[i]).ToString());
+            }
         }
     }
 }

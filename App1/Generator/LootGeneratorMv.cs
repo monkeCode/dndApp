@@ -17,11 +17,31 @@ namespace App.Generator
             {
               _buttonGem10Click??= new CustomCommand(obj =>
                 {
-                    foreach(var gem in GemGenerator.GenerateGemsBy10(1))
+                    Gem gem = null;
+                    switch (obj.ToString())
                     {
-                        AddGem(gem);
+                        case "10":
+                            gem = GemGenerator.GenerateGemsBy10(1)[0];
+                            break;
+                        case "50":
+                            gem = GemGenerator.GenerateGemsBy50(1)[0];
+                            break; 
+                        case "100":
+                            gem = GemGenerator.GenerateGemsBy100(1)[0];
+                            break;
+                        case "500":
+                            gem = GemGenerator.GenerateGemsBy500(1)[0];
+                            break;case "1000":
+                            gem = GemGenerator.GenerateGemsBy1000(1)[0];
+                            break;
+                        case "5000":
+                            gem = GemGenerator.GenerateGemsBy5000(1)[0];
+                            break;
+                            default: throw new NotImplementedException();
 
                     }
+                    AddGem(gem);
+                    
                 }
                 );
                 return _buttonGem10Click;

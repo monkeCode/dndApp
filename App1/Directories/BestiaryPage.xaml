@@ -65,10 +65,19 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <TextBlock TextAlignment="Center" Style="{StaticResource SubtitleTextBlockStyle}" TextDecorations="Underline">Название</TextBlock>
-                <TextBlock Grid.Column="1" TextAlignment="Center" Style="{StaticResource SubtitleTextBlockStyle}" TextDecorations="Underline">Тип</TextBlock>
-                <TextBlock Grid.Column="2"  TextAlignment="Center" Style="{StaticResource SubtitleTextBlockStyle}" TextDecorations="Underline">Размер</TextBlock>
-                <TextBlock Grid.Column="3"  TextAlignment="Center" Style="{StaticResource SubtitleTextBlockStyle}" TextDecorations="Underline">Опасность</TextBlock>
+                <TextBlock Style="{StaticResource SortingText}">
+                    <Hyperlink Click="NameSort">Название</Hyperlink>
+                </TextBlock>
+                <TextBlock Grid.Column="1" Style="{StaticResource SortingText}">
+                    <Hyperlink Click="TypeSort">Тип</Hyperlink>
+                    </TextBlock>
+                <TextBlock Grid.Column="2"  Style="{StaticResource SortingText}">
+                    <Hyperlink Click="SizeSort">Размер</Hyperlink>
+                    
+                </TextBlock>
+                <TextBlock Grid.Column="3"  Style="{StaticResource SortingText}">
+                    <Hyperlink Click="DangerousSort">Опасность</Hyperlink>
+                </TextBlock>
             </Grid>
             </StackPanel>
         <ListView Grid.Row="1" ItemsSource="{Binding DataCollection, Mode=OneTime }" ItemContainerStyle="{StaticResource DirectoryList}"  Margin="10,0,10,0" ItemClick="ListViewBase_OnItemClick" IsItemClickEnabled="True">
