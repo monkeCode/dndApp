@@ -6,7 +6,7 @@
     xmlns:app1="using:App1"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Grid  Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <controls1:NavigationView x:Name="NavPanel" IsSettingsVisible="False" PaneDisplayMode="Left"
+        <controls1:NavigationView x:Name="NavPanel" IsSettingsVisible="True" PaneDisplayMode="Left"
                                   Loaded="navPanel_Loaded" MinWidth="50" ItemInvoked="NavPanel_OnItemInvoked" BackRequested="NavPanel_OnBackRequested">
             <controls1:NavigationView.MenuItems>
                 <controls1:NavigationViewItemHeader Content="Справочники"/>

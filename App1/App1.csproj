@@ -182,6 +182,9 @@
     </Compile>
     <Compile Include="Quest\QuestsMV.cs" />
     <Compile Include="Helpers\SizeConverter.cs" />
+    <Compile Include="SettingPage.xaml.cs">
+      <DependentUpon>SettingPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Table.cs" />
     <Compile Include="Model\ExtendedMagicItem.cs" />
     <Compile Include="Directories\MagicItemExtendedPage.xaml.cs">
@@ -267,6 +270,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Quest\QuestPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SettingPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

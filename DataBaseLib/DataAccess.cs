@@ -20,6 +20,7 @@ namespace DataBaseLib
                 return !(localSettings.Values["DataBaseVercion"] == null || (int)localSettings.Values["DataBaseVercion"] != DB_VERSION);
 
             } }
+        public static string DbPath => Path.Combine(ApplicationData.Current.LocalFolder.Path, DB_NAME);
         static DataAccess(){InitializeDatabase(); }
         public static async Task InitializeDatabase()
         {

@@ -115,7 +115,16 @@ namespace App1
 
         public static List<string> MonsterHabitat { get; } = new List<string>()
         {
-
+            "Болото",
+            "Горы",
+            "Город",
+            "Лес",
+            "Побережье",
+            "Подводный мир",
+            "Подземье",
+            "Пустыня",
+            "Степь",
+            "Холмы"
         };
         public StaticValues()
         {

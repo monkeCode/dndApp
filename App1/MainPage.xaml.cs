@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Windows.UI.Xaml.Controls;
+using App;
 
 // Документацию по шаблону элемента "Пустая страница" см. по адресу https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x419
 
@@ -29,19 +30,20 @@ namespace App1
            ("Encounters", typeof(EncounterPage)),
             ("GroupManager", typeof(GroupPage)),
             ("Quests", typeof(Quest.QuestPage)),
-            ("LootGenerator", typeof(LootGeneratorPage))
+            ("LootGenerator", typeof(LootGeneratorPage)),
+            ("Параметры", typeof(SettingPage))
         };
 
         private void NavView_Navigate(
     string navItemTag,
     Windows.UI.Xaml.Media.Animation.NavigationTransitionInfo transitionInfo)
         {
-            System.Type _page;
+            System.Type page;
 
             try
             {
                 var item = TagPage.FirstOrDefault(p => p.Tag.Equals(navItemTag));
-                _page = item.Page;
+                page = item.Page;
             }
             catch { return; }
             // Get the page type before navigation so you can prevent duplicate
@@ -49,9 +51,9 @@ namespace App1
             var preNavPageType = mainFrame.CurrentSourcePageType;
 
             // Only navigate if the selected page isn't currently loaded.
-            if (!(_page is null) && !System.Type.Equals(preNavPageType, _page))
+            if (!(page is null) && !System.Type.Equals(preNavPageType, page))
             {
-                mainFrame.Navigate(_page, null, transitionInfo);
+                mainFrame.Navigate(page, null, transitionInfo);
             }
         }
 
