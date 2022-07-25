@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text.RegularExpressions;
 using Windows.Foundation;
@@ -17,6 +19,7 @@ using Windows.UI.Xaml.Navigation;
 using App1;
 using App1.WorkShop;
 using App.Model;
+using App1.Annotations;
 
 // Документацию по шаблону элемента "Пользовательский элемент управления" см. по адресу https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -27,25 +30,26 @@ namespace App
         public event Action<Type,int> HyperlinkClicked; 
         public string Text
         {
-            get => (string) GetValue(TextProperty);
+            get => MarkableTextBlock.Text;
             set
             {
-                SetValue(TextProperty, value);
+               MarkableTextBlock.Text = value;
+               Update(MarkableTextBlock);
             }
         }
 
         public static readonly DependencyProperty TextProperty =
             DependencyProperty.Register(
-                "Text", typeof(string), typeof(MarkdownText), new PropertyMetadata("")
+                nameof(Text), typeof(string), typeof(MarkdownText), new PropertyMetadata(null)
             );
         public MarkdownText()
         {
             this.InitializeComponent();
+            var text = MarkableTextBlock.Text;
         }
 
-        private void FrameworkElement_OnLoaded(object sender, RoutedEventArgs e)
+        private void Update(TextBlock textBlock)
         {
-            TextBlock textBlock = sender as TextBlock;
             Formator.StringtoText(textBlock);
             foreach (var r in textBlock.Inlines)
             {
@@ -79,5 +83,6 @@ namespace App
             Link link = new Link(item.ItemType, item.Id, null);
             HyperlinkClicked?.Invoke(link.Page, link.Id);
         }
+
     }
 }

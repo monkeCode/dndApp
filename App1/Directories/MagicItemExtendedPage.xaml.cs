@@ -19,6 +19,7 @@ namespace App1.Directories
 {
     public sealed partial class MagicItemExtendedPage : Page
     {
+        private PrintHelper _printHelper;
         public MagicItemExtendedPage()
         {
             this.InitializeComponent();
@@ -70,33 +71,17 @@ namespace App1.Directories
             defaultPrintHelperOptions.AddDisplayOption(StandardPrintTaskOptions.Orientation);
             defaultPrintHelperOptions.Orientation = PrintOrientation.Portrait;
 
-            // Create a new PrintHelper instance
-            // "container" is a XAML panel that will be used to host printable control.
-            // It needs to be in your visual tree but can be hidden with Opacity = 0
-            var printHelper = new PrintHelper(new Grid(), defaultPrintHelperOptions);
-            ExtendedMagicItem data = DataContext as ExtendedMagicItem;
-            StackPanel panel = new StackPanel();
-            panel.Children.Add(new TextBlock(){Text = data.Name, FontSize = 24, Margin = new Thickness(30)});
-            printHelper.AddFrameworkElementToPrint(panel);
+            _printHelper = new PrintHelper(PrintContent);
+            //StackPanel panel = new StackPanel();
+            //ExtendedMagicItem data = DataContext as ExtendedMagicItem;
+            //panel.Children.Add(new TextBlock() { Text = data.Name, FontSize = 24, Margin = new Thickness(30) });
+            MainPanel.Children.Remove(ItemPanel);
+            _printHelper.AddFrameworkElementToPrint(ItemPanel);
 
-            await printHelper.ShowPrintUIAsync("DnD Helper", true);
-            // Add controls that you want to print
-            //printHelper.AddFrameworkElementToPrint(await PrepareWebViewForPrintingAsync());
+            await _printHelper.ShowPrintUIAsync("DnD Helper", defaultPrintHelperOptions);
+  
 
         }
-        //private async void PrintHelper_OnPrintSucceeded()
-        //{
-        //    printHelper.Dispose();
-        //    var dialog = new MessageDialog("Printing done.");
-        //    await dialog.ShowAsync();
-        //}
-
-        //private async void PrintHelper_OnPrintFailed()
-        //{
-        //    printHelper.Dispose();
-        //    var dialog = new MessageDialog("Printing failed.");
-        //    await dialog.ShowAsync();
-        //}
 
     }
 }

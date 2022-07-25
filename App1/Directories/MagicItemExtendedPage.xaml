@@ -15,7 +15,8 @@
         <helpers:AddHooksConverter x:Key="HooksConverter"/>
     </Page.Resources>
     <ScrollViewer MinWidth="500">
-        <StackPanel  BorderThickness="1">
+        <StackPanel Name="MainPanel">
+        <StackPanel Name="ItemPanel" BorderThickness="1" >
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
@@ -52,7 +53,7 @@
                     <Run  Text="{Binding ItemSource}"></Run>
             </TextBlock>
                 <!--<TextBlock Text="{Binding Description}" Margin="30,30,0,0" Loaded="ReFormateText" TextWrapping="Wrap" MaxWidth="1000" HorizontalAlignment="Left" />-->
-            <app:MarkdownText Text="{Binding Description}" Margin="30,30,0,0" HyperlinkClicked="MarkdownText_OnHyperlinkClicked" MaxWidth="1000" HorizontalAlignment="Left" />
+            <app:MarkdownText Text="{Binding Description, Mode=OneTime}" Margin="30,30,0,0" HyperlinkClicked="MarkdownText_OnHyperlinkClicked" MaxWidth="1000" HorizontalAlignment="Left" />
             <ListView x:Name="FeaturesList" ItemsSource="{Binding Features, Mode=OneTime}" SelectionMode="None" Margin="30,20,0,30">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="local:Features">
@@ -76,6 +77,10 @@
             <Grid x:Name="TableGrid" Margin="30,0,0,0" HorizontalAlignment="Left"/>
             <app:MarkdownText Text="{Binding OptionableText}" Margin="30" HyperlinkClicked="MarkdownText_OnHyperlinkClicked"/>
             <Image HorizontalAlignment="Center" Margin="30" Name="ItemImage" Stretch="Uniform" MinWidth="800" MaxHeight="600" />
+        </StackPanel>
+            <Grid Name="PrintContent">
+                <Grid/>
+            </Grid>
         </StackPanel>
     </ScrollViewer>
 </Page>
