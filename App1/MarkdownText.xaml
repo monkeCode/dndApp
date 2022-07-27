@@ -9,5 +9,5 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
 
-    <TextBlock Name="MarkableTextBlock" TextWrapping="Wrap" />
+    <TextBlock Name="MarkableTextBlock" TextWrapping="Wrap" Text="{x:Bind Text, Mode = OneWay }"  Loaded="MarkableTextBlock_OnLoaded" />
 </UserControl>

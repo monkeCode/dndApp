@@ -30,12 +30,13 @@ namespace App
         public event Action<Type,int> HyperlinkClicked; 
         public string Text
         {
-            get => MarkableTextBlock.Text;
+            get => (string) GetValue(TextProperty);
             set
             {
-               MarkableTextBlock.Text = value;
-               Update(MarkableTextBlock);
+                SetValue(TextProperty, value);
+                Update(MarkableTextBlock);
             }
+
         }
 
         public static readonly DependencyProperty TextProperty =
@@ -45,7 +46,6 @@ namespace App
         public MarkdownText()
         {
             this.InitializeComponent();
-            var text = MarkableTextBlock.Text;
         }
 
         private void Update(TextBlock textBlock)
@@ -84,5 +84,9 @@ namespace App
             HyperlinkClicked?.Invoke(link.Page, link.Id);
         }
 
+        private void MarkableTextBlock_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            Update(sender as TextBlock);
+        }
     }
 }
