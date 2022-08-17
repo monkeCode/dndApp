@@ -15,6 +15,7 @@ namespace App1.WorkShop
         private static Regex BoldRegex = new Regex(@"(?<!\\)[\*]{2}", RegexOptions.Compiled | RegexOptions.Multiline);
         private static Regex hypeRegex = new Regex(@"(?<!\\)(\[)(?<name>.*?)(\])", RegexOptions.Compiled);
         private static Regex listRegex = new Regex(@"^(?<space>\s{0,4})(?<!\\)[\*\-\+](\s|\t)", RegexOptions.Compiled | RegexOptions.Multiline);
+        private static Regex ignoreSymvolRegex = new Regex(@"\\(?<Sym>.)");
         public static void StringtoText(TextBlock textBlock, string s = null)
         {
             if (!string.IsNullOrEmpty(s))
@@ -24,6 +25,7 @@ namespace App1.WorkShop
             Formating(BoldRegex, run => run.FontWeight = FontWeights.Bold , textBlock);
             Formating(ItalicRegex, run => run.FontStyle = FontStyle.Italic, textBlock);
             AddHyperlink(textBlock);
+            TextIgnoring(ignoreSymvolRegex, textBlock);
             CreateDiceRoll(textBlock);
         }
         private static void Formating(Regex rg, Action<Run> action, TextBlock textBlock)
@@ -60,6 +62,18 @@ namespace App1.WorkShop
             textBlock.Text = string.Empty;
             foreach (var r in runs)
                 textBlock.Inlines.Add(r);
+        }
+
+        private static void TextIgnoring(Regex rg, TextBlock text)
+        {
+            foreach (Inline inline in text.Inlines)
+            {
+                Run ru = inline as Run;
+                if (ru != null)
+                {
+                    ru.Text = rg.Replace(ru.Text, "${Sym}");
+                }
+            }
         }
 
         private static void AddHyperlink(TextBlock textBlock)
