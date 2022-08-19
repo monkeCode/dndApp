@@ -43,7 +43,7 @@
             </Grid.RowDefinitions>
             <TextBlock Text="Существа" />
             <ListView Grid.Row="1"/>
-            <Button Grid.Row="2">Добавить новое</Button>
+            <Button Grid.Row="2" Click="AddNewMonster">Добавить новое</Button>
         </Grid>
         <Grid Grid.Column="2" MinWidth="100">
             <Grid.RowDefinitions>

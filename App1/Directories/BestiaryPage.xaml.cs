@@ -1,6 +1,8 @@
 ﻿using System;
+using System.ComponentModel;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Data;
 
 // Документацию по шаблону элемента "Пустая страница" см. по адресу https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -26,8 +28,13 @@ namespace App1.Directories
         private void RefreshButtonClick(object sender, RoutedEventArgs e)
         {
             (DataContext as MonsterModelView).DropFilters();
+            TypeList.DeselectRange(new ItemIndexRange(0, (uint) TypeList.Items.Count));
+            ChallengeList.DeselectRange(new ItemIndexRange(0, (uint) ChallengeList.Items.Count ));
+            SizeList.DeselectRange(new ItemIndexRange(0, (uint) SizeList.Items.Count));
+            HabbiatList.DeselectRange(new ItemIndexRange(0, (uint) HabbiatList.Items.Count));
+            SourceList.DeselectRange(new ItemIndexRange(0, (uint)SourceList.Items.Count));
         }
-
+        
         private void TypeList_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             (DataContext as MonsterModelView).SelectedType = (sender as ListView).SelectedItems;

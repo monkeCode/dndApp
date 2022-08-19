@@ -1,4 +1,6 @@
-﻿using App.Model;
+﻿using System.Collections.ObjectModel;
+using System.Linq;
+using App.Model;
 using DataBaseLib;
 
 namespace App1
@@ -48,7 +50,7 @@ namespace App1
             };
         public string Source { get; set; }
         public bool isLegendary { get; set; }
-        public string Habitat { get; set; }
+        public ObservableCollection<string> Habitat { get; set; }
         public Monster()
         {
             ItemType = DataType.Monster;
@@ -61,7 +63,7 @@ namespace App1
             Name = list[1].ToString();
             Size = (int)(long)list[2];
             Type = list[3].ToString();
-            Habitat = list[4].ToString();
+            Habitat = new ObservableCollection<string>(list[4].ToString().Split("@"));
             Challenge = list[5].ToString();
             isLegendary = list[6].ToString() == "1";
             Source = list[7].ToString();

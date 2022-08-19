@@ -43,5 +43,10 @@ namespace App1
         {
             Frame.Navigate(typeof(CreateItem), (e.AddedItems[0] as DataItem).Id);
         }
+
+        private void AddNewMonster(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(CreateMonster));
+        }
     }
 }

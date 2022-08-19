@@ -52,7 +52,7 @@
             <Button Content="Источник" VerticalAlignment="Top" Margin="0,0,10,0">
                 <Button.Flyout>
                     <Flyout>
-                        <ListView SelectionMode="Multiple"  SelectionChanged="Selector_OnSelectionChanged" ItemsSource="{Binding Source= {StaticResource StaticVal}, Path=MonsterSource, Mode=OneTime}"/>
+                        <ListView SelectionMode="Multiple" x:Name="SourceList"  SelectionChanged="Selector_OnSelectionChanged" ItemsSource="{Binding Source= {StaticResource StaticVal}, Path=MonsterSource, Mode=OneTime}"/>
                     </Flyout>
                 </Button.Flyout>
             </Button>

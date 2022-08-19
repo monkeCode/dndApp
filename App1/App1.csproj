@@ -147,6 +147,9 @@
       <DependentUpon>EncounterPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Encounters\NumericalTextBox.cs" />
+    <Compile Include="FeatureList.xaml.cs">
+      <DependentUpon>FeatureList.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Generator\Art.cs" />
     <Compile Include="Generator\ArtsGenerator.cs" />
     <Compile Include="Generator\Gem.cs" />
@@ -213,6 +216,10 @@
     <Compile Include="Helpers\Formator.cs" />
     <Compile Include="Model\Link.cs" />
     <Compile Include="WorkShop\CreateItemMV.cs" />
+    <Compile Include="WorkShop\CreateMonster.xaml.cs">
+      <DependentUpon>CreateMonster.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WorkShop\CreateMonsterVM.cs" />
     <Compile Include="WorkShop\CreateMV.cs" />
     <Compile Include="WorkShop\Workshop.xaml.cs">
       <DependentUpon>Workshop.xaml</DependentUpon>
@@ -259,6 +266,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="FeatureList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Generator\LootGeneratorPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -292,6 +303,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Directories\MagicPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WorkShop\CreateMonster.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

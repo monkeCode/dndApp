@@ -1,5 +1,7 @@
-﻿using DataBaseLib;
+﻿using System;
+using DataBaseLib;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace App1.Model
 {
@@ -28,10 +30,11 @@ namespace App1.Model
         public string Resistance { get; set; }
         public string Vulnerability { get; set; }
         public string ImmunityState { get; set; }
-        public List<Features> Actions { get; set; } = new(); 
-        public List<Features> ReciprocalActions { get; set; } = new();
-        public List<Features> Features { get; set; } = new();
-        public List<Features> LegendaryActions { get; set; } = new();
+        public ObservableCollection<Features> Actions { get; set; } = new(); 
+        public ObservableCollection<Features> ReciprocalActions { get; set; } = new();
+        public ObservableCollection<Features> Features { get; set; } = new();
+        public ObservableCollection<Features> LegendaryActions { get; set; } = new();
+        public Table Table { get; set; }
 
         public ExtendedMonster(int id) : base(id)
         {
@@ -95,6 +98,18 @@ namespace App1.Model
 
         }
 
+        private void LoadTableFromDb(int id)
+        {
+            try
+            {
+                var data = DataAccess.GetData("TablesMonsters", $"ParentId = {id}", null, "*");
+                Table = new Table(data[0]);
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
+        }
         public ExtendedMonster()
         {
         }

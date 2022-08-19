@@ -24,7 +24,7 @@ namespace App1.Directories
 
         private void TableLoading()
         {
-            Table table = (DataContext as ExtendedMagicItem).Table;
+            Table table = (DataContext as ExtendedMonster).Table;
             //if (table != null)
             //{
 

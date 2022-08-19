@@ -1,4 +1,5 @@
-﻿using App1.Directories;
+﻿using System;
+using App1.Directories;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Documents;
@@ -55,22 +56,27 @@ namespace App1
 
         private void NameClick(Hyperlink sender, HyperlinkClickEventArgs args)
         {
-            (DataContext as MagicItemsModelView).SortCommand.Execute((MagicItem mn) => mn.Name);
+            ExecuteSort(mn => mn.Name);
         }
 
         private void QualityClick(Hyperlink sender, HyperlinkClickEventArgs args)
         {
-            (DataContext as MagicItemsModelView).SortCommand.Execute((MagicItem mn) => mn.Quality.ToString());
+            ExecuteSort(mn => mn.Quality.ToString());
         }
 
         private void ConsentrationClick(Hyperlink sender, HyperlinkClickEventArgs args)
         {
-            (DataContext as MagicItemsModelView).SortCommand.Execute((MagicItem mn) => mn.Attunement);
+            ExecuteSort(mn => mn.Attunement);
         }
 
         private void TypeClick(Hyperlink sender, HyperlinkClickEventArgs args)
         {
-            (DataContext as MagicItemsModelView).SortCommand.Execute((MagicItem mn) => mn.Type);
+            ExecuteSort(mn => mn.Type);
+        }
+
+        private void ExecuteSort(Func<MagicItem, object> sortDel)
+        {
+            (DataContext as MagicItemsModelView).SortCommand.Execute(sortDel);
         }
     }
 }
