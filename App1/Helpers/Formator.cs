@@ -1,16 +1,19 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using Windows.UI.Text;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Documents;
+using Windows.UI.Xaml.Media;
 
 namespace App1.WorkShop
 {
     internal class Formator
     {
-        private static Regex headerRegex = new Regex(@"(?<!\\|#)(#{1,6})", RegexOptions.Compiled | RegexOptions.Multiline);
+        private static Regex headerRegex = new Regex(@"^\s*(?<!\\|\#)(?<Header>\#{1,6})(?<text>[^#]*)\k<Header>?", RegexOptions.Compiled);
         private static Regex ItalicRegex = new Regex(@"(?<!\\)[\*]", RegexOptions.Compiled | RegexOptions.Multiline);
         private static Regex BoldRegex = new Regex(@"(?<!\\)[\*]{2}", RegexOptions.Compiled | RegexOptions.Multiline);
         private static Regex hypeRegex = new Regex(@"(?<!\\)(\[)(?<name>.*?)(\])", RegexOptions.Compiled);
@@ -25,6 +28,7 @@ namespace App1.WorkShop
             Formating(BoldRegex, run => run.FontWeight = FontWeights.Bold , textBlock);
             Formating(ItalicRegex, run => run.FontStyle = FontStyle.Italic, textBlock);
             AddHyperlink(textBlock);
+            AddHeaders(headerRegex, textBlock);
             TextIgnoring(ignoreSymvolRegex, textBlock);
             CreateDiceRoll(textBlock);
         }
@@ -64,6 +68,53 @@ namespace App1.WorkShop
                 textBlock.Inlines.Add(r);
         }
 
+        private static void AddHeaders(Regex rg, TextBlock textBlock)
+        {
+            ResourceDictionary myResourceDictionary = new ResourceDictionary();
+            myResourceDictionary.Source = new Uri("ms-appx:///Dictionary.xaml");
+            foreach (Inline inline in textBlock.Inlines)
+            {
+                Run ru = inline as Run;
+                if (ru == null || !rg.IsMatch(ru.Text))
+                {
+                    continue;
+                }
+                
+                var headerType = rg.Match(ru.Text).Groups["Header"].Value.Length;
+                ru.Text = rg.Match(ru.Text).Groups["text"].Value;
+                switch (headerType)
+                    {
+                        case 1:
+                            ru.FontWeight = FontWeights.Bold;
+                            ru.FontSize = 24;
+                            ru.Foreground = myResourceDictionary["Header"] as SolidColorBrush;
+                            break;
+                        case 2:
+                            ru.FontWeight = FontWeights.Bold;
+                            ru.FontSize = 24;
+                            break;
+                        case 3:
+                            ru.FontWeight = FontWeights.Bold;
+                            ru.FontStyle = FontStyle.Italic;
+                            ru.FontStretch = FontStretch.ExtraExpanded;
+                            break;
+                        case 4:
+                            ru.FontWeight = FontWeights.Bold;
+                            ru.FontStyle = FontStyle.Italic;
+                            ru.FontStretch = FontStretch.ExtraExpanded;
+                            ru.Foreground = myResourceDictionary["Header"] as SolidColorBrush;
+                            break;
+                        case 5:
+                            ru.FontWeight = FontWeights.Bold;
+                            ru.FontStyle = FontStyle.Italic;
+                            ru.FontStretch = FontStretch.ExtraExpanded;
+                            ru.Foreground = myResourceDictionary["Header"] as SolidColorBrush;
+                            break;
+                    }
+            }
+
+        }
+        
         private static void TextIgnoring(Regex rg, TextBlock text)
         {
             foreach (Inline inline in text.Inlines)
@@ -181,6 +232,8 @@ namespace App1.WorkShop
                             FontWeight = ru.FontWeight,
                             TextDecorations = ru.TextDecorations,
                             FontStyle = ru.FontStyle,
+                            Foreground = ru.Foreground,
+                            FontSize = ru.FontSize
                         };
                     }
                     else
@@ -191,6 +244,8 @@ namespace App1.WorkShop
                             FontWeight = ru.FontWeight,
                             TextDecorations = ru.TextDecorations,
                             FontStyle = ru.FontStyle,
+                            Foreground = ru.Foreground,
+                            FontSize = ru.FontSize
                         });
                     }
 
@@ -204,6 +259,7 @@ namespace App1.WorkShop
                             FontWeight = run.FontWeight,
                             TextDecorations = run.TextDecorations,
                             FontStyle = run.FontStyle,
+                            FontSize = ru.FontSize,
                             Text = ((Match)matchEnum.Current).Value
                         });
                         runs.Add(hyperlink);
@@ -233,7 +289,7 @@ namespace App1.WorkShop
         {
             if (s == null)
                 return "";
-            s = s.Replace("'", "\\'");
+            s = s.Replace("'", "''");
             return s;
         }
     }

@@ -8,24 +8,25 @@ using App1.Model;
 
 namespace App.WorkShop
 {
-    internal class CreateMonsterVM
+    internal class CreateMonsterVM:CreateMv<ExtendedMonster>
     {
-        public ExtendedMonster Monster { get; set; }
+        public ExtendedMonster Monster => Item;
         public bool IsTable { get; set; }
 
-        private CustomCommand _featureCommand;
         private CustomCommand _actionCommand;
         private CustomCommand _reActionCommand;
         private CustomCommand _legendaryActionCommand;
-        public CustomCommand FeatureCommand
+
+        public override void AddFeature()
         {
-            get
-            {
-                return _featureCommand ??= new CustomCommand(
-                    (p) => { Monster.Features.Add(new Features()); }
-                );
-            }
+            Monster.Features.Add(new Features());
         }
+
+        public override void Save()
+        {
+            throw new NotImplementedException();
+        }
+
         public CustomCommand ActionCommand
         {
             get
@@ -54,9 +55,9 @@ namespace App.WorkShop
             }
         }
 
-        public CreateMonsterVM()
+        public CreateMonsterVM():base(true)
         {
-            Monster = new ExtendedMonster(1);
+            Item = new ExtendedMonster(1);
         }
         
     }

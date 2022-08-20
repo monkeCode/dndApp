@@ -61,4 +61,5 @@
         <Setter Property="BorderBrush" Value="{StaticResource AccentDark1}"/>
         <Setter Property="CornerRadius" Value="5"/>
     </Style>
+    <SolidColorBrush x:Name ="Header" Color="{ThemeResource SystemAccentColorLight1}"/>
 </ResourceDictionary>

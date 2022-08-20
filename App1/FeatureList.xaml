@@ -14,7 +14,7 @@
         <TextBlock Margin="40,0,0,0" FontSize="18" TextDecorations="Underline" Text="{x:Bind ListName}"/>
         <ListView Style="{StaticResource FeaturesListStyle}" 
                   ItemContainerStyle="{StaticResource ListViewItemsStyle}" 
-                  ItemsSource="{x:Bind Features}">
+                  ItemsSource="{x:Bind Features}" CanReorderItems="True" AllowDrop="True">
             <ListView.ItemTemplate>
                 <DataTemplate  x:DataType="app1:Features">
                     <Grid>

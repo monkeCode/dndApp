@@ -128,8 +128,8 @@ namespace App.WorkShop
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
             var table = Table.LoadTableData();
-            (DataContext as CreateItemMV).Item.Table = table;
-            (DataContext as CreateItemMV).Save();
+            (DataContext as CreateMonsterVM).Monster.Table = table;
+            (DataContext as CreateMonsterVM).Save();
             isSaved = true;
             Frame.Navigate(typeof(Workshop));
         }
