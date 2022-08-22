@@ -109,8 +109,7 @@ namespace App1
             switch (result)
             {
                 case ContentDialogResult.Primary:
-                    ((CreateItemMV)DataContext).Save();
-                    isSaved = true;
+                    Save();
                     Frame.Navigate(page);
                     break;
                 case ContentDialogResult.Secondary:
@@ -139,11 +138,16 @@ namespace App1
 
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
-            var table =  Table.LoadTableData();
+            Save();
+            Frame.Navigate(typeof(Workshop));
+        }
+
+        private void Save()
+        {
+            var table = Table.LoadTableData();
             (DataContext as CreateItemMV).Item.Table = table;
             (DataContext as CreateItemMV).Save();
             isSaved = true;
-            Frame.Navigate(typeof(Workshop));
         }
 
         private void DeleteFeature(object sender, RoutedEventArgs e)

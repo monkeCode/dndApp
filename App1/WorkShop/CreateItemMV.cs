@@ -33,9 +33,19 @@ namespace App.WorkShop
 
         public override async void Save()
         {
+            if (isNew)
+            {
+               await DataAccess.RawRequestAsync(
+                    "INSERT INTO MagicItems (Name, Quality, Type, Source)" +
+                    $"values('{Formator.CreateDbValidStr(Item.Name)}',{Item.Quality}, '{Item.Type}', '{Formator.CreateDbValidStr(Item.ItemSource)}')");
+              var id = (int)(long)DataAccess.GetData($"Select _id from MagicItems where Name = '{Formator.CreateDbValidStr(Item.Name)}'")[0][0];
+              await DataAccess.RawRequestAsync($"Insert into ExtendedMagicItems (_id) values ({id})");
+              Item.Id = id;
+            }
+            
             if (!IsAttunemended)
                 Item.Attunement = "";
-            else if (IsAttunemended && Item.Attunement.Trim() == string.Empty)
+            else if (IsAttunemended && string.IsNullOrEmpty(Item?.Attunement?.Trim()))
                 Item.Attunement = "требует настроенности";
             (await DataBaseLib.DataAccess.RawRequestAsync($"UPDATE MagicItems " +
                                                           $"SET Name = \'{Formator.CreateDbValidStr(Item.Name)}\', " +

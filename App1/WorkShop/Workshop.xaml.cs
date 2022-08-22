@@ -22,7 +22,7 @@ namespace App1
 
         private void AddNewItem(object sender, RoutedEventArgs e)
         {
-           
+            Frame.Navigate(typeof(CreateItem));
         }
 
 
