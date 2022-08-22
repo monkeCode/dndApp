@@ -8,6 +8,7 @@ namespace App1
         public int Quality { set; get; }
         public string Type { set; get; }
         public string Attunement { get; set; }
+        public string ItemSource { set; get; }
 
         public MagicItem(int id, string name, int quality, string type, bool attunement) : this()
         {
@@ -26,11 +27,14 @@ namespace App1
             Quality = (int)(long)it[2];
             Type = it[3].ToString();
             Attunement = it[4].ToString() != "0" ? "(Настройка)" : "";
+            ItemSource = it[5].ToString();
         }
 
         public MagicItem()
         {
             ItemType = DataType.MagicItem;
+            Type = "Чудесный предмет";
+            ItemSource = "Homebrew";
         }
     }
 }

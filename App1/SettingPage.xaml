@@ -10,5 +10,6 @@
 
     <StackPanel Margin="30">
         <Button Click="ButtonBase_OnClick">Сохранть базу данных</Button>
+        <Button Click="UpLoadDataBase">Загрузить базу данных</Button>
     </StackPanel>
 </Page>

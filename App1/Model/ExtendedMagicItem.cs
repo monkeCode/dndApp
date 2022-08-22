@@ -11,7 +11,7 @@ namespace App1
         public string UnderType { get; set; }
         public string UnderQuality { get; set; }
         public string OptionableText { get; set; }
-        public string ItemSource { get; set; }
+        //public string ItemSource { get; set; }
         public Table Table { get; set; }
 
         public ExtendedMagicItem(int id)

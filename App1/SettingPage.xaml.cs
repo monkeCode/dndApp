@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.ApplicationModel;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
@@ -49,6 +50,23 @@ namespace App
                   var buffer = await FileIO.ReadBufferAsync(db);
                   await FileIO.WriteBufferAsync(newFile, buffer);
                }
+            }
+        }
+
+        private async void UpLoadDataBase(object sender, RoutedEventArgs e)
+        {
+            var openPicker = new Windows.Storage.Pickers.FileOpenPicker();
+            openPicker.SuggestedStartLocation = 
+                Windows.Storage.Pickers.PickerLocationId.DocumentsLibrary;
+            openPicker.FileTypeFilter.Add(".db");
+            
+            var newFile = await openPicker.PickSingleFileAsync();
+            if (newFile != null)
+            {
+                StorageFile databaseFile = await StorageFile.GetFileFromPathAsync(DataAccess.DbPath);
+                //await newFile.RenameAsync(DataAccess.DB_NAME);
+                await newFile.CopyAndReplaceAsync(databaseFile);
+
             }
         }
     }

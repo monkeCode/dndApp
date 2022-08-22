@@ -5,12 +5,13 @@ using System.IO;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.Storage;
+using Windows.Storage.Streams;
 
 namespace DataBaseLib
 {
     public static class DataAccess
     {
-        private const string DB_NAME = "DataBase.db";
+        public const string DB_NAME = "DataBase.db";
         private const int DB_VERSION = 11;
         public static event Action NewDataLoaded;
         private static bool _canOpenConnection = true;
@@ -52,6 +53,17 @@ namespace DataBaseLib
                 NewDataLoaded?.Invoke();
         }
 
+        public static async Task UpdateDb(string text)
+        {
+            //await text.RenameAsync(DB_NAME);
+            //await text.CopyAsync(
+            //    await StorageFolder.GetFolderFromPathAsync(ApplicationData.Current.LocalFolder.Path + $"\\{DB_NAME}"));
+            //ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+            //localSettings.Values["DataBaseVercion"] = DB_VERSION;
+            StorageFile databaseFile = await Package.Current.InstalledLocation.GetFileAsync(DB_NAME);
+            await FileIO.WriteTextAsync(databaseFile, text);
+            NewDataLoaded?.Invoke();
+        }
         public static void AddData(string table, string[] rows, object[] input)
         {
             string dbpath = Path.Combine(ApplicationData.Current.LocalFolder.Path, DB_NAME);
