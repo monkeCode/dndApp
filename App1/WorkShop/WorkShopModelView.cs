@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using App.Model;
+using DataBaseLib;
 using System.Collections.ObjectModel;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.UI.Xaml.Media;
-using App.Model;
-using DataBaseLib;
 
 namespace App.WorkShop
 {
-    class CompletedDataItem:DataItem
+    class CompletedDataItem : DataItem
     {
         public Brush Color { get; set; }
     }
@@ -33,7 +28,7 @@ namespace App.WorkShop
                     Id = (int)(long)item[0],
                     Name = item[1].ToString(),
                     ItemType = DataItem.DataType.MagicItem,
-                    Color = new SolidColorBrush((int)(long)item[2] == 1 ? Windows.UI.Color.FromArgb(Color.YellowGreen.A, Color.YellowGreen.R, Color.YellowGreen.G, Color.YellowGreen.B):Windows.UI.Color.FromArgb(0,0,0,0))
+                    Color = new SolidColorBrush((int)(long)item[2] == 1 ? Windows.UI.Color.FromArgb(Color.YellowGreen.A, Color.YellowGreen.R, Color.YellowGreen.G, Color.YellowGreen.B) : Windows.UI.Color.FromArgb(0, 0, 0, 0))
                 });
             }
 

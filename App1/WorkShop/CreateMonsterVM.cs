@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using App1;
+﻿using App1;
 using App1.Model;
+using System;
 
 namespace App.WorkShop
 {
-    internal class CreateMonsterVM:CreateMv<ExtendedMonster>
+    internal class CreateMonsterVM : CreateMv<ExtendedMonster>
     {
         public ExtendedMonster Monster => Item;
         public bool IsTable { get; set; }
@@ -55,10 +51,10 @@ namespace App.WorkShop
             }
         }
 
-        public CreateMonsterVM():base(true)
+        public CreateMonsterVM() : base(true)
         {
             Item = new ExtendedMonster(1);
         }
-        
+
     }
 }

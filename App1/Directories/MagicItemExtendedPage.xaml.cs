@@ -1,18 +1,12 @@
-﻿using System;
-using App1.WorkShop;
-using System.Linq;
-using System.Text.RegularExpressions;
-using Windows.Graphics.Printing;
-using Windows.UI.Popups;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Documents;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Media.Imaging;
-using Windows.UI.Xaml.Navigation;
-using App;
+﻿using App;
 using App.Helpers;
 using Microsoft.Toolkit.Uwp.Helpers;
+using System;
+using Windows.Graphics.Printing;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media.Imaging;
+using Windows.UI.Xaml.Navigation;
 
 
 namespace App1.Directories
@@ -26,9 +20,9 @@ namespace App1.Directories
 
         private async void LoadImage()
         {
-           var name = (DataContext as ExtendedMagicItem).Name;
-           var result = await Web.GetImageUri(name + " днд");
-           ItemImage.Source = new BitmapImage(new Uri(result));
+            var name = (DataContext as ExtendedMagicItem).Name;
+            var result = await Web.GetImageUri(name + " днд");
+            ItemImage.Source = new BitmapImage(new Uri(result));
         }
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
@@ -52,7 +46,7 @@ namespace App1.Directories
             }
         }
 
-        private void MarkdownText_OnHyperlinkClicked(Type obj,int id)
+        private void MarkdownText_OnHyperlinkClicked(Type obj, int id)
         {
             Frame.Navigate(obj, id);
         }
@@ -76,7 +70,7 @@ namespace App1.Directories
             var printHelper = new PrintHelper(new Grid(), defaultPrintHelperOptions);
             ExtendedMagicItem data = DataContext as ExtendedMagicItem;
             StackPanel panel = new StackPanel();
-            panel.Children.Add(new TextBlock(){Text = data.Name, FontSize = 24, Margin = new Thickness(30)});
+            panel.Children.Add(new TextBlock() { Text = data.Name, FontSize = 24, Margin = new Thickness(30) });
             printHelper.AddFrameworkElementToPrint(panel);
 
             await printHelper.ShowPrintUIAsync("DnD Helper", true);

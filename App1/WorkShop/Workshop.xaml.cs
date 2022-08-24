@@ -1,9 +1,8 @@
-﻿using Windows.UI.Xaml;
+﻿using App.Model;
+using App.WorkShop;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
-using App.Model;
-using App.WorkShop;
-using WinRTXamlToolkit.IO.Serialization;
 
 // Документацию по шаблону элемента "Пустая страница" см. по адресу https://go.microsoft.com/fwlink/?LinkId=234238
 

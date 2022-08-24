@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.RegularExpressions;
 using Windows.UI.Text;
 using Windows.UI.Xaml;
@@ -25,7 +24,7 @@ namespace App1.WorkShop
                 textBlock.Text = s;
             SplitByLines(textBlock);
             CreateList(textBlock);
-            Formating(BoldRegex, run => run.FontWeight = FontWeights.Bold , textBlock);
+            Formating(BoldRegex, run => run.FontWeight = FontWeights.Bold, textBlock);
             Formating(ItalicRegex, run => run.FontStyle = FontStyle.Italic, textBlock);
             AddHyperlink(textBlock);
             AddHeaders(headerRegex, textBlock);
@@ -79,42 +78,42 @@ namespace App1.WorkShop
                 {
                     continue;
                 }
-                
+
                 var headerType = rg.Match(ru.Text).Groups["Header"].Value.Length;
                 ru.Text = rg.Match(ru.Text).Groups["text"].Value;
                 switch (headerType)
-                    {
-                        case 1:
-                            ru.FontWeight = FontWeights.Bold;
-                            ru.FontSize = 24;
-                            ru.Foreground = myResourceDictionary["Header"] as SolidColorBrush;
-                            break;
-                        case 2:
-                            ru.FontWeight = FontWeights.Bold;
-                            ru.FontSize = 24;
-                            break;
-                        case 3:
-                            ru.FontWeight = FontWeights.Bold;
-                            ru.FontStyle = FontStyle.Italic;
-                            ru.FontStretch = FontStretch.ExtraExpanded;
-                            break;
-                        case 4:
-                            ru.FontWeight = FontWeights.Bold;
-                            ru.FontStyle = FontStyle.Italic;
-                            ru.FontStretch = FontStretch.ExtraExpanded;
-                            ru.Foreground = myResourceDictionary["Header"] as SolidColorBrush;
-                            break;
-                        case 5:
-                            ru.FontWeight = FontWeights.Bold;
-                            ru.FontStyle = FontStyle.Italic;
-                            ru.FontStretch = FontStretch.ExtraExpanded;
-                            ru.Foreground = myResourceDictionary["Header"] as SolidColorBrush;
-                            break;
-                    }
+                {
+                    case 1:
+                        ru.FontWeight = FontWeights.Bold;
+                        ru.FontSize = 24;
+                        ru.Foreground = myResourceDictionary["Header"] as SolidColorBrush;
+                        break;
+                    case 2:
+                        ru.FontWeight = FontWeights.Bold;
+                        ru.FontSize = 24;
+                        break;
+                    case 3:
+                        ru.FontWeight = FontWeights.Bold;
+                        ru.FontStyle = FontStyle.Italic;
+                        ru.FontStretch = FontStretch.ExtraExpanded;
+                        break;
+                    case 4:
+                        ru.FontWeight = FontWeights.Bold;
+                        ru.FontStyle = FontStyle.Italic;
+                        ru.FontStretch = FontStretch.ExtraExpanded;
+                        ru.Foreground = myResourceDictionary["Header"] as SolidColorBrush;
+                        break;
+                    case 5:
+                        ru.FontWeight = FontWeights.Bold;
+                        ru.FontStyle = FontStyle.Italic;
+                        ru.FontStretch = FontStretch.ExtraExpanded;
+                        ru.Foreground = myResourceDictionary["Header"] as SolidColorBrush;
+                        break;
+                }
             }
 
         }
-        
+
         private static void TextIgnoring(Regex rg, TextBlock text)
         {
             foreach (Inline inline in text.Inlines)
@@ -179,9 +178,9 @@ namespace App1.WorkShop
         {
             var text = textBlock.Text.Split("\r");
             textBlock.Text = "";
-            foreach(var line in text)
+            foreach (var line in text)
             {
-               // if (line.Length > 0)
+                // if (line.Length > 0)
                 {
                     textBlock.Inlines.Add(new Run { Text = line });
                     textBlock.Inlines.Add(new LineBreak());
@@ -191,7 +190,7 @@ namespace App1.WorkShop
         }
         private static void CreateList(TextBlock textBlock)
         {
-            foreach(var inline in textBlock.Inlines)
+            foreach (var inline in textBlock.Inlines)
             {
                 var run = (inline as Run);
                 if (run == null)
@@ -208,7 +207,7 @@ namespace App1.WorkShop
                 string s;
                 if (ru.GetType() == typeof(Run))
                     s = (ru as Run).Text;
-                else if(ru.GetType() == typeof(Hyperlink))
+                else if (ru.GetType() == typeof(Hyperlink))
                 {
                     s = ((ru as Hyperlink).Inlines[0] as Run).Text;
                 }

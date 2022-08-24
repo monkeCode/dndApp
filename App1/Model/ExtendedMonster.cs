@@ -1,6 +1,5 @@
-﻿using System;
-using DataBaseLib;
-using System.Collections.Generic;
+﻿using DataBaseLib;
+using System;
 using System.Collections.ObjectModel;
 
 namespace App1.Model
@@ -30,7 +29,7 @@ namespace App1.Model
         public string Resistance { get; set; }
         public string Vulnerability { get; set; }
         public string ImmunityState { get; set; }
-        public ObservableCollection<Features> Actions { get; set; } = new(); 
+        public ObservableCollection<Features> Actions { get; set; } = new();
         public ObservableCollection<Features> ReciprocalActions { get; set; } = new();
         public ObservableCollection<Features> Features { get; set; } = new();
         public ObservableCollection<Features> LegendaryActions { get; set; } = new();

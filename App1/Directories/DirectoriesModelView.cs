@@ -61,7 +61,7 @@ namespace App1
         }
         protected List<T> Sort(List<T> list)
         {
-            if(sortPred == null)
+            if (sortPred == null)
                 return list;
             if (isDesc)
             {

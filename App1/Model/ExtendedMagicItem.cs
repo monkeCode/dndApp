@@ -26,7 +26,7 @@ namespace App1
             if (item[9].ToString() != "")
                 UnderType = item[9].ToString();
             if (item[10].ToString() != "")
-                UnderQuality =  item[10].ToString();
+                UnderQuality = item[10].ToString();
             if (item[11].ToString() != "")
                 Attunement = item[11].ToString();
             else

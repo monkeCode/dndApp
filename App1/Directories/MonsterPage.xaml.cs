@@ -1,13 +1,7 @@
-﻿using System;
-using App1.Model;
-using App1.WorkShop;
-using System.Linq;
-using System.Text.RegularExpressions;
-using Windows.UI.Xaml;
+﻿using App1.Model;
+using System;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Navigation;
-using App;
 
 namespace App1.Directories
 {

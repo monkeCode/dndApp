@@ -102,7 +102,7 @@ namespace App
         List<string> _data;
         public List<string> Data
         {
-            get => _data; 
+            get => _data;
             set
             {
                 _data = value;
@@ -124,7 +124,7 @@ namespace App
         DependencyProperty.Register(
         "Rows", typeof(Int32), typeof(VisualTable), new PropertyMetadata(1)
         );
-        
+
         public Table LoadTableData()
         {
             var list = Children.ToList();

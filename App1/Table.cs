@@ -1,11 +1,11 @@
-﻿using App1.WorkShop;
+﻿using App;
+using App1.WorkShop;
+using DataBaseLib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using App;
-using DataBaseLib;
 
 namespace App1
 {
@@ -27,7 +27,7 @@ namespace App1
             for (int i = 0; i <= this.Rows; i++)
                 grid.RowDefinitions.Add(new RowDefinition());
             for (int i = 0; i <= this.Columns; i++)
-                grid.ColumnDefinitions.Add(new ColumnDefinition() { MinWidth = 100});
+                grid.ColumnDefinitions.Add(new ColumnDefinition() { MinWidth = 100 });
             var enumerator = this.Fields.GetEnumerator();
             ResourceDictionary dict = new ResourceDictionary();
             dict.Source = new Uri("ms-appx:///Dictionary.xaml");
@@ -52,7 +52,7 @@ namespace App1
                     border.Child = textBlock;
                     Grid.SetColumn(border, c);
                     Grid.SetRow(border, r);
-                    if(enumerator.MoveNext())
+                    if (enumerator.MoveNext())
                         textBlock.Text = enumerator.Current;
                     grid.Children.Add(border);
                     textBlocks.Add(textBlock);
@@ -64,7 +64,7 @@ namespace App1
         public void UpdateTable(string dbTable, int id)
         {
             DeleteTable(dbTable, id);
-            string data = string.Join("@", Fields.Select(it=> Formator.CreateDbValidStr(it)));
+            string data = string.Join("@", Fields.Select(it => Formator.CreateDbValidStr(it)));
             DataAccess.RawRequest(
                 $"INSERT INTO {dbTable} (ParentId, Rows, Columns, Data) " +
                 $"values ({id},{Rows}, {Columns}, \'{data}\')");

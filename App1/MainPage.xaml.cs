@@ -1,4 +1,5 @@
-﻿using App.Generator;
+﻿using App;
+using App.Generator;
 using App1.Directories;
 using App1.Encounters;
 using App1.GroupMenu;
@@ -6,7 +7,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Windows.UI.Xaml.Controls;
-using App;
 
 // Документацию по шаблону элемента "Пустая страница" см. по адресу https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x419
 

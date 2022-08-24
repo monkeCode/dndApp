@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{0841A07A-F749-4EB0-BAE0-7DD8E5EE1E80}</ProjectGuid>
+    <ProjectGuid>{E841B0C7-EAB2-4BD9-9B51-9A47CCF8DE6B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DataBaseLib</RootNamespace>
-    <AssemblyName>DataBaseLib</AssemblyName>
+    <RootNamespace>Model</RootNamespace>
+    <AssemblyName>Model</AssemblyName>
     <DefaultLanguage>ru-RU</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.19041.0</TargetPlatformVersion>
@@ -130,34 +130,28 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="DataAccess.cs" />
-    <Compile Include="DataBaseContext.cs" />
-    <Compile Include="IDataContext.cs" />
+    <Compile Include="DataItem.cs" />
+    <Compile Include="ExtendedMagicItem.cs" />
+    <Compile Include="ExtendedMonster.cs" />
+    <Compile Include="ExtendedSpell.cs" />
+    <Compile Include="Feature.cs" />
+    <Compile Include="Group.cs" />
+    <Compile Include="MagicItem.cs" />
+    <Compile Include="Monster.cs" />
+    <Compile Include="Player.cs" />
+    <Compile Include="Spell.cs" />
+    <Compile Include="Table.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Properties\DataBaseLib.rd.xml" />
+    <EmbeddedResource Include="Properties\Model.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.Data.Sqlite.Core">
-      <Version>5.0.7</Version>
-    </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.2.12</Version>
+      <Version>6.2.13</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Model\Model.csproj">
-      <Project>{e841b0c7-eab2-4bd9-9b51-9a47ccf8de6b}</Project>
-      <Name>Model</Name>
-    </ProjectReference>
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
-  </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject />
-  </PropertyGroup>
-  <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

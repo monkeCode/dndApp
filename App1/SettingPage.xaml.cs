@@ -1,20 +1,9 @@
-﻿using System;
+﻿using DataBaseLib;
+using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.ApplicationModel;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
-using DataBaseLib;
 
 // Документацию по шаблону элемента "Пустая страница" см. по адресу https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -44,22 +33,22 @@ namespace App
             if (newFile != null)
             {
 
-               var db = await StorageFile.GetFileFromPathAsync(DataAccess.DbPath);
-               if (db != null)
-               {
-                  var buffer = await FileIO.ReadBufferAsync(db);
-                  await FileIO.WriteBufferAsync(newFile, buffer);
-               }
+                var db = await StorageFile.GetFileFromPathAsync(DataAccess.DbPath);
+                if (db != null)
+                {
+                    var buffer = await FileIO.ReadBufferAsync(db);
+                    await FileIO.WriteBufferAsync(newFile, buffer);
+                }
             }
         }
 
         private async void UpLoadDataBase(object sender, RoutedEventArgs e)
         {
             var openPicker = new Windows.Storage.Pickers.FileOpenPicker();
-            openPicker.SuggestedStartLocation = 
+            openPicker.SuggestedStartLocation =
                 Windows.Storage.Pickers.PickerLocationId.DocumentsLibrary;
             openPicker.FileTypeFilter.Add(".db");
-            
+
             var newFile = await openPicker.PickSingleFileAsync();
             if (newFile != null)
             {

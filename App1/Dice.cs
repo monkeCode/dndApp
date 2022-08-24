@@ -7,7 +7,7 @@ namespace App1
 {
     public class Dice
     {
-        public enum Dices { D2,D4,D6,D8,D10,D12,D20,D100}
+        public enum Dices { D2, D4, D6, D8, D10, D12, D20, D100 }
         public string Roll { get; set; }
         public int Result { get; set; }
 
@@ -19,7 +19,7 @@ namespace App1
         }
         public static bool ContainDice(string str)
         {
-           return Regex.IsMatch(str, DICE_PATTERN);
+            return Regex.IsMatch(str, DICE_PATTERN);
         }
         private int Calculate(string roll)
         {
@@ -69,7 +69,7 @@ namespace App1
         public static int RollDice(Dices dice, int count)
         {
             int val = 0;
-            for(int i = 0; i < count; i++)
+            for (int i = 0; i < count; i++)
             {
                 val += dice switch
                 {

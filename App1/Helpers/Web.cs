@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -10,7 +8,7 @@ namespace App.Helpers
 {
     internal class Web
     {
-       private static readonly Regex _apiParseRegex = new("\"original\": \"([^\'\" ])*\"", RegexOptions.Compiled);
+        private static readonly Regex _apiParseRegex = new("\"original\": \"([^\'\" ])*\"", RegexOptions.Compiled);
 
         public static async Task<string> GetImageUri(string request)
         {
@@ -18,7 +16,7 @@ namespace App.Helpers
                 $"https://serpapi.com/search.json?engine=yandex_images&text={request}&api_key=d7c2281e5d111c0beef6ba68be9fc13bc4062e4f450a450b9a6b5a4b18ace458";
 
             HttpClient http = new HttpClient();
-            http.DefaultRequestHeaders.Add("yandex_domain","yandex.ru");
+            http.DefaultRequestHeaders.Add("yandex_domain", "yandex.ru");
             http.DefaultRequestHeaders.Add("site", "dnd.su");
             var responseMessage = await http.GetAsync(uriReq);
             var stream = await responseMessage.Content.ReadAsStreamAsync();

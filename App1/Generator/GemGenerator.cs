@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace App.Generator
 {
@@ -77,9 +75,9 @@ namespace App.Generator
             "Алмаз (прозрачный сине-белый, желтый, розоватый, коричневый или синий)",
             "Гиацинт (прозрачный огненно-оранжевый)",
             "Рубин (прозрачный, от светло-красного до темно-красного)"
-           
+
         };
-       public static List<Gem> GenerateGemsBy10(int count)
+        public static List<Gem> GenerateGemsBy10(int count)
         {
             return Generate(GEMS10G, count, 10);
         }

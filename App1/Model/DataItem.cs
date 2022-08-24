@@ -49,7 +49,7 @@ namespace App.Model
                     ItemType = DataItem.DataType.Spell
                 });
             }
-            if(name != null)
+            if (name != null)
                 return dataItems.Where(it => it.Name.ToLower().Contains(name)).OrderByDescending(it => it.Name).ToList();
             return dataItems;
         }

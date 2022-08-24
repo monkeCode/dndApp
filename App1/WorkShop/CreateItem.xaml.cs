@@ -1,7 +1,7 @@
-﻿using System;
-using System.Threading.Tasks;
-using App.Model;
+﻿using App.Model;
 using App.WorkShop;
+using System;
+using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -113,7 +113,7 @@ namespace App1
                     Frame.Navigate(page);
                     break;
                 case ContentDialogResult.Secondary:
-                    isSaved = true;                    
+                    isSaved = true;
                     Frame.Navigate(page);
                     break;
                 case ContentDialogResult.None:

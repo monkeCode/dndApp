@@ -5,7 +5,6 @@ using System.IO;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.Storage;
-using Windows.Storage.Streams;
 
 namespace DataBaseLib
 {
@@ -15,14 +14,17 @@ namespace DataBaseLib
         private const int DB_VERSION = 11;
         public static event Action NewDataLoaded;
         private static bool _canOpenConnection = true;
-        public static bool IsActualDb { get
+        public static bool IsActualDb
+        {
+            get
             {
                 ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
                 return !(localSettings.Values["DataBaseVercion"] == null || (int)localSettings.Values["DataBaseVercion"] != DB_VERSION);
 
-            } }
+            }
+        }
         public static string DbPath => Path.Combine(ApplicationData.Current.LocalFolder.Path, DB_NAME);
-        static DataAccess(){InitializeDatabase(); }
+        static DataAccess() { InitializeDatabase(); }
         public static async Task InitializeDatabase()
         {
             ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
@@ -40,17 +42,17 @@ namespace DataBaseLib
 
         private static async Task DeleteDb()
         {
-                var storage = await ApplicationData.Current.LocalFolder.TryGetItemAsync(DB_NAME);
-                if (storage != null)
-                    await storage.DeleteAsync();
+            var storage = await ApplicationData.Current.LocalFolder.TryGetItemAsync(DB_NAME);
+            if (storage != null)
+                await storage.DeleteAsync();
         }
 
         private static async Task LoadNewDb(ApplicationDataContainer localSettings)
         {
-                StorageFile databaseFile = await Package.Current.InstalledLocation.GetFileAsync(DB_NAME);
-                File.Copy(databaseFile.Path, ApplicationData.Current.LocalFolder.Path + $"\\{DB_NAME}");
-                localSettings.Values["DataBaseVercion"] = DB_VERSION;
-                NewDataLoaded?.Invoke();
+            StorageFile databaseFile = await Package.Current.InstalledLocation.GetFileAsync(DB_NAME);
+            File.Copy(databaseFile.Path, ApplicationData.Current.LocalFolder.Path + $"\\{DB_NAME}");
+            localSettings.Values["DataBaseVercion"] = DB_VERSION;
+            NewDataLoaded?.Invoke();
         }
 
         public static async Task UpdateDb(string text)

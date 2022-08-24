@@ -1,14 +1,11 @@
-﻿
-using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using App;
-using App.Generator;
+﻿using App.Generator;
 using App1;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace UnitTests
 {
     [TestClass]
-    public class UnitTest1
+    public partial class UnitTest1
     {
         [TestMethod]
         public void GemValidate()
@@ -17,7 +14,7 @@ namespace UnitTests
             var gems = GemGenerator.GenerateGemsBy10(GEM_COUNT);
             int count = 0;
             int price = 0;
-            foreach(var ge in gems)
+            foreach (var ge in gems)
             {
                 count += ge.Count;
                 price += ge.Price * ge.Count;
@@ -31,7 +28,7 @@ namespace UnitTests
         {
             for (int i = 0; i < StaticValues.MonsterRate.Count; i++)
             {
-                
+
                 Assert.AreEqual(i.ToString(), StaticValues.MonsterRate.IndexOf(StaticValues.MonsterRate[i]).ToString());
             }
         }

@@ -1,8 +1,6 @@
-﻿using App.Model;
-using DataBaseLib;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 
-namespace App1
+namespace Model
 {
     public class Monster : DataItem
     {
@@ -48,25 +46,12 @@ namespace App1
                 "30" => 155000
             };
         public string Source { get; set; }
-        public bool isLegendary { get; set; }
+        public bool IsLegendary { get; set; }
         public ObservableCollection<string> Habitat { get; set; }
         public Monster()
         {
             ItemType = DataType.Monster;
         }
 
-        public Monster(int id) : this()
-        {
-            var list = DataAccess.GetData("Monsters", $"_id = {id}", null, "*")[0];
-            Id = id;
-            Name = list[1].ToString();
-            Size = (int)(long)list[2];
-            Type = list[3].ToString();
-            Habitat = new ObservableCollection<string>(list[4].ToString().Split("@"));
-            Challenge = list[5].ToString();
-            isLegendary = list[6].ToString() == "1";
-            Source = list[7].ToString();
-
-        }
     }
 }
