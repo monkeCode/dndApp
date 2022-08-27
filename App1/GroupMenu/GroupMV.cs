@@ -1,27 +1,38 @@
 ﻿using System.Collections.ObjectModel;
+using System.Linq;
+using DataBaseLib;
+using Model;
 
-namespace App1.GroupMenu
+namespace App.GroupMenu
 {
     class GroupMV
     {
         public ObservableCollection<Player> PlayerWithoutGroup { get; } = new ObservableCollection<Player>();
         public ObservableCollection<Group> Groups { get; set; } = new ObservableCollection<Group>();
+
+        public void AddPlayer(Player p)
+        {
+            PlayerWithoutGroup.Add(p);
+        }
+
+        public void UpdatePlayer(Player p)
+        {
+            //Groups.SelectMany(g => g.Players).FirstOrDefault(player => player.Id == p.Id)
+        }
+
         public GroupMV()
         {
-            foreach (var groups in DataBaseLib.DataAccess.GetData("SELECT _id FROM Parties"))
+            foreach (var group in App.DataContext.GetGroups())
             {
-                Groups.Add(new Group((int)(long)groups[0]));
+                Groups.Add(group);
             }
-            foreach (var p in DataBaseLib.DataAccess.GetData("SELECT Name,PlayerName,Class,Lvl From Players Where Group_id IS NULl"))
+
+            foreach (var player in App.DataContext.GetPlayers().Where(p => p.GroupId == -1))
             {
-                PlayerWithoutGroup.Add(new Player
-                {
-                    Name = (string)p[0],
-                    PlayerName = (string)p[1],
-                    Class = (string)p[2],
-                    Lvl = (int)(long)p[3],
-                });
+                PlayerWithoutGroup.Add(player);
             }
+
+            
         }
     }
 }

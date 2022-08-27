@@ -1,6 +1,7 @@
-﻿using App.Model;
-using App.WorkShop;
+﻿using App.WorkShop;
+using Model;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -8,7 +9,7 @@ using Windows.UI.Xaml.Navigation;
 
 // Документацию по шаблону элемента "Пустая страница" см. по адресу https://go.microsoft.com/fwlink/?LinkId=234238
 
-namespace App1
+namespace App
 {
     /// <summary>
     /// Пустая страница, которую можно использовать саму по себе или для перехода внутри фрейма.
@@ -86,7 +87,7 @@ namespace App1
             if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
             {
                 var text = sender.Text.ToLower();
-                var items = DataItem.GetItems(text);
+                var items = App.DataContext.GetDataItems().Where(it => it.Name.Contains(text));
                 sender.ItemsSource = items;
             }
         }
@@ -152,7 +153,7 @@ namespace App1
 
         private void DeleteFeature(object sender, RoutedEventArgs e)
         {
-            (DataContext as CreateItemMV).Item.Features.Remove((Features)(sender as Button).DataContext);
+            (DataContext as CreateItemMV).Item.Features.Remove((Feature)(sender as Button).DataContext);
         }
     }
 }

@@ -1,7 +1,8 @@
-﻿using System.ComponentModel;
+﻿using Model;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace App1.Encounters
+namespace App.Encounters
 {
     public class BattleMonster : INotifyPropertyChanged
     {

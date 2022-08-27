@@ -1,5 +1,5 @@
-﻿using App1.Annotations;
-using App1.Directories;
+﻿using App.Annotations;
+using App.Directories;
 using DataBaseLib;
 using System;
 using System.Collections.Generic;
@@ -7,8 +7,9 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using Model;
 
-namespace App1.Encounters
+namespace App.Encounters
 {
     class EncounterModelView : INotifyPropertyChanged, IDisposable
     {
@@ -81,7 +82,7 @@ namespace App1.Encounters
             }
             finally
             {
-                PlayerGroup = new Group(groupId);
+                PlayerGroup = DataBaseContext.Instance.GetGroups().First(g => g.Id == groupId);
                 if (_playerGroup.Players.Count < 3)
                     _exModifierOffset = 1;
                 else if (_playerGroup.Players.Count > 5)

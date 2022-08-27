@@ -5,7 +5,7 @@ using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 
-namespace App1
+namespace App
 {
     public class RarityConvector : IValueConverter
     {

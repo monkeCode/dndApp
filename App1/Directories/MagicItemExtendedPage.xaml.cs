@@ -1,6 +1,7 @@
 ﻿using App;
 using App.Helpers;
 using Microsoft.Toolkit.Uwp.Helpers;
+using Model;
 using System;
 using Windows.Graphics.Printing;
 using Windows.UI.Xaml;
@@ -9,7 +10,7 @@ using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
 
-namespace App1.Directories
+namespace App.Directories
 {
     public sealed partial class MagicItemExtendedPage : Page
     {
@@ -26,9 +27,12 @@ namespace App1.Directories
         }
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            DataContext = new ExtendedMagicItem((int)e.Parameter);
-            TableLoading();
+            var item = App.DataContext.GetExtendedMagicById((int)e.Parameter);
+            DataContext = item;
             //LoadImage();
+            TableGrid.Table = item.Table;
+            TableLoading();
+            TabMenu.UpdateText(Frame, item.Name);
         }
 
 
@@ -38,7 +42,7 @@ namespace App1.Directories
             if (table != null)
             {
 
-                foreach (MarkdownText tex in table.LoadTable(TableGrid))
+                foreach (MarkdownText tex in TableGrid.MarkdownTexts)
                 {
 
                     tex.HyperlinkClicked += MarkdownText_OnHyperlinkClicked;

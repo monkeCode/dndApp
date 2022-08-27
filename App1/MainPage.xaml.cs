@@ -1,25 +1,38 @@
 ﻿using App;
 using App.Generator;
-using App1.Directories;
-using App1.Encounters;
-using App1.GroupMenu;
+using App.Directories;
+using App.Encounters;
+using App.GroupMenu;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Windows.UI.Xaml.Controls;
+using Model;
 
 // Документацию по шаблону элемента "Пустая страница" см. по адресу https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x419
 
-namespace App1
+namespace App
 {
     public sealed partial class MainPage : Page
     {
         private ObservableCollection<Dice> _dices = new ObservableCollection<Dice>();
 
+        public event Action<object,string> TabChanged;
+
+        public Frame ContentFrame => mainFrame;
+
         public MainPage()
         {
             this.InitializeComponent();
-            //mainFrame.Navigate(typeof(MagicPage));
+            mainFrame.Navigated += MainFrame_Navigated1;
+        }
+
+        private void MainFrame_Navigated1(object sender, Windows.UI.Xaml.Navigation.NavigationEventArgs e)
+        {
+            var type = e.Content.GetType();
+            var text = type.Name;
+            TabChanged?.Invoke(Frame,text);
         }
 
         private List<(string Tag, System.Type Page)> TagPage = new List<(string, System.Type)>

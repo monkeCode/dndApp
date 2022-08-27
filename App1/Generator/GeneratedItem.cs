@@ -1,4 +1,5 @@
-﻿using App1;
+﻿using App;
+using Model;
 
 namespace App.Generator
 {

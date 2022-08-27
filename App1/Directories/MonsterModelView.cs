@@ -1,9 +1,10 @@
 ﻿using DataBaseLib;
+using Model;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
-namespace App1.Directories
+namespace App.Directories
 {
     public class MonsterModelView : DirectoriesModelView<Monster>
     {
@@ -12,32 +13,32 @@ namespace App1.Directories
             DataCollection = new ObservableCollection<Monster>();
             sortPred = m => m.Name;
             GetListData();
-            whereReq = new string[5];
         }
-        public IList<object> SelectedType { set { whereReq[0] = value.Count > 0 ? "Type IN ( " + ChangeSelect(value) : null; GetListData(); } }
-        public IList<object> SelectedRate { set { whereReq[1] = value.Count > 0 ? "ChallengeRate IN ( " + ChangeSelect(value) : null; GetListData(); } }
-        public IList<object> SelectedSize { set { whereReq[2] = value.Count > 0 ? "Size IN (" + ChangeSelect(value.Select(i => (object)StaticValues.monsterSize[i.ToString()]).ToList()) : null; GetListData(); } }
-        public IList<object> SelectedHabitat { set { whereReq[3] = value.Count > 0 ? "Habitat IN ( " + string.Join("@", value) : null; GetListData(); } }
-        public IList<object> SelectedSource { set { whereReq[4] = value.Count > 0 ? "Source IN ( " + ChangeSelect(value) : null; GetListData(); } }
+        private List<string> _selectedType = new();
+        private List<string> _selectedRate = new();
+        private List<int> _selectedSize = new();
+        private List<string> _selectedHabitat = new();
+        private List<string> _selectedSource = new();
+        public IList<string> SelectedType { set { _selectedType = value.ToList(); GetListData(); } }
+        public IList<string> SelectedRate { set { _selectedRate = value.ToList(); GetListData(); } }
+        public IList<string> SelectedSize { set { _selectedSize = value.Select(i => StaticValues.monsterSize[i.ToString()]).ToList(); GetListData(); } }
+        public IList<string> SelectedHabitat { set { _selectedHabitat = value.ToList(); GetListData(); } }
+        public IList<string> SelectedSource { set { _selectedSource = value.ToList(); GetListData(); } }
         public override void GetListData()
         {
             DataCollection.Clear();
             var list = new List<Monster>();
-            string s = whereReq?.GetAllElemets(" AND ");
-            foreach (object[] i in DataAccess.GetData("Monsters", s, "Name", "*"))
+            foreach (var monster in App.DataContext.GetMonsters().Where(m =>
+            (_selectedRate.Contains(m.Challenge) || _selectedRate.Count == 0) &&
+            (_selectedSize.Contains(m.Size) || _selectedSize.Count == 0) &&
+            (_selectedType.Contains(m.Type) || _selectedType.Count == 0) &&
+            (_selectedSource.Contains(m.Source) || _selectedSource.Count == 0)&&
+            (_selectedHabitat.Intersect(m.Habitat).Count() > 0 || _selectedHabitat.Count == 0)))
             {
                 if (!string.IsNullOrEmpty(SubstringFilter))
-                    if (i[1].ToString().ToLower().IndexOf(SubstringFilter) == -1)
+                    if (monster.Name.ToLower().IndexOf(SubstringFilter) == -1)
                         continue;
-                list.Add(new Monster
-                {
-                    Id = (int)(long)i[0],
-                    Name = i[1].ToString(),
-                    Size = (int)(long)i[2],
-                    Challenge = i[5].ToString(),
-                    Type = i[3].ToString()
-
-                });
+                list.Add(monster);
             }
             foreach (var m in Sort(list))
                 DataCollection.Add(m);

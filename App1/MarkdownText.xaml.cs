@@ -1,6 +1,6 @@
-﻿using App.Model;
-using App1;
-using App1.WorkShop;
+﻿using App;
+using App.WorkShop;
+using Model;
 using System;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -61,7 +61,7 @@ namespace App
 
         private void Hyperlink_Click(Hyperlink sender, HyperlinkClickEventArgs args)
         {
-            var itemList = DataItem.GetItems();
+            var itemList = App.DataContext.GetDataItems();
             string name = (sender.Inlines.First() as Run).Text;
             var item = itemList.OrderBy(it => name.LevenshteinDistance(it.Name)).First();
             //ExtendedMagicItem model = DataContext as ExtendedMagicItem;

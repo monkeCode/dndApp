@@ -1,4 +1,5 @@
-﻿using App1;
+﻿using App;
+using Model;
 using System;
 using System.Collections.Generic;
 
@@ -16,7 +17,7 @@ namespace App.Generator
         protected ItemGenerator() { }
         public virtual GeneratedItem GetItem()
         {
-            MagicItem magicItem = new MagicItem(_id);
+            MagicItem magicItem = App.DataContext.GetExtendedMagicById(_id);
             _title ??= magicItem.Name;
             return new GeneratedItem(_title, magicItem);
         }

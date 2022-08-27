@@ -1,6 +1,6 @@
 ﻿namespace Model
 {
-    public class ExtendedSpell
+    public class ExtendedSpell:Spell
     {
 
     }

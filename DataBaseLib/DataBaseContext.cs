@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.Store.Preview.InstallControl;
 
 namespace DataBaseLib
@@ -94,7 +95,7 @@ namespace DataBaseLib
                 monsters.Add(new Monster()
                 {
                     Id = (int)(long)monster[0],
-                    Name = list[1].ToString(),
+                    Name = monster[1].ToString(),
                     Size = (int)(long)monster[2],
                     Type = monster[3].ToString(),
                     Habitat = new ObservableCollection<string>(monster[4].ToString().Split("@")),
@@ -219,18 +220,7 @@ namespace DataBaseLib
                 var players = DataAccess.GetData("Players", $"Group_id = {group.Id}", null,"*");
                 foreach (var p in players)
                 {
-                    var player = new Player()
-                    {
-                        GroupId = (int) (long) p[0],
-                        Name = p[1].ToString(),
-                        PlayerName = p[2].ToString(),
-                        Class = p[3].ToString(),
-                        Id = (int) (long) p[4],
-                        AC = (int) (long) p[5],
-                        HP = (int) (long) p[6],
-                        Experience = (int) (long) p[7],
-                        PassWis = (int) (long) p[8]
-                    };
+                    var player = GetPlayerFromData(p);
                     group.Players.Add(player);
                 }
                 groups.Add(group);
@@ -239,107 +229,186 @@ namespace DataBaseLib
             return groups;
         }
 
+        private static Player GetPlayerFromData(object[] playerData)
+        {
+            var player = new Player()
+            {
+                GroupId = (int) (long) playerData[0],
+                Name = playerData[1].ToString(),
+                PlayerName = playerData[2].ToString(),
+                Class = playerData[3].ToString(),
+                Id = (int) (long) playerData[4],
+                AC = (int) (long) playerData[5],
+                HP = (int) (long) playerData[6],
+                Experience = (int) (long) playerData[7],
+                PassWis = (int) (long) playerData[8],
+                Initiative = (int)(long)playerData[9],
+                Race = playerData[10].ToString()
+            };
+            return player;
+        }
+
         public IEnumerable<Player> GetPlayers()
         {
-            throw new NotImplementedException();
+            List<Player> players = new List<Player>();
+            var data = DataAccess.GetData("Players", null, null, "*");
+            foreach (var singleData in data)
+            {
+                players.Add(GetPlayerFromData(singleData));
+            }
+
+            return players;
         }
 
-        public IEnumerable<Player> GetPlayersByGroupId(int id)
+        public async Task AddMonster(ExtendedMonster monster)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Player> GetPlayerById(int id)
+        public async Task AddItem(ExtendedMagicItem item)
+        {
+            await DataAccess.RawRequestAsync(
+                    "INSERT INTO MagicItems (Name, Quality, Type, Source)" +
+                    $"values('{item.Name.Replace("'","''")}',{item.Quality}, '{item.Type}', '{item.ItemSource.Replace("'", "''")}')");
+            var id = (int)(long)DataAccess.GetData($"Select _id from MagicItems where Name = '{item.Name.Replace("'", "''")}'")[0][0];
+            await DataAccess.RawRequestAsync($"Insert into ExtendedMagicItems (_id) values ({id})");
+            item.Id = id;
+            await UpdateItem(item);
+        }
+
+        public async Task AddSpell(ExtendedSpell spell)
         {
             throw new NotImplementedException();
         }
 
-        public void AddMonster(ExtendedMonster monster)
+        public async Task AddGroup(Group group)
+        {
+            DataAccess.RawRequest("Insert into Parties (Name) values ('" + group.Name.Replace("'","''") + "')");
+        }
+
+        public async Task AddPlayer(Player player)
+        {
+            DataAccess.RawRequest(
+                "INSERT into Players (Group_Id, Name, PlayerName, Class, AC, HP, Exp, PassWis, Initiative, Race) " +
+                $"values ({player.GroupId}, '{player.Name.Replace("'","''")}', " +
+                $"'{player.PlayerName.Replace("'", "''")}', '{player.Class}', " +
+                $"{player.AC}, {player.HP}, {player.Experience}, " +
+                $"{player.PassWis}, {player.Initiative}, " +
+                $"'{player.Race.Replace("'","''")}')");
+        }
+
+        public async Task UpdateMonster(ExtendedMonster monster)
         {
             throw new NotImplementedException();
         }
 
-        public void AddItem(ExtendedMagicItem item)
+        public async Task UpdateItem(ExtendedMagicItem item)
+        {
+            (await DataAccess.RawRequestAsync($"UPDATE MagicItems " +
+                                                          $"SET Name = \'{item.Name.Replace("'", "''")}\', " +
+                                                          $"Quality = {item.Quality}, " +
+                                                          $"Type = \'{item.Type}\', " +
+                                                          $"Attunement = \'{((item.Attunement != string.Empty) ? 1 : 0)}\', " +
+                                                          $"Source = \'{item.ItemSource.Replace("'", "''")}\', " +
+                                                          $"isHomeBrew = 0 " +
+                                                          $"Where _id = {item.Id}")).Close();
+
+            (await DataAccess.RawRequestAsync("UPDATE ExtendedMagicItems SET " +
+                 $"Description = \'{item.Description.Replace("'", "''")}\', " +
+                 $"Undertype = \'{item.UnderType.Replace("'", "''")}\'," +
+                 $"UnderQuality = \'{item.UnderQuality.Replace("'", "''")}\', " +
+                 $"Attunement = \'{item.Attunement.Replace("'", "''")}\', " +
+                 $"OptionalText = \'{item.OptionableText.Replace("'", "''")}\' " +
+                 $"Where _id = {item.Id}")).Close();
+            await Task.Run(() => UpdateTable(item.Table, item.Id, "TablesMagicItems"));
+            await Task.Run(() =>
+            {
+                DeleteFeatures(item.Id, "FeaturesOfMagicItem");
+                foreach (var feature in item.Features)
+                {
+                    UpdateFeature(feature, item.Id, "FeaturesOfMagicItem");
+                }
+
+            });
+        }
+
+        public async Task UpdateSpell(ExtendedSpell spell)
         {
             throw new NotImplementedException();
         }
 
-        public void AddSpell(ExtendedSpell spell)
+        public async Task UpdatePlayer(Player player)
+        {
+            DataAccess.RawRequest("Update Players SET" +
+                                  $"Group_Id = {player.GroupId}, " +
+                                  $"Name = '{player.Name.Replace("'", "''")}', " +
+                                  $"PlayerName = '{player.PlayerName.Replace("'", "''")}', " +
+                                  $"Class = '{player.Class}', AC = {player.AC}, HP = {player.HP}, " +
+                                  $"Exp = {player.Experience}, PassWis = {player.PassWis}, " +
+                                  $"Initiative = {player.Initiative}, " +
+                                  $"Race = '{player.Race.Replace("'","''")}' " +
+                                  $"WHERE _id = {player.Id}");
+        }
+
+        public async Task UpdateGroup(Group group)
+        {
+            DataAccess.RawRequest("Update Parties SET" +
+                                  $"Name = '{group.Name.Replace("'", "''")}' " +
+                                  $"WHERE _id = {group.Id}");
+        }
+
+        public async Task DeleteMonster(int id)
         {
             throw new NotImplementedException();
         }
 
-        public void AddGroup(Group group)
+        public async Task DeleteItem(int id)
         {
             throw new NotImplementedException();
         }
 
-        public void AddPlayer(Player player)
+        public async Task DeleteSpell(int id)
         {
             throw new NotImplementedException();
         }
 
-        public void UpdateMonster(ExtendedMonster monster)
+        public async Task DeletePlayer(int id)
         {
-            throw new NotImplementedException();
+            DataAccess.RawRequest($"Delete from Players WHERE _id = {id}");
         }
 
-        public void UpdateItem(ExtendedMagicItem item)
+        public async Task DeleteGroup(int id)
         {
-            throw new NotImplementedException();
-        }
-
-        public void UpdateSpell(ExtendedSpell spell)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void UpdatePlayer(Player player)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void UpdateGroup(Group group)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteMonster(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteItem(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteSpell(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeletePlayer(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteGroup(int id)
-        {
-            throw new NotImplementedException();
+            DataAccess.RawRequest($"Delete from Parties WHERE _id = {id}");
         }
 
         private void UpdateTable(Table table, int parentId, string dbTable)
         {
-
+            DeleteTable(parentId, dbTable);
+            if (table == null) return;
+            string data = string.Join("@", table.Fields.Select(it => it.Replace("'","''")));
+            
+            DataAccess.RawRequest(
+                $"INSERT INTO {dbTable} (ParentId, Rows, Columns, Data) " +
+                $"values ({parentId},{table.Rows}, {table.Columns}, '{data}')");
         }
 
+        private static void DeleteTable(int parentId, string dbTable)
+        {
+            DataAccess.RawRequest($"Delete from {dbTable} where ParentId = {parentId}");
+        }
+        private void DeleteFeatures(int parentId, string dbTable)
+        {
+            DataAccess.RawRequest($"Delete from {dbTable} where _id = {parentId}");
+        }
         private void UpdateFeature(Feature feature, int parentId, string dbTable)
         {
-
+            if (feature == null) return;
+            DataBaseLib.DataAccess.RawRequest($"INSERT INTO {dbTable} (_id, Name, Description) " +
+                                              $"values ({parentId},'{feature.Name.Replace("'","''")}', '{feature.Description.Replace("'", "''")}')");
         }
 
-        private Table GetTable(int parentId, string dbTable)
+        private static Table GetTable(int parentId, string dbTable)
         {
             var data = DataAccess.GetData(dbTable, $"ParentId = {parentId}", null, "*");
             if (data.Count == 0) return null;
@@ -350,7 +419,7 @@ namespace DataBaseLib
             };
         }
 
-        private List<Feature> GetFeatures(int parentId, string dbTable)
+        private static List<Feature> GetFeatures(int parentId, string dbTable)
         {
             List<Feature> features = new List<Feature>();
             foreach (var act in DataAccess.GetData(dbTable, $"_id = {parentId}", null, "Name, Description"))

@@ -2,7 +2,7 @@
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 
-namespace App1
+namespace App
 {
     class NumericalTextBox : TextBox
     {

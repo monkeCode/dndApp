@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Model;
 
-namespace App1
+namespace App
 {
     public class StaticValues
     {
@@ -39,7 +40,7 @@ namespace App1
 
         public static List<string> MonsterType { get; } = new List<string>()
         {
-            "Абберация",
+            "Аберрация",
             "Бестия",
             "Великан",
             "Гуманоид",
@@ -126,6 +127,37 @@ namespace App1
             "Степь",
             "Холмы"
         };
+
+        public static List<string> Classes { get; } = new List<string>()
+        {
+            "Бард",
+            "Варвар",
+            "Воин",
+            "Жрец",
+            "Волшебник",
+            "Паладин",
+            "Плут",
+            "Друид",
+            "Монах",
+            "Следопыт",
+            "Чародей",
+            "Изобретатель",
+            "Колдун",
+
+        };
+
+        public static List<string> Races { get; } = new List<string>()
+        {
+            "Человек",
+            "Эльф",
+            "Полурослик",
+            "Дроу",
+            "Полуэльф",
+            "Полуорк",
+            "Гном",
+            "Драконорожденный"
+        };
+
         public StaticValues()
         {
         }

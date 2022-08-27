@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace App1.Quest
+namespace App.Quest
 {
     internal class QuestModel
     {

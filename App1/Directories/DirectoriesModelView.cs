@@ -6,36 +6,17 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using Windows.UI.Xaml.Controls;
 
-namespace App1
+namespace App
 {
     public abstract class DirectoriesModelView<T> : INotifyPropertyChanged
     {
         public ObservableCollection<T> DataCollection { get; set; }
-        protected string[] whereReq = default;
         protected string substringFilter = "";
         public string SubstringFilter { get { return substringFilter; } set { substringFilter = value.Trim().ToLower(); OnPropertyChanged(); } }
         public void Search(object s)
         {
             substringFilter = ((TextBox)s).Text.ToLower();
             GetListData();
-        }
-
-        protected string ChangeSelect(IList<object> list)
-        {
-            if (list.Count == 0)
-            {
-                return null;
-            }
-
-            string str = "";
-            foreach (var a in list)
-            {
-                if (a != list.Last())
-                    str += $" \"{a}\", ";
-                else str += $"\"{a}\" )";
-            }
-
-            return str;
         }
 
         protected Func<T, object> sortPred;
@@ -80,11 +61,6 @@ namespace App1
 
         public virtual void DropFilters()
         {
-            for (int i = 0; i < whereReq.Length; i++)
-            {
-                whereReq[i] = string.Empty;
-            }
-
             SubstringFilter = string.Empty;
             GetListData();
         }

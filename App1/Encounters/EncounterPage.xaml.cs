@@ -6,7 +6,7 @@ using Windows.UI.Xaml.Navigation;
 
 // Документацию по шаблону элемента "Пустая страница" см. по адресу https://go.microsoft.com/fwlink/?LinkId=234238
 
-namespace App1.Encounters
+namespace App.Encounters
 {
 
     public sealed partial class EncounterPage : Page
@@ -29,31 +29,31 @@ namespace App1.Encounters
 
         private void SourceList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            (DataContext as EncounterModelView).MonsterModel.SelectedSource = (sender as ListView).SelectedItems;
+            (DataContext as EncounterModelView).MonsterModel.SelectedSource = (sender as ListView).SelectedItems.Select(it => it.ToString()).ToList();
             (DataContext as EncounterModelView).GetMonsterData();
         }
 
         private void HabbiatList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            (DataContext as EncounterModelView).MonsterModel.SelectedHabitat = (sender as ListView).SelectedItems;
+            (DataContext as EncounterModelView).MonsterModel.SelectedHabitat = (sender as ListView).SelectedItems.Select(it => it.ToString()).ToList();
             (DataContext as EncounterModelView).GetMonsterData();
         }
 
         private void SizeList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            (DataContext as EncounterModelView).MonsterModel.SelectedSize = (sender as ListView).SelectedItems;
+            (DataContext as EncounterModelView).MonsterModel.SelectedSize = (sender as ListView).SelectedItems.Select(it => it.ToString()).ToList();
             (DataContext as EncounterModelView).GetMonsterData();
         }
 
         private void ChallengeList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            (DataContext as EncounterModelView).MonsterModel.SelectedRate = (sender as ListView).SelectedItems;
+            (DataContext as EncounterModelView).MonsterModel.SelectedRate = (sender as ListView).SelectedItems.Select(it => it.ToString()).ToList();
             (DataContext as EncounterModelView).GetMonsterData();
         }
 
         private void TypeList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            (DataContext as EncounterModelView).MonsterModel.SelectedType = (sender as ListView).SelectedItems;
+            (DataContext as EncounterModelView).MonsterModel.SelectedType = (sender as ListView).SelectedItems.Select(it => it.ToString()).ToList();
             (DataContext as EncounterModelView).GetMonsterData();
         }
 

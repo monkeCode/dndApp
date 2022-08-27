@@ -1,11 +1,12 @@
-﻿using App1.Annotations;
+﻿using App.Annotations;
 using DataBaseLib;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Model;
 
-namespace App1.Encounters
+namespace App.Encounters
 {
     class Encounter : INotifyPropertyChanged
     {

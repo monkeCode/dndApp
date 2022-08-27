@@ -1,18 +1,18 @@
 ﻿<Page
-    x:Class="App1.Directories.MagicItemExtendedPage"
+    x:Class="App.Directories.MagicItemExtendedPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:App1"
+    xmlns:local="using:App"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:controls1="using:Microsoft.UI.Xaml.Controls"
     xmlns:app="using:App"
-    xmlns:helpers="using:App.Helpers"
+    xmlns:helpers="using:App.Helpers" xmlns:local1="using:Model"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Page.Resources>
-        <local:RarityConvector x:Key="RarityConvert" />
         <helpers:AddHooksConverter x:Key="HooksConverter"/>
+        <app:RarityConvector x:Key="RarityConvert" />
     </Page.Resources>
     <ScrollViewer MinWidth="500">
         <StackPanel  BorderThickness="1">
@@ -53,27 +53,8 @@
             </TextBlock>
                 <!--<TextBlock Text="{Binding Description}" Margin="30,30,0,0" Loaded="ReFormateText" TextWrapping="Wrap" MaxWidth="1000" HorizontalAlignment="Left" />-->
             <app:MarkdownText Text="{Binding Description}" Margin="30,30,0,0" HyperlinkClicked="MarkdownText_OnHyperlinkClicked" MaxWidth="1000" HorizontalAlignment="Left" />
-            <ListView x:Name="FeaturesList" ItemsSource="{Binding Features, Mode=OneTime}" SelectionMode="None" Margin="30,20,0,30">
-                <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="local:Features">
-                        <Grid MaxWidth="1000">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto" />
-                                <ColumnDefinition Width="*" MinWidth="150" />
-                            </Grid.ColumnDefinitions>
-                            <TextBlock FontWeight="Black" Foreground="{ThemeResource AccentDark1}" Text="{Binding Name}" VerticalAlignment="Top">
-                            </TextBlock>
-                            <app:MarkdownText Margin="10,0,0,0" Text="{x:Bind Description}" HyperlinkClicked="MarkdownText_OnHyperlinkClicked" VerticalAlignment="Top" Grid.Column="1"/>
-                        </Grid>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <Setter Property="VerticalAlignment" Value="Stretch" />
-                    </Style>
-                </ListView.ItemContainerStyle>
-            </ListView>
-            <Grid x:Name="TableGrid" Margin="30,0,0,0" HorizontalAlignment="Left"/>
+            <app:FeaturesTextBlock Margin="20,0,0,0" Features="{Binding Features}" MarkDownTextClicked="MarkdownText_OnHyperlinkClicked" ></app:FeaturesTextBlock>
+            <app:TextBlockTable x:Name="TableGrid" Table="{Binding Table}" Margin="30" ></app:TextBlockTable>
             <app:MarkdownText Text="{Binding OptionableText}" Margin="30" HyperlinkClicked="MarkdownText_OnHyperlinkClicked"/>
             <Image HorizontalAlignment="Center" Margin="30" Name="ItemImage" Stretch="Uniform" MinWidth="800" MaxHeight="600" />
         </StackPanel>

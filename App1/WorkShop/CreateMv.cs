@@ -1,5 +1,5 @@
-﻿using App1;
-using App1.Annotations;
+﻿using App;
+using App.Annotations;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 

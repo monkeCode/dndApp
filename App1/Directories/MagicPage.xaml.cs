@@ -1,12 +1,14 @@
-﻿using App1.Directories;
+﻿using App.Directories;
+using Model;
 using System;
+using System.Linq;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Documents;
 
 // Документацию по шаблону элемента "Пустая страница" см. по адресу https://go.microsoft.com/fwlink/?LinkId=234238
 
-namespace App1
+namespace App
 {
     public sealed partial class MagicPage : Page
     {
@@ -20,14 +22,14 @@ namespace App1
         private void ListView1_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ListView listView = sender as ListView;
-            _model.SelectedType = listView.SelectedItems;
+            _model.SelectedType = listView.SelectedItems.Select(it => it.ToString()).ToList();
         }
 
         private void ListView2_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
             ListView listView = sender as ListView;
-            _model.SelectedQuality = listView.SelectedItems;
+            _model.SelectedQuality = listView.SelectedItems.Select(it => it.ToString()).ToList();
         }
 
         private void searchBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -51,7 +53,7 @@ namespace App1
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ListView listView = sender as ListView;
-            _model.SelectedSource = listView.SelectedItems;
+            _model.SelectedSource = listView.SelectedItems.Select(it => it.ToString()).ToList();
         }
 
         private void NameClick(Hyperlink sender, HyperlinkClickEventArgs args)

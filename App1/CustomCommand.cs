@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace App1
+namespace App
 {
     public class CustomCommand : ICommand
     {

@@ -1,11 +1,13 @@
-﻿using System;
+﻿using Model;
+using System;
+using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
 
 // Документацию по шаблону элемента "Пустая страница" см. по адресу https://go.microsoft.com/fwlink/?LinkId=234238
 
-namespace App1.Directories
+namespace App.Directories
 {
     /// <summary>
     /// Пустая страница, которую можно использовать саму по себе или для перехода внутри фрейма.
@@ -36,28 +38,28 @@ namespace App1.Directories
 
         private void TypeList_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            (DataContext as MonsterModelView).SelectedType = (sender as ListView).SelectedItems;
+            (DataContext as MonsterModelView).SelectedType = (sender as ListView).SelectedItems.Select(it => it.ToString()).ToList();
         }
 
         private void ChallengeList_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            (DataContext as MonsterModelView).SelectedRate = (sender as ListView).SelectedItems;
+            (DataContext as MonsterModelView).SelectedRate = (sender as ListView).SelectedItems.Select(it => it.ToString()).ToList();
         }
 
         private void SizeList_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             MonsterModelView model = (DataContext as MonsterModelView);
             ListView lv = sender as ListView;
-            model.SelectedSize = lv.SelectedItems;
+            model.SelectedSize = lv.SelectedItems.Select(it => it.ToString()).ToList();
         }
 
         private void HabbiatList_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            (DataContext as MonsterModelView).SelectedHabitat = (sender as ListView).SelectedItems;
+            (DataContext as MonsterModelView).SelectedHabitat = (sender as ListView).SelectedItems.Select(it => it.ToString()).ToList();
         }
         private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            (DataContext as MonsterModelView).SelectedSource = (sender as ListView).SelectedItems;
+            (DataContext as MonsterModelView).SelectedSource = (sender as ListView).SelectedItems.Select(it => it.ToString()).ToList();
         }
 
         private void ListViewBase_OnItemClick(object sender, ItemClickEventArgs e)

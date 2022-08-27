@@ -8,7 +8,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Media;
 
-namespace App1.WorkShop
+namespace App.WorkShop
 {
     internal class Formator
     {

@@ -1,5 +1,5 @@
-﻿using App1;
-using App1.Model;
+﻿using App;
+using Model;
 using System;
 
 namespace App.WorkShop
@@ -15,7 +15,7 @@ namespace App.WorkShop
 
         public override void AddFeature()
         {
-            Monster.Features.Add(new Features());
+            Monster.Features.Add(new Feature());
         }
 
         public override void Save()
@@ -28,7 +28,7 @@ namespace App.WorkShop
             get
             {
                 return _actionCommand ??= new CustomCommand(
-                    (p) => { Monster.Actions.Add(new Features()); }
+                    (p) => { Monster.Actions.Add(new Feature()); }
                 );
             }
         }
@@ -37,7 +37,7 @@ namespace App.WorkShop
             get
             {
                 return _reActionCommand ??= new CustomCommand(
-                    (p) => { Monster.ReciprocalActions.Add(new Features()); }
+                    (p) => { Monster.ReciprocalActions.Add(new Feature()); }
                 );
             }
         }
@@ -46,14 +46,14 @@ namespace App.WorkShop
             get
             {
                 return _legendaryActionCommand ??= new CustomCommand(
-                    (p) => { Monster.LegendaryActions.Add(new Features()); }
+                    (p) => { Monster.LegendaryActions.Add(new Feature()); }
                 );
             }
         }
 
         public CreateMonsterVM() : base(true)
         {
-            Item = new ExtendedMonster(1);
+            Item = App.DataContext.GetExtendedMonsterById(1);
         }
 
     }

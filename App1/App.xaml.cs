@@ -1,11 +1,13 @@
-﻿using System;
+﻿using App;
+using DataBaseLib;
+using System;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
-namespace App1
+namespace App
 {
     /// <summary>
     /// Обеспечивает зависящее от конкретного приложения поведение, дополняющее класс Application по умолчанию.
@@ -16,6 +18,7 @@ namespace App1
         /// Инициализирует одноэлементный объект приложения. Это первая выполняемая строка разрабатываемого
         /// кода, поэтому она является логическим эквивалентом main() или WinMain().
         /// </summary>
+        public static IDataContext DataContext => DataBaseContext.Instance;
         public App()
         {
             this.InitializeComponent();
@@ -56,7 +59,7 @@ namespace App1
                     // Если стек навигации не восстанавливается для перехода к первой странице,
                     // настройка новой страницы путем передачи необходимой информации в качестве параметра
                     // навигации
-                    rootFrame.Navigate(typeof(MainPage), e.Arguments);
+                    rootFrame.Navigate(typeof(TabMenu), e.Arguments);
                 }
                 // Обеспечение активности текущего окна
                 Window.Current.Activate();

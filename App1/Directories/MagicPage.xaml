@@ -1,10 +1,10 @@
 ﻿<Page
-    x:Class="App1.MagicPage"
+    x:Class="App.MagicPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:local="using:App1"
+    xmlns:local="using:App" xmlns:local1="using:Model"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Page.Resources>
@@ -72,7 +72,7 @@
         </StackPanel>
         <ListView Grid.Row="1" HorizontalAlignment="Stretch" ItemsSource="{Binding DataCollection }" ItemContainerStyle="{StaticResource DirectoryList}" ItemClick="ItemsPanel_ItemClick" IsItemClickEnabled="True">
             <ListView.ItemTemplate>
-                <DataTemplate x:DataType="local:MagicItem">
+                <DataTemplate x:DataType="local1:MagicItem">
                     <Grid Style="{StaticResource DirectoryItemGrid}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>

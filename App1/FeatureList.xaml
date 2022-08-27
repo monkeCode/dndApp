@@ -5,7 +5,7 @@
     xmlns:local="using:App"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:app1="using:App1"
+    xmlns:app1="using:App" xmlns:app11="using:Model"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
@@ -16,7 +16,7 @@
                   ItemContainerStyle="{StaticResource ListViewItemsStyle}" 
                   ItemsSource="{x:Bind Features}" CanReorderItems="True" AllowDrop="True">
             <ListView.ItemTemplate>
-                <DataTemplate  x:DataType="app1:Features">
+                <DataTemplate  x:DataType="app11:Feature">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto" />

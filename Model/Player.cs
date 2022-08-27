@@ -33,10 +33,13 @@ namespace Model
             >= 300 => 2,
             _=>1
         };
-        public int Experience { get; set; }
+
+        public int Experience { get; set; } = 0;
         public int AC { get; set; }
         public int HP { get; set; }
         public int PassWis { get; set; }
+        public int Initiative { get; set; }
         public int GroupId { get; set; }
+        public string Race { get; set; }
     }
 }

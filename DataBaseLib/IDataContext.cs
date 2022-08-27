@@ -1,5 +1,6 @@
 ﻿using Model;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace DataBaseLib
 {
@@ -25,50 +26,47 @@ namespace DataBaseLib
 
         IEnumerable<Player> GetPlayers();
 
-        IEnumerable<Player> GetPlayersByGroupId(int id);
-        IEnumerable<Player> GetPlayerById(int id);
-
         #endregion
 
         #region Add
 
-        void AddMonster(ExtendedMonster monster);
+        Task AddMonster(ExtendedMonster monster);
 
-        void AddItem(ExtendedMagicItem item);
+        Task AddItem(ExtendedMagicItem item);
 
-        void AddSpell(ExtendedSpell spell);
+        Task AddSpell(ExtendedSpell spell);
 
-        void AddGroup(Group group);
+        Task AddGroup(Group group);
 
-        void AddPlayer(Player player);
+        Task AddPlayer(Player player);
 
         #endregion
 
         #region Update
 
-        void UpdateMonster(ExtendedMonster monster);
+        Task UpdateMonster(ExtendedMonster monster);
 
-        void UpdateItem(ExtendedMagicItem item);
+        Task UpdateItem(ExtendedMagicItem item);
 
-        void UpdateSpell(ExtendedSpell spell);
+        Task UpdateSpell(ExtendedSpell spell);
 
-        void UpdatePlayer(Player player);
+        Task UpdatePlayer(Player player);
 
-        void UpdateGroup(Group group);
+        Task UpdateGroup(Group group);
 
         #endregion
 
         #region Delete
 
-        void DeleteMonster(int id);
+        Task DeleteMonster(int id);
 
-        void DeleteItem(int id);
+        Task DeleteItem(int id);
 
-        void DeleteSpell(int id);
+        Task DeleteSpell(int id);
 
-        void DeletePlayer(int id);
+        Task DeletePlayer(int id);
 
-        void DeleteGroup(int id);
+        Task DeleteGroup(int id);
 
         #endregion
     }

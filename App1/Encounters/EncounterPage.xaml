@@ -1,11 +1,11 @@
 ﻿<Page
-    x:Class="App1.Encounters.EncounterPage"
+    x:Class="App.Encounters.EncounterPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:App1.Encounters"
+    xmlns:local="using:App.Encounters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:app1="using:App1"
+    xmlns:app1="using:App"
     xmlns:controls1="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">

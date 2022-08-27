@@ -6,7 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:app="using:App"
-    xmlns:app1="using:App1"
+    xmlns:app1="using:App"
     xmlns:controls="using:Microsoft.UI.Xaml.Controls"
     xmlns:controls1="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
@@ -150,10 +150,10 @@
                 <Button Margin="10" HorizontalAlignment="Center" Command="{Binding ReActionCommand}">Добавить ответное действие</Button>
                 <StackPanel Orientation="Horizontal" Margin="40,0,0,0">
                     <TextBlock FontSize="18" TextDecorations="Underline" >Легендарное</TextBlock>
-                    <CheckBox Margin="5,0,0,0" Click="Legendary" IsChecked="{Binding Monster.isLegendary, Mode=TwoWay}" />
+                    <CheckBox Margin="5,0,0,0" Click="Legendary" IsChecked="{Binding Monster.IsLegendary, Mode=TwoWay}" />
                 </StackPanel>
 
-                <StackPanel x:Name="LegendaryPanel" Visibility="{Binding Monster.isLegendary}">
+                <StackPanel x:Name="LegendaryPanel" Visibility="{Binding Monster.IsLegendary}">
                     <app:FeatureList ListName="Легендарные действия" Features="{Binding Monster.LegendaryActions}" Margin="0,10,0,0" ></app:FeatureList>
                     <Button  HorizontalAlignment="Center" Command="{Binding LegendaryActionCommand}">Добавить легендарное действие</Button>
                     <TextBox Margin="30,0,0,10" Header="Логово" Text="{Binding Monster.LairActions, Mode=TwoWay}" MinHeight="80" AcceptsReturn="True" TextWrapping="Wrap"></TextBox>

@@ -1,8 +1,8 @@
-﻿using App.Model;
-using App1.Directories;
+﻿using App.Directories;
 using System;
+using Model;
 
-namespace App1
+namespace App
 {
     public class Link
     {
@@ -17,9 +17,9 @@ namespace App1
             {
                 return Type switch
                 {
-                    DataItem.DataType.MagicItem => new MagicItem(Id),
-                    DataItem.DataType.Monster => new Monster(Id),
-                    DataItem.DataType.Spell => new Spell(Id),
+                    DataItem.DataType.MagicItem => App.DataContext.GetExtendedMagicById(Id),
+                    DataItem.DataType.Monster => App.DataContext.GetExtendedMonsterById(Id),
+                    DataItem.DataType.Spell => App.DataContext.GetExtendedSpellById(Id),
                     _ => throw new Exception()
 
                 };

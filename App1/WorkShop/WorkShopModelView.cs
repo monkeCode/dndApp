@@ -1,5 +1,5 @@
-﻿using App.Model;
-using DataBaseLib;
+﻿using DataBaseLib;
+using Model;
 using System.Collections.ObjectModel;
 using System.Drawing;
 using Windows.UI.Xaml.Media;

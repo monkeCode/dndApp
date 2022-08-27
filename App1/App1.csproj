@@ -150,6 +150,9 @@
     <Compile Include="FeatureList.xaml.cs">
       <DependentUpon>FeatureList.xaml</DependentUpon>
     </Compile>
+    <Compile Include="FeaturesTextBlock.xaml.cs">
+      <DependentUpon>FeaturesTextBlock.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Generator\Art.cs" />
     <Compile Include="Generator\ArtsGenerator.cs" />
     <Compile Include="Generator\Gem.cs" />
@@ -162,6 +165,9 @@
       <DependentUpon>LootGeneratorPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Generator\MoneyGenerator.cs" />
+    <Compile Include="GroupMenu\ChangePlayerDialog.xaml.cs">
+      <DependentUpon>ChangePlayerDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GroupMenu\GroupMV.cs" />
     <Compile Include="GroupMenu\GroupPage.xaml.cs">
       <DependentUpon>GroupPage.xaml</DependentUpon>
@@ -173,13 +179,6 @@
     <Compile Include="MarkdownText.xaml.cs">
       <DependentUpon>MarkdownText.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Model\DataItem.cs" />
-    <Compile Include="Model\ExtendedMonster.cs" />
-    <Compile Include="Model\Features.cs" />
-    <Compile Include="Model\Group.cs" />
-    <Compile Include="Model\Monster.cs" />
-    <Compile Include="Model\Player.cs" />
-    <Compile Include="Model\Spell.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Quest\QuestModel.cs" />
     <Compile Include="Quest\QuestPage.xaml.cs">
@@ -190,12 +189,16 @@
     <Compile Include="SettingPage.xaml.cs">
       <DependentUpon>SettingPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Table.cs" />
-    <Compile Include="Model\ExtendedMagicItem.cs" />
     <Compile Include="Directories\MagicItemExtendedPage.xaml.cs">
       <DependentUpon>MagicItemExtendedPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helpers\VisibilityConverter.cs" />
+    <Compile Include="TabMenu.xaml.cs">
+      <DependentUpon>TabMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TextBlockTable.xaml.cs">
+      <DependentUpon>TextBlockTable.xaml</DependentUpon>
+    </Compile>
     <Compile Include="VisualTable.cs" />
     <Compile Include="WorkShop\CreateItem.xaml.cs">
       <DependentUpon>CreateItem.xaml</DependentUpon>
@@ -204,7 +207,6 @@
     <Compile Include="Helpers\Extensions.cs" />
     <Compile Include="Directories\MagicItemsModelView.cs" />
     <Compile Include="Helpers\RarityConvector.cs" />
-    <Compile Include="Model\MagicItem.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -270,7 +272,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="FeaturesTextBlock.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Generator\LootGeneratorPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GroupMenu\ChangePlayerDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -287,6 +297,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SettingPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TabMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TextBlockTable.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -339,6 +357,10 @@
     <ProjectReference Include="..\DataBaseLib\DataBaseLib.csproj">
       <Project>{0841a07a-f749-4eb0-bae0-7dd8e5ee1e80}</Project>
       <Name>DataBaseLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Model\Model.csproj">
+      <Project>{e841b0c7-eab2-4bd9-9b51-9a47ccf8de6b}</Project>
+      <Name>Model</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

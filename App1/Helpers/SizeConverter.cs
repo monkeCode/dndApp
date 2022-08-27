@@ -2,7 +2,7 @@
 using System.Linq;
 using Windows.UI.Xaml.Data;
 
-namespace App1
+namespace App
 {
     public class SizeConverter : IValueConverter
     {

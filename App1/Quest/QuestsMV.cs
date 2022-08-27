@@ -1,9 +1,9 @@
-﻿using App1.Annotations;
+﻿using App.Annotations;
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace App1.Quest
+namespace App.Quest
 {
     internal class QuestsMV : INotifyPropertyChanged
     {

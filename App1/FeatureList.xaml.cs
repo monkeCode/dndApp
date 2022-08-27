@@ -1,4 +1,5 @@
-﻿using App1;
+﻿using App;
+using Model;
 using System.Collections.ObjectModel;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -9,9 +10,9 @@ namespace App
 {
     public sealed partial class FeatureList : UserControl
     {
-        public Collection<Features> Features
+        public Collection<Feature> Features
         {
-            get => (Collection<Features>)GetValue(FeaturesProperty);
+            get => (Collection<Feature>)GetValue(FeaturesProperty);
             set => SetValue(FeaturesProperty, value);
         }
 
@@ -21,7 +22,7 @@ namespace App
             set => SetValue(ListNameProperty, value);
         }
 
-        public static readonly DependencyProperty FeaturesProperty = DependencyProperty.Register(nameof(Features), typeof(Collection<Features>), typeof(FeatureList), new PropertyMetadata(new Collection<Features>()));
+        public static readonly DependencyProperty FeaturesProperty = DependencyProperty.Register(nameof(Features), typeof(Collection<Feature>), typeof(FeatureList), new PropertyMetadata(new Collection<Feature>()));
 
         public static readonly DependencyProperty ListNameProperty = DependencyProperty.Register(nameof(ListName), typeof(string), typeof(FeatureList), new PropertyMetadata(""));
 
@@ -31,7 +32,7 @@ namespace App
         }
         private void DeleteFeature(object sender, RoutedEventArgs e)
         {
-            Features.Remove((Features)(sender as Button).DataContext);
+            Features.Remove((Feature)(sender as Button).DataContext);
         }
     }
 }

@@ -1,9 +1,10 @@
 ﻿using DataBaseLib;
+using Model;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
-namespace App1
+namespace App
 {
     public class MagicItemsModelView : DirectoriesModelView<MagicItem>
     {
@@ -12,23 +13,28 @@ namespace App1
             DataCollection = new ObservableCollection<MagicItem>();
             sortPred = item => item.Name;
             GetListData();
-            whereReq = new string[3];
         }
 
-        public IList<object> SelectedType { set { whereReq[0] = value.Count > 0 ? "Type IN ( " + ChangeSelect(value) : null; GetListData(); } }
-        public IList<object> SelectedQuality { set { whereReq[1] = value.Count > 0 ? "Quality IN ( " + ChangeSelect(value.Select(i => (object)StaticValues.magicItemQality[i.ToString()]).ToList()) : null; GetListData(); } }
-        public IList<object> SelectedSource { set { whereReq[2] = value.Count > 0 ? "Source IN ( " + ChangeSelect(value) : null; GetListData(); } }
+        private List<string> _selectedTypes = new();
+        public IList<string> SelectedType { set { _selectedTypes = value.ToList(); GetListData(); } }
+        
+        private List<int> _selectedQuality = new();
+        public IList<string> SelectedQuality { set { _selectedQuality = value.Select(i => StaticValues.magicItemQality[i]).ToList(); GetListData(); } }
+        
+        private List<string> _selectedSource = new();
+        public IList<string> SelectedSource { set { _selectedSource = value.ToList() ; GetListData(); } }
         public override void GetListData()
         {
             DataCollection.Clear();
             List<MagicItem> list = new List<MagicItem>();
-            string s = whereReq?.GetAllElemets(" AND ");
-            foreach (var i in DataAccess.GetData("MagicItems", s, "Name", "*"))
+            foreach (var i in  App.DataContext.GetMagicItems().Where(it => (_selectedQuality.Contains(it.Quality) || _selectedQuality.Count == 0) && 
+            (_selectedTypes.Contains(it.Type) || _selectedTypes.Count == 0) && 
+            (_selectedSource.Contains(it.ItemSource) || _selectedSource.Count == 0)))
             {
                 if (!string.IsNullOrEmpty(SubstringFilter))
-                    if (i[1].ToString().ToLower().IndexOf(SubstringFilter) == -1)
+                    if (!i.Name.ToLower().Contains(SubstringFilter))
                         continue;
-                list.Add(new MagicItem(int.Parse(i[0].ToString()), i[1].ToString(), (int)(long)i[2], i[3].ToString(), i[4].ToString() != "0"));
+                list.Add(i);
             }
             foreach (var item in Sort(list))
                 DataCollection.Add(item);
