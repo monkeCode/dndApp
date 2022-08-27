@@ -14,6 +14,7 @@ namespace App
 {
     public sealed partial class MarkdownText : UserControl
     {
+        private bool _isLoaded;
         public event Action<Type, int> HyperlinkClicked;
         public string Text
         {
@@ -21,6 +22,7 @@ namespace App
             set
             {
                 SetValue(TextProperty, value);
+                //UpdateText(MarkableTextBlock, value);
             }
         }
 
@@ -35,7 +37,15 @@ namespace App
 
         private void FrameworkElement_OnLoaded(object sender, RoutedEventArgs e)
         {
-            TextBlock textBlock = sender as TextBlock;
+            if (_isLoaded) return;
+            UpdateText(sender as TextBlock, (sender as TextBlock)?.Text);
+        }
+
+        private void UpdateText(TextBlock sender, string text)
+        {
+            _isLoaded = true;
+            TextBlock textBlock = sender;
+            textBlock.Text = text;
             Formator.StringtoText(textBlock);
             foreach (var r in textBlock.Inlines)
             {
@@ -51,6 +61,7 @@ namespace App
                 }
             }
         }
+
         private void Hyperlink_rollDice(Hyperlink sender, HyperlinkClickEventArgs args)
         {
             var match = Regex.Match((sender.Inlines[0] as Run).Text, Dice.DICE_PATTERN);
