@@ -21,11 +21,11 @@ namespace App
 {
     public sealed partial class FeaturesTextBlock : UserControl
     {
-        public Collection<Feature> Features { get { return (Collection<Feature>)GetValue(FeaturesProperty); } set { SetValue(FeaturesProperty, value); } }
+        public Collection<Feature> FeatureList { get { return (Collection<Feature>)GetValue(FeatureListProperty); } set { SetValue(FeatureListProperty, value); } }
 
         public event Action<Type, int> MarkDownTextClicked;
 
-        public DependencyProperty FeaturesProperty = DependencyProperty.Register(nameof(Features),typeof(Collection<Feature>), typeof(FeaturesTextBlock), new PropertyMetadata(null));
+        public static readonly DependencyProperty FeatureListProperty = DependencyProperty.Register(nameof(FeatureList),typeof(Collection<Feature>), typeof(FeaturesTextBlock), new PropertyMetadata(null));
         
         public FeaturesTextBlock()
         {

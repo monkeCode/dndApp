@@ -20,16 +20,6 @@
             <Setter Property="TextWrapping" Value="Wrap"/>
             <!--<Setter Property="MaxWidth" Value="1000"/>-->
         </Style>
-        <DataTemplate x:Name="FeatureTemplate">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <TextBlock Text="{Binding Name}" Style="{StaticResource NameStyle}" ></TextBlock>
-                <app:MarkdownText Grid.Column="1" Text="{Binding Description}" HyperlinkClicked="MarkdownText_OnHyperlinkClicked"></app:MarkdownText>
-            </Grid>
-        </DataTemplate>
     </Page.Resources>
     <ScrollViewer>
         <StackPanel>
@@ -157,46 +147,22 @@
             </Grid>
             <StackPanel Name="FeaturesPanel" Visibility="{Binding Features.Count, Converter={StaticResource VisibilityConverter }, ConverterParameter=1}">
             <Border BorderThickness="0,1,0,0" BorderBrush="{StaticResource UnderlineBrush}" Margin="0,15,0,0"/>
-                <ListView ItemsSource="{Binding Features}" Margin="30,30,0,0" SelectionMode="None" ItemTemplate="{StaticResource FeatureTemplate}">
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <Setter Property="HorizontalAlignment" Value="Stretch"/>
-                    </Style>
-                </ListView.ItemContainerStyle>
-                </ListView>
+                <app:FeaturesTextBlock FeatureList="{Binding Features}" Margin="20,30,0,0" MarkDownTextClicked="MarkdownText_OnHyperlinkClicked"/>
             </StackPanel>
             <StackPanel Name="ActionPanel" Visibility="{Binding Actions.Count, Converter={StaticResource VisibilityConverter }, ConverterParameter=1}">
             <Border BorderThickness="0,1,0,0" BorderBrush="{StaticResource UnderlineBrush}" Margin="0,15,0,0"/>
             <TextBlock FontSize="24" Margin="30,15,0,0" FontWeight="Bold">Действия</TextBlock>
-                <ListView ItemsSource="{Binding Actions}" Margin="30,30,0,0" SelectionMode="None" ItemTemplate="{StaticResource FeatureTemplate}">
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <Setter Property="HorizontalAlignment" Value="Stretch"/>
-                    </Style>
-                </ListView.ItemContainerStyle>
-                </ListView>
+                <app:FeaturesTextBlock FeatureList="{Binding Actions}" Margin="20,30,0,0" MarkDownTextClicked="MarkdownText_OnHyperlinkClicked"/>
                 </StackPanel>
             <StackPanel Name="RelateActionPanel" Visibility="{Binding ReciprocalActions.Count, Converter={StaticResource VisibilityConverter }, ConverterParameter=1}">
             <Border BorderThickness="0,1,0,0" BorderBrush="{StaticResource UnderlineBrush}" Margin="0,15,0,0"></Border>
             <TextBlock FontSize="24" Margin="30,15,0,0" FontWeight="Bold">Ответные действия</TextBlock>
-                <ListView ItemsSource="{Binding ReciprocalActions}" Margin="30,30,0,0" SelectionMode="None" ItemTemplate="{StaticResource FeatureTemplate}">
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <Setter Property="HorizontalAlignment" Value="Stretch"/>
-                    </Style>
-                </ListView.ItemContainerStyle>
-                </ListView>
+                <app:FeaturesTextBlock FeatureList="{Binding ReciprocalActions}" Margin="20,30,0,0" MarkDownTextClicked="MarkdownText_OnHyperlinkClicked"/>
             </StackPanel>
             <StackPanel Name="LegendaryActionPanel"  Visibility="{Binding LegendaryActions.Count, Converter={StaticResource VisibilityConverter }, ConverterParameter=1}">
                 <Border BorderThickness="0,1,0,0" BorderBrush="{StaticResource UnderlineBrush}" Margin="0,15,0,0"></Border>
                 <TextBlock FontSize="24" Margin="30,15,0,0" FontWeight="Bold">Легендарные действия</TextBlock>
-                <ListView ItemsSource="{Binding LegendaryActions}" Margin="30,30,0,0" SelectionMode="None" ItemTemplate="{StaticResource FeatureTemplate}">
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="ListViewItem">
-                            <Setter Property="HorizontalAlignment" Value="Stretch"/>
-                        </Style>
-                    </ListView.ItemContainerStyle>
-                </ListView>
+                <app:FeaturesTextBlock FeatureList="{Binding LegendaryActions}" Margin="20,30,0,0"/>
             </StackPanel>
             <StackPanel Name="LairPanel" Visibility="{Binding LairActions, Converter={StaticResource VisibilityConverter }}">
                 <Border BorderThickness="0,1,0,0" BorderBrush="{StaticResource UnderlineBrush}" Margin="0,15,0,0"></Border>

@@ -18,9 +18,18 @@ namespace App.WorkShop
             Monster.Features.Add(new Feature());
         }
 
-        public override void Save()
+        public override async void Save()
         {
-            throw new NotImplementedException();
+            if (!IsTable)
+                Item.Table = null;
+
+            if (isNew)
+            {
+                await App.DataContext.AddMonster(Item);
+                return;
+            }
+
+            await App.DataContext.UpdateMonster(Item);
         }
 
         public CustomCommand ActionCommand
@@ -53,7 +62,12 @@ namespace App.WorkShop
 
         public CreateMonsterVM() : base(true)
         {
-            Item = App.DataContext.GetExtendedMonsterById(1);
+            Item = new ExtendedMonster();
+        }
+
+        public CreateMonsterVM(int id) : base(false)
+        {
+            Item = App.DataContext.GetExtendedMonsterById(id);
         }
 
     }

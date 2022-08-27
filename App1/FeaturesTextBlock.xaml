@@ -9,7 +9,7 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
 
-    <ListView x:Name="FeaturesList" ItemsSource="{Binding Features, Mode=OneTime}" SelectionMode="None">
+    <ListView x:Name="FeaturesList" ItemsSource="{x:Bind  FeatureList, Mode=OneWay}" SelectionMode="None">
         <ListView.ItemTemplate>
             <DataTemplate x:DataType="local1:Feature">
                 <StackPanel MaxWidth="1000">

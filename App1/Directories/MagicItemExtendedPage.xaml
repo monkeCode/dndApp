@@ -53,7 +53,7 @@
             </TextBlock>
                 <!--<TextBlock Text="{Binding Description}" Margin="30,30,0,0" Loaded="ReFormateText" TextWrapping="Wrap" MaxWidth="1000" HorizontalAlignment="Left" />-->
             <app:MarkdownText Text="{Binding Description}" Margin="30,30,0,0" HyperlinkClicked="MarkdownText_OnHyperlinkClicked" MaxWidth="1000" HorizontalAlignment="Left" />
-            <app:FeaturesTextBlock Margin="20,0,0,0" Features="{Binding Features}" MarkDownTextClicked="MarkdownText_OnHyperlinkClicked" ></app:FeaturesTextBlock>
+            <app:FeaturesTextBlock Margin="20,0,0,0" FeatureList="{Binding Features}" MarkDownTextClicked="MarkdownText_OnHyperlinkClicked" ></app:FeaturesTextBlock>
             <app:TextBlockTable x:Name="TableGrid" Table="{Binding Table}" Margin="30" ></app:TextBlockTable>
             <app:MarkdownText Text="{Binding OptionableText}" Margin="30" HyperlinkClicked="MarkdownText_OnHyperlinkClicked"/>
             <Image HorizontalAlignment="Center" Margin="30" Name="ItemImage" Stretch="Uniform" MinWidth="800" MaxHeight="600" />

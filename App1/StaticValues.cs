@@ -35,6 +35,9 @@ namespace App
         public static List<string> MagicItemsSource { get; } = new List<string>()
         {
             "Dungeon master's guide",
+            "Waterdeep: Dragon Heist",
+            "Baldur's Gate: Descent into Avernus",
+            "Lost mine of Phandelver",
             "Homebrew"
         };
 
@@ -111,6 +114,9 @@ namespace App
         {
             "Monster manual",
             "Dungeon master's guide",
+            "Waterdeep: Dragon Heist",
+            "Baldur's Gate: Descent into Avernus",
+            "Lost mine of Phandelver",
             "Homebrew"
         };
 
@@ -156,6 +162,13 @@ namespace App
             "Полуорк",
             "Гном",
             "Драконорожденный"
+        };
+
+        public static List<string> SpellSource { get; } = new List<string>()
+        {
+            "Player's handbook",
+            "Lost mine of Phandelver",
+            "Homebrew"
         };
 
         public StaticValues()
