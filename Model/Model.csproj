@@ -130,7 +130,9 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="BattleMonster.cs" />
     <Compile Include="DataItem.cs" />
+    <Compile Include="Encounter.cs" />
     <Compile Include="ExtendedMagicItem.cs" />
     <Compile Include="ExtendedMonster.cs" />
     <Compile Include="ExtendedSpell.cs" />

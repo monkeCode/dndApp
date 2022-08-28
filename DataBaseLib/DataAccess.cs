@@ -144,7 +144,6 @@ namespace DataBaseLib
 
                 db.Close();
             }
-
             return entries;
         }
 

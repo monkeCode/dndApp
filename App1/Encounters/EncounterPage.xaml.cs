@@ -3,6 +3,7 @@ using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using Model;
 
 // Документацию по шаблону элемента "Пустая страница" см. по адресу https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -130,5 +131,20 @@ namespace App.Encounters
             base.OnNavigatedFrom(e);
         }
 
+        private void IncrementMonster(object sender, RoutedEventArgs e)
+        {
+            ((sender as Button).DataContext as BattleMonster).Quantity++;
+        }
+
+        private void DecrementMonster(object sender, RoutedEventArgs e)
+        {
+            ((sender as Button).DataContext as BattleMonster).Quantity--;
+        }
+
+        private void DeleteEncounter(object sender, RoutedEventArgs e)
+        {
+            var enc = ((sender as Button).DataContext as Encounter);
+            (DataContext as EncounterModelView).DeleteEncounter(enc);
+        }
     }
 }

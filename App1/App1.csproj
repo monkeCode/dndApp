@@ -140,8 +140,6 @@
     <Compile Include="Directories\MonsterPage.xaml.cs">
       <DependentUpon>MonsterPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Encounters\BattleMonster.cs" />
-    <Compile Include="Encounters\Encounter.cs" />
     <Compile Include="Encounters\EncounterModelView.cs" />
     <Compile Include="Encounters\EncounterPage.xaml.cs">
       <DependentUpon>EncounterPage.xaml</DependentUpon>

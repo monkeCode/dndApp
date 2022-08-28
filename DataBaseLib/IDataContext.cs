@@ -26,6 +26,8 @@ namespace DataBaseLib
 
         IEnumerable<Player> GetPlayers();
 
+        IEnumerable<Encounter> GetEncounters();
+
         #endregion
 
         #region Add
@@ -39,6 +41,8 @@ namespace DataBaseLib
         Task AddGroup(Group group);
 
         Task AddPlayer(Player player);
+
+        Task AddEncounter(Encounter enc);
 
         #endregion
 
@@ -54,6 +58,8 @@ namespace DataBaseLib
 
         Task UpdateGroup(Group group);
 
+        Task UpdateEncounter(Encounter encounter);
+
         #endregion
 
         #region Delete
@@ -67,6 +73,7 @@ namespace DataBaseLib
         Task DeletePlayer(int id);
 
         Task DeleteGroup(int id);
+        Task DeleteEncounter(int id);
 
         #endregion
     }

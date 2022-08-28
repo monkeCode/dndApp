@@ -2,6 +2,7 @@
 using App.Directories;
 using DataBaseLib;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -23,8 +24,7 @@ namespace App.Encounters
             get { return _playerGroup; }
             set { _playerGroup = value; OnPropertyChanged(); }
         }
-
-        private int _exModifierOffset = 0;
+        
         private int _dailyEx;
         private int _totalMonstersEx;
         public int TotalMonstersEx
@@ -82,21 +82,13 @@ namespace App.Encounters
             }
             finally
             {
-                PlayerGroup = DataBaseContext.Instance.GetGroups().First(g => g.Id == groupId);
-                if (_playerGroup.Players.Count < 3)
-                    _exModifierOffset = 1;
-                else if (_playerGroup.Players.Count > 5)
-                    _exModifierOffset = -1;
-                else
-                    _exModifierOffset = 0;
+                PlayerGroup = App.DataContext.GetGroups().First(g => g.Id == groupId);
                 SetDailyEx();
                 Encounters.Clear();
-                foreach (var item in DataAccess.GetData("Encounters", $"Group_id = {groupId}", null, "*"))
+                foreach (var encounter in App.DataContext.GetEncounters().Where(enc => enc.GroupId == groupId))
                 {
-                    Encounter e = new Encounter((int)(long)item[2], item[1].ToString(), _exModifierOffset, _playerGroup);
-                    e.DeleteEvent += DeleteElement;
-                    Encounters.Add(e);
-
+                    Encounters.Add(encounter);
+                    encounter.CalculateForGroup(PlayerGroup);
                 }
             }
         }
@@ -135,17 +127,23 @@ namespace App.Encounters
             DailyEx = res;
         }
 
-        private void SaveEncounters()
+        private async void SaveEncounters()
         {
-            string req = "";
-            foreach (var E in Encounters)
+            //var encList = App.DataContext.GetEncounters().Where(en => en.GroupId == PlayerGroup.Id).ToList();
+            foreach (var encounter in Encounters)
             {
 
-                req += E.SaveData() + ";";
+                if (encounter.Name == null) encounter.Name = "Боевая сцена";
+                if(encounter.Id == -1)
+                    await App.DataContext.AddEncounter(encounter);
+                else
+                    await App.DataContext.UpdateEncounter(encounter);
             }
-            if (req != "")
-                // DataAccess.RawRequest(req);
-                DataAccess.RawRequestAsync(req);
+
+            //foreach (var en in encList.Where(it => Encounters.Count(e => e.Id == it.Id) == 0))
+            //{
+            //    App.DataContext.DeleteEncounter(en.Id);
+            //}
         }
 
 
@@ -159,23 +157,19 @@ namespace App.Encounters
         }
         private void AddEncounter()
         {
-            DataAccess.AddData("Encounters", new[] { "Group_id" }, new[] { (object)_playerGroup.Id });
-            foreach (var item in DataAccess.GetData("Encounters", $"Group_id = {_playerGroup.Id}", null, "*"))
+            var enc = new Encounter()
             {
-                if (Encounters.FirstOrDefault(obj => obj.Id == (int)(long)item[2]) == null)
-                {
-                    Encounter e = new Encounter((int)(long)item[2], item[1].ToString(), _exModifierOffset,
-                        _playerGroup);
-                    Encounters.Add(e);
-                    e.DeleteEvent += DeleteElement;
-
-                }
-            }
+                GroupId = PlayerGroup.Id,
+                Id = -1
+            };
+            Encounters.Add(enc);
         }
 
-        private void DeleteElement(int id)
+        public void DeleteEncounter(Encounter en)
         {
-            Encounters.Remove(Encounters.First(obj => obj.Id == id));
+            Encounters.Remove(en);
+            if (en.Id != -1)
+                App.DataContext.DeleteEncounter(en.Id);
         }
         public event PropertyChangedEventHandler PropertyChanged;
 

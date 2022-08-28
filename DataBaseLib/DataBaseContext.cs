@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Store.Preview.InstallControl;
@@ -10,7 +11,6 @@ namespace DataBaseLib
 {
     public class DataBaseContext : IDataContext
     {
-
         private static DataBaseContext _inst;
         public static DataBaseContext Instance => _inst ??= new DataBaseContext();
         private DataBaseContext() { }
@@ -176,7 +176,6 @@ namespace DataBaseLib
             return monster;
         }
 
-
         public IEnumerable<Spell> GetSpells()
         {
            var data = DataAccess.GetData("Spells", null, null, "*");
@@ -260,6 +259,38 @@ namespace DataBaseLib
             return players;
         }
 
+        public IEnumerable<Encounter> GetEncounters()
+        {
+            var encData = DataAccess.GetData("Select * From Encounters");
+            List<Encounter> encounters = new List<Encounter>();
+
+            foreach (var en in encData)
+            {
+                encounters.Add(new Encounter()
+                {
+                    GroupId =(int)(long)en[0],
+                    Name = en[1].ToString(),
+                    Id = (int)(long)en[2]
+                });
+            }
+
+            foreach (var enc in encounters)
+            {
+                var monsterData = DataAccess.GetData("SELECT * FROM EncountersToMonsters " +
+                                                        $"where Encounter_Id = {enc.Id}");
+                foreach(var monsterd in monsterData)
+                {
+                    enc.Monsters.Add(new BattleMonster()
+                    {
+                        Quantity = (int)(long)monsterd[2],
+                        Monster = GetExtendedMonsterById((int)(long)monsterd[1])
+                    });
+                }
+            }
+
+            return encounters;
+        }
+
         public async Task AddMonster(ExtendedMonster monster)
         {
             throw new NotImplementedException();
@@ -295,6 +326,22 @@ namespace DataBaseLib
                 $"{player.AC}, {player.HP}, {player.Experience}, " +
                 $"{player.PassWis}, {player.Initiative}, " +
                 $"'{player.Race.Replace("'","''")}')");
+        }
+
+        public async Task AddEncounter(Encounter enc)
+        {
+            await DataAccess.RawRequestAsync($"insert into Encounters(group_id, name) values ({enc.GroupId}, '{enc.Name?.Replace("'", "''")}')");
+            var id = (int)(long)DataAccess.GetData("SELECT last_insert_rowid()")[0][0];
+            foreach (var monster in enc.Monsters)
+            {
+                await AddBattleMonster(monster, id);
+            }
+        }
+        
+        private async Task AddBattleMonster(BattleMonster monster, int encId)
+        {
+            await DataAccess.RawRequestAsync($"insert into EncountersToMonsters(Monster_Quantity, Monster_id, Encounter_id) " +
+                                             $"values ({monster.Quantity}, {monster.Monster.Id}, {encId})");
         }
 
         public async Task UpdateMonster(ExtendedMonster monster)
@@ -357,6 +404,18 @@ namespace DataBaseLib
                                   $"WHERE _id = {group.Id}");
         }
 
+        public async Task UpdateEncounter(Encounter encounter)
+        {
+            await DataAccess.RawRequestAsync("Update Encounters SET " +
+                                  $"Name = '{encounter.Name.Replace("'", "''")}' " +
+                                  $"WHERE _id = {encounter.Id}");
+            await DataAccess.RawRequestAsync("Delete from EncountersToMonsters where Encounter_id = " + encounter.Id);
+            foreach (var monster in encounter.Monsters)
+            {
+                await AddBattleMonster(monster, encounter.Id);
+            }
+        }
+
         public async Task DeleteMonster(int id)
         {
             throw new NotImplementedException();
@@ -380,6 +439,11 @@ namespace DataBaseLib
         public async Task DeleteGroup(int id)
         {
             DataAccess.RawRequest($"Delete from Parties WHERE _id = {id}");
+        }
+
+        public async Task DeleteEncounter(int id)
+        {
+           await DataAccess.RawRequestAsync("DELEte from Encounters WHERE _id = " + id);
         }
 
         private void UpdateTable(Table table, int parentId, string dbTable)
