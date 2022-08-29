@@ -1,11 +1,6 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Windows.Storage;
-using Microsoft.Data.Sqlite;
-using MySql.Data.MySqlClient;
 
 namespace DataBaseLib
 {
@@ -25,7 +20,7 @@ namespace DataBaseLib
         {
             List<object[]> entries = new List<object[]>();
             var connection = GetDBConnection();
-            var command =connection.CreateCommand();
+            var command = connection.CreateCommand();
             command.CommandText = DataAccess.CreateCommand(table, whereReq, sortBy, columns);
             var reader = command.ExecuteReader();
 

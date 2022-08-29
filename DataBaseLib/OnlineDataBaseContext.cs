@@ -1,14 +1,15 @@
-﻿using System;
+﻿using Model;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Model;
+using Windows.UI.Xaml.Media;
 
 namespace DataBaseLib
 {
-    public class OnlineDataBaseContext:IDataContext
+    public class OnlineDataBaseContext : IDataContext
     {
         private static OnlineDataBaseContext _inst;
         public static OnlineDataBaseContext Instance => _inst ??= new OnlineDataBaseContext();
@@ -288,6 +289,36 @@ namespace DataBaseLib
             }
 
             return encounters;
+        }
+
+        public IEnumerable<CompletedDataItem> GetCompletedItems()
+        {
+            List<CompletedDataItem> completedDataItems = new List<CompletedDataItem>();
+            var data = OnlineDataAccess.GetData(
+                 "select _id, Name, (select Description from ExtendedMagicItems where MagicItems._id = ExtendedMagicItems._id) is not null as Completed from MagicItems");
+            AddCompletedItems(completedDataItems, data, DataItem.DataType.MagicItem);
+             data = OnlineDataAccess.GetData(
+                "select _id, Name, (select Description from ExtendedMonsters where Monsters._id = ExtendedMonsters._id) is not null as Completed from Monsters");
+            AddCompletedItems(completedDataItems, data, DataItem.DataType.Monster);
+            return completedDataItems;
+        }
+
+        private static void AddCompletedItems(List<CompletedDataItem> completedDataItems, List<object[]> data, DataItem.DataType type)
+        {
+            foreach (var item in data)
+            {
+                completedDataItems.Add(new CompletedDataItem()
+                {
+                    Id = Convert.ToInt32(item[0]),
+                    Name = item[1].ToString(),
+                    ItemType = type,
+                    Color = new SolidColorBrush(
+                        Convert.ToInt32(item[2]) == 1
+                            ? Windows.UI.Color.FromArgb(Color.YellowGreen.A, Color.YellowGreen.R,
+                                Color.YellowGreen.G, Color.YellowGreen.B)
+                            : Windows.UI.Color.FromArgb(0, 0, 0, 0))
+                });
+            }
         }
 
         public async Task AddMonster(ExtendedMonster monster)

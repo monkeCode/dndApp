@@ -27,7 +27,8 @@ namespace App
 
         private void UIElement_OnPointerEntered(object sender, PointerRoutedEventArgs e)
         {
-            if (e.Pointer.PointerDeviceType == Windows.Devices.Input.PointerDeviceType.Mouse || e.Pointer.PointerDeviceType == Windows.Devices.Input.PointerDeviceType.Pen)
+            if (e.Pointer.PointerDeviceType == Windows.Devices.Input.PointerDeviceType.Mouse ||
+                e.Pointer.PointerDeviceType == Windows.Devices.Input.PointerDeviceType.Pen)
             {
                 VisualStateManager.GoToState(sender as Control, "HoverButtonsShown", true);
             }
@@ -40,10 +41,22 @@ namespace App
 
         private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Frame.Navigate(typeof(CreateItem), (e.AddedItems[0] as DataItem).Id);
+            var dataItem = (e.AddedItems[0] as DataItem);
+            switch (dataItem.ItemType)
+            {
+                case DataItem.DataType.MagicItem:
+                    Frame.Navigate(typeof(CreateItem), dataItem.Id);
+                    break;
+                case DataItem.DataType.Monster:
+                    Frame.Navigate(typeof(CreateMonster), dataItem.Id);
+                break;
+                case DataItem.DataType.Spell:
+
+                break;
+            }
         }
 
-        private void AddNewMonster(object sender, RoutedEventArgs e)
+    private void AddNewMonster(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(CreateMonster));
         }

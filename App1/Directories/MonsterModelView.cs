@@ -1,5 +1,4 @@
-﻿using DataBaseLib;
-using Model;
+﻿using Model;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -32,7 +31,7 @@ namespace App.Directories
             (_selectedRate.Contains(m.Challenge) || _selectedRate.Count == 0) &&
             (_selectedSize.Contains(m.Size) || _selectedSize.Count == 0) &&
             (_selectedType.Contains(m.Type) || _selectedType.Count == 0) &&
-            (_selectedSource.Contains(m.Source) || _selectedSource.Count == 0)&&
+            (_selectedSource.Contains(m.Source) || _selectedSource.Count == 0) &&
             (_selectedHabitat.Intersect(m.Habitat).Count() > 0 || _selectedHabitat.Count == 0)))
             {
                 if (!string.IsNullOrEmpty(SubstringFilter))

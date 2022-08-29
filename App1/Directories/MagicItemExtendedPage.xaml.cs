@@ -1,5 +1,4 @@
-﻿using App;
-using App.Helpers;
+﻿using App.Helpers;
 using Microsoft.Toolkit.Uwp.Helpers;
 using Model;
 using System;

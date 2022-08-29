@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:workShop="using:App.WorkShop"
+    xmlns:model="using:Model"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Grid>
@@ -18,6 +19,40 @@
                 <Setter Property="Margin" Value="10"/>
                 <Setter Property="HorizontalAlignment" Value="Center"/>
             </Style>
+
+            <DataTemplate x:DataType="model:CompletedDataItem" x:Name="CompletedItemDataTemp">
+                <UserControl PointerEntered="UIElement_OnPointerEntered" PointerExited="UIElement_OnPointerExited">
+                    <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="1" BorderBrush="{Binding Color}" >
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="HoveringStates">
+                                <VisualState x:Name="HoverButtonsHidden" />
+                                <VisualState x:Name="HoverButtonsShown">
+                                    <VisualState.Setters>
+                                        <Setter Target="HoverButton.Visibility" Value="Visible" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Height="60">
+                            <Grid.ContextFlyout>
+                                <MenuFlyout>
+                                    <MenuFlyoutItem Text="Удалить" Icon="Delete">
+                                        <MenuFlyoutItem.KeyboardAccelerators>
+                                            <KeyboardAccelerator Key="Delete"></KeyboardAccelerator>
+                                        </MenuFlyoutItem.KeyboardAccelerators>
+                                    </MenuFlyoutItem>
+                                </MenuFlyout>
+                            </Grid.ContextFlyout>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" FontSize="18" Text="{Binding Name}" VerticalAlignment ="Center" HorizontalAlignment="Stretch" TextAlignment="Left" />
+                            <AppBarButton Grid.Column="1" x:Name="HoverButton" Icon="Delete" HorizontalAlignment="Right" Label="Удалить" Visibility="Collapsed"  IsTabStop="False"></AppBarButton>
+                        </Grid>
+                    </StackPanel>
+                </UserControl>
+            </DataTemplate>
         </Grid.Resources>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
@@ -41,7 +76,7 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <TextBlock Text="Существа" />
-            <ListView Grid.Row="1"/>
+            <ListView Grid.Row="1" ItemsSource="{Binding Monsters}" ItemTemplate="{StaticResource CompletedItemDataTemp}" SelectionChanged="Selector_OnSelectionChanged" ItemContainerStyle="{StaticResource DirectoryList}"/>
             <Button Grid.Row="2" Click="AddNewMonster">Добавить новое</Button>
         </Grid>
         <Grid Grid.Column="2" MinWidth="100">
@@ -51,42 +86,7 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <TextBlock Text="Магические предметы"/>
-            <ListView Grid.Row="1" ItemsSource="{Binding MagicItems}" SelectionChanged="Selector_OnSelectionChanged" ItemContainerStyle="{StaticResource DirectoryList}">
-                <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="workShop:CompletedDataItem">
-                        <UserControl PointerEntered="UIElement_OnPointerEntered" PointerExited="UIElement_OnPointerExited">
-                            <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="1" BorderBrush="{Binding Color}" >
-                                <VisualStateManager.VisualStateGroups>
-                                    <VisualStateGroup x:Name="HoveringStates">
-                                        <VisualState x:Name="HoverButtonsHidden" />
-                                        <VisualState x:Name="HoverButtonsShown">
-                                            <VisualState.Setters>
-                                                <Setter Target="HoverButton.Visibility" Value="Visible" />
-                                            </VisualState.Setters>
-                                        </VisualState>
-                                    </VisualStateGroup>
-                                </VisualStateManager.VisualStateGroups>
-                                <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Height="60">
-                                <Grid.ContextFlyout>
-                                    <MenuFlyout>
-                                        <MenuFlyoutItem Text="Удалить" Icon="Delete">
-                                            <MenuFlyoutItem.KeyboardAccelerators>
-                                                <KeyboardAccelerator Key="Delete"></KeyboardAccelerator>
-                                            </MenuFlyoutItem.KeyboardAccelerators>
-                                        </MenuFlyoutItem>
-                                    </MenuFlyout>
-                                </Grid.ContextFlyout>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" FontSize="18" Text="{Binding Name}" VerticalAlignment ="Center" HorizontalAlignment="Stretch" TextAlignment="Left" />
-                                <AppBarButton Grid.Column="1" x:Name="HoverButton" Icon="Delete" HorizontalAlignment="Right" Label="Удалить" Visibility="Collapsed"  IsTabStop="False"></AppBarButton>
-                            </Grid>
-                            </StackPanel>
-                        </UserControl>
-                    </DataTemplate>
-                    </ListView.ItemTemplate>
+            <ListView Grid.Row="1" ItemsSource="{Binding MagicItems}" ItemTemplate="{StaticResource CompletedItemDataTemp}" SelectionChanged="Selector_OnSelectionChanged" ItemContainerStyle="{StaticResource DirectoryList}">
             </ListView>
             <Button Grid.Row="2" Click="AddNewItem">Добавить новый</Button>
         </Grid>

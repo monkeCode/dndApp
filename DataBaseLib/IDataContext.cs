@@ -28,6 +28,9 @@ namespace DataBaseLib
 
         IEnumerable<Encounter> GetEncounters();
 
+        IEnumerable<CompletedDataItem> GetCompletedItems();
+
+
         #endregion
 
         #region Add

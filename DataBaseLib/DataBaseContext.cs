@@ -2,10 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Data.SqlClient;
+using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
-using Windows.ApplicationModel.Store.Preview.InstallControl;
+using Windows.UI.Xaml.Media;
 
 namespace DataBaseLib
 {
@@ -178,25 +178,25 @@ namespace DataBaseLib
 
         public IEnumerable<Spell> GetSpells()
         {
-           var data = DataAccess.GetData("Spells", null, null, "*");
-           var spells = new List<Spell>();
-           foreach (var spell in data)
-           {
-               var s = new Spell()
-               {
-                   Id = (int) (long) spell[0],
-                   Name = spell[1].ToString(),
-                   Lvl = (int) (long) spell[2],
-                   School = spell[3].ToString(),
-                   Concentration = (long)spell[5] != 0 ,
-                   Source = spell[6].ToString()
-               };
+            var data = DataAccess.GetData("Spells", null, null, "*");
+            var spells = new List<Spell>();
+            foreach (var spell in data)
+            {
+                var s = new Spell()
+                {
+                    Id = (int)(long)spell[0],
+                    Name = spell[1].ToString(),
+                    Lvl = (int)(long)spell[2],
+                    School = spell[3].ToString(),
+                    Concentration = (long)spell[5] != 0,
+                    Source = spell[6].ToString()
+                };
                 s.SetComponents(spell[4].ToString());
-               spells.Add(s);
-               
-           }
+                spells.Add(s);
 
-           return spells;
+            }
+
+            return spells;
         }
 
         public ExtendedSpell GetExtendedSpellById(int id)
@@ -213,10 +213,10 @@ namespace DataBaseLib
 
                 var group = new Model.Group()
                 {
-                    Id = (int) (long) gr[0],
+                    Id = (int)(long)gr[0],
                     Name = gr[1].ToString()
                 };
-                var players = DataAccess.GetData("Players", $"Group_id = {group.Id}", null,"*");
+                var players = DataAccess.GetData("Players", $"Group_id = {group.Id}", null, "*");
                 foreach (var p in players)
                 {
                     var player = GetPlayerFromData(p);
@@ -232,15 +232,15 @@ namespace DataBaseLib
         {
             var player = new Player()
             {
-                GroupId = (int) (long) playerData[0],
+                GroupId = (int)(long)playerData[0],
                 Name = playerData[1].ToString(),
                 PlayerName = playerData[2].ToString(),
                 Class = playerData[3].ToString(),
-                Id = (int) (long) playerData[4],
-                AC = (int) (long) playerData[5],
-                HP = (int) (long) playerData[6],
-                Experience = (int) (long) playerData[7],
-                PassWis = (int) (long) playerData[8],
+                Id = (int)(long)playerData[4],
+                AC = (int)(long)playerData[5],
+                HP = (int)(long)playerData[6],
+                Experience = (int)(long)playerData[7],
+                PassWis = (int)(long)playerData[8],
                 Initiative = (int)(long)playerData[9],
                 Race = playerData[10].ToString()
             };
@@ -268,7 +268,7 @@ namespace DataBaseLib
             {
                 encounters.Add(new Encounter()
                 {
-                    GroupId =(int)(long)en[0],
+                    GroupId = (int)(long)en[0],
                     Name = en[1].ToString(),
                     Id = (int)(long)en[2]
                 });
@@ -278,7 +278,7 @@ namespace DataBaseLib
             {
                 var monsterData = DataAccess.GetData("SELECT * FROM EncountersToMonsters " +
                                                         $"where Encounter_Id = {enc.Id}");
-                foreach(var monsterd in monsterData)
+                foreach (var monsterd in monsterData)
                 {
                     enc.Monsters.Add(new BattleMonster()
                     {
@@ -291,6 +291,36 @@ namespace DataBaseLib
             return encounters;
         }
 
+        public IEnumerable<CompletedDataItem> GetCompletedItems()
+        {
+            List<CompletedDataItem> completedDataItems = new List<CompletedDataItem>();
+            var data = DataAccess.GetData(
+                "select _id, Name, (select Description from ExtendedMagicItems where MagicItems._id = ExtendedMagicItems._id) is not null as Completed from MagicItems");
+            AddCompletedItems(completedDataItems, data, DataItem.DataType.MagicItem);
+            data = DataAccess.GetData(
+                "select _id, Name, (select Description from ExtendedMonsters where Monsters._id = ExtendedMonsters._id) is not null as Completed from Monsters");
+            AddCompletedItems(completedDataItems, data, DataItem.DataType.Monster);
+            return completedDataItems;
+        }
+
+        private static void AddCompletedItems(List<CompletedDataItem> completedDataItems, List<object[]> data, DataItem.DataType type)
+        {
+            foreach (var item in data)
+            {
+                completedDataItems.Add(new CompletedDataItem()
+                {
+                    Id = (int)(long)item[0],
+                    Name = item[1].ToString(),
+                    ItemType = type,
+                    Color = new SolidColorBrush(
+                        (int)(long)item[2] == 1
+                            ? Windows.UI.Color.FromArgb(Color.YellowGreen.A, Color.YellowGreen.R,
+                                Color.YellowGreen.G, Color.YellowGreen.B)
+                            : Windows.UI.Color.FromArgb(0, 0, 0, 0))
+                });
+            }
+        }
+
         public async Task AddMonster(ExtendedMonster monster)
         {
             throw new NotImplementedException();
@@ -300,7 +330,7 @@ namespace DataBaseLib
         {
             await DataAccess.RawRequestAsync(
                     "INSERT INTO MagicItems (Name, Quality, Type, Source)" +
-                    $"values('{item.Name.Replace("'","''")}',{item.Quality}, '{item.Type}', '{item.ItemSource.Replace("'", "''")}')");
+                    $"values('{item.Name.Replace("'", "''")}',{item.Quality}, '{item.Type}', '{item.ItemSource.Replace("'", "''")}')");
             var id = (int)(long)DataAccess.GetData($"Select _id from MagicItems where Name = '{item.Name.Replace("'", "''")}'")[0][0];
             await DataAccess.RawRequestAsync($"Insert into ExtendedMagicItems (_id) values ({id})");
             item.Id = id;
@@ -314,18 +344,18 @@ namespace DataBaseLib
 
         public async Task AddGroup(Group group)
         {
-            await DataAccess.RawRequestAsync("Insert into Parties (Name) values ('" + group.Name.Replace("'","''") + "')");
+            await DataAccess.RawRequestAsync("Insert into Parties (Name) values ('" + group.Name.Replace("'", "''") + "')");
         }
 
         public async Task AddPlayer(Player player)
         {
             await DataAccess.RawRequestAsync(
                 "INSERT into Players (Group_Id, Name, PlayerName, Class, AC, HP, Exp, PassWis, Initiative, Race) " +
-                $"values ({player.GroupId}, '{player.Name.Replace("'","''")}', " +
+                $"values ({player.GroupId}, '{player.Name.Replace("'", "''")}', " +
                 $"'{player.PlayerName.Replace("'", "''")}', '{player.Class}', " +
                 $"{player.AC}, {player.HP}, {player.Experience}, " +
                 $"{player.PassWis}, {player.Initiative}, " +
-                $"'{player.Race.Replace("'","''")}')");
+                $"'{player.Race.Replace("'", "''")}')");
         }
 
         public async Task AddEncounter(Encounter enc)
@@ -337,7 +367,7 @@ namespace DataBaseLib
                 await AddBattleMonster(monster, id);
             }
         }
-        
+
         private async Task AddBattleMonster(BattleMonster monster, int encId)
         {
             await DataAccess.RawRequestAsync($"insert into EncountersToMonsters(Monster_Quantity, Monster_id, Encounter_id) " +
@@ -393,15 +423,15 @@ namespace DataBaseLib
                                   $"Class = '{player.Class}', AC = {player.AC}, HP = {player.HP}, " +
                                   $"Exp = {player.Experience}, PassWis = {player.PassWis}, " +
                                   $"Initiative = {player.Initiative}, " +
-                                  $"Race = '{player.Race.Replace("'","''")}' " +
+                                  $"Race = '{player.Race.Replace("'", "''")}' " +
                                   $"WHERE _id = {player.Id}");
         }
 
         public async Task UpdateGroup(Group group)
         {
-           await DataAccess.RawRequestAsync("Update Parties SET" +
-                                  $"Name = '{group.Name.Replace("'", "''")}' " +
-                                  $"WHERE _id = {group.Id}");
+            await DataAccess.RawRequestAsync("Update Parties SET" +
+                                   $"Name = '{group.Name.Replace("'", "''")}' " +
+                                   $"WHERE _id = {group.Id}");
         }
 
         public async Task UpdateEncounter(Encounter encounter)
@@ -438,20 +468,20 @@ namespace DataBaseLib
 
         public async Task DeleteGroup(int id)
         {
-           await DataAccess.RawRequestAsync($"Delete from Parties WHERE _id = {id}");
+            await DataAccess.RawRequestAsync($"Delete from Parties WHERE _id = {id}");
         }
 
         public async Task DeleteEncounter(int id)
         {
-           await DataAccess.RawRequestAsync("DELEte from Encounters WHERE _id = " + id);
+            await DataAccess.RawRequestAsync("DELEte from Encounters WHERE _id = " + id);
         }
 
         private void UpdateTable(Table table, int parentId, string dbTable)
         {
             DeleteTable(parentId, dbTable);
             if (table == null) return;
-            string data = string.Join("@", table.Fields.Select(it => it.Replace("'","''")));
-            
+            string data = string.Join("@", table.Fields.Select(it => it.Replace("'", "''")));
+
             DataAccess.RawRequest(
                 $"INSERT INTO {dbTable} (ParentId, Rows, Columns, Data) " +
                 $"values ({parentId},{table.Rows}, {table.Columns}, '{data}')");
@@ -469,7 +499,7 @@ namespace DataBaseLib
         {
             if (feature == null) return;
             DataBaseLib.DataAccess.RawRequest($"INSERT INTO {dbTable} (_id, Name, Description) " +
-                                              $"values ({parentId},'{feature.Name.Replace("'","''")}', '{feature.Description.Replace("'", "''")}')");
+                                              $"values ({parentId},'{feature.Name.Replace("'", "''")}', '{feature.Description.Replace("'", "''")}')");
         }
 
         private static Table GetTable(int parentId, string dbTable)
@@ -478,7 +508,8 @@ namespace DataBaseLib
             if (data.Count == 0) return null;
             return new Table()
             {
-                Rows = (int) (long) data[0][1], Columns = (int) (long) data[0][2],
+                Rows = (int)(long)data[0][1],
+                Columns = (int)(long)data[0][2],
                 Fields = data[0][3].ToString().Split("@").ToList()
             };
         }

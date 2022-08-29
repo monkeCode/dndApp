@@ -1,20 +1,8 @@
-﻿using App;
-using Microsoft.UI.Xaml.Controls;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
+﻿using Microsoft.UI.Xaml.Controls;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 // Документацию по шаблону элемента "Пустая страница" см. по адресу https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -33,8 +21,8 @@ namespace App
         }
         private void TabView_Loaded(object sender, RoutedEventArgs e)
         {
-                (sender as TabView).TabItems.Add(CreateNewTab());
-                
+            (sender as TabView).TabItems.Add(CreateNewTab());
+
         }
 
         private void TabView_AddButtonClick(TabView sender, object args)
@@ -63,7 +51,7 @@ namespace App
             return newItem;
         }
 
-        private void TabMenu_TabChanged(object sender,string header)
+        private void TabMenu_TabChanged(object sender, string header)
         {
             (Tabs.TabItems.First(it => ((TabViewItem)it).Content == sender) as TabViewItem).Header = header;
         }
@@ -88,7 +76,7 @@ namespace App
 
         public static void UpdateText(Frame frame, string text)
         {
-            var it = _instance.Tabs.TabItems.FirstOrDefault(it => (((Frame)(((TabViewItem)it).Content)).Content as MainPage)?.ContentFrame  == frame) as TabViewItem;
+            var it = _instance.Tabs.TabItems.FirstOrDefault(it => (((Frame)(((TabViewItem)it).Content)).Content as MainPage)?.ContentFrame == frame) as TabViewItem;
             if (it != null)
                 it.Header = text;
         }

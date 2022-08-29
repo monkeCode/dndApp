@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Model
+﻿namespace Model
 {
     public class Player
     {
@@ -31,7 +29,7 @@ namespace Model
             >= 2700 => 4,
             >= 900 => 3,
             >= 300 => 2,
-            _=>1
+            _ => 1
         };
 
         public int Experience { get; set; } = 0;

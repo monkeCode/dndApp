@@ -1,5 +1,4 @@
-﻿using App;
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -19,6 +18,13 @@ namespace App.WorkShop
         public CreateMonster()
         {
             this.InitializeComponent();
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            var id = (int?)e.Parameter;
+            DataContext = id.HasValue ? new CreateMonsterVM(id.Value) : new CreateMonsterVM();
+            base.OnNavigatedFrom(e);
         }
 
         private void Grid_SizeChanged(object sender, SizeChangedEventArgs e)

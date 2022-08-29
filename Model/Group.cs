@@ -37,7 +37,7 @@ namespace Model
         public int Medium { get; private set; }
         public int Easy { get; private set; }
 
-        public Group(int id, string name, ICollection<Player> players):base()
+        public Group(int id, string name, ICollection<Player> players) : base()
         {
             Id = id;
             Name = name;

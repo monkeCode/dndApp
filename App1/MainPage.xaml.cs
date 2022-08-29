@@ -1,14 +1,12 @@
-﻿using App;
-using App.Generator;
-using App.Directories;
+﻿using App.Directories;
 using App.Encounters;
+using App.Generator;
 using App.GroupMenu;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Windows.UI.Xaml.Controls;
-using Model;
 
 // Документацию по шаблону элемента "Пустая страница" см. по адресу https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x419
 
@@ -18,7 +16,7 @@ namespace App
     {
         private ObservableCollection<Dice> _dices = new ObservableCollection<Dice>();
 
-        public event Action<object,string> TabChanged;
+        public event Action<object, string> TabChanged;
 
         public Frame ContentFrame => mainFrame;
 
@@ -32,7 +30,7 @@ namespace App
         {
             var type = e.Content.GetType();
             var text = type.Name;
-            TabChanged?.Invoke(Frame,text);
+            TabChanged?.Invoke(Frame, text);
         }
 
         private List<(string Tag, System.Type Page)> TagPage = new List<(string, System.Type)>

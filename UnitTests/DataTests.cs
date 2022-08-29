@@ -88,7 +88,7 @@ namespace UnitTests
             Assert.AreEqual(item.UnderType, newItem.UnderType);
             Assert.AreEqual(item.UnderQuality, newItem.UnderQuality);
             Assert.AreEqual(item.Name, newItem.Name);
-            
+
 
         }
 

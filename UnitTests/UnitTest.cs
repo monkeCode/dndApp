@@ -1,5 +1,5 @@
-﻿using App.Generator;
-using App;
+﻿using App;
+using App.Generator;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace UnitTests

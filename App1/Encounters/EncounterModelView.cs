@@ -1,14 +1,12 @@
 ﻿using App.Annotations;
 using App.Directories;
-using DataBaseLib;
+using Model;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using Model;
 
 namespace App.Encounters
 {
@@ -24,7 +22,7 @@ namespace App.Encounters
             get { return _playerGroup; }
             set { _playerGroup = value; OnPropertyChanged(); }
         }
-        
+
         private int _dailyEx;
         private int _totalMonstersEx;
         public int TotalMonstersEx
@@ -134,7 +132,7 @@ namespace App.Encounters
             {
 
                 if (encounter.Name == null) encounter.Name = "Боевая сцена";
-                if(encounter.Id == -1)
+                if (encounter.Id == -1)
                     await App.DataContext.AddEncounter(encounter);
                 else
                     await App.DataContext.UpdateEncounter(encounter);

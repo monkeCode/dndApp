@@ -10,7 +10,7 @@ namespace Model
 
         public int Lvl { get; set; }
         public string School { get; set; }
-        
+
         public bool Concentration { get; set; }
 
         public string Source { get; set; }
@@ -22,7 +22,7 @@ namespace Model
 
         public void SetComponents(string data)
         {
-            if(string.IsNullOrEmpty(data)) return;
+            if (string.IsNullOrEmpty(data)) return;
             Components = new List<Component>();
             foreach (var c in data)
             {

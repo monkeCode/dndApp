@@ -1,5 +1,4 @@
-﻿using App;
-using Model;
+﻿using Model;
 using System.Collections.ObjectModel;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;

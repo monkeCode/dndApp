@@ -1,7 +1,6 @@
-﻿using System.Collections.ObjectModel;
+﻿using Model;
+using System.Collections.ObjectModel;
 using System.Linq;
-using DataBaseLib;
-using Model;
 
 namespace App.GroupMenu
 {
@@ -32,7 +31,7 @@ namespace App.GroupMenu
                 PlayerWithoutGroup.Add(player);
             }
 
-            
+
         }
     }
 }

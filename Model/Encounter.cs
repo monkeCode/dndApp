@@ -2,7 +2,6 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using Model;
 
 namespace Model
 {
@@ -10,12 +9,12 @@ namespace Model
     {
 
         public ObservableCollection<BattleMonster> Monsters { get; } = new();
-        
+
         public string Name { get; set; }
         public int Id { get; set; }
 
         private string _difficulty = "";
-        
+
         private int _offset;
         public string Difficulty
         {
@@ -52,7 +51,7 @@ namespace Model
         private int _hard;
         private int _medium;
         private int _easy;
-        
+
         private float _modificator;
         public float Modificator
         {
@@ -63,7 +62,7 @@ namespace Model
                 OnPropertyChanged();
             }
         }
-       
+
         public int GroupId { get; set; }
         private void Monsters_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
@@ -87,13 +86,13 @@ namespace Model
             _hard = playerGroup.Hard;
             Deadly = playerGroup.Deadly;
             if (playerGroup.Players.Count < 3)
-               _offset = 1;
+                _offset = 1;
             else if (playerGroup.Players.Count > 5)
                 _offset = -1;
             else
-               _offset = 0;
+                _offset = 0;
         }
-        
+
         private void MonstersChanged(BattleMonster monster)
         {
             if (monster.Quantity < 1)
@@ -162,7 +161,7 @@ namespace Model
             };
         }
         public event PropertyChangedEventHandler PropertyChanged;
-        
+
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

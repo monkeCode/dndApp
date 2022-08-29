@@ -2,19 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 // Документацию по шаблону элемента "Пользовательский элемент управления" см. по адресу https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -22,15 +13,21 @@ namespace App
 {
     public sealed partial class TextBlockTable : UserControl, INotifyPropertyChanged
     {
-        public Table Table { get { return (Table)GetValue(TableProperty); } 
-            set { SetValue(TableProperty, value); MarkdownTexts = UpdateTabe(GridTable); } }
+        public Table Table
+        {
+            get { return (Table)GetValue(TableProperty); }
+            set { SetValue(TableProperty, value); MarkdownTexts = UpdateTabe(GridTable); }
+        }
 
         private List<MarkdownText> _markdownTexts;
-        public List<MarkdownText> MarkdownTexts { get => _markdownTexts; set
+        public List<MarkdownText> MarkdownTexts
+        {
+            get => _markdownTexts; set
             {
                 _markdownTexts = value;
                 OnPropertyChanged();
-            } }
+            }
+        }
 
         private void OnPropertyChanged([CallerMemberName] string v = "")
         {

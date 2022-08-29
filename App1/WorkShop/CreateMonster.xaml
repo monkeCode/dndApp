@@ -14,10 +14,7 @@
         <Page.Resources>
             <app1:StaticValues x:Key="StaticValues" />
         </Page.Resources>
-    <Page.DataContext>
-        <local:CreateMonsterVM></local:CreateMonsterVM>
-    </Page.DataContext>
-        <ScrollViewer>
+    <ScrollViewer>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto" />
@@ -70,7 +67,7 @@
                     <controls:NumberBox Header="Класс брони" MinWidth="150" SpinButtonPlacementMode="Inline" Value="{Binding Monster.AC, Mode=TwoWay}" Margin="5" ></controls:NumberBox>
                     <TextBox Header="Тип брони" MinWidth="150" PlaceholderText="естественная броня" Text="{Binding Monster.ACType, Mode=TwoWay}" ></TextBox>
                     <TextBox Header="ПЗ" MinWidth="50" PlaceholderText="136 (16d8+64)" Text="{Binding Monster.HP, Mode=TwoWay}" ></TextBox>
-                    <TextBox Header="Скорость" MinWidth="150" PlaceholderText="136 (16d8+64)" Text="{Binding Monster.Speed, Mode=TwoWay}" ></TextBox>
+                    <TextBox Header="Скорость" MinWidth="150" Text="{Binding Monster.Speed, Mode=TwoWay}" ></TextBox>
                     
                 </ListView>
                 <ListView  MaxWidth="1000" HorizontalAlignment="Left" SelectionMode="None"
