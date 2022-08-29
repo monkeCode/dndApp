@@ -18,7 +18,7 @@ namespace App
         /// Инициализирует одноэлементный объект приложения. Это первая выполняемая строка разрабатываемого
         /// кода, поэтому она является логическим эквивалентом main() или WinMain().
         /// </summary>
-        public static IDataContext DataContext => DataBaseContext.Instance;
+        public static IDataContext DataContext => OnlineDataBaseContext.Instance;
         public App()
         {
             this.InitializeComponent();

@@ -55,53 +55,6 @@ namespace DataBaseLib
             NewDataLoaded?.Invoke();
         }
 
-        public static async Task UpdateDb(string text)
-        {
-            //await text.RenameAsync(DB_NAME);
-            //await text.CopyAsync(
-            //    await StorageFolder.GetFolderFromPathAsync(ApplicationData.Current.LocalFolder.Path + $"\\{DB_NAME}"));
-            //ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
-            //localSettings.Values["DataBaseVercion"] = DB_VERSION;
-            StorageFile databaseFile = await Package.Current.InstalledLocation.GetFileAsync(DB_NAME);
-            await FileIO.WriteTextAsync(databaseFile, text);
-            NewDataLoaded?.Invoke();
-        }
-        public static void AddData(string table, string[] rows, object[] input)
-        {
-            string dbpath = Path.Combine(ApplicationData.Current.LocalFolder.Path, DB_NAME);
-            using (SqliteConnection db =
-              new SqliteConnection($"Filename={dbpath}"))
-            {
-                db.Open();
-                string rowEx = "";
-                string param = "";
-                if (rows != null)
-                {
-                    foreach (var i in rows)
-                    {
-                        rowEx += i + ",";
-                    }
-                    rowEx = "(" + rowEx.Trim(',') + ")";
-                }
-
-                foreach (var i in input)
-                {
-                    param += i.ToString() + ',';
-                }
-                param = "(" + param.Trim(',') + ")";
-                SqliteCommand insertCommand = new SqliteCommand
-                {
-                    Connection = db,
-
-                    // Use parameterized query to prevent SQL injection attacks
-                    CommandText = $"INSERT INTO {table} {rowEx} VALUES {param}",
-                    CommandType = System.Data.CommandType.Text
-                };
-                insertCommand.ExecuteReader();
-
-                db.Close();
-            }
-        }
         public static List<object[]> GetData(string table, string whereReq = null, string sortBy = null, params string[] columns)
         {
             List<object[]> entries = new List<object[]>();
@@ -116,21 +69,9 @@ namespace DataBaseLib
                new SqliteConnection($"Filename={dbpath}"))
             {
                 db.Open();
-                string columnsString = "";
-                foreach (var str in columns)
-                {
-                    columnsString += str + ", ";
-                }
-                columnsString = columnsString.Trim();
-                columnsString = columnsString.Remove(columnsString.Length - 1);
-                if (!string.IsNullOrEmpty(whereReq))
-                    whereReq = "WHERE " + whereReq;
-                else whereReq = "";
-                if (sortBy != null)
-                    sortBy = "ORDER BY " + sortBy;
-                else sortBy = "";
+                var command = CreateCommand(table, whereReq, sortBy, columns);
                 SqliteCommand selectCommand = new SqliteCommand
-                    ($"SELECT {columnsString} from {table} {whereReq} {sortBy}", db);
+                    (command, db);
                 SqliteDataReader query = selectCommand.ExecuteReader();
                 while (query.Read())
                 {
@@ -145,6 +86,26 @@ namespace DataBaseLib
                 db.Close();
             }
             return entries;
+        }
+
+        public static string CreateCommand(string table, string whereReq, string sortBy, string[] columns)
+        {
+            string columnsString = "";
+            foreach (var str in columns)
+            {
+                columnsString += str + ", ";
+            }
+
+            columnsString = columnsString.Trim();
+            columnsString = columnsString.Remove(columnsString.Length - 1);
+            if (!string.IsNullOrEmpty(whereReq))
+                whereReq = "WHERE " + whereReq;
+            else whereReq = "";
+            if (sortBy != null)
+                sortBy = "ORDER BY " + sortBy;
+            else sortBy = "";
+            var command = $"SELECT {columnsString} from {table} {whereReq} {sortBy}";
+            return command;
         }
 
         public static List<object[]> GetData(string request)

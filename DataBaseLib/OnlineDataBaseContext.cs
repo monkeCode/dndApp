@@ -1,44 +1,43 @@
-﻿using Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Data.SqlClient;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
-using Windows.ApplicationModel.Store.Preview.InstallControl;
+using Model;
 
 namespace DataBaseLib
 {
-    public class DataBaseContext : IDataContext
+    public class OnlineDataBaseContext:IDataContext
     {
-        private static DataBaseContext _inst;
-        public static DataBaseContext Instance => _inst ??= new DataBaseContext();
-        private DataBaseContext() { }
+        private static OnlineDataBaseContext _inst;
+        public static OnlineDataBaseContext Instance => _inst ??= new OnlineDataBaseContext();
+        private OnlineDataBaseContext() { }
 
         public IEnumerable<DataItem> GetDataItems()
         {
-            var request = DataAccess.GetData("SELECT _id, Name from Monsters");
-            List<DataItem> dataItems = request.Select(it => new DataItem { Id = (int)(long)it[0], Name = it[1].ToString(), ItemType = DataItem.DataType.Monster }).ToList();
-            request = DataBaseLib.DataAccess.GetData("SELECT _id, Name from MagicItems");
-            dataItems.AddRange(request.Select(it => new DataItem { Id = (int)(long)it[0], Name = it[1].ToString(), ItemType = DataItem.DataType.MagicItem }));
+            var request = OnlineDataAccess.GetData("SELECT _id, Name from Monsters");
+            List<DataItem> dataItems = request.Select(it => new DataItem { Id = (int)it[0], Name = it[1].ToString(), ItemType = DataItem.DataType.Monster }).ToList();
+            request = DataBaseLib.OnlineDataAccess.GetData("SELECT _id, Name from MagicItems");
+            dataItems.AddRange(request.Select(it => new DataItem { Id = (int)it[0], Name = it[1].ToString(), ItemType = DataItem.DataType.MagicItem }));
 
-            request = DataBaseLib.DataAccess.GetData("SELECT _id, Name from Spells");
-            dataItems.AddRange(request.Select(it => new DataItem { Id = (int)(long)it[0], Name = it[1].ToString(), ItemType = DataItem.DataType.Spell }));
+            request = DataBaseLib.OnlineDataAccess.GetData("SELECT _id, Name from Spells");
+            dataItems.AddRange(request.Select(it => new DataItem { Id = (int)it[0], Name = it[1].ToString(), ItemType = DataItem.DataType.Spell }));
 
             return dataItems;
         }
 
         public IEnumerable<MagicItem> GetMagicItems()
         {
-            var data = DataAccess.GetData("MagicItems", null, "Name", "*");
+            var data = OnlineDataAccess.GetData("MagicItems", null, "Name", "*");
             List<MagicItem> items = new List<MagicItem>();
             foreach (var item in data)
             {
                 items.Add(new MagicItem()
                 {
-                    Id = (int)(long)item[0],
+                    Id = (int)item[0],
                     Name = item[1].ToString(),
-                    Quality = (int)(long)item[2],
+                    Quality = (int)item[2],
                     Type = item[3].ToString(),
                     Attunement = item[4].ToString() != "0" ? "(Настройка)" : "",
                     ItemSource = item[5].ToString(),
@@ -49,19 +48,19 @@ namespace DataBaseLib
 
         public ExtendedMagicItem GetExtendedMagicById(int id)
         {
-            var data = DataAccess.GetData("MagicItems", $"_id = {id}", "Name", "*")[0];
+            var data = OnlineDataAccess.GetData("MagicItems", $"_id = {id}", "Name", "*")[0];
             var item = new ExtendedMagicItem()
             {
-                Id = (int)(long)data[0],
+                Id = (int)data[0],
                 Name = data[1].ToString(),
-                Quality = (int)(long)data[2],
+                Quality = (int)data[2],
                 Type = data[3].ToString(),
                 ItemSource = data[5].ToString(),
             };
-            data = DataAccess.GetData("MagicItems, ExtendedMagicItems", $"MagicItems._id = {id} And MagicItems._Id = ExtendedMagicItems._id", null, "*")[0];
+            data = OnlineDataAccess.GetData("MagicItems, ExtendedMagicItems", $"MagicItems._id = {id} And MagicItems._Id = ExtendedMagicItems._id", null, "*")[0];
             item.Id = id;
             item.Name = data[1].ToString();
-            item.Quality = (int)(long)data[2];
+            item.Quality = (int)data[2];
             item.Type = data[3].ToString();
             item.ItemSource = data[5].ToString();
             item.Description = data[8].ToString();
@@ -88,15 +87,15 @@ namespace DataBaseLib
 
         public IEnumerable<Monster> GetMonsters()
         {
-            var list = DataAccess.GetData("Monsters", null, null, "*");
+            var list = OnlineDataAccess.GetData("Monsters", null, null, "*");
             var monsters = new List<Monster>();
             foreach (var monster in list)
             {
                 monsters.Add(new Monster()
                 {
-                    Id = (int)(long)monster[0],
+                    Id = (int)monster[0],
                     Name = monster[1].ToString(),
-                    Size = (int)(long)monster[2],
+                    Size = (int)monster[2],
                     Type = monster[3].ToString(),
                     Habitat = new ObservableCollection<string>(monster[4].ToString().Split("@")),
                     Challenge = monster[5].ToString(),
@@ -110,18 +109,18 @@ namespace DataBaseLib
 
         public ExtendedMonster GetExtendedMonsterById(int id)
         {
-            var list = DataAccess.GetData("ExtendedMonsters", $"_id = {id}", null, "*")[0];
+            var list = OnlineDataAccess.GetData("ExtendedMonsters", $"_id = {id}", null, "*")[0];
             ExtendedMonster monster = new ExtendedMonster()
             {
-                AC = (int)(long)list[1],
+                AC = (int)list[1],
                 HP = list[2].ToString(),
                 Speed = list[3].ToString(),
-                Str = (int)(long)list[4],
-                Dex = (int)(long)list[5],
-                Con = (int)(long)list[6],
-                Intel = (int)(long)list[7],
-                Wis = (int)(long)list[8],
-                Cha = (int)(long)list[9],
+                Str = (int)list[4],
+                Dex = (int)list[5],
+                Con = (int)list[6],
+                Intel = (int)list[7],
+                Wis = (int)list[8],
+                Cha = (int)list[9],
                 SavingThrows = list[10].ToString(),
                 Skills = list[11].ToString(),
                 Senses = list[12].ToString(),
@@ -138,10 +137,10 @@ namespace DataBaseLib
                 ImmunityState = list[23].ToString(),
             };
 
-            list = DataAccess.GetData("Monsters", $"_id = {id}", null, "*")[0];
+            list = OnlineDataAccess.GetData("Monsters", $"_id = {id}", null, "*")[0];
             monster.Id = id;
             monster.Name = list[1].ToString();
-            monster.Size = (int)(long)list[2];
+            monster.Size = (int)list[2];
             monster.Type = list[3].ToString();
             monster.Habitat = new ObservableCollection<string>(list[4].ToString().Split("@"));
             monster.Challenge = list[5].ToString();
@@ -178,25 +177,25 @@ namespace DataBaseLib
 
         public IEnumerable<Spell> GetSpells()
         {
-           var data = DataAccess.GetData("Spells", null, null, "*");
-           var spells = new List<Spell>();
-           foreach (var spell in data)
-           {
-               var s = new Spell()
-               {
-                   Id = (int) (long) spell[0],
-                   Name = spell[1].ToString(),
-                   Lvl = (int) (long) spell[2],
-                   School = spell[3].ToString(),
-                   Concentration = (long)spell[5] != 0 ,
-                   Source = spell[6].ToString()
-               };
+            var data = OnlineDataAccess.GetData("Spells", null, null, "*");
+            var spells = new List<Spell>();
+            foreach (var spell in data)
+            {
+                var s = new Spell()
+                {
+                    Id = (int)spell[0],
+                    Name = spell[1].ToString(),
+                    Lvl = (int)spell[2],
+                    School = spell[3].ToString(),
+                    Concentration = (int)spell[5] != 0,
+                    Source = spell[6].ToString()
+                };
                 s.SetComponents(spell[4].ToString());
-               spells.Add(s);
-               
-           }
+                spells.Add(s);
 
-           return spells;
+            }
+
+            return spells;
         }
 
         public ExtendedSpell GetExtendedSpellById(int id)
@@ -206,17 +205,17 @@ namespace DataBaseLib
 
         public IEnumerable<Group> GetGroups()
         {
-            var data = DataAccess.GetData("Parties", null, null, "*");
+            var data = OnlineDataAccess.GetData("Parties", null, null, "*");
             List<Group> groups = new List<Group>();
             foreach (var gr in data)
             {
 
                 var group = new Model.Group()
                 {
-                    Id = (int) (long) gr[0],
+                    Id = (int)gr[0],
                     Name = gr[1].ToString()
                 };
-                var players = DataAccess.GetData("Players", $"Group_id = {group.Id}", null,"*");
+                var players = OnlineDataAccess.GetData("Players", $"Group_id = {group.Id}", null, "*");
                 foreach (var p in players)
                 {
                     var player = GetPlayerFromData(p);
@@ -232,16 +231,16 @@ namespace DataBaseLib
         {
             var player = new Player()
             {
-                GroupId = (int) (long) playerData[0],
+                GroupId = (int)playerData[0],
                 Name = playerData[1].ToString(),
                 PlayerName = playerData[2].ToString(),
                 Class = playerData[3].ToString(),
-                Id = (int) (long) playerData[4],
-                AC = (int) (long) playerData[5],
-                HP = (int) (long) playerData[6],
-                Experience = (int) (long) playerData[7],
-                PassWis = (int) (long) playerData[8],
-                Initiative = (int)(long)playerData[9],
+                Id = (int)playerData[4],
+                AC = (int)playerData[5],
+                HP = (int)playerData[6],
+                Experience = (int)playerData[7],
+                PassWis = (int)playerData[8],
+                Initiative = (int)playerData[9],
                 Race = playerData[10].ToString()
             };
             return player;
@@ -250,7 +249,7 @@ namespace DataBaseLib
         public IEnumerable<Player> GetPlayers()
         {
             List<Player> players = new List<Player>();
-            var data = DataAccess.GetData("Players", null, null, "*");
+            var data = OnlineDataAccess.GetData("Players", null, null, "*");
             foreach (var singleData in data)
             {
                 players.Add(GetPlayerFromData(singleData));
@@ -261,29 +260,29 @@ namespace DataBaseLib
 
         public IEnumerable<Encounter> GetEncounters()
         {
-            var encData = DataAccess.GetData("Select * From Encounters");
+            var encData = OnlineDataAccess.GetData("Select * From Encounters");
             List<Encounter> encounters = new List<Encounter>();
 
             foreach (var en in encData)
             {
                 encounters.Add(new Encounter()
                 {
-                    GroupId =(int)(long)en[0],
+                    GroupId = (int)en[0],
                     Name = en[1].ToString(),
-                    Id = (int)(long)en[2]
+                    Id = (int)en[2]
                 });
             }
 
             foreach (var enc in encounters)
             {
-                var monsterData = DataAccess.GetData("SELECT * FROM EncountersToMonsters " +
+                var monsterData = OnlineDataAccess.GetData("SELECT * FROM EncountersToMonsters " +
                                                         $"where Encounter_Id = {enc.Id}");
-                foreach(var monsterd in monsterData)
+                foreach (var monsterd in monsterData)
                 {
                     enc.Monsters.Add(new BattleMonster()
                     {
-                        Quantity = (int)(long)monsterd[2],
-                        Monster = GetExtendedMonsterById((int)(long)monsterd[1])
+                        Quantity = (int)monsterd[2],
+                        Monster = GetExtendedMonsterById((int)monsterd[1])
                     });
                 }
             }
@@ -298,11 +297,11 @@ namespace DataBaseLib
 
         public async Task AddItem(ExtendedMagicItem item)
         {
-            await DataAccess.RawRequestAsync(
+            await OnlineDataAccess.RawRequestAsync(
                     "INSERT INTO MagicItems (Name, Quality, Type, Source)" +
-                    $"values('{item.Name.Replace("'","''")}',{item.Quality}, '{item.Type}', '{item.ItemSource.Replace("'", "''")}')");
-            var id = (int)(long)DataAccess.GetData($"Select _id from MagicItems where Name = '{item.Name.Replace("'", "''")}'")[0][0];
-            await DataAccess.RawRequestAsync($"Insert into ExtendedMagicItems (_id) values ({id})");
+                    $"values('{item.Name.Replace("'", "''")}',{item.Quality}, '{item.Type}', '{item.ItemSource.Replace("'", "''")}')");
+            var id = (int)OnlineDataAccess.GetData($"Select _id from MagicItems where Name = '{item.Name.Replace("'", "''")}'")[0][0];
+            await OnlineDataAccess.RawRequestAsync($"Insert into ExtendedMagicItems (_id) values ({id})");
             item.Id = id;
             await UpdateItem(item);
         }
@@ -314,33 +313,33 @@ namespace DataBaseLib
 
         public async Task AddGroup(Group group)
         {
-            await DataAccess.RawRequestAsync("Insert into Parties (Name) values ('" + group.Name.Replace("'","''") + "')");
+            await OnlineDataAccess.RawRequestAsync("Insert into Parties (Name) values ('" + group.Name.Replace("'", "''") + "')");
         }
 
         public async Task AddPlayer(Player player)
         {
-            await DataAccess.RawRequestAsync(
+            await OnlineDataAccess.RawRequestAsync(
                 "INSERT into Players (Group_Id, Name, PlayerName, Class, AC, HP, Exp, PassWis, Initiative, Race) " +
-                $"values ({player.GroupId}, '{player.Name.Replace("'","''")}', " +
+                $"values ({player.GroupId}, '{player.Name.Replace("'", "''")}', " +
                 $"'{player.PlayerName.Replace("'", "''")}', '{player.Class}', " +
                 $"{player.AC}, {player.HP}, {player.Experience}, " +
                 $"{player.PassWis}, {player.Initiative}, " +
-                $"'{player.Race.Replace("'","''")}')");
+                $"'{player.Race.Replace("'", "''")}')");
         }
 
         public async Task AddEncounter(Encounter enc)
         {
-            await DataAccess.RawRequestAsync($"insert into Encounters(group_id, name) values ({enc.GroupId}, '{enc.Name?.Replace("'", "''")}')");
-            var id = (int)(long)DataAccess.GetData("SELECT last_insert_rowid()")[0][0];
+            await OnlineDataAccess.RawRequestAsync($"insert into Encounters(group_id, name) values ({enc.GroupId}, '{enc.Name?.Replace("'", "''")}')");
+            var id = (int)OnlineDataAccess.GetData("SELECT last_insert_rowid()")[0][0];
             foreach (var monster in enc.Monsters)
             {
                 await AddBattleMonster(monster, id);
             }
         }
-        
+
         private async Task AddBattleMonster(BattleMonster monster, int encId)
         {
-            await DataAccess.RawRequestAsync($"insert into EncountersToMonsters(Monster_Quantity, Monster_id, Encounter_id) " +
+            await OnlineDataAccess.RawRequestAsync($"insert into EncountersToMonsters(Monster_Quantity, Monster_id, Encounter_id) " +
                                              $"values ({monster.Quantity}, {monster.Monster.Id}, {encId})");
         }
 
@@ -351,7 +350,7 @@ namespace DataBaseLib
 
         public async Task UpdateItem(ExtendedMagicItem item)
         {
-            (await DataAccess.RawRequestAsync($"UPDATE MagicItems " +
+            (await OnlineDataAccess.RawRequestAsync($"UPDATE MagicItems " +
                                                           $"SET Name = \'{item.Name.Replace("'", "''")}\', " +
                                                           $"Quality = {item.Quality}, " +
                                                           $"Type = \'{item.Type}\', " +
@@ -360,7 +359,7 @@ namespace DataBaseLib
                                                           $"isHomeBrew = 0 " +
                                                           $"Where _id = {item.Id}")).Close();
 
-            (await DataAccess.RawRequestAsync("UPDATE ExtendedMagicItems SET " +
+            (await OnlineDataAccess.RawRequestAsync("UPDATE ExtendedMagicItems SET " +
                  $"Description = \'{item.Description.Replace("'", "''")}\', " +
                  $"Undertype = \'{item.UnderType.Replace("'", "''")}\'," +
                  $"UnderQuality = \'{item.UnderQuality.Replace("'", "''")}\', " +
@@ -386,30 +385,30 @@ namespace DataBaseLib
 
         public async Task UpdatePlayer(Player player)
         {
-            await DataAccess.RawRequestAsync("Update Players SET" +
+            await OnlineDataAccess.RawRequestAsync("Update Players SET" +
                                   $"Group_Id = {player.GroupId}, " +
                                   $"Name = '{player.Name.Replace("'", "''")}', " +
                                   $"PlayerName = '{player.PlayerName.Replace("'", "''")}', " +
                                   $"Class = '{player.Class}', AC = {player.AC}, HP = {player.HP}, " +
                                   $"Exp = {player.Experience}, PassWis = {player.PassWis}, " +
                                   $"Initiative = {player.Initiative}, " +
-                                  $"Race = '{player.Race.Replace("'","''")}' " +
+                                  $"Race = '{player.Race.Replace("'", "''")}' " +
                                   $"WHERE _id = {player.Id}");
         }
 
         public async Task UpdateGroup(Group group)
         {
-           await DataAccess.RawRequestAsync("Update Parties SET" +
-                                  $"Name = '{group.Name.Replace("'", "''")}' " +
-                                  $"WHERE _id = {group.Id}");
+            await OnlineDataAccess.RawRequestAsync("Update Parties SET" +
+                                   $"Name = '{group.Name.Replace("'", "''")}' " +
+                                   $"WHERE _id = {group.Id}");
         }
 
         public async Task UpdateEncounter(Encounter encounter)
         {
-            await DataAccess.RawRequestAsync("Update Encounters SET " +
+            await OnlineDataAccess.RawRequestAsync("Update Encounters SET " +
                                   $"Name = '{encounter.Name.Replace("'", "''")}' " +
                                   $"WHERE _id = {encounter.Id}");
-            await DataAccess.RawRequestAsync("Delete from EncountersToMonsters where Encounter_id = " + encounter.Id);
+            await OnlineDataAccess.RawRequestAsync("Delete from EncountersToMonsters where Encounter_id = " + encounter.Id);
             foreach (var monster in encounter.Monsters)
             {
                 await AddBattleMonster(monster, encounter.Id);
@@ -433,52 +432,53 @@ namespace DataBaseLib
 
         public async Task DeletePlayer(int id)
         {
-            await DataAccess.RawRequestAsync($"Delete from Players WHERE _id = {id}");
+            await OnlineDataAccess.RawRequestAsync($"Delete from Players WHERE _id = {id}");
         }
 
         public async Task DeleteGroup(int id)
         {
-           await DataAccess.RawRequestAsync($"Delete from Parties WHERE _id = {id}");
+            await OnlineDataAccess.RawRequestAsync($"Delete from Parties WHERE _id = {id}");
         }
 
         public async Task DeleteEncounter(int id)
         {
-           await DataAccess.RawRequestAsync("DELEte from Encounters WHERE _id = " + id);
+            await OnlineDataAccess.RawRequestAsync("DELEte from Encounters WHERE _id = " + id);
         }
 
         private void UpdateTable(Table table, int parentId, string dbTable)
         {
             DeleteTable(parentId, dbTable);
             if (table == null) return;
-            string data = string.Join("@", table.Fields.Select(it => it.Replace("'","''")));
-            
-            DataAccess.RawRequest(
+            string data = string.Join("@", table.Fields.Select(it => it.Replace("'", "''")));
+
+            OnlineDataAccess.RawRequest(
                 $"INSERT INTO {dbTable} (ParentId, Rows, Columns, Data) " +
                 $"values ({parentId},{table.Rows}, {table.Columns}, '{data}')");
         }
 
         private static void DeleteTable(int parentId, string dbTable)
         {
-            DataAccess.RawRequest($"Delete from {dbTable} where ParentId = {parentId}");
+            OnlineDataAccess.RawRequest($"Delete from {dbTable} where ParentId = {parentId}");
         }
         private void DeleteFeatures(int parentId, string dbTable)
         {
-            DataAccess.RawRequest($"Delete from {dbTable} where _id = {parentId}");
+            OnlineDataAccess.RawRequest($"Delete from {dbTable} where _id = {parentId}");
         }
         private void UpdateFeature(Feature feature, int parentId, string dbTable)
         {
             if (feature == null) return;
-            DataBaseLib.DataAccess.RawRequest($"INSERT INTO {dbTable} (_id, Name, Description) " +
-                                              $"values ({parentId},'{feature.Name.Replace("'","''")}', '{feature.Description.Replace("'", "''")}')");
+            DataBaseLib.OnlineDataAccess.RawRequest($"INSERT INTO {dbTable} (_id, Name, Description) " +
+                                              $"values ({parentId},'{feature.Name.Replace("'", "''")}', '{feature.Description.Replace("'", "''")}')");
         }
 
         private static Table GetTable(int parentId, string dbTable)
         {
-            var data = DataAccess.GetData(dbTable, $"ParentId = {parentId}", null, "*");
+            var data = OnlineDataAccess.GetData(dbTable, $"ParentId = {parentId}", null, "*");
             if (data.Count == 0) return null;
             return new Table()
             {
-                Rows = (int) (long) data[0][1], Columns = (int) (long) data[0][2],
+                Rows = (int)data[0][1],
+                Columns = (int)data[0][2],
                 Fields = data[0][3].ToString().Split("@").ToList()
             };
         }
@@ -486,7 +486,7 @@ namespace DataBaseLib
         private static List<Feature> GetFeatures(int parentId, string dbTable)
         {
             List<Feature> features = new List<Feature>();
-            foreach (var act in DataAccess.GetData(dbTable, $"_id = {parentId}", null, "Name, Description"))
+            foreach (var act in OnlineDataAccess.GetData(dbTable, $"_id = {parentId}", null, "Name, Description"))
             {
                 features.Add(new Feature()
                 {
