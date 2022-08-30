@@ -1,6 +1,7 @@
 ﻿using App.Directories;
 using Model;
 using System;
+using App.Pages;
 
 namespace App
 {
@@ -49,17 +50,7 @@ namespace App
                 _ => throw new Exception()
             };
         }
-
-        public static Type GetPage(string type)
-        {
-            return type switch
-            {
-                "MI" => typeof(MagicItemExtendedPage),
-                "MO" => typeof(MonsterPage),
-                "SP" => typeof(MagicItemExtendedPage),
-                _ => throw new Exception()
-            };
-        }
+        
         public static Type GetPage(DataItem.DataType type)
         {
             return type switch
@@ -70,5 +61,17 @@ namespace App
                 _ => throw new Exception()
             };
         }
+
+        public static Type GetCustomPage(string page, int param)
+        {
+            
+            return typeof(TestPage);
+        }
+        public static Type GetCustomPage(RelativeLinks relativeLinks)
+        {
+
+            return GetCustomPage(relativeLinks.Url, relativeLinks.Parameter);
+        }
+        
     }
 }

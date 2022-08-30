@@ -61,5 +61,15 @@
         <Setter Property="BorderBrush" Value="{StaticResource AccentDark1}"/>
         <Setter Property="CornerRadius" Value="5"/>
     </Style>
-    <SolidColorBrush x:Name ="Header" Color="{ThemeResource SystemAccentColorLight1}"/>
+
+    <Style TargetType="TextBlock" x:Key="NameStyle">
+        <Setter Property="Foreground" Value="{ThemeResource AccentDark1}"/>
+        <Setter Property="Margin" Value="0,0,5,0"></Setter>
+        <Setter Property="FontWeight" Value="Bold"></Setter>
+    </Style>
+    <Style TargetType="TextBlock" x:Key="DescriptionStyle">
+        <Setter Property="TextWrapping" Value="Wrap"/>
+        <!--<Setter Property="MaxWidth" Value="1000"/>-->
+    </Style>
+
 </ResourceDictionary>

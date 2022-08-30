@@ -8,8 +8,10 @@ using Windows.Storage;
 
 namespace DataBaseLib
 {
-    public static class DataAccess
+    public class DataAccess:IDataAccess
     {
+        private static DataAccess _instance;
+        public static DataAccess Instance => _instance ??= new DataAccess();
         public const string DB_NAME = "DataBase.db";
         private const int DB_VERSION = 12;
         public static event Action NewDataLoaded;
@@ -24,8 +26,8 @@ namespace DataBaseLib
             }
         }
         public static string DbPath => Path.Combine(ApplicationData.Current.LocalFolder.Path, DB_NAME);
-        static DataAccess() { InitializeDatabase(); }
-        public static async Task InitializeDatabase()
+        private DataAccess() { InitializeDatabase(); }
+        public async Task InitializeDatabase()
         {
             ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
             if (!IsActualDb)
@@ -55,7 +57,7 @@ namespace DataBaseLib
             NewDataLoaded?.Invoke();
         }
 
-        public static List<object[]> GetData(string table, string whereReq = null, string sortBy = null, params string[] columns)
+        public List<object[]> GetData(string table, string whereReq = null, string sortBy = null, params string[] columns)
         {
             List<object[]> entries = new List<object[]>();
             //for (int i = 0; i < entries.Count; i++)
@@ -108,7 +110,7 @@ namespace DataBaseLib
             return command;
         }
 
-        public static List<object[]> GetData(string request)
+        public List<object[]> GetData(string request)
         {
             List<object[]> entries = new List<object[]>();
             //for (int i = 0; i < entries.Count; i++)
@@ -140,7 +142,7 @@ namespace DataBaseLib
             return entries;
         }
 
-        public static SqliteDataReader RawRequest(string request)
+        public void RawRequest(string request)
         {
             string dbpath = Path.Combine(ApplicationData.Current.LocalFolder.Path, DB_NAME);
             using (SqliteConnection db =
@@ -156,13 +158,13 @@ namespace DataBaseLib
 
                 SqliteDataReader query = insertCommand.ExecuteReader();
                 db.Close();
-                return query;
+                query.Close();
             }
         }
 
-        public static async Task<SqliteDataReader> RawRequestAsync(string request)
+        public async Task RawRequestAsync(string request)
         {
-            return await Task.Run(() => RawRequest(request));
+            await Task.Run(() => RawRequest(request));
         }
     }
 }

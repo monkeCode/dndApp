@@ -9,7 +9,7 @@ namespace App
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             int val = int.Parse(value.ToString());
-            int mod = (val - 10) / 2;
+            int mod = (int)Math.Floor((val - 10) / 2.0f);
             return $"{val}({(mod >= 0 ? "+" : "")}{mod})";
         }
 

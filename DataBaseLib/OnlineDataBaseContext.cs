@@ -274,16 +274,18 @@ namespace DataBaseLib
                 });
             }
 
+            var monsterList = GetMonsters().ToList();
             foreach (var enc in encounters)
             {
                 var monsterData = OnlineDataAccess.GetData("SELECT * FROM EncountersToMonsters " +
                                                         $"where Encounter_Id = {enc.Id}");
+                
                 foreach (var monsterd in monsterData)
                 {
                     enc.Monsters.Add(new BattleMonster()
                     {
                         Quantity = (int)monsterd[2],
-                        Monster = GetExtendedMonsterById((int)monsterd[1])
+                        Monster =  monsterList.First(m => m.Id == Convert.ToInt32(monsterd[1]))
                     });
                 }
             }
@@ -361,7 +363,7 @@ namespace DataBaseLib
         public async Task AddEncounter(Encounter enc)
         {
             await OnlineDataAccess.RawRequestAsync($"insert into Encounters(group_id, name) values ({enc.GroupId}, '{enc.Name?.Replace("'", "''")}')");
-            var id = (int)OnlineDataAccess.GetData("SELECT last_insert_rowid()")[0][0];
+            var id = (int)OnlineDataAccess.GetData(" SELECT MAX(_id) FROM Encounters")[0][0];
             foreach (var monster in enc.Monsters)
             {
                 await AddBattleMonster(monster, id);

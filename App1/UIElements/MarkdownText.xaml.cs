@@ -1,5 +1,6 @@
 ﻿using App.WorkShop;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Windows.UI.Xaml;
@@ -14,6 +15,9 @@ namespace App
     {
         private bool _isLoaded;
         public event Action<Type, int> HyperlinkClicked;
+
+        public List<RelativeLinks> RelativeLinks { get; set; }
+
         public string Text
         {
             get => (string)GetValue(TextProperty);
@@ -44,7 +48,7 @@ namespace App
             _isLoaded = true;
             TextBlock textBlock = sender;
             textBlock.Text = text;
-            Formator.StringtoText(textBlock);
+           RelativeLinks = Formator.StringtoText(textBlock);
             foreach (var r in textBlock.Inlines)
             {
                 if (r is Hyperlink)
@@ -70,13 +74,20 @@ namespace App
 
         private void Hyperlink_Click(Hyperlink sender, HyperlinkClickEventArgs args)
         {
-            var itemList = App.DataContext.GetDataItems();
             string name = (sender.Inlines.First() as Run).Text;
-            var item = itemList.OrderBy(it => name.LevenshteinDistance(it.Name)).First();
-            //ExtendedMagicItem model = DataContext as ExtendedMagicItem;
-            //Link link = model.Links.First(obj => obj.Text == (sender.Inlines.First() as Run).Text);
-            Link link = new Link(item.ItemType, item.Id, null);
-            HyperlinkClicked?.Invoke(link.Page, link.Id);
+            try
+            {
+                var relativeLink = RelativeLinks.First(x => x.Text == name);
+               var type = Link.GetCustomPage(relativeLink);
+                HyperlinkClicked?.Invoke(type, relativeLink.Parameter);
+            }
+            catch(Exception)
+            {
+                var itemList = App.DataContext.GetDataItems();
+                var item = itemList.OrderBy(it => name.LevenshteinDistance(it.Name)).First();
+                Link link = new Link(item.ItemType, item.Id, null);
+                HyperlinkClicked?.Invoke(link.Page, link.Id);
+            }
         }
     }
 }

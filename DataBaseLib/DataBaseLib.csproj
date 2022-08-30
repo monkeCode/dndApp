@@ -132,6 +132,7 @@
   <ItemGroup>
     <Compile Include="DataAccess.cs" />
     <Compile Include="DataBaseContext.cs" />
+    <Compile Include="IDataAccess.cs" />
     <Compile Include="IDataContext.cs" />
     <Compile Include="OnlineDataAccess.cs" />
     <Compile Include="OnlineDataBaseContext.cs" />

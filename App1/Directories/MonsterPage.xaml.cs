@@ -14,6 +14,7 @@ namespace App.Directories
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             DataContext = App.DataContext.GetExtendedMonsterById((int)e.Parameter);
+            TabMenu.UpdateText(Frame,(DataContext as Monster).Name);
         }
 
         private void TableLoading()

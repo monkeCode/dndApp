@@ -15,10 +15,10 @@ namespace App.WorkShop
         private static Regex headerRegex = new Regex(@"^\s*(?<!\\|\#)(?<Header>\#{1,6})(?<text>[^#]*)\k<Header>?", RegexOptions.Compiled);
         private static Regex ItalicRegex = new Regex(@"(?<!\\)[\*]", RegexOptions.Compiled | RegexOptions.Multiline);
         private static Regex BoldRegex = new Regex(@"(?<!\\)[\*]{2}", RegexOptions.Compiled | RegexOptions.Multiline);
-        private static Regex hypeRegex = new Regex(@"(?<!\\)(\[)(?<name>.*?)(\])", RegexOptions.Compiled);
+        private static Regex hypeRegex = new Regex(@"(?<!\\)\[(?<name>.*?)\]\d?(\(//(?<Ref>.*?)(/(?<Param>.*?))?\))?", RegexOptions.Compiled);
         private static Regex listRegex = new Regex(@"^(?<space>\s{0,4})(?<!\\)[\*\-\+](\s|\t)", RegexOptions.Compiled | RegexOptions.Multiline);
         private static Regex ignoreSymvolRegex = new Regex(@"\\(?<Sym>.)");
-        public static void StringtoText(TextBlock textBlock, string s = null)
+        public static List<RelativeLinks> StringtoText(TextBlock textBlock, string s = null)
         {
             if (!string.IsNullOrEmpty(s))
                 textBlock.Text = s;
@@ -26,10 +26,11 @@ namespace App.WorkShop
             CreateList(textBlock);
             Formating(BoldRegex, run => run.FontWeight = FontWeights.Bold, textBlock);
             Formating(ItalicRegex, run => run.FontStyle = FontStyle.Italic, textBlock);
-            AddHyperlink(textBlock);
+            var links = AddHyperlink(textBlock);
             AddHeaders(headerRegex, textBlock);
             TextIgnoring(ignoreSymvolRegex, textBlock);
             CreateDiceRoll(textBlock);
+            return links;
         }
         private static void Formating(Regex rg, Action<Run> action, TextBlock textBlock)
         {
@@ -86,7 +87,7 @@ namespace App.WorkShop
                     case 1:
                         ru.FontWeight = FontWeights.Bold;
                         ru.FontSize = 24;
-                        ru.Foreground = myResourceDictionary["Header"] as SolidColorBrush;
+                        ru.Foreground = myResourceDictionary["AccentDark1"] as SolidColorBrush;
                         break;
                     case 2:
                         ru.FontWeight = FontWeights.Bold;
@@ -101,13 +102,13 @@ namespace App.WorkShop
                         ru.FontWeight = FontWeights.Bold;
                         ru.FontStyle = FontStyle.Italic;
                         ru.FontStretch = FontStretch.ExtraExpanded;
-                        ru.Foreground = myResourceDictionary["Header"] as SolidColorBrush;
+                        ru.Foreground = myResourceDictionary["AccentDark1"] as SolidColorBrush;
                         break;
                     case 5:
                         ru.FontWeight = FontWeights.Bold;
                         ru.FontStyle = FontStyle.Italic;
                         ru.FontStretch = FontStretch.ExtraExpanded;
-                        ru.Foreground = myResourceDictionary["Header"] as SolidColorBrush;
+                        ru.Foreground = myResourceDictionary["AccentDark1"] as SolidColorBrush;
                         break;
                 }
             }
@@ -126,9 +127,10 @@ namespace App.WorkShop
             }
         }
 
-        private static void AddHyperlink(TextBlock textBlock)
+        private static List<RelativeLinks> AddHyperlink(TextBlock textBlock)
         {
             List<Inline> runs = new List<Inline>();
+            List<RelativeLinks> links = new List<RelativeLinks>();
             foreach (Inline inline in textBlock.Inlines)
             {
                 Run ru = inline as Run;
@@ -165,13 +167,24 @@ namespace App.WorkShop
                                 }
                             }
                         });
+                        if (matches[i].Groups["Ref"].Value != string.Empty)
+                        {
 
+                            links.Add(new RelativeLinks()
+                            {
+                                Url = matches[i].Groups["Ref"].Value,
+                                Parameter = matches[i].Groups["Param"].Value== string.Empty?0:int.Parse(matches[i].Groups["Param"].Value),
+                                Text = matches[i].Groups["name"].Value
+                            });
+                        }
                     }
                 }
             }
             textBlock.Text = string.Empty;
             foreach (var r in runs)
                 textBlock.Inlines.Add(r);
+
+            return links;
         }
 
         private static void SplitByLines(TextBlock textBlock)
@@ -282,14 +295,6 @@ namespace App.WorkShop
             foreach (var r in runs)
                 textBlock.Inlines.Add(r);
 
-        }
-
-        public static string CreateDbValidStr(string s)
-        {
-            if (s == null)
-                return "";
-            s = s.Replace("'", "''");
-            return s;
         }
     }
 }

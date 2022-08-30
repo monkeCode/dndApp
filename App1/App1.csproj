@@ -131,7 +131,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Dice.cs" />
+    <Compile Include="Helpers\Dice.cs" />
     <Compile Include="Directories\BestiaryPage.xaml.cs">
       <DependentUpon>BestiaryPage.xaml</DependentUpon>
     </Compile>
@@ -145,10 +145,13 @@
       <DependentUpon>EncounterPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Encounters\NumericalTextBox.cs" />
-    <Compile Include="FeatureList.xaml.cs">
+    <Compile Include="Pages\TestPage.xaml.cs">
+      <DependentUpon>TestPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIElements\FeatureList.xaml.cs">
       <DependentUpon>FeatureList.xaml</DependentUpon>
     </Compile>
-    <Compile Include="FeaturesTextBlock.xaml.cs">
+    <Compile Include="UIElements\FeaturesTextBlock.xaml.cs">
       <DependentUpon>FeaturesTextBlock.xaml</DependentUpon>
     </Compile>
     <Compile Include="Generator\Art.cs" />
@@ -174,9 +177,10 @@
     <Compile Include="Helpers\AttunementConverter.cs" />
     <Compile Include="Helpers\StatsConverter.cs" />
     <Compile Include="Helpers\Web.cs" />
-    <Compile Include="MarkdownText.xaml.cs">
+    <Compile Include="UIElements\MarkdownText.xaml.cs">
       <DependentUpon>MarkdownText.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\RelativeLinks.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Quest\QuestModel.cs" />
     <Compile Include="Quest\QuestPage.xaml.cs">
@@ -194,10 +198,10 @@
     <Compile Include="TabMenu.xaml.cs">
       <DependentUpon>TabMenu.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TextBlockTable.xaml.cs">
+    <Compile Include="UIElements\TextBlockTable.xaml.cs">
       <DependentUpon>TextBlockTable.xaml</DependentUpon>
     </Compile>
-    <Compile Include="VisualTable.cs" />
+    <Compile Include="UIElements\VisualTable.cs" />
     <Compile Include="WorkShop\CreateItem.xaml.cs">
       <DependentUpon>CreateItem.xaml</DependentUpon>
     </Compile>
@@ -266,11 +270,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="FeatureList.xaml">
+    <Page Include="Pages\TestPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="FeaturesTextBlock.xaml">
+    <Page Include="UIElements\FeatureList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIElements\FeaturesTextBlock.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -286,7 +294,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MarkdownText.xaml">
+    <Page Include="UIElements\MarkdownText.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -302,7 +310,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="TextBlockTable.xaml">
+    <Page Include="UIElements\TextBlockTable.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -378,6 +386,7 @@
   <ItemGroup>
     <Content Include="Assets\Fonts\Font Awesome 6 Free-Solid-900.otf" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

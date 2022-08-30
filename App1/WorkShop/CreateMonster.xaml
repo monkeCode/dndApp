@@ -87,7 +87,7 @@
                     <TextBox Header="Устойчивость к урону" Text="{Binding Monster.Resistance, Mode=TwoWay}" HorizontalAlignment="Left" MinWidth="200" Margin="0,0,0,5"></TextBox>
                     <TextBox Header="Невосприимчивость к урону" Text="{Binding Monster.Immunity, Mode=TwoWay}" HorizontalAlignment="Left" MinWidth="200" Margin="0,0,0,5"></TextBox>
                     <TextBox Header="Невосприимчивость к состояниям" Text="{Binding Monster.ImmunityState, Mode=TwoWay}" HorizontalAlignment="Left" MinWidth="200" Margin="0,0,0,5"></TextBox>
-                    <TextBox Header="Воспиятие" Text="{Binding Monster.Senses}" HorizontalAlignment="Left" MinWidth="200" Margin="0,0,0,5"></TextBox>
+                    <TextBox Header="Восприятие" Text="{Binding Monster.Senses}" HorizontalAlignment="Left" MinWidth="200" Margin="0,0,0,5"></TextBox>
                     <TextBox Header="Языки" Text="{Binding Monster.Languages}" HorizontalAlignment="Left" MinWidth="200" Margin="0,0,0,5"></TextBox>
                     <ComboBox Header="Опасность" HorizontalAlignment="Left" MinWidth="100" Margin="0,0,0,5" ItemsSource="{Binding Source= {StaticResource StaticValues}, Path=MonsterRate}" SelectedValue="{Binding Monster.Challenge, Mode=TwoWay}"></ComboBox>
                     <Button Margin="0,25,0,5" VerticalAlignment="Bottom">

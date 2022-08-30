@@ -92,7 +92,9 @@ namespace App.WorkShop
             switch (result)
             {
                 case ContentDialogResult.Primary:
-                    ((CreateItemMV)DataContext).Save();
+                    var table = Table.LoadTableData();
+                    (DataContext as CreateMonsterVM).Monster.Table = table;
+                    (DataContext as CreateMonsterVM).Save();
                     isSaved = true;
                     Frame.Navigate(page);
                     break;
