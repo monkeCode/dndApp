@@ -24,7 +24,7 @@ namespace App
         private int Calculate(string roll)
         {
             roll = roll.Replace(" ", "");
-            if (Regex.IsMatch(roll.Trim().ToLower(), @"[\D-[dkдк+-]]"))
+            if (Regex.IsMatch(roll.Trim().ToLower(), @"[\D-[dkдк+*-]]"))
                 throw new ArgumentException();
             if (Regex.IsMatch(roll.Trim().ToLower(), @"^\d*[dkдк]\d*$"))
             {
@@ -53,7 +53,7 @@ namespace App
                 l = roll.Split('-').ToList();
                 nextoperat = '-';
             }
-            else if (l.Count < 2)
+            if (l.Count < 2)
             {
                 l = roll.Split('*').ToList();
                 nextoperat = '*';
