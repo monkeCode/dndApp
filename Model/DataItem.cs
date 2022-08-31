@@ -10,6 +10,8 @@ namespace Model
         public string Name { get; set; } = "";
         public DataType ItemType { get; set; }
         public int Id { get; set; }
+
+        public bool IsHomebrew { get; set; }
         public override string ToString()
         {
             return Name;

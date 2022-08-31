@@ -18,12 +18,12 @@ namespace DataBaseLib
         public IEnumerable<DataItem> GetDataItems()
         {
             var request = DataAccess.Instance.GetData("SELECT _id, Name from Monsters");
-            List<DataItem> dataItems = request.Select(it => new DataItem { Id = (int)(long)it[0], Name = it[1].ToString(), ItemType = DataItem.DataType.Monster }).ToList();
+            List<DataItem> dataItems = request.Select(it => new DataItem { Id = Convert.ToInt32(it[0]), Name = it[1].ToString(),IsHomebrew = Convert.ToInt32(it[8]) == 1 , ItemType = DataItem.DataType.Monster }).ToList();
             request = DataBaseLib.DataAccess.Instance.GetData("SELECT _id, Name from MagicItems");
-            dataItems.AddRange(request.Select(it => new DataItem { Id = (int)(long)it[0], Name = it[1].ToString(), ItemType = DataItem.DataType.MagicItem }));
+            dataItems.AddRange(request.Select(it => new DataItem { Id = Convert.ToInt32(it[0]), Name = it[1].ToString(),IsHomebrew = Convert.ToInt32(it[6]) == 1, ItemType = DataItem.DataType.MagicItem }));
 
             request = DataBaseLib.DataAccess.Instance.GetData("SELECT _id, Name from Spells");
-            dataItems.AddRange(request.Select(it => new DataItem { Id = (int)(long)it[0], Name = it[1].ToString(), ItemType = DataItem.DataType.Spell }));
+            dataItems.AddRange(request.Select(it => new DataItem { Id = Convert.ToInt32(it[0]), Name = it[1].ToString(),IsHomebrew = Convert.ToInt32(it[7]) == 1, ItemType = DataItem.DataType.Spell }));
 
             return dataItems;
         }
@@ -36,12 +36,13 @@ namespace DataBaseLib
             {
                 items.Add(new MagicItem()
                 {
-                    Id = (int)(long)item[0],
+                    Id = Convert.ToInt32(item[0]),
                     Name = item[1].ToString(),
-                    Quality = (int)(long)item[2],
+                    Quality = Convert.ToInt32(item[2]),
                     Type = item[3].ToString(),
                     Attunement = item[4].ToString() != "0" ? "(Настройка)" : "",
                     ItemSource = item[5].ToString(),
+                    IsHomebrew = Convert.ToInt32(item[6]) == 1
                 });
             }
             return items;
@@ -52,16 +53,17 @@ namespace DataBaseLib
             var data = DataAccess.Instance.GetData("MagicItems", $"_id = {id}", "Name", "*")[0];
             var item = new ExtendedMagicItem()
             {
-                Id = (int)(long)data[0],
+                Id = Convert.ToInt32(data[0]),
                 Name = data[1].ToString(),
-                Quality = (int)(long)data[2],
+                Quality = Convert.ToInt32(data[2]),
                 Type = data[3].ToString(),
                 ItemSource = data[5].ToString(),
+                IsHomebrew = Convert.ToInt32(data[6]) == 1,
             };
             data = DataAccess.Instance.GetData("MagicItems, ExtendedMagicItems", $"MagicItems._id = {id} And MagicItems._Id = ExtendedMagicItems._id", null, "*")[0];
             item.Id = id;
             item.Name = data[1].ToString();
-            item.Quality = (int)(long)data[2];
+            item.Quality = Convert.ToInt32(data[2]);
             item.Type = data[3].ToString();
             item.ItemSource = data[5].ToString();
             item.Description = data[8].ToString();
@@ -94,14 +96,15 @@ namespace DataBaseLib
             {
                 monsters.Add(new Monster()
                 {
-                    Id = (int)(long)monster[0],
+                    Id = Convert.ToInt32(monster[0]),
                     Name = monster[1].ToString(),
-                    Size = (int)(long)monster[2],
+                    Size = Convert.ToInt32(monster[2]),
                     Type = monster[3].ToString(),
                     Habitat = new ObservableCollection<string>(monster[4].ToString().Split("@")),
                     Challenge = monster[5].ToString(),
                     IsLegendary = monster[6].ToString() == "1",
                     Source = monster[7].ToString(),
+                    IsHomebrew = Convert.ToInt32(monster[8]) == 1
                 });
             }
 
@@ -113,15 +116,15 @@ namespace DataBaseLib
             var list = DataAccess.Instance.GetData("ExtendedMonsters", $"_id = {id}", null, "*")[0];
             ExtendedMonster monster = new ExtendedMonster()
             {
-                AC = (int)(long)list[1],
+                AC = Convert.ToInt32(list[1]),
                 HP = list[2].ToString(),
                 Speed = list[3].ToString(),
-                Str = (int)(long)list[4],
-                Dex = (int)(long)list[5],
-                Con = (int)(long)list[6],
-                Intel = (int)(long)list[7],
-                Wis = (int)(long)list[8],
-                Cha = (int)(long)list[9],
+                Str = Convert.ToInt32(list[4]),
+                Dex = Convert.ToInt32(list[5]),
+                Con = Convert.ToInt32(list[6]),
+                Intel = Convert.ToInt32(list[7]),
+                Wis = Convert.ToInt32(list[8]),
+                Cha = Convert.ToInt32(list[9]),
                 SavingThrows = list[10].ToString(),
                 Skills = list[11].ToString(),
                 Senses = list[12].ToString(),
@@ -141,12 +144,13 @@ namespace DataBaseLib
             list = DataAccess.Instance.GetData("Monsters", $"_id = {id}", null, "*")[0];
             monster.Id = id;
             monster.Name = list[1].ToString();
-            monster.Size = (int)(long)list[2];
+            monster.Size = Convert.ToInt32(list[2]);
             monster.Type = list[3].ToString();
             monster.Habitat = new ObservableCollection<string>(list[4].ToString().Split("@"));
             monster.Challenge = list[5].ToString();
             monster.IsLegendary = list[6].ToString() == "1";
             monster.Source = list[7].ToString();
+            monster.IsHomebrew = Convert.ToInt32(list[8]) == 1;
 
             monster.Features = new ObservableCollection<Feature>();
             monster.Actions = new ObservableCollection<Feature>();
@@ -184,16 +188,16 @@ namespace DataBaseLib
             {
                 var s = new Spell()
                 {
-                    Id = (int)(long)spell[0],
+                    Id = Convert.ToInt32(spell[0]),
                     Name = spell[1].ToString(),
-                    Lvl = (int)(long)spell[2],
+                    Lvl = Convert.ToInt32(spell[2]),
                     School = spell[3].ToString(),
-                    Concentration = (long)spell[5] != 0,
-                    Source = spell[6].ToString()
+                    Concentration = Convert.ToInt32(spell[5]) == 1,
+                    Source = spell[6].ToString(),
+                    IsHomebrew = Convert.ToInt32(spell[7]) == 1,
                 };
                 s.SetComponents(spell[4].ToString());
                 spells.Add(s);
-
             }
 
             return spells;
@@ -213,7 +217,7 @@ namespace DataBaseLib
 
                 var group = new Model.Group()
                 {
-                    Id = (int)(long)gr[0],
+                    Id = Convert.ToInt32(gr[0]),
                     Name = gr[1].ToString()
                 };
                 var players = DataAccess.Instance.GetData("Players", $"Group_id = {group.Id}", null, "*");
@@ -232,16 +236,16 @@ namespace DataBaseLib
         {
             var player = new Player()
             {
-                GroupId = (int)(long)playerData[0],
+                GroupId = Convert.ToInt32(playerData[0]),
                 Name = playerData[1].ToString(),
                 PlayerName = playerData[2].ToString(),
                 Class = playerData[3].ToString(),
-                Id = (int)(long)playerData[4],
-                AC = (int)(long)playerData[5],
-                HP = (int)(long)playerData[6],
-                Experience = (int)(long)playerData[7],
-                PassWis = (int)(long)playerData[8],
-                Initiative = (int)(long)playerData[9],
+                Id = Convert.ToInt32(playerData[4]),
+                AC = Convert.ToInt32(playerData[5]),
+                HP = Convert.ToInt32(playerData[6]),
+                Experience = Convert.ToInt32(playerData[7]),
+                PassWis = Convert.ToInt32(playerData[8]),
+                Initiative = Convert.ToInt32(playerData[9]),
                 Race = playerData[10].ToString()
             };
             return player;
@@ -261,29 +265,31 @@ namespace DataBaseLib
 
         public IEnumerable<Encounter> GetEncounters()
         {
-            var encData = DataAccess.Instance.GetData("Select * From Encounters");
+            var encData = OnlineDataAccess.GetData("Select * From Encounters");
             List<Encounter> encounters = new List<Encounter>();
 
             foreach (var en in encData)
             {
                 encounters.Add(new Encounter()
                 {
-                    GroupId = (int)(long)en[0],
+                    GroupId = Convert.ToInt32(en[0]),
                     Name = en[1].ToString(),
-                    Id = (int)(long)en[2]
+                    Id = Convert.ToInt32(en[2])
                 });
             }
 
+            var monsterList = GetMonsters().ToList();
             foreach (var enc in encounters)
             {
-                var monsterData = DataAccess.Instance.GetData("SELECT * FROM EncountersToMonsters " +
-                                                        $"where Encounter_Id = {enc.Id}");
+                var monsterData = OnlineDataAccess.GetData("SELECT * FROM EncountersToMonsters " +
+                                                           $"where Encounter_Id = {enc.Id}");
+
                 foreach (var monsterd in monsterData)
                 {
                     enc.Monsters.Add(new BattleMonster()
                     {
-                        Quantity = (int)(long)monsterd[2],
-                        Monster = GetExtendedMonsterById((int)(long)monsterd[1])
+                        Quantity = Convert.ToInt32(monsterd[2]),
+                        Monster = monsterList.First(m => m.Id == Convert.ToInt32(monsterd[1]))
                     });
                 }
             }
@@ -309,11 +315,11 @@ namespace DataBaseLib
             {
                 completedDataItems.Add(new CompletedDataItem()
                 {
-                    Id = (int)(long)item[0],
+                    Id = Convert.ToInt32(item[0]),
                     Name = item[1].ToString(),
                     ItemType = type,
                     Color = new SolidColorBrush(
-                        (int)(long)item[2] == 1
+                        Convert.ToInt32(item[2]) == 1
                             ? Windows.UI.Color.FromArgb(Color.YellowGreen.A, Color.YellowGreen.R,
                                 Color.YellowGreen.G, Color.YellowGreen.B)
                             : Windows.UI.Color.FromArgb(0, 0, 0, 0))
@@ -331,7 +337,7 @@ namespace DataBaseLib
             await DataAccess.Instance.RawRequestAsync(
                     "INSERT INTO MagicItems (Name, Quality, Type, Source)" +
                     $"values('{item.Name.Replace("'", "''")}',{item.Quality}, '{item.Type}', '{item.ItemSource.Replace("'", "''")}')");
-            var id = (int)(long)DataAccess.Instance.GetData($"Select _id from MagicItems where Name = '{item.Name.Replace("'", "''")}'")[0][0];
+            var id = Convert.ToInt32(DataAccess.Instance.GetData($"Select _id from MagicItems where Name = '{item.Name.Replace("'", "''")}'")[0][0]);
             await DataAccess.Instance.RawRequestAsync($"Insert into ExtendedMagicItems (_id) values ({id})");
             item.Id = id;
             await UpdateItem(item);
@@ -361,7 +367,7 @@ namespace DataBaseLib
         public async Task AddEncounter(Encounter enc)
         {
             await DataAccess.Instance.RawRequestAsync($"insert into Encounters(group_id, name) values ({enc.GroupId}, '{enc.Name?.Replace("'", "''")}')");
-            var id = (int)(long)DataAccess.Instance.GetData("SELECT last_insert_rowid()")[0][0];
+            var id = Convert.ToInt32(DataAccess.Instance.GetData("SELECT last_insert_rowid()")[0][0]);
             foreach (var monster in enc.Monsters)
             {
                 await AddBattleMonster(monster, id);
@@ -448,17 +454,18 @@ namespace DataBaseLib
 
         public async Task DeleteMonster(int id)
         {
-            throw new NotImplementedException();
+            await OnlineDataAccess.RawRequestAsync($"Delete from Monsters where _id = {id}");
         }
 
         public async Task DeleteItem(int id)
         {
-            throw new NotImplementedException();
+            await OnlineDataAccess.RawRequestAsync($"Delete from MagicItems where _id = {id}");
+
         }
 
         public async Task DeleteSpell(int id)
         {
-            throw new NotImplementedException();
+            await OnlineDataAccess.RawRequestAsync($"Delete from Spells where _id = {id}");
         }
 
         public async Task DeletePlayer(int id)
@@ -508,8 +515,8 @@ namespace DataBaseLib
             if (data.Count == 0) return null;
             return new Table()
             {
-                Rows = (int)(long)data[0][1],
-                Columns = (int)(long)data[0][2],
+                Rows = Convert.ToInt32(data[0][1]),
+                Columns = Convert.ToInt32(data[0][2]),
                 Fields = data[0][3].ToString().Split("@").ToList()
             };
         }

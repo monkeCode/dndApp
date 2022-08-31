@@ -1,9 +1,11 @@
 ﻿using Model;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Drawing;
+using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Windows.UI;
 using Windows.UI.Xaml.Media;
 
 namespace App.WorkShop
@@ -19,7 +21,28 @@ namespace App.WorkShop
         {
             MagicItems = new ObservableCollection<CompletedDataItem>();
             Monsters = new ObservableCollection<CompletedDataItem>();
-            var completedItems = App.DataContext.GetCompletedItems();
+            IEnumerable<CompletedDataItem> completedItems;
+
+#if !DEBUG
+            
+               var list = new List<CompletedDataItem>();
+            foreach (var item in App.DataContext.GetCompletedItems())
+            {
+               list.Add(new CompletedDataItem()
+               {
+                   Id = item.Id,
+                   IsHomebrew = item.IsHomebrew,
+                   ItemType = item.ItemType,
+                   Name = item.Name,
+                   Color = new SolidColorBrush(Color.FromArgb(0, 0, 0, 255))
+               });
+            }
+
+            completedItems = list.Where(it => it.IsHomebrew);
+
+#else
+            completedItems = App.DataContext.GetCompletedItems();
+#endif
             foreach (var it in completedItems)
             {
                 switch (it.ItemType)
