@@ -15,6 +15,11 @@ namespace DataBaseLib
         public static OnlineDataBaseContext Instance => _inst ??= new OnlineDataBaseContext();
         private OnlineDataBaseContext() { }
 
+        private static string HandleString(string str)
+        {
+           return str.Replace("'", "''").Replace("\\","\\\\");
+        }
+
         public IEnumerable<DataItem> GetDataItems()
         {
             var request = OnlineDataAccess.GetData("SELECT _id, Name from Monsters");
@@ -332,8 +337,8 @@ namespace DataBaseLib
         {
             await OnlineDataAccess.RawRequestAsync(
                     "INSERT INTO MagicItems (Name, Quality, Type, Source)" +
-                    $"values('{item.Name.Replace("'", "''")}',{item.Quality}, '{item.Type}', '{item.ItemSource.Replace("'", "''")}')");
-            var id = (int)OnlineDataAccess.GetData($"Select _id from MagicItems where Name = '{item.Name.Replace("'", "''")}'")[0][0];
+                    $"values('{HandleString(item.Name)}',{item.Quality}, '{item.Type}', '{HandleString(item.ItemSource)}')");
+            var id = (int)OnlineDataAccess.GetData($"Select _id from MagicItems where Name = '{HandleString(item.Name)}'")[0][0];
             await OnlineDataAccess.RawRequestAsync($"Insert into ExtendedMagicItems (_id) values ({id})");
             item.Id = id;
             await UpdateItem(item);
@@ -346,23 +351,23 @@ namespace DataBaseLib
 
         public async Task AddGroup(Group group)
         {
-            await OnlineDataAccess.RawRequestAsync("Insert into Parties (Name) values ('" + group.Name.Replace("'", "''") + "')");
+            await OnlineDataAccess.RawRequestAsync("Insert into Parties (Name) values ('" + HandleString(group.Name) + "')");
         }
-
+        
         public async Task AddPlayer(Player player)
         {
             await OnlineDataAccess.RawRequestAsync(
                 "INSERT into Players (Group_Id, Name, PlayerName, Class, AC, HP, Exp, PassWis, Initiative, Race) " +
-                $"values ({player.GroupId}, '{player.Name.Replace("'", "''")}', " +
-                $"'{player.PlayerName.Replace("'", "''")}', '{player.Class}', " +
+                $"values ({player.GroupId}, '{HandleString(player.Name)}', " +
+                $"'{HandleString(player.PlayerName)}', '{player.Class}', " +
                 $"{player.AC}, {player.HP}, {player.Experience}, " +
                 $"{player.PassWis}, {player.Initiative}, " +
-                $"'{player.Race.Replace("'", "''")}')");
+                $"'{HandleString(player.Race)}')");
         }
 
         public async Task AddEncounter(Encounter enc)
         {
-            await OnlineDataAccess.RawRequestAsync($"insert into Encounters(group_id, name) values ({enc.GroupId}, '{enc.Name?.Replace("'", "''")}')");
+            await OnlineDataAccess.RawRequestAsync($"insert into Encounters(group_id, name) values ({enc.GroupId}, '{HandleString(enc.Name)}')");
             var id = (int)OnlineDataAccess.GetData(" SELECT MAX(_id) FROM Encounters")[0][0];
             foreach (var monster in enc.Monsters)
             {
@@ -384,20 +389,20 @@ namespace DataBaseLib
         public async Task UpdateItem(ExtendedMagicItem item)
         {
             (await OnlineDataAccess.RawRequestAsync($"UPDATE MagicItems " +
-                                                          $"SET Name = \'{item.Name.Replace("'", "''")}\', " +
+                                                          $"SET Name = \'{HandleString(item.Name)}\', " +
                                                           $"Quality = {item.Quality}, " +
                                                           $"Type = \'{item.Type}\', " +
                                                           $"Attunement = \'{((item.Attunement != string.Empty) ? 1 : 0)}\', " +
-                                                          $"Source = \'{item.ItemSource.Replace("'", "''")}\', " +
+                                                          $"Source = \'{HandleString(item.ItemSource)}\', " +
                                                           $"isHomeBrew = 0 " +
                                                           $"Where _id = {item.Id}")).Close();
 
             (await OnlineDataAccess.RawRequestAsync("UPDATE ExtendedMagicItems SET " +
-                 $"Description = \'{item.Description.Replace("'", "''")}\', " +
-                 $"Undertype = \'{item.UnderType.Replace("'", "''")}\'," +
-                 $"UnderQuality = \'{item.UnderQuality.Replace("'", "''")}\', " +
-                 $"Attunement = \'{item.Attunement.Replace("'", "''")}\', " +
-                 $"OptionalText = \'{item.OptionableText.Replace("'", "''")}\' " +
+                 $"Description = \'{HandleString(item.Description)}\', " +
+                 $"Undertype = \'{HandleString(item.UnderType)}\'," +
+                 $"UnderQuality = \'{HandleString(item.UnderQuality)}\', " +
+                 $"Attunement = \'{HandleString(item.Attunement)}\', " +
+                 $"OptionalText = \'{HandleString(item.OptionableText)}\' " +
                  $"Where _id = {item.Id}")).Close();
             await Task.Run(() => UpdateTable(item.Table, item.Id, "TablesMagicItems"));
             await Task.Run(() =>
@@ -420,26 +425,26 @@ namespace DataBaseLib
         {
             await OnlineDataAccess.RawRequestAsync("Update Players SET" +
                                   $"Group_Id = {player.GroupId}, " +
-                                  $"Name = '{player.Name.Replace("'", "''")}', " +
-                                  $"PlayerName = '{player.PlayerName.Replace("'", "''")}', " +
+                                  $"Name = '{HandleString(player.Name)}', " +
+                                  $"PlayerName = '{HandleString(player.PlayerName)}', " +
                                   $"Class = '{player.Class}', AC = {player.AC}, HP = {player.HP}, " +
                                   $"Exp = {player.Experience}, PassWis = {player.PassWis}, " +
                                   $"Initiative = {player.Initiative}, " +
-                                  $"Race = '{player.Race.Replace("'", "''")}' " +
+                                  $"Race = '{HandleString(player.Race)}' " +
                                   $"WHERE _id = {player.Id}");
         }
 
         public async Task UpdateGroup(Group group)
         {
             await OnlineDataAccess.RawRequestAsync("Update Parties SET" +
-                                   $"Name = '{group.Name.Replace("'", "''")}' " +
+                                   $"Name = '{HandleString(group.Name)}' " +
                                    $"WHERE _id = {group.Id}");
         }
 
         public async Task UpdateEncounter(Encounter encounter)
         {
             await OnlineDataAccess.RawRequestAsync("Update Encounters SET " +
-                                  $"Name = '{encounter.Name.Replace("'", "''")}' " +
+                                  $"Name = '{HandleString(encounter.Name)}' " +
                                   $"WHERE _id = {encounter.Id}");
             await OnlineDataAccess.RawRequestAsync("Delete from EncountersToMonsters where Encounter_id = " + encounter.Id);
             foreach (var monster in encounter.Monsters)
@@ -482,7 +487,7 @@ namespace DataBaseLib
         {
             DeleteTable(parentId, dbTable);
             if (table == null) return;
-            string data = string.Join("@", table.Fields.Select(it => it.Replace("'", "''")));
+            string data = string.Join("@", table.Fields.Select(HandleString));
 
             OnlineDataAccess.RawRequest(
                 $"INSERT INTO {dbTable} (ParentId, Rows, Columns, Data) " +
@@ -501,7 +506,7 @@ namespace DataBaseLib
         {
             if (feature == null) return;
             DataBaseLib.OnlineDataAccess.RawRequest($"INSERT INTO {dbTable} (_id, Name, Description) " +
-                                              $"values ({parentId},'{feature.Name.Replace("'", "''")}', '{feature.Description.Replace("'", "''")}')");
+                                              $"values ({parentId},'{HandleString(feature.Name)}', '{HandleString(feature.Description)}')");
         }
 
         private static Table GetTable(int parentId, string dbTable)

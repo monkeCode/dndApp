@@ -11,7 +11,7 @@ namespace App
         public string Roll { get; set; }
         public int Result { get; set; }
 
-        public const string DICE_PATTERN = @"\d*[[dkдк]\d{1,}(\s*[+-]?\s*\d{1,})?";
+        public const string DICE_PATTERN = @"\d*[[dkдк]\d{1,}(\s*[+*-]?\s*\d{1,})?";
         public Dice(string roll)
         {
             Roll = roll;
@@ -53,6 +53,11 @@ namespace App
                 l = roll.Split('-').ToList();
                 nextoperat = '-';
             }
+            else if (l.Count < 2)
+            {
+                l = roll.Split('*').ToList();
+                nextoperat = '*';
+            }
             string first = l[0];
             string second = "";
             for (int i = 1; i < l.Count; i++)
@@ -62,8 +67,15 @@ namespace App
                     second += nextoperat;
             }
 
-            return first == roll || second == roll ? throw new ArgumentException() :
-                nextoperat == '+' ? Calculate(first) + Calculate(second) : Calculate(first) - Calculate(second);
+            return first == roll || second == roll
+                ? throw new ArgumentException()
+                : nextoperat switch
+                {
+                    '+' => Calculate(first) + Calculate(second),
+                    '-' => Calculate(first) - Calculate(second),
+                    '*' => Calculate(first) * Calculate(second)
+
+                };
         }
 
         public static int RollDice(Dices dice, int count)
