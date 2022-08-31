@@ -36,7 +36,7 @@
                         <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Height="60">
                             <Grid.ContextFlyout>
                                 <MenuFlyout>
-                                    <MenuFlyoutItem Text="Удалить" Icon="Delete">
+                                    <MenuFlyoutItem Text="Удалить" Icon="Delete" Click="DeleteItem">
                                         <MenuFlyoutItem.KeyboardAccelerators>
                                             <KeyboardAccelerator Key="Delete"></KeyboardAccelerator>
                                         </MenuFlyoutItem.KeyboardAccelerators>
@@ -48,7 +48,7 @@
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Grid.Column="0" FontSize="18" Text="{Binding Name}" VerticalAlignment ="Center" HorizontalAlignment="Stretch" TextAlignment="Left" />
-                            <AppBarButton Grid.Column="1" x:Name="HoverButton" Icon="Delete" HorizontalAlignment="Right" Label="Удалить" Visibility="Collapsed"  IsTabStop="False"></AppBarButton>
+                            <AppBarButton Grid.Column="1" x:Name="HoverButton" Icon="Delete" HorizontalAlignment="Right" Label="Удалить" Visibility="Collapsed" Click="DeleteItem"  IsTabStop="False"></AppBarButton>
                         </Grid>
                     </StackPanel>
                 </UserControl>

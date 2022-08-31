@@ -73,7 +73,8 @@ namespace App
                 {
                     '+' => Calculate(first) + Calculate(second),
                     '-' => Calculate(first) - Calculate(second),
-                    '*' => Calculate(first) * Calculate(second)
+                    '*' => Calculate(first) * Calculate(second),
+                    _ => throw new ArgumentException()
 
                 };
         }

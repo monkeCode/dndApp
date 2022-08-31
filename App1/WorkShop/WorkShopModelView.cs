@@ -13,6 +13,7 @@ namespace App.WorkShop
     {
         public ObservableCollection<CompletedDataItem> MagicItems { get; set; }
         public ObservableCollection<CompletedDataItem> Monsters { get; set; }
+        public ObservableCollection<CompletedDataItem> Spells { get; set; }
 
         public WorkShopModelView()
         {
@@ -35,6 +36,24 @@ namespace App.WorkShop
                 
             }
         }
-        
+
+        public void Delete(DataItem item)
+        {
+            switch (item.ItemType)
+            {
+                case DataItem.DataType.MagicItem:
+                    MagicItems.Remove(MagicItems.First(i => i.Id == item.Id));
+                    App.DataContext.DeleteItem(item.Id);
+                    break;
+                case DataItem.DataType.Monster:
+                    Monsters.Remove(Monsters.First(i => i.Id == item.Id));
+                    App.DataContext.DeleteMonster(item.Id);
+                    break;
+                case DataItem.DataType.Spell:
+                    Spells.Remove(Spells.First(it => item.Id == it.Id));
+                    App.DataContext.DeleteSpell(item.Id);
+                    break;
+            }
+        }
     }
 }

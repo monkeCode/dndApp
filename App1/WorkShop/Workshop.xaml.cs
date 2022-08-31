@@ -60,5 +60,12 @@ namespace App
         {
             Frame.Navigate(typeof(CreateMonster));
         }
+
+    private void DeleteItem(object sender, RoutedEventArgs e)
+    {
+            var context = (sender as FrameworkElement).DataContext as DataItem;
+            (DataContext as WorkShopModelView).Delete(context);
+            
+    }  
     }
 }
