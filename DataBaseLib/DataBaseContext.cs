@@ -265,7 +265,7 @@ namespace DataBaseLib
 
         public IEnumerable<Encounter> GetEncounters()
         {
-            var encData = OnlineDataAccess.GetData("Select * From Encounters");
+            var encData = DataAccess.Instance.GetData("Select * From Encounters");
             List<Encounter> encounters = new List<Encounter>();
 
             foreach (var en in encData)
@@ -281,7 +281,7 @@ namespace DataBaseLib
             var monsterList = GetMonsters().ToList();
             foreach (var enc in encounters)
             {
-                var monsterData = OnlineDataAccess.GetData("SELECT * FROM EncountersToMonsters " +
+                var monsterData = DataAccess.Instance.GetData("SELECT * FROM EncountersToMonsters " +
                                                            $"where Encounter_Id = {enc.Id}");
 
                 foreach (var monsterd in monsterData)
