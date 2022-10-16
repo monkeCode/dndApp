@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -135,15 +136,31 @@ namespace App.WorkShop
         {
             var list = sender as ListView;
             if (list == null) return;
-            foreach (var hab in (DataContext as CreateMonsterVM).Monster.Habitat)
+            var dat = (DataContext as CreateMonsterVM).Monster.Habitat.ToArray();
+            foreach (var hab in dat)
             {
                 list.SelectedItems.Add(hab);
             }
+
+            (sender as ListView).Loaded -= HabittatLoaded;
         }
 
         private void Legendary(object sender, RoutedEventArgs e)
         {
             LegendaryPanel.Visibility = (sender as CheckBox).IsChecked.Value ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        private void HabbitatSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            for (int i = 0; i < e.AddedItems.Count; i++)
+            {
+                if(!(DataContext as CreateMonsterVM).Monster.Habitat.Contains(e.AddedItems[i] as string))
+                    (DataContext as CreateMonsterVM).Monster.Habitat.Add(e.AddedItems[i] as string);
+            }
+            for (int i = 0; i < e.RemovedItems.Count; i++)
+            {
+                (DataContext as CreateMonsterVM).Monster.Habitat.Remove(e.RemovedItems[i] as string);
+            }
         }
     }
 }

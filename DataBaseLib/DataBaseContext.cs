@@ -382,7 +382,80 @@ namespace DataBaseLib
 
         public async Task UpdateMonster(ExtendedMonster monster)
         {
-            throw new NotImplementedException();
+            await DataAccess.Instance.RawRequestAsync("UPDATE  Monsters set " +
+                                                      $"Name = '{monster.Name.Replace("'","''")}', " +
+                                                      $"Size = {monster.Size}, " +
+                                                      $"Type = '{monster.Type.Replace("'", "''")}', " +
+                                                      $"Habitat = '{string.Join("@",monster.Habitat)}', " +
+                                                      $"ChallengeRate = '{monster.Challenge}', " +
+                                                      $"IsLegendary = {monster.IsLegendary}, " +
+                                                      $"Source = '{monster.Source.Replace("'", "''")}', " +
+                                                      $"IsHomebrew = 0 " +
+                                                      $"where _id = {monster.Id}");
+            await DataAccess.Instance.RawRequestAsync("UPDATE ExtendedMonsters set " +
+                                                      $"AC = {monster.AC}, " +
+                                                      $"HP = '{monster.HP.Replace("'", "''")}', " +
+                                                      $"speed = '{monster.Speed.Replace("'", "''")}', " +
+                                                      $"STR = {monster.Str}, " +
+                                                      $"Dex = {monster.Dex}, " +
+                                                      $"CON = {monster.Con}, " +
+                                                      $"INTEL = {monster.Intel}, " +
+                                                      $"WIS = {monster.Wis}, " +
+                                                      $"CHA = {monster.Cha}, " +
+                                                      $"SavingThrows = '{monster.SavingThrows.Replace("'", "''")}', " +
+                                                      $"Skills = '{monster.Skills.Replace("'", "''")}', " +
+                                                      $"Senses = '{monster.Senses.Replace("'", "''")}', " +
+                                                      $"Languages = '{monster.Languages.Replace("'", "''")}', " +
+                                                      $"Description = '{monster.Description.Replace("'", "''")}', " +
+                                                      $"LairActions = '{monster.LairActions.Replace("'", "''")}', " +
+                                                      $"RegionalEffect ='{monster.RegionalEf.Replace("'", "''")}', " +
+                                                      $"UnderType = '{monster.UnderType.Replace("'", "''")}', " +
+                                                      $"WorldView = '{monster.WorldView}', " +
+                                                      $"ACType = '{monster.ACType}', " +
+                                                      $"Immunity = '{monster.Immunity}', " +
+                                                      $"Resistance = '{monster.Resistance}', " +
+                                                      $"Vulnerability = '{monster.Vulnerability}', " +
+                                                      $"ImmunityState = '{monster.ImmunityState}' " +
+                                                      $"where _id = {monster.Id}");
+
+            //await Task.Run(() => UpdateTable(monster.Table, monster.Id, "TablesMonsters"));
+            await Task.Run(() =>
+            {
+                DeleteFeatures(monster.Id, "MonsterFeatures");
+                foreach (var feature in monster.Features)
+                {
+                    UpdateFeature(feature, monster.Id, "MonsterFeatures");
+                }
+
+            });
+            await Task.Run(() =>
+            {
+                DeleteFeatures(monster.Id, "MonsterActions");
+                foreach (var feature in monster.Features)
+                {
+                    UpdateFeature(feature, monster.Id, "MonsterActions");
+                }
+
+            }); 
+            await Task.Run(() =>
+            {
+                DeleteFeatures(monster.Id, "MonsterLegendaryActions");
+                foreach (var feature in monster.Features)
+                {
+                    UpdateFeature(feature, monster.Id, "MonsterLegendaryActions");
+                }
+
+            });
+            await Task.Run(() =>
+            {
+                DeleteFeatures(monster.Id, "MonsterReciprocalActions");
+                foreach (var feature in monster.Features)
+                {
+                    UpdateFeature(feature, monster.Id, "MonsterReciprocalActions");
+                }
+
+            });
+
         }
 
         public async Task UpdateItem(ExtendedMagicItem item)
