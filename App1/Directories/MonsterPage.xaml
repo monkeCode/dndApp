@@ -179,6 +179,7 @@
                 <TextBlock FontSize="24" Margin="30,15,0,0" FontWeight="Bold">Описание</TextBlock>
                 <app:MarkdownText Text="{Binding Description}" HyperlinkClicked="MarkdownText_OnHyperlinkClicked"></app:MarkdownText>
             </StackPanel>
+            <local:TextBlockTable Table="{Binding Table}" x:Name="TableGrid" Margin="30" ></local:TextBlockTable>
         </StackPanel>
     </ScrollViewer>
 </Page>

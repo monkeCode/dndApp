@@ -162,7 +162,7 @@
                     <TextBlock FontSize="18" TextDecorations="Underline" >Таблица</TextBlock>
                     <CheckBox Margin="5,0,0,0" Click="TableStateChanged" IsChecked="{Binding IsTable, Mode=TwoWay}" />
                 </StackPanel>
-                <StackPanel x:Name="TablePanel" Visibility="{Binding IsTable, Mode=OneWay}">
+                <StackPanel x:Name="TablePanel" Visibility="{Binding IsTable, Mode=OneTime}">
                     <app:VisualTable x:Name="Table" 
                                      Rows="{x:Bind ((local:CreateMonsterVM)DataContext).Monster.Table.Rows, Mode=TwoWay}" 
                                      Columns="{x:Bind ((local:CreateMonsterVM)DataContext).Monster.Table.Columns, Mode=TwoWay}" 

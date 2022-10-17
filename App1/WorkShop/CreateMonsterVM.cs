@@ -20,6 +20,12 @@ namespace App.WorkShop
         {
             if (!IsTable)
                 Item.Table = null;
+            if(!Monster.IsLegendary)
+            {
+                Monster.LegendaryActions.Clear();
+                Monster.LairActions = "";
+                Monster.RegionalEf = "";
+            }
 
             if (isNew)
             {
@@ -61,11 +67,13 @@ namespace App.WorkShop
         public CreateMonsterVM() : base(true)
         {
             Item = new ExtendedMonster();
+            IsTable = false;
         }
 
         public CreateMonsterVM(int id) : base(false)
         {
             Item = App.DataContext.GetExtendedMonsterById(id);
+            IsTable = Item.Table != null;
         }
 
     }

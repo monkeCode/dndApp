@@ -14,12 +14,23 @@ namespace App.Directories
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             DataContext = App.DataContext.GetExtendedMonsterById((int)e.Parameter);
+            TableGrid.Table = (DataContext as ExtendedMonster).Table;
+            TableLoading();
             TabMenu.UpdateText(Frame,(DataContext as Monster).Name);
         }
 
         private void TableLoading()
         {
             Table table = (DataContext as ExtendedMonster).Table;
+            if (table != null)
+            {
+
+                foreach (MarkdownText tex in TableGrid.MarkdownTexts)
+                {
+
+                    tex.HyperlinkClicked += MarkdownText_OnHyperlinkClicked;
+                }
+            }
         }
 
         private void MarkdownText_OnHyperlinkClicked(Type arg1, int arg2)

@@ -157,6 +157,8 @@ namespace DataBaseLib
             monster.ReciprocalActions = new ObservableCollection<Feature>();
             monster.LegendaryActions = new ObservableCollection<Feature>();
 
+            monster.Table = GetTable(monster.Id, "TablesMonsters");
+
             foreach (var feature in GetFeatures(id, "MonsterFeatures"))
             {
                 monster.Features.Add(feature);
@@ -176,6 +178,7 @@ namespace DataBaseLib
             {
                 monster.LegendaryActions.Add(feature);
             }
+
 
             return monster;
         }
@@ -418,7 +421,7 @@ namespace DataBaseLib
                                                       $"ImmunityState = '{monster.ImmunityState}' " +
                                                       $"where _id = {monster.Id}");
 
-            //await Task.Run(() => UpdateTable(monster.Table, monster.Id, "TablesMonsters"));
+            await Task.Run(() => UpdateTable(monster.Table, monster.Id, "TablesMonsters"));
             await Task.Run(() =>
             {
                 DeleteFeatures(monster.Id, "MonsterFeatures");
@@ -431,7 +434,7 @@ namespace DataBaseLib
             await Task.Run(() =>
             {
                 DeleteFeatures(monster.Id, "MonsterActions");
-                foreach (var feature in monster.Features)
+                foreach (var feature in monster.Actions)
                 {
                     UpdateFeature(feature, monster.Id, "MonsterActions");
                 }
@@ -440,7 +443,7 @@ namespace DataBaseLib
             await Task.Run(() =>
             {
                 DeleteFeatures(monster.Id, "MonsterLegendaryActions");
-                foreach (var feature in monster.Features)
+                foreach (var feature in monster.LegendaryActions)
                 {
                     UpdateFeature(feature, monster.Id, "MonsterLegendaryActions");
                 }
@@ -449,7 +452,7 @@ namespace DataBaseLib
             await Task.Run(() =>
             {
                 DeleteFeatures(monster.Id, "MonsterReciprocalActions");
-                foreach (var feature in monster.Features)
+                foreach (var feature in monster.ReciprocalActions)
                 {
                     UpdateFeature(feature, monster.Id, "MonsterReciprocalActions");
                 }
