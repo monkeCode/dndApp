@@ -66,6 +66,11 @@ namespace App
             var context = (sender as FrameworkElement).DataContext as DataItem;
             (DataContext as WorkShopModelView).Delete(context);
             
-    }  
+    }
+
+    private void AddNewSpell(object sender, RoutedEventArgs e)
+    {
+        throw new System.NotImplementedException();
+    }
     }
 }

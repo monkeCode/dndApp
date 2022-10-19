@@ -21,6 +21,7 @@ namespace App.WorkShop
         {
             MagicItems = new ObservableCollection<CompletedDataItem>();
             Monsters = new ObservableCollection<CompletedDataItem>();
+            Spells = new ObservableCollection<CompletedDataItem>();
             IEnumerable<CompletedDataItem> completedItems;
 
 #if !DEBUG
@@ -54,6 +55,7 @@ namespace App.WorkShop
                         Monsters.Add(it);
                         break;
                     case DataItem.DataType.Spell:
+                        Spells.Add(it);
                         break;
                 }
                 

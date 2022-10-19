@@ -67,7 +67,7 @@
             </Grid.RowDefinitions>
             <TextBlock Text="Заклинания" />
             <ListView Grid.Row="1"/>
-            <Button Grid.Row="2">Добавить новое</Button>
+            <Button Grid.Row="2" Click="AddNewSpell">Добавить новое</Button>
         </Grid>
         <Grid Grid.Column="1" MinWidth="100">
             <Grid.RowDefinitions>

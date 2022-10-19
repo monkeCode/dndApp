@@ -162,7 +162,7 @@ namespace DataBaseLib
             }
         }
 
-        public int GetLastId() => Convert.ToInt32(DataAccess.Instance.GetData("SELECT last_insert_rowid()")[0][0];
+        public int GetLastId() => Convert.ToInt32(DataAccess.Instance.GetData("SELECT last_insert_rowid()")[0][0]);
 
         public async Task RawRequestAsync(string request)
         {
