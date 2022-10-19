@@ -367,7 +367,7 @@ namespace DataBaseLib
         public async Task AddEncounter(Encounter enc)
         {
             await DataAccess.Instance.RawRequestAsync($"insert into Encounters(group_id, name) values ({enc.GroupId}, '{enc.Name?.Replace("'", "''")}')");
-            var id = Convert.ToInt32(DataAccess.Instance.GetData("SELECT last_insert_rowid()")[0][0]);
+            var id = DataAccess.Instance.GetLastId();
             foreach (var monster in enc.Monsters)
             {
                 await AddBattleMonster(monster, id);
