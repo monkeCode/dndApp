@@ -18,12 +18,12 @@ namespace DataBaseLib
         public IEnumerable<DataItem> GetDataItems()
         {
             var request = DataAccess.Instance.GetData("SELECT _id, Name from Monsters");
-            List<DataItem> dataItems = request.Select(it => new DataItem { Id = Convert.ToInt32(it[0]), Name = it[1].ToString(),IsHomebrew = Convert.ToInt32(it[8]) == 1 , ItemType = DataItem.DataType.Monster }).ToList();
+            List<DataItem> dataItems = request.Select(it => new DataItem { Id = Convert.ToInt32(it[0]), Name = it[1].ToString(), ItemType = DataItem.DataType.Monster }).ToList();
             request = DataBaseLib.DataAccess.Instance.GetData("SELECT _id, Name from MagicItems");
-            dataItems.AddRange(request.Select(it => new DataItem { Id = Convert.ToInt32(it[0]), Name = it[1].ToString(),IsHomebrew = Convert.ToInt32(it[6]) == 1, ItemType = DataItem.DataType.MagicItem }));
+            dataItems.AddRange(request.Select(it => new DataItem { Id = Convert.ToInt32(it[0]), Name = it[1].ToString(), ItemType = DataItem.DataType.MagicItem }));
 
             request = DataBaseLib.DataAccess.Instance.GetData("SELECT _id, Name from Spells");
-            dataItems.AddRange(request.Select(it => new DataItem { Id = Convert.ToInt32(it[0]), Name = it[1].ToString(),IsHomebrew = Convert.ToInt32(it[7]) == 1, ItemType = DataItem.DataType.Spell }));
+            dataItems.AddRange(request.Select(it => new DataItem { Id = Convert.ToInt32(it[0]), Name = it[1].ToString(), ItemType = DataItem.DataType.Spell }));
 
             return dataItems;
         }

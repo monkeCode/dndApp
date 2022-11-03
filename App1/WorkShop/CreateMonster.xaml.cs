@@ -23,8 +23,14 @@ namespace App.WorkShop
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            var id = (int?)e.Parameter;
-            DataContext = id.HasValue ? new CreateMonsterVM(id.Value) : new CreateMonsterVM();
+           
+            if (e.Parameter == null)
+            {
+                DataContext = new CreateMonsterVM();
+                return;
+            }
+            var data = (CreatingData)e.Parameter;
+            DataContext =  new CreateMonsterVM(data.Id, data.IsNew);
             base.OnNavigatedFrom(e);
         }
 

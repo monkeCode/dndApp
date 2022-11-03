@@ -70,8 +70,10 @@ namespace App.WorkShop
             IsTable = false;
         }
 
-        public CreateMonsterVM(int id) : base(false)
+        public CreateMonsterVM(int id, bool isN) : base(isN)
         {
+            if(id == -1)
+                return;
             Item = App.DataContext.GetExtendedMonsterById(id);
             IsTable = Item.Table != null;
         }

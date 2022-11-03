@@ -20,7 +20,7 @@
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
-    <PackageCertificateThumbprint>114C5291B57E6F9AB2BE43836B80F11EB0CD124C</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>BE2C7A3CCD1E79CD089FB45120BDC0CA45412F1D</PackageCertificateThumbprint>
     <PackageCertificateKeyFile />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
@@ -223,6 +223,9 @@
     <Compile Include="WorkShop\CreateMonster.xaml.cs">
       <DependentUpon>CreateMonster.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WorkShop\CreateDialog.xaml.cs">
+      <DependentUpon>CreateDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WorkShop\CreateMonsterVM.cs" />
     <Compile Include="WorkShop\CreateMV.cs" />
     <Compile Include="WorkShop\Workshop.xaml.cs">
@@ -331,6 +334,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="WorkShop\CreateMonster.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WorkShop\CreateDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

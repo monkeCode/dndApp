@@ -1,5 +1,7 @@
 ﻿using App.WorkShop;
 using Model;
+using System;
+using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -56,9 +58,25 @@ namespace App
             }
         }
 
-    private void AddNewMonster(object sender, RoutedEventArgs e)
+    private async void AddNewMonster(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(CreateMonster));
+            ContentDialog dialog = new ContentDialog();
+            dialog.Title = "Создать новое существо?";
+            dialog.PrimaryButtonText = "Создать";
+            dialog.CloseButtonText = "Отмена";
+            dialog.DefaultButton = ContentDialogButton.Primary;
+            dialog.Content = new CreateDialog(App.DataContext.GetMonsters());
+
+            var result = await dialog.ShowAsync();
+            if(result == ContentDialogResult.None)
+                return;
+            
+            var monster = (dialog.Content as CreateDialog).SelectedItem;
+                Frame.Navigate(typeof(CreateMonster), new
+                CreatingData{
+                    IsNew = true,
+                    Id = monster!= null?monster.Id:-1
+                });
         }
 
     private void DeleteItem(object sender, RoutedEventArgs e)
@@ -73,4 +91,10 @@ namespace App
         throw new System.NotImplementedException();
     }
     }
+}
+
+class CreatingData
+{
+    public bool IsNew { get; set; }
+    public int Id { get; set; }
 }
