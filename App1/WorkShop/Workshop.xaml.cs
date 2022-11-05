@@ -50,7 +50,7 @@ namespace App
                     Frame.Navigate(typeof(CreateItem), dataItem.Id);
                     break;
                 case DataItem.DataType.Monster:
-                    Frame.Navigate(typeof(CreateMonster), dataItem.Id);
+                    Frame.Navigate(typeof(CreateMonster), new CreatingData{ Id = dataItem.Id, IsNew = false});
                 break;
                 case DataItem.DataType.Spell:
 

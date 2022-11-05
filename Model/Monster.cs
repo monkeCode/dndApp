@@ -4,9 +4,9 @@ namespace Model
 {
     public class Monster : DataItem
     {
-        public string Type { set; get; }
+        public string Type { set; get; } = "";
         public int Size { get; set; }
-        public string Challenge { get; set; }
+        public string Challenge { get; set; } = "0";
         public int Ex =>
             Challenge switch
             {
@@ -45,9 +45,9 @@ namespace Model
                 "29" => 135000,
                 "30" => 155000
             };
-        public string Source { get; set; }
+        public string Source { get; set; } = "";
         public bool IsLegendary { get; set; }
-        public ObservableCollection<string> Habitat { get; set; }
+        public ObservableCollection<string> Habitat { get; set; } = new();
         public Monster()
         {
             ItemType = DataType.Monster;

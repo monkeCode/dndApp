@@ -72,8 +72,12 @@ namespace App.WorkShop
 
         public CreateMonsterVM(int id, bool isN) : base(isN)
         {
-            if(id == -1)
+            if (id == -1)
+            {
+                Item = new ExtendedMonster();
+                IsTable = false;
                 return;
+            }
             Item = App.DataContext.GetExtendedMonsterById(id);
             IsTable = Item.Table != null;
         }

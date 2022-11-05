@@ -332,7 +332,15 @@ namespace DataBaseLib
 
         public async Task AddMonster(ExtendedMonster monster)
         {
-            throw new NotImplementedException();
+            await DataAccess.Instance.RawRequestAsync($"INSERT INTO Monsters(Name, Size, Type, ChallengeRate) " +
+                                                      $"values ('{monster.Name.Replace("'", "''")}', " +
+                                                      $"{monster.Size}, " +
+                                                      $"'{monster.Type}', " +
+                                                      $" '{monster.Challenge}');");
+            var id = Convert.ToInt32(DataAccess.Instance.GetData("select _id from Monsters Last where _id = (select max(_id) from Monsters)")[0][0]);
+            await DataAccess.Instance.RawRequestAsync($"Insert into ExtendedMonsters (_id) values ({id})");
+            monster.Id = id;
+            await UpdateMonster(monster);
         }
 
         public async Task AddItem(ExtendedMagicItem item)
@@ -340,7 +348,8 @@ namespace DataBaseLib
             await DataAccess.Instance.RawRequestAsync(
                     "INSERT INTO MagicItems (Name, Quality, Type, Source)" +
                     $"values('{item.Name.Replace("'", "''")}',{item.Quality}, '{item.Type}', '{item.ItemSource.Replace("'", "''")}')");
-            var id = Convert.ToInt32(DataAccess.Instance.GetData($"Select _id from MagicItems where Name = '{item.Name.Replace("'", "''")}'")[0][0]);
+            //var id = Convert.ToInt32(DataAccess.Instance.GetData($"Select _id from MagicItems where Name = '{item.Name.Replace("'", "''")}'")[0][0]);
+            var id = Convert.ToInt32(DataAccess.Instance.GetData("select _id from MagicItems Last where _id = (select max(_id) from MagicItems)")[0][0]);
             await DataAccess.Instance.RawRequestAsync($"Insert into ExtendedMagicItems (_id) values ({id})");
             item.Id = id;
             await UpdateItem(item);
