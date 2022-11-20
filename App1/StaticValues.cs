@@ -130,7 +130,8 @@ namespace App
             "Подземье",
             "Пустыня",
             "Степь",
-            "Холмы"
+            "Холмы",
+            "Приполярье"
         };
 
         public static List<string> Classes { get; } = new List<string>()
