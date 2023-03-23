@@ -26,7 +26,7 @@ namespace App.Generator
         private IList<ItemGenerator> _items;
         public ItemRangeGenerator(IList<ItemGenerator> items)
         {
-            this._items = items;
+            _items = items;
         }
         public override GeneratedItem GetItem()
         {

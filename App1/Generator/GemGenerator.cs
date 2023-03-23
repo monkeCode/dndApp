@@ -109,7 +109,7 @@ namespace App.Generator
             {
                 g.Add(gems[new Random().Next(0, gems.Count)]);
             }
-            return g.ToLookup(x => x, key => g.Count(i => i == key)).Select(it => new Gem { Name = it.Key, Count = it.First(), Price = price }).ToList(); ; ;
+            return g.ToLookup(x => x, key => g.Count(i => i == key)).Select(it => new Gem { Name = it.Key, Count = it.First(), Price = price }).ToList();
         }
     }
 }
