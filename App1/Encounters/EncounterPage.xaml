@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:app1="using:App"
     xmlns:controls1="using:Microsoft.UI.Xaml.Controls"
-    xmlns:model="using:Model"
+    xmlns:model="using:Model" xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls" xmlns:directories="using:App.Directories"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Page.Resources>
@@ -126,10 +126,7 @@
                                             <Run Text="{Binding AdaptEx}" Foreground="{ThemeResource AccentDark1}"></Run>
                                         </TextBlock>
                                     </Grid>
-                                    <ProgressBar Margin="10" HorizontalAlignment="Stretch" Height="20" Maximum="{Binding Deadly}" Value="{Binding AdaptEx}">
-
-
-                                    </ProgressBar>
+                                    <ProgressBar Margin="10" HorizontalAlignment="Stretch" Height="20" Maximum="{Binding Deadly}" Value="{Binding AdaptEx}"/>
                                     <ListView ItemsSource="{x:Bind Monsters}" MinHeight="200" HorizontalAlignment="Stretch" CanDragItems="True" AllowDrop="True" CanReorderItems="True" DragItemsStarting="ListView_DragItemsStarting" DragOver="ListView_DragOver_1" Drop="ListView_Drop" SelectionMode="None">
                                         <ListView.ItemContainerStyle>
                                             <Style TargetType="ListViewItem">
@@ -147,7 +144,7 @@
                                                             <ColumnDefinition Width="Auto"/>
                                                         </Grid.ColumnDefinitions>
                                                         <TextBlock Margin="10" VerticalAlignment="Center" TextWrapping="Wrap">
-                                                    <Hyperlink FontSize="20" FontWeight="SemiBold" Foreground="{ThemeResource SystemControlHyperlinkBaseHighBrush}" ><Run Text="{Binding Monster.Name}"></Run></Hyperlink>
+                                                    <Hyperlink FontSize="20" FontWeight="SemiBold" Click="Hyperlink_MonsterNameClick" Foreground="{ThemeResource SystemControlHyperlinkBaseHighBrush}" ><Run Text="{Binding Monster.Name}"></Run></Hyperlink>
                                                     <LineBreak/>
                                                     <Run Text="{Binding Monster.Size, Converter={StaticResource SizeConverter}}" FontStyle="Italic"/>
                                                     <Run Text="{Binding Monster.Type}" FontStyle="Italic"></Run>
@@ -186,6 +183,21 @@
             </Grid>
         </Grid>
         <Border BorderBrush="{StaticResource SystemControlBackgroundBaseHighBrush }" BorderThickness="1" Grid.Column="1">
+            <controls:SwitchPresenter Value="Monsters" Name="SwitchPresenter">
+                <controls:Case Value="Monster">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Button Content="Вернуться" Click="SwipeToMonsters" HorizontalAlignment="Right" Margin="10"/>
+                        <Frame x:Name="monsterFrame" Grid.Row="1"/>
+                    </Grid>
+                   
+                </controls:Case>
+                <controls:Case Value="Monsters">
+                    
+                
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -244,7 +256,7 @@
                         <TextBlock Grid.Column="3"  TextAlignment="Center" Style="{StaticResource SubtitleTextBlockStyle}" TextDecorations="Underline">Опасность</TextBlock>
                     </Grid>
                 </StackPanel>
-                <ListView Grid.Row="1" ItemsSource="{x:Bind ((local:EncounterModelView)DataContext).MonsterList}" SelectionMode="None" IsItemClickEnabled="True" CanDragItems="True" AllowDrop="True" DragOver="ListView_DragOver" DragItemsStarting="ListView_DragItemsStarting"  Drop="ListView_Drop_1" Margin="0,0,0,0">
+                <ListView Grid.Row="1" ItemsSource="{x:Bind ((local:EncounterModelView)DataContext).MonsterList}" ItemClick="ListView_MosnterClick" SelectionMode="None" IsItemClickEnabled="True" CanDragItems="True" AllowDrop="True" DragOver="ListView_DragOver" DragItemsStarting="ListView_DragItemsStarting"  Drop="ListView_Drop_1" Margin="0,0,0,0">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
                             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
@@ -277,6 +289,8 @@
                     </ListView.ItemTemplate>
                 </ListView>
             </Grid>
+                </controls:Case>
+            </controls:SwitchPresenter>
         </Border>
     </Grid>
 </Page>

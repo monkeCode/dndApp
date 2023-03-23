@@ -1,8 +1,10 @@
-﻿using Model;
+﻿using App.Directories;
+using Model;
 using System.Collections.Generic;
 using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Navigation;
 
 // Документацию по шаблону элемента "Пустая страница" см. по адресу https://go.microsoft.com/fwlink/?LinkId=234238
@@ -145,6 +147,25 @@ namespace App.Encounters
         {
             var enc = ((sender as Button).DataContext as Encounter);
             (DataContext as EncounterModelView).DeleteEncounter(enc);
+        }
+
+        private void SwipeToMonsters(object sender, RoutedEventArgs e)
+        {
+            SwitchPresenter.Value = "Monsters";
+        }
+
+        private void ListView_MosnterClick(object sender, ItemClickEventArgs e)
+        {
+            monsterFrame.Navigate(typeof(MonsterPage), (e.ClickedItem as BattleMonster).Monster.Id);
+            SwitchPresenter.Value = "Monster";
+        }
+
+        private void Hyperlink_MonsterNameClick(Windows.UI.Xaml.Documents.Hyperlink sender, Windows.UI.Xaml.Documents.HyperlinkClickEventArgs args)
+        {
+            var monster = (from m in (DataContext as EncounterModelView).MonsterList
+                           where m.Monster.Name == (sender.Inlines[0] as Run).Text select m.Monster).First();
+            monsterFrame.Navigate(typeof(MonsterPage), monster.Id);
+            SwitchPresenter.Value = "Monster";
         }
     }
 }
