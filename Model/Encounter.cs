@@ -8,7 +8,7 @@ namespace Model
     public class Encounter : INotifyPropertyChanged
     {
 
-        public ObservableCollection<BattleMonster> Monsters { get; } = new();
+        public ObservableCollection<EncountingMonster> Monsters { get; } = new();
 
         public string Name { get; set; }
         public int Id { get; set; }
@@ -67,8 +67,8 @@ namespace Model
         private void Monsters_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             if (e.NewItems != null)
-                foreach (BattleMonster i in e.NewItems)
-                    i.PropertyChanged += delegate (object sender, PropertyChangedEventArgs args) { if (args.PropertyName == nameof(BattleMonster.Quantity)) MonstersChanged((sender as BattleMonster)); };
+                foreach (EncountingMonster i in e.NewItems)
+                    i.PropertyChanged += delegate (object sender, PropertyChangedEventArgs args) { if (args.PropertyName == nameof(EncountingMonster.Quantity)) MonstersChanged((sender as EncountingMonster)); };
 
             SetDifficulty();
         }
@@ -94,7 +94,7 @@ namespace Model
             SetDifficulty();
         }
 
-        private void MonstersChanged(BattleMonster monster)
+        private void MonstersChanged(EncountingMonster monster)
         {
             if (monster.Quantity < 1)
             {

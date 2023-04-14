@@ -289,7 +289,7 @@ namespace DataBaseLib
 
                 foreach (var monsterd in monsterData)
                 {
-                    enc.Monsters.Add(new BattleMonster()
+                    enc.Monsters.Add(new EncountingMonster()
                     {
                         Quantity = Convert.ToInt32(monsterd[2]),
                         Monster = monsterList.First(m => m.Id == Convert.ToInt32(monsterd[1]))
@@ -386,7 +386,7 @@ namespace DataBaseLib
             }
         }
 
-        private async Task AddBattleMonster(BattleMonster monster, int encId)
+        private async Task AddBattleMonster(EncountingMonster monster, int encId)
         {
             await DataAccess.Instance.RawRequestAsync($"insert into EncountersToMonsters(Monster_Quantity, Monster_id, Encounter_id) " +
                                              $"values ({monster.Quantity}, {monster.Monster.Id}, {encId})");

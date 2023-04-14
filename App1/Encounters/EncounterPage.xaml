@@ -136,7 +136,7 @@
                                             </Style>
                                         </ListView.ItemContainerStyle>
                                         <ListView.ItemTemplate>
-                                            <DataTemplate x:DataType="model:BattleMonster">
+                                            <DataTemplate x:DataType="model:EncountingMonster">
                                                 <Border BorderBrush="{StaticResource SystemAccentColorLight1}" BorderThickness="1"   CornerRadius="10" HorizontalAlignment="Stretch">
                                                     <Grid>
                                                         <Grid.ColumnDefinitions>
@@ -263,7 +263,7 @@
                         </Style>
                     </ListView.ItemContainerStyle>
                     <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="model:BattleMonster">
+                        <DataTemplate x:DataType="model:EncountingMonster">
                             <Grid BorderThickness="0,0,0,0.5" >
 
                                 <Grid.BorderBrush>

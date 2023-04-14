@@ -130,7 +130,7 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="BattleMonster.cs" />
+    <Compile Include="EncountingMonster.cs" />
     <Compile Include="CompletedDataItem.cs" />
     <Compile Include="DataItem.cs" />
     <Compile Include="Encounter.cs" />
@@ -138,7 +138,9 @@
     <Compile Include="ExtendedMonster.cs" />
     <Compile Include="ExtendedSpell.cs" />
     <Compile Include="Feature.cs" />
+    <Compile Include="FightablePlayer.cs" />
     <Compile Include="Group.cs" />
+    <Compile Include="IFightable.cs" />
     <Compile Include="MagicItem.cs" />
     <Compile Include="Monster.cs" />
     <Compile Include="Player.cs" />

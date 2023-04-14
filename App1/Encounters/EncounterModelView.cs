@@ -13,7 +13,7 @@ namespace App.Encounters
     class EncounterModelView : INotifyPropertyChanged, IDisposable
     {
         public MonsterModelView MonsterModel { get; } = new();
-        public ObservableCollection<BattleMonster> MonsterList { get; private set; } = new();
+        public ObservableCollection<EncountingMonster> MonsterList { get; private set; } = new();
         public ObservableCollection<Encounter> Encounters { get; set; } = new();
 
         private Group _playerGroup;
@@ -54,7 +54,7 @@ namespace App.Encounters
             MonsterList.Clear();
             foreach (var monster in MonsterModel.DataCollection)
             {
-                MonsterList.Add(new BattleMonster
+                MonsterList.Add(new EncountingMonster
                 {
                     Monster = monster,
                     Quantity = 1

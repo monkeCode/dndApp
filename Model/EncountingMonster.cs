@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 namespace Model
 {
-    public class BattleMonster : INotifyPropertyChanged
+    public class EncountingMonster : INotifyPropertyChanged
     {
         public Monster Monster { get; set; }
         private int _quantity;

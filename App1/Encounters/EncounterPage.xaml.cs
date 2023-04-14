@@ -16,7 +16,7 @@ namespace App.Encounters
     public sealed partial class EncounterPage : Page
     {
 
-        private List<BattleMonster> _dragableItems = new List<BattleMonster>();
+        private List<EncountingMonster> _dragableItems = new List<EncountingMonster>();
         private ListView _originalSource;
         public EncounterPage()
         {
@@ -87,7 +87,7 @@ namespace App.Encounters
             _dragableItems.Clear();
             foreach (var i in e.Items)
             {
-                _dragableItems.Add((BattleMonster)i);
+                _dragableItems.Add((EncountingMonster)i);
                 _originalSource = sender as ListView;
             }
         }
@@ -99,7 +99,7 @@ namespace App.Encounters
             foreach (var i in _dragableItems)
             {
                 if (((lv.DataContext) as Encounter).Monsters.FirstOrDefault(monster => monster.Monster.Id == i.Monster.Id) == null)
-                    ((lv.DataContext) as Encounter).Monsters.Add(new BattleMonster() { Monster = i.Monster, Quantity = i.Quantity });
+                    ((lv.DataContext) as Encounter).Monsters.Add(new EncountingMonster() { Monster = i.Monster, Quantity = i.Quantity });
                 else
                     ((lv.DataContext) as Encounter).Monsters.First(monster => monster.Monster.Id == i.Monster.Id).Quantity++;
                 var obj = _originalSource.DataContext as Encounter;
@@ -136,12 +136,12 @@ namespace App.Encounters
 
         private void IncrementMonster(object sender, RoutedEventArgs e)
         {
-            ((sender as Button).DataContext as BattleMonster).Quantity++;
+            ((sender as Button).DataContext as EncountingMonster).Quantity++;
         }
 
         private void DecrementMonster(object sender, RoutedEventArgs e)
         {
-            ((sender as Button).DataContext as BattleMonster).Quantity--;
+            ((sender as Button).DataContext as EncountingMonster).Quantity--;
         }
 
         private void DeleteEncounter(object sender, RoutedEventArgs e)
@@ -157,7 +157,7 @@ namespace App.Encounters
 
         private void ListView_MosnterClick(object sender, ItemClickEventArgs e)
         {
-            monsterFrame.Navigate(typeof(MonsterPage), (e.ClickedItem as BattleMonster).Monster.Id);
+            monsterFrame.Navigate(typeof(MonsterPage), (e.ClickedItem as EncountingMonster).Monster.Id);
             SwitchPresenter.Value = "Monster";
         }
 
