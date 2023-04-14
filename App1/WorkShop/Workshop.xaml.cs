@@ -79,10 +79,19 @@ namespace App
                 });
         }
 
-    private void DeleteItem(object sender, RoutedEventArgs e)
-    {
+        private async void DeleteItem(object sender, RoutedEventArgs e)
+        {
             var context = (sender as FrameworkElement).DataContext as DataItem;
-            (DataContext as WorkShopModelView).Delete(context);
+            ContentDialog dialog = new ContentDialog()
+            {
+                Title = "Подтверждение",
+                Content = $"Вы действительно хотите удалить {context.Name}?",
+                PrimaryButtonText = "Удалить",
+                SecondaryButtonText = "Отмена"
+            };
+            var result = await dialog.ShowAsync();
+            if(result == ContentDialogResult.Primary)
+                (DataContext as WorkShopModelView).Delete(context);
             
     }
 

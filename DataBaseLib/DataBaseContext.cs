@@ -539,18 +539,18 @@ namespace DataBaseLib
 
         public async Task DeleteMonster(int id)
         {
-            await OnlineDataAccess.RawRequestAsync($"Delete from Monsters where _id = {id}");
+            await DataAccess.Instance.RawRequestAsync($"Delete from Monsters where _id = {id}");
         }
 
         public async Task DeleteItem(int id)
         {
-            await OnlineDataAccess.RawRequestAsync($"Delete from MagicItems where _id = {id}");
+            await DataAccess.Instance.RawRequestAsync($"Delete from MagicItems where _id = {id}");
 
         }
 
         public async Task DeleteSpell(int id)
         {
-            await OnlineDataAccess.RawRequestAsync($"Delete from Spells where _id = {id}");
+            await DataAccess.Instance.RawRequestAsync($"Delete from Spells where _id = {id}");
         }
 
         public async Task DeletePlayer(int id)
