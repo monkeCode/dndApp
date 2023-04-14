@@ -74,6 +74,7 @@ namespace App.Encounters
         }
         public void ChangeGroup(int groupId)
         {
+            if (groupId == _playerGroup?.Id) return;
             try
             {
                 SaveEncounters();
@@ -127,8 +128,8 @@ namespace App.Encounters
 
         private async void SaveEncounters()
         {
-            //var encList = App.DataContext.GetEncounters().Where(en => en.GroupId == PlayerGroup.Id).ToList();
-            foreach (var encounter in Encounters)
+            var savedEcounters = new List<Encounter>(Encounters);
+            foreach (var encounter in savedEcounters)
             {
 
                 if (encounter.Name == null) encounter.Name = "Боевая сцена";
@@ -137,11 +138,6 @@ namespace App.Encounters
                 else
                     await App.DataContext.UpdateEncounter(encounter);
             }
-
-            //foreach (var en in encList.Where(it => Encounters.Count(e => e.Id == it.Id) == 0))
-            //{
-            //    App.DataContext.DeleteEncounter(en.Id);
-            //}
         }
 
 
@@ -160,6 +156,7 @@ namespace App.Encounters
                 GroupId = PlayerGroup.Id,
                 Id = -1
             };
+            enc.CalculateForGroup(PlayerGroup);
             Encounters.Add(enc);
         }
 

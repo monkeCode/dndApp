@@ -131,6 +131,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Encounters\GroupSelector.xaml.cs">
+      <DependentUpon>GroupSelector.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\Dice.cs" />
     <Compile Include="Directories\BestiaryPage.xaml.cs">
       <DependentUpon>BestiaryPage.xaml</DependentUpon>
@@ -273,6 +276,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Encounters\EncounterPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Encounters\GroupSelector.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

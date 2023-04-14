@@ -1,5 +1,6 @@
 ﻿using App.Directories;
 using Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Windows.UI.Xaml;
@@ -166,6 +167,16 @@ namespace App.Encounters
                            where m.Monster.Name == (sender.Inlines[0] as Run).Text select m.Monster).First();
             monsterFrame.Navigate(typeof(MonsterPage), monster.Id);
             SwitchPresenter.Value = "Monster";
+        }
+
+        private async void ChangeGroup(object sender, RoutedEventArgs e)
+        {
+            GroupSelector groupSelector = new GroupSelector();
+            var result = await groupSelector.ShowAsync();
+            if(result == ContentDialogResult.Primary)
+            {
+                (DataContext as EncounterModelView).ChangeGroup(groupSelector.selectedGroup.Id);
+            }
         }
     }
 }

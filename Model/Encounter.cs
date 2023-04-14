@@ -91,6 +91,7 @@ namespace Model
                 _offset = -1;
             else
                 _offset = 0;
+            SetDifficulty();
         }
 
         private void MonstersChanged(BattleMonster monster)
