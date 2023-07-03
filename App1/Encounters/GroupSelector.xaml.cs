@@ -22,13 +22,12 @@ namespace App.Encounters
     {
 
         public Group selectedGroup { get; set; }
-        private List<Group> allGroups { get; set; }
+        private List<Group> allGroups { get; }
         public GroupSelector()
         {
             this.InitializeComponent();
 
             allGroups = App.DataContext.GetGroups().ToList();
-
         }
 
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
@@ -41,7 +40,6 @@ namespace App.Encounters
 
         private void ListView_ItemClick(object sender, ItemClickEventArgs e)
         {
-
         }
     }
 }

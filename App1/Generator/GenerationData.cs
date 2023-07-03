@@ -5,8 +5,8 @@ namespace App.Generator
 {
     public class GenerationData
     {
-        public ObservableCollection<Gem> Gems { get; set; } = new ObservableCollection<Gem>();
-        public ObservableCollection<Art> Arts { get; set; } = new ObservableCollection<Art>();
+        public ObservableCollection<Jewel> Gems { get; set; } = new ObservableCollection<Jewel>();
+        public ObservableCollection<Jewel> Arts { get; set; } = new ObservableCollection<Jewel>();
         public ObservableCollection<GeneratedItem> Items { get; set; } = new ObservableCollection<GeneratedItem>();
         public IObservable<int> Copper { get; set; }
         public IObservable<int> Silver { get; set; }

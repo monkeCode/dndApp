@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 
 namespace App.Generator
 {
-    public class GemGenerator
+    public class GemGenerator : JewelGenerator
     {
         private static readonly IReadOnlyList<string> GEMS10G = new List<string>
         {
@@ -77,39 +75,29 @@ namespace App.Generator
             "Рубин (прозрачный, от светло-красного до темно-красного)"
 
         };
-        public static List<Gem> GenerateGemsBy10(int count)
+        public static List<Jewel> GenerateGemsBy10(int count)
         {
             return Generate(GEMS10G, count, 10);
         }
-        public static List<Gem> GenerateGemsBy50(int count)
+        public static List<Jewel> GenerateGemsBy50(int count)
         {
             return Generate(GEMS50G, count, 50);
         }
-        public static List<Gem> GenerateGemsBy100(int count)
+        public static List<Jewel> GenerateGemsBy100(int count)
         {
             return Generate(GEMS100G, count, 100);
         }
-        public static List<Gem> GenerateGemsBy500(int count)
+        public static List<Jewel> GenerateGemsBy500(int count)
         {
             return Generate(GEMS500G, count, 500);
         }
-        public static List<Gem> GenerateGemsBy1000(int count)
+        public static List<Jewel> GenerateGemsBy1000(int count)
         {
             return Generate(GEMS1000G, count, 1000);
         }
-        public static List<Gem> GenerateGemsBy5000(int count)
+        public static List<Jewel> GenerateGemsBy5000(int count)
         {
             return Generate(GEMS5000G, count, 5000);
-        }
-
-        private static List<Gem> Generate(IReadOnlyList<string> gems, int count, int price)
-        {
-            List<string> g = new List<string>();
-            for (int i = 0; i < count; i++)
-            {
-                g.Add(gems[new Random().Next(0, gems.Count)]);
-            }
-            return g.ToLookup(x => x, key => g.Count(i => i == key)).Select(it => new Gem { Name = it.Key, Count = it.First(), Price = price }).ToList();
         }
     }
 }

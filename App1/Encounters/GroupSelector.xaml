@@ -24,7 +24,7 @@
             <TextBlock>Название:</TextBlock>
             <TextBlock Grid.Column="1">Кол-во игроков:</TextBlock>
         </Grid>
-        <ListView ItemClick="ListView_ItemClick" SelectedItem="{x:Bind selectedGroup, Mode=TwoWay}" Grid.Row="1" ItemsSource="{x:Bind allGroups}">
+        <ListView ItemClick="ListView_ItemClick" Name="GroupList" SelectedItem="{x:Bind selectedGroup, Mode=TwoWay}" Grid.Row="1" ItemsSource="{x:Bind allGroups}">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="model:Group">
                     <Grid>

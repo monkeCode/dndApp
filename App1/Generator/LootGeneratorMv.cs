@@ -8,14 +8,14 @@ namespace App.Generator
     {
         public GenerationData Data { get; set; } = new GenerationData();
         public List<GenerationData> TreasureData { get; set; } = new List<GenerationData>();
-        private CustomCommand _buttonGem10Click;
-        public CustomCommand ButtonGem10Click
+        private CustomCommand _generateGemClick;
+        public CustomCommand GenerateGemClick
         {
             get
             {
-                _buttonGem10Click ??= new CustomCommand(obj =>
+                _generateGemClick ??= new CustomCommand(obj =>
                   {
-                      Gem gem = null;
+                      Jewel gem;
                       switch (obj.ToString())
                       {
                           case "10":
@@ -43,10 +43,10 @@ namespace App.Generator
 
                   }
                   );
-                return _buttonGem10Click;
+                return _generateGemClick;
             }
         }
-        private void AddGem(Gem g)
+        private void AddGem(Jewel g)
         {
             if (Data.Gems.Count > 4)
             {
@@ -54,5 +54,15 @@ namespace App.Generator
             }
             Data.Gems.Insert(0, g);
         }
+
+        private void AddArt(Jewel art)
+        {
+            if (Data.Arts.Count > 4)
+            {
+                Data.Gems.Remove(Data.Arts.Last());
+            }
+            Data.Arts.Insert(0, art);
+        }
+
     }
 }

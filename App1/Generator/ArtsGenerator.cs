@@ -1,6 +1,6 @@
 ﻿namespace App.Generator
 {
-    public class ArtsGenerator
+    public class ArtsGenerator: JewelGenerator
     {
     }
 }

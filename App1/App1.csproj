@@ -13,14 +13,14 @@
     <AssemblyName>DndHelper</AssemblyName>
     <DefaultLanguage>ru-RU</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.19041.0</TargetPlatformVersion>
+    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.22000.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
-    <PackageCertificateThumbprint>BE2C7A3CCD1E79CD089FB45120BDC0CA45412F1D</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>90AF07CD571F8B32902E0E6D398584615D74F0C4</PackageCertificateThumbprint>
     <PackageCertificateKeyFile />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
@@ -134,6 +134,8 @@
     <Compile Include="Encounters\GroupSelector.xaml.cs">
       <DependentUpon>GroupSelector.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Generator\Jewel.cs" />
+    <Compile Include="Generator\JewelGenerator.cs" />
     <Compile Include="Helpers\Dice.cs" />
     <Compile Include="Directories\BestiaryPage.xaml.cs">
       <DependentUpon>BestiaryPage.xaml</DependentUpon>
@@ -160,9 +162,7 @@
     <Compile Include="UIElements\FeaturesTextBlock.xaml.cs">
       <DependentUpon>FeaturesTextBlock.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Generator\Art.cs" />
     <Compile Include="Generator\ArtsGenerator.cs" />
-    <Compile Include="Generator\Gem.cs" />
     <Compile Include="Generator\GeneratedItem.cs" />
     <Compile Include="Generator\ItemGenerator.cs" />
     <Compile Include="Generator\GemGenerator.cs" />
@@ -407,7 +407,9 @@
   <ItemGroup>
     <Content Include="Assets\Fonts\Font Awesome 6 Free-Solid-900.otf" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="App1_TemporaryKey.pfx" />
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

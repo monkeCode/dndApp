@@ -6,33 +6,32 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" 
+    d:DataContext="{d:DesignInstance local:LootGeneratorMv}">
     <Page.Resources>
         <Style TargetType="StackPanel" x:Name="ButtonPanel">
-            <Setter Property="Margin" Value="0,0,0,30"/>
+            <Setter Property="Margin" Value="0,0,0,00"/>
         </Style>
+        <DataTemplate x:DataType="local:Jewel" x:Name="JewelTemplate">
+            <TextBlock>
+                <Run Text="{x:Bind Name}"/>
+                <Run Text="{x:Bind Price}"/>
+                <Run Text="зм"/>
+            </TextBlock>
+        </DataTemplate>
     </Page.Resources>
     <ScrollViewer Padding="30">
         <StackPanel>
         <TextBlock Style="{ThemeResource SubtitleTextBlockStyle}" >Самоцветы</TextBlock>
         <StackPanel Orientation="Horizontal" Style="{StaticResource ButtonPanel}">
-            <Button Margin="0,0,5,0" Command="{Binding ButtonGem10Click}" CommandParameter="10">10 зм</Button>
-                <Button Margin="0,0,5,0" Command="{Binding ButtonGem10Click}" CommandParameter="50">50 зм</Button>
-                <Button Margin="0,0,5,0" Command="{Binding ButtonGem10Click}" CommandParameter="100">100 зм</Button>
-                <Button Margin="0,0,5,0" Command="{Binding ButtonGem10Click}" CommandParameter="500">500 зм</Button>
-                <Button Margin="0,0,5,0" Command="{Binding ButtonGem10Click}" CommandParameter="1000">1000 зм</Button>
-                <Button Margin="0,0,5,0" Command="{Binding ButtonGem10Click}" CommandParameter="5000">5000 зм</Button>
+                <Button Margin="0,0,5,0" Command="{Binding GenerateGemClick}" CommandParameter="10">10 зм</Button>
+                <Button Margin="0,0,5,0" Command="{Binding GenerateGemClick}" CommandParameter="50">50 зм</Button>
+                <Button Margin="0,0,5,0" Command="{Binding GenerateGemClick}" CommandParameter="100">100 зм</Button>
+                <Button Margin="0,0,5,0" Command="{Binding GenerateGemClick}" CommandParameter="500">500 зм</Button>
+                <Button Margin="0,0,5,0" Command="{Binding GenerateGemClick}" CommandParameter="1000">1000 зм</Button>
+                <Button Margin="0,0,5,0" Command="{Binding GenerateGemClick}" CommandParameter="5000">5000 зм</Button>
         </StackPanel>
-        <ListView ItemsSource="{Binding Data.Gems}" MaxHeight="300" SelectionMode="None">
-            <ListView.ItemTemplate>
-                <DataTemplate x:DataType="local:Gem">
-                    <TextBlock>
-                        <Run Text="{x:Bind Name}"/>
-                        <Run Text="{x:Bind Price}"/>
-                        <Run Text="зм"/>
-                        </TextBlock>
-                </DataTemplate>
-            </ListView.ItemTemplate>
+        <ListView ItemsSource="{Binding Data.Gems}" MaxHeight="300" SelectionMode="None" ItemTemplate="{StaticResource JewelTemplate}">
         </ListView>
         <TextBlock Style="{ThemeResource SubtitleTextBlockStyle}">Предметы искусства</TextBlock>
         <StackPanel Orientation="Horizontal" Style="{StaticResource ButtonPanel}">

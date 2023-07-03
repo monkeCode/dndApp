@@ -6,19 +6,20 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:local="using:App" xmlns:local1="using:Model"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    NavigationCacheMode="Enabled">
     <Page.Resources>
         <local:RarityConvector x:Key="RarityConvert" />
         <local:StaticValues x:Key="StaticVal" />
     </Page.Resources>
-    <Grid x:Name="frame">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="0">
-                <TextBox x:Name="searchBox" PlaceholderText ="Поиск" Width="200" Margin="0,0,10,10" Text="{Binding SubstringFilter}" TextChanged="searchBox_TextChanged" ></TextBox>
+                <TextBox PlaceholderText ="Поиск" Width="200" Margin="0,0,10,10" Text="{Binding SubstringFilter}" TextChanged="searchBox_TextChanged" ></TextBox>
                 <Button  Content="Тип" VerticalAlignment="Top" Margin="0,0,10,10">
                     <Button.Flyout>
                         <Flyout>
