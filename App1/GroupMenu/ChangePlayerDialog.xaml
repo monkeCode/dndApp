@@ -41,7 +41,7 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <AutoSuggestBox Margin="10"  Header="Раса" Text="{x:Bind Player.Race, Mode = TwoWay}" ItemsSource="{ Binding  Source={StaticResource StaticValues}, Path=Races}"></AutoSuggestBox>
+            <AutoSuggestBox x:Name="RaceBox" Margin="10"  Header="Раса"  Text="{x:Bind Player.Race, Mode = TwoWay}" ItemsSource="{ Binding  Source={StaticResource StaticValues}, Path=Races}"></AutoSuggestBox>
             <controls:NumberBox Grid.Column="2" Margin="10" Header="Инициатива" Value="{x:Bind Player.Initiative, Mode =TwoWay}"></controls:NumberBox>
             <controls:NumberBox Grid.Column="1" Margin="10" Header="Пассивная мудрость" Value="{x:Bind Player.PassWis, Mode =TwoWay}"></controls:NumberBox>
         </Grid>

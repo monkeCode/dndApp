@@ -507,7 +507,7 @@ namespace DataBaseLib
 
         public async Task UpdatePlayer(Player player)
         {
-            await DataAccess.Instance.RawRequestAsync("Update Players SET" +
+            await DataAccess.Instance.RawRequestAsync("Update Players SET " +
                                   $"Group_Id = {player.GroupId}, " +
                                   $"Name = '{player.Name.Replace("'", "''")}', " +
                                   $"PlayerName = '{player.PlayerName.Replace("'", "''")}', " +

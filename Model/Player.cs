@@ -4,9 +4,9 @@
     {
 
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string PlayerName { get; set; }
-        public string Class { get; set; }
+        public string Name { get; set; } = "";
+        public string PlayerName { get; set; } = "";
+        public string Class { get; set; } = "Варвар";
 
         public int Lvl => Experience switch
         {
@@ -37,7 +37,7 @@
         public int HP { get; set; }
         public int PassWis { get; set; }
         public int Initiative { get; set; }
-        public int GroupId { get; set; }
-        public string Race { get; set; }
+        public int GroupId { get; set; } = -1;
+        public string Race { get; set; } = "";
     }
 }

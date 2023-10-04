@@ -1,26 +1,51 @@
-﻿using Model;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using Model;
 using Windows.UI.Xaml.Controls;
-
-// Документацию по шаблону элемента "Диалоговое окно содержимого" см. по адресу https://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace App.GroupMenu
 {
-    public sealed partial class ChangePlayerDialog : ContentDialog
+    public sealed partial class ChangePlayerDialog : ContentDialog, INotifyPropertyChanged
     {
-        public Player Player { get; set; } = new Player();
+        public Player Player { get; set; } = new();
+
+
         public ChangePlayerDialog()
         {
-            this.InitializeComponent();
+            InitializeComponent();
         }
 
-
-        private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        public ChangePlayerDialog(Player player)
         {
+            Player = player;
+            InitializeComponent();
         }
 
-        private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
-        {
+    private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+    {
 
-        }
+    }
+
+    private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+    {
+
+    }
+
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+
+    private bool SetField<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
+    {
+        if (EqualityComparer<T>.Default.Equals(field, value)) return false;
+        field = value;
+        OnPropertyChanged(propertyName);
+        return true;
+    }
     }
 }

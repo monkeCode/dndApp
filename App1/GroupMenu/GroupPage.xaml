@@ -13,8 +13,8 @@
             <StackPanel Orientation="Horizontal">
                 <StackPanel.ContextFlyout>
                     <MenuFlyout>
-                        <MenuFlyoutItem Text="Удалить" Icon="Delete"/>
-                        <MenuFlyoutItem Text="Изменить" Icon="Refresh"/>
+                        <MenuFlyoutItem Text="Удалить" Icon="Delete" Click="DeletePlayerClick"/>
+                        <MenuFlyoutItem Text="Изменить" Icon="Refresh" Click="ChangePlayerClick"/>
                     </MenuFlyout>
                 </StackPanel.ContextFlyout>
                 <StackPanel>
@@ -39,7 +39,7 @@
         
         <StackPanel>
             <TextBlock Style="{StaticResource TitleTextBlockStyle}" HorizontalAlignment="Center" TextDecorations="Underline">Группы</TextBlock>
-            <ListView ItemsSource="{Binding Groups}" Style="{StaticResource FeaturesListStyle}" ItemContainerStyle="{StaticResource ListViewItemsStyle}">
+            <ListView x:Name="mainList" ItemsSource="{Binding Groups}" Style="{StaticResource FeaturesListStyle}" ItemContainerStyle="{StaticResource ListViewItemsStyle}">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="model:Group">
                         <StackPanel>

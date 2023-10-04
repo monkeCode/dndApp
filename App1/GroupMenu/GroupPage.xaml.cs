@@ -1,6 +1,8 @@
 ﻿using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
+using Model;
 
 // Документацию по шаблону элемента "Пустая страница" см. по адресу https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -11,11 +13,11 @@ namespace App.GroupMenu
     /// </summary>
     public sealed partial class GroupPage : Page
     {
-        private GroupMV _dataContext;
+        private GroupMv _dataContext;
         public GroupPage()
         {
-            DataContext = new GroupMV();
-            _dataContext = (GroupMV)DataContext;
+            DataContext = new GroupMv();
+            _dataContext = (GroupMv)DataContext;
             this.InitializeComponent();
         }
 
@@ -26,6 +28,25 @@ namespace App.GroupMenu
             if (res == ContentDialogResult.Primary)
             {
                 _dataContext.AddPlayer(playerDialog.Player);
+            }
+        }
+
+        private void DeletePlayerClick(object sender, RoutedEventArgs e)
+        {
+            var context = (sender as MenuFlyoutItem).DataContext as Player;
+            _dataContext.DeletePlayer(context);
+
+        }
+
+        private async void ChangePlayerClick(object sender, RoutedEventArgs e)
+        {
+            var context = (sender as MenuFlyoutItem).DataContext as Player;
+
+            var playerDialog = new ChangePlayerDialog(context);
+            var res = await playerDialog.ShowAsync();
+            if (res == ContentDialogResult.Primary)
+            {
+                _dataContext.UpdatePlayer(playerDialog.Player);
             }
         }
     }
